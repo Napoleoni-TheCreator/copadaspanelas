@@ -55,7 +55,7 @@ a:hover {
 }
 
 main {
-    height: 100%;
+    height: auto;
     width: 100%;
     min-width: 320px;
     background-color: rgb(201, 201, 201);
@@ -67,7 +67,7 @@ main {
 
 .container-video{
     width: 100%;
-    height: 60%;
+    height: 570px;
     position: relative;
 }
   
@@ -81,24 +81,41 @@ main {
 .container-lore{
     width: 100%;
     height: 300px;
-    background-image: none;
-
+    background-image:linear-gradient(to left bottom, #1e1e1e, #3c3c3c);
+    margin: 0 auto;
+    display: flex;
+    
+    
 }
 
 .container-galeria{
     width: 100%;
     height: 300px;
-    back
-
+    background-image:linear-gradient(to left bottom, #1e1e1e, #3c3c3c);
+    margin: 0 auto;
+    display: flex;
+    
 }
 
+span{
+    font-size: 120%;
+    align-self: center;
+    width: 50%;
+    height: 50%;
+}
+
+img{
+    width: 100%;
+    
+}
 footer {
     font-size: larger;
     width: 100%;
-    height: 180px;
+    height: 130px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-image: linear-gradient(to left top, rgb(138, 6, 6), rgb(51, 7, 7));
+    background-image: linear-gradient(to left top, rgb(138, 6, 6), rgb(114, 17, 17));
 }
+
