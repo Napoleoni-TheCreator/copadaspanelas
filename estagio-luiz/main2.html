@@ -6,11 +6,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .transmit {
+            width: 100vw;
+            height: auto;
+            background-color: rgba(0, 0, 0, 0.233);
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        header {
+            width: 100vw;
+            height: 70px;
+            background-image: linear-gradient(to left top, #df1331, #9d000d);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            text-decoration: none;
+            color: white;
+            margin-right: 20px;
+        }
+        .nxtGames{
+            width: 100vw;
+            height: auto;
+            background-color: aquamarine;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+      
+
+        .nxtGames .jogos{
+            margin: 10px;
+            display: flex;
+            width: 400px;
+            height: 200px;
+            background-color: #df1331;
+            justify-content: space-between;
+        }
+        .nxtGames .jogos .jogos-team1{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nxtGames .jogos .jogos-team2{
+            display: flex;
+        }
+
+    </style>
 </head>
 
 <body>
-    <div> sexo</div>
-    <div id="player"></div>
+    <header>
+        <h1>Trasmissão e jogos</h1>
+        <a href="HomePage.html">Voltar a Pagina Inicial</a>
+    </header>
+    <main>
+
+        <section class="transmit">
+            <div id="player"></div>
+        </section>
+
+        <section class="nxtGames">
+   
+            <div id="seg" class="jogos">
+                <div class="jogos-team1">
+                    <img src="" alt="Foto do time">
+                    <p>Time1</p>   
+                </div>
+                <div class="jogos-team2">
+                    <img src="" alt="foto Time 2">
+                    <p>Time2</p>
+                </div>
+            </div>
+
+            <div id="ter" class="jogos">
+                <div></div>
+                <div></div>
+            </div>
+            
+            <div id="qua" class="jogos">
+                <div></div>
+                <div></div>
+            </div>
+            
+            <div id="qui" class="jogos">
+                <div></div>
+                <div></div>
+            </div>
+            
+            <div id="sex" class="jogos">
+                <div></div>
+                <div></div>
+            </div>
+
+
+        </section>
+    </main>
+
+
+
+
+
     <script src="script.js"></script>
 </body>
 
