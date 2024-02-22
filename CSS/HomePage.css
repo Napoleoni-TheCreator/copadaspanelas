@@ -27,7 +27,7 @@ nav {
     display: flex;
     height: auto;
     width: 50%;
-    font-size: 120%;
+    font-size: 140%;
 
 
 }
@@ -42,6 +42,7 @@ ul {
 li {
     display: flex;
     list-style-type: none;
+    
 }
 
 a {
@@ -61,7 +62,33 @@ main {
     margin: auto 0;
 
 }
+/*
+.container-video{
+    width: 100%;
+    height: calc(100vh - 180px);
+    position: relative;
+  }
+  
+  #video {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 
+  }
+
+  
+  #play-button {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+  }
+*/
 footer {
     color: white;
     font-size: larger;
