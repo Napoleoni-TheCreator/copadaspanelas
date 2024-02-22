@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cadastro de Times</title>
+</head>
+<body>
+    <h1>Cadastro de Times</h1>
+    <form action="processa_cadastro.php" method="post">
+        <!-- Dados do Time -->
+        <fieldset>
+            <legend>Dados do Time</legend>
+            <label for="nome_time">Nome do Time:</label>
+            <input type="text" id="nome_time" name="nome_time" required>
+        </fieldset>
+
+
+        <!-- Dados do Capitão -->
+        <fieldset>
+            <legend>Dados do Capitão</legend>
+            <label for="nome_capitão">Nome do Capitão:</label>
+            <input type="text" id="nome_capitão" name="nome_capitão" required>
+        </fieldset>
+
+
+        <!-- Dados dos Jogadores -->
+        <fieldset>
+            <legend>Dados dos Jogadores</legend>
+            <label for="quantidade_jogadores">Quantidade de Jogadores:</label>
+            <input type="number" id="quantidade_jogadores" name="quantidade_jogadores" min="1" required>
+
+
+            <!-- Nome dos Jogadores (pode ser repetido para cada jogador) -->
+            <label for="nome_jogador">Nome dos Jogadores:</label>
+            <input type="text" id="nome_jogador" name="nome_jogador[]" required>
+        </fieldset>
+
+
+        <input type="submit" value="Cadastrar">
+    </form>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
