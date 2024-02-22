@@ -36,7 +36,8 @@
             color: white;
             margin-right: 20px;
         }
-        .nxtGames{
+
+        .nxtGames {
             width: 100vw;
             height: auto;
             background-color: aquamarine;
@@ -44,9 +45,9 @@
             justify-content: space-evenly;
             flex-wrap: wrap;
         }
-      
 
-        .nxtGames .jogos{
+
+        .nxtGames .jogos {
             margin: 10px;
             display: flex;
             width: 400px;
@@ -54,15 +55,33 @@
             background-color: #df1331;
             justify-content: space-between;
         }
-        .nxtGames .jogos .jogos-team1{
+
+        .nxtGames .jogos .jogos-team1 {
             display: flex;
             flex-direction: column;
+            width: 40%;
+            align-items: center;
+            margin-top: 20px;
         }
 
-        .nxtGames .jogos .jogos-team2{
-            display: flex;
+        .nxtGames .jogos .jogos-team1 .spc-logo {
+            width: 50px;
+            height: 50px;
         }
 
+        .nxtGames .jogos .jogos-team1 .spc-logo img {
+            height: 50px;
+            width: 50px;
+            max-width: inherit;
+            object-fit: contain;
+        }
+        .nxtGames .jogos #versus  {
+            font-size: x-large;
+            margin-top: 45px;
+        }
+        .nxtGames .jogos .jogos-team1 p{
+            margin-top: 5px;
+        }
     </style>
 </head>
 
@@ -78,15 +97,21 @@
         </section>
 
         <section class="nxtGames">
-   
+
             <div id="seg" class="jogos">
                 <div class="jogos-team1">
-                    <img src="" alt="Foto do time">
-                    <p>Time1</p>   
+                    <div class="spc-logo"><img src="imgs/2017_logobahia.png" alt="Foto do time"></div>
+                    <p>Bahia</p>
                 </div>
-                <div class="jogos-team2">
-                    <img src="" alt="foto Time 2">
-                    <p>Time2</p>
+                <p id="versus">X</p>
+                <div class="jogos-team1">
+                    <div class="spc-logo"><img src="imgs/506.png" alt="foto Time 2"></div>
+                    <p>Juventus</p>
+                </div>
+                <div class="situation">
+                    <h1>
+                        Jogo Começa amanha as 13h
+                    </h1>
                 </div>
             </div>
 
@@ -94,22 +119,22 @@
                 <div></div>
                 <div></div>
             </div>
-            
+
             <div id="qua" class="jogos">
                 <div></div>
                 <div></div>
             </div>
-            
+<!--
             <div id="qui" class="jogos">
                 <div></div>
                 <div></div>
             </div>
-            
+
             <div id="sex" class="jogos">
                 <div></div>
                 <div></div>
             </div>
-
+-->
 
         </section>
     </main>
