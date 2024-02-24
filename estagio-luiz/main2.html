@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -36,7 +36,10 @@
             color: white;
             margin-right: 20px;
         }
-
+        main{
+            width: 100vw;
+            height: auto;
+        }
         .nxtGames {
             width: 100vw;
             height: auto;
@@ -54,6 +57,7 @@
             height: 200px;
             background-color: #df1331;
             justify-content: space-between;
+            position: relative; /* Adicionado */
         }
 
         .nxtGames .jogos .jogos-team1 {
@@ -81,6 +85,14 @@
         }
         .nxtGames .jogos .jogos-team1 p{
             margin-top: 5px;
+        }
+
+        .situation { /* Modificado */
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
         }
     </style>
 </head>
