@@ -36,10 +36,12 @@
             color: white;
             margin-right: 20px;
         }
-        main{
+
+        main {
             width: 100vw;
             height: auto;
         }
+
         .nxtGames {
             width: 100vw;
             height: auto;
@@ -57,7 +59,9 @@
             height: 200px;
             background-color: #df1331;
             justify-content: space-between;
-            position: relative; /* Adicionado */
+            position: relative;
+            /* Adicionado */
+            border-radius: 10px;
         }
 
         .nxtGames .jogos .jogos-team1 {
@@ -79,20 +83,37 @@
             max-width: inherit;
             object-fit: contain;
         }
-        .nxtGames .jogos #versus  {
+
+        .nxtGames .jogos #versus {
             font-size: x-large;
             margin-top: 45px;
         }
-        .nxtGames .jogos .jogos-team1 p{
+
+        .nxtGames .jogos .jogos-team1 p {
             margin-top: 5px;
         }
 
-        .situation { /* Modificado */
+        .situation {
+            /* Modificado */
             position: absolute;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             padding: 10px;
+        }
+
+
+        /*para o footer*/
+
+        footer {
+            font-size: larger;
+            width: 100%;
+            height: 130px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background-image: linear-gradient(to left top, rgb(138, 6, 6), rgb(114, 17, 17));
         }
     </style>
 </head>
@@ -136,7 +157,7 @@
                 <div></div>
                 <div></div>
             </div>
-<!--
+            <!--
             <div id="qui" class="jogos">
                 <div></div>
                 <div></div>
@@ -152,7 +173,10 @@
     </main>
 
 
-
+    <footer>
+        <p id="copyright-text">©️ Todos os direitos reservados a Campus BJL</p>
+        <p id="local-text">BR-349, Km 14 - Zona Rural,<br> Bom Jesus da Lapa - BA,<br>CEP: 47600-000</p>
+    </footer>
 
 
     <script src="script.js"></script>
