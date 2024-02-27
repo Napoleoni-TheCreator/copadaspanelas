@@ -9,7 +9,6 @@
 }
 
 body {
-    height: 100vh;
     color: white;
 }
 
@@ -21,6 +20,18 @@ header {
     align-items: center;
     justify-content: space-between;
     margin: auto 0;
+}
+
+header img{
+    width: 20%;
+}
+
+.pika{
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
 }
 
 nav {
@@ -52,13 +63,14 @@ a {
 
 a:hover {
     text-decoration: underline;
+
 }
 
 main {
+    color: #fdfdfd;
     height: auto;
     width: 100%;
     min-width: 320px;
-    background-color: rgb(201, 201, 201);
     margin: auto 0;
     display: flex;
     flex-direction: column;
@@ -80,34 +92,34 @@ main {
 
 .container-lore{
     width: 100%;
-    height: 300px;
+    height: 400px;
     background-image:linear-gradient(to left bottom, #1e1e1e, #3c3c3c);
     margin: 0 auto;
     display: flex;
-    
+    justify-content: flex-start;
+    align-items: center;
     
 }
-
-.container-galeria{
-    width: 100%;
+.text-lore{
+    margin-top: 24px;
+    font-size: 110%;
     height: 300px;
-    background-image:linear-gradient(to left bottom, #1e1e1e, #3c3c3c);
-    margin: 0 auto;
-    display: flex;
-    
-}
-
-span{
-    font-size: 120%;
-    align-self: center;
     width: 50%;
-    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-left: 10px;
+    border: 2px solid rgba(190, 190, 190, 0.5);
 }
 
-img{
-    width: 100%;
-    
+.redes-sociais img{
+    padding-top: 2px;
+    width: 8%;
+    height: 8%;
 }
+
+
 footer {
     font-size: larger;
     width: 100%;
@@ -119,3 +131,8 @@ footer {
     background-image: linear-gradient(to left top, rgb(138, 6, 6), rgb(114, 17, 17));
 }
 
+footer img{
+    width: 100%;
+}
+
+/*@media (max-width:)
