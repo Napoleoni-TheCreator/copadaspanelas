@@ -144,6 +144,7 @@
 </head>
 
 <body>
+    
     <header>
         <h1>Transmissão e jogos</h1>
         <img src="{{ asset('images/ESCUDO COPA DAS PANELAS.png') }}" alt="Logo Copa das panelas">

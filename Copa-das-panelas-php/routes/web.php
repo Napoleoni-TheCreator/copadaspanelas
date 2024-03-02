@@ -14,5 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('live');
+    return view('indeqs');
 });
+
+//
+use App\Http\Controllers\CopaController;
+Route::get('/transmissão', [CopaController::class, 'shw_live'])->name('transmissão');
+
