@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="{{route('transmissão')}}">Clique Aqui para assistir as transmissoes</a>
-</body>
+    <a href=">Clique Aqui para assistir as transmissoes</a>
+</body>{{route('transmissão')}}"
 </html>

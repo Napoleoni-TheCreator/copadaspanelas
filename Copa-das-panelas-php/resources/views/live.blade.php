@@ -230,5 +230,5 @@
     </footer>
 </body>
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/script_live.js') }}"></script>
 </html>
