@@ -23,12 +23,12 @@
         <h1 style="padding-left: 20px;">Jogos Próximos</h1>
         <section class="nxtGames">
             <div id="seg" class="jogos">
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-1">
                     <div class="spc-logo"><img src="{{ asset('images/2017_logobahia.png') }}" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-2">
                     <div class="spc-logo"><img src="{{ asset('images/506.png') }}" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
@@ -40,12 +40,12 @@
             </div>
             <!-- Adicione os demais jogos aqui -->
             <div id="ter" class="jogos">
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-1">
                     <div class="spc-logo"><img src="{{ asset('images/2017_logobahia.png') }}" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-2">
                     <div class="spc-logo"><img src="{{ asset('images/506.png') }}" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
@@ -56,12 +56,12 @@
                 </div>
             </div>
             <div id="qua" class="jogos">
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-1">
                     <div class="spc-logo"><img src="{{ asset('images/2017_logobahia.png') }}" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-2">
                     <div class="spc-logo"><img src="{{ asset('images/506.png') }}" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
@@ -72,12 +72,12 @@
                 </div>
             </div>
             <div id="qui" class="jogos">
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-1">
                     <div class="spc-logo"><img src="{{ asset('images/2017_logobahia.png') }}" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
-                <div class="jogos-team1">
+                <div class="jogos-team1" id="team-2">
                     <div class="spc-logo"><img src="{{ asset('images/506.png') }}" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
