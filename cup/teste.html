@@ -25,6 +25,7 @@
 </head>
 <body>
     <button onclick="adicionarTime()">Adicionar Time</button>
+    <button onclick="ordenarPorPontos()">Ordenar por Pontos</button>
   <table id="tabela">
     <tr>
       <th>Clube</th>
@@ -97,6 +98,7 @@
       var pontos = document.getElementById(selecaoTime).cells[1];
       vitorias.textContent = parseInt(vitorias.textContent) + 1;
       pontos.textContent = parseInt(pontos.textContent) + 3;
+      ordenarPorPontos();
     }
 
     function adicionarEmpate() {
@@ -106,6 +108,7 @@
       var pontos = document.getElementById(selecaoTime).cells[1];
       empates.textContent = parseInt(empates.textContent) + 1;
       pontos.textContent = parseInt(pontos.textContent) + 1;
+      ordenarPorPontos();
     }
 
     function adicionarDerrota() {
@@ -113,6 +116,7 @@
       if (!selecaoTime) return;
       var derrotas = document.getElementById(selecaoTime).cells[4];
       derrotas.textContent = parseInt(derrotas.textContent) + 1;
+      ordenarPorPontos();
     }
 
     function adicionar_golsContra() {
@@ -122,6 +126,7 @@
       var saldo = document.getElementById(selecaoTime).cells[7];
       golsContra.textContent = parseInt(golsContra.textContent) + 1;
       saldo.textContent = parseInt(saldo.textContent) - 1;
+      ordenarPorPontos();
     }
 
     function adicionarGol() {
@@ -131,6 +136,24 @@
       var saldo = document.getElementById(selecaoTime).cells[7];
       golsMarcados.textContent = parseInt(golsMarcados.textContent) + 1;
       saldo.textContent = parseInt(saldo.textContent) + 1;
+      ordenarPorPontos();
+    }
+
+    function ordenarPorPontos() {
+      var tabela = document.getElementById('tabela');
+      var linhas = tabela.rows;
+      var trocado;
+      do {
+        trocado = false;
+        for (var i = 1; i < linhas.length - 1; i++) {
+          var atual = parseInt(linhas[i].cells[1].textContent);
+          var proximo = parseInt(linhas[i + 1].cells[1].textContent);
+          if (atual < proximo) {
+            linhas[i].parentNode.insertBefore(linhas[i + 1], linhas[i]);
+            trocado = true;
+          }
+        }
+      } while (trocado);
     }
   </script>
 </body>
