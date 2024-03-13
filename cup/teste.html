@@ -9,6 +9,7 @@
       border-collapse: collapse;
       width: 100%;
     }
+    
     th, td {
       border: 1px solid black;
       padding: 8px;
@@ -37,14 +38,14 @@
       <th>Ultimas 5</th>
     </tr>
     <tr>
-      <td id="time">time1</td>
-      <td id="pontos">0</td>
-      <td id="vitorias">0</td>
-      <td id="empates">0</td>
-      <td id="derrotas">0</td>
-      <td id="golsMarcados">0</td>
-      <td id="golsContra">0</td>
-      <td id="saldo">0</td>
+      <td id="time1">time1</td>
+      <td id="pontos1">0</td>
+      <td id="vitorias1">0</td>
+      <td id="empates1">0</td>
+      <td id="derrotas1">0</td>
+      <td id="golsMarcados1">0</td>
+      <td id="golsContra1">0</td>
+      <td id="saldo1">0</td>
     </tr>
   </table>
   <br>
@@ -53,74 +54,84 @@
   </select>
   <button onclick="adicionarVitoria()">Adicionar Vitória</button>
   <button onclick="adicionarGol()">Adicionar Gol</button>
-  <button onclick="adicionarEmpate()">empate</button>
+  <button onclick="adicionarEmpate()">Empate</button>
   <button onclick="adicionarDerrota()">Derrota</button>
-  <button onclick="adicionar_golsContra()">golsContra</button>
+  <button onclick="adicionar_golsContra()">Gols Contra</button>
   <script>
-            function adicionarTime() {
-            var nomeTime = prompt('Digite o nome do time:');
-            if (!nomeTime) return;
+    function adicionarTime() {
+      var nomeTime = prompt('Digite o nome do time:');
+      if (!nomeTime) return;
 
-            var tabela = document.getElementById('tabela');
-            var linha = tabela.insertRow(-1);
+      var tabela = document.getElementById('tabela');
+      var linha = tabela.insertRow(-1);
+      linha.id = nomeTime.toLowerCase().replace(/ /g, "_");
 
-            var celulaTime = linha.insertCell(0);
-            var celulaPontos = linha.insertCell(1);
-            var celulaVitorias = linha.insertCell(2);
-            var celulaEmpates = linha.insertCell(3);
-            var celulaDerrotas = linha.insertCell(4);
-            var celulaGolsMarcados = linha.insertCell(5);
-            var celulaGolsContra = linha.insertCell(6);
-            var celulaSaldo = linha.insertCell(7);
+      var celulaTime = linha.insertCell(0);
+      var celulaPontos = linha.insertCell(1);
+      var celulaVitorias = linha.insertCell(2);
+      var celulaEmpates = linha.insertCell(3);
+      var celulaDerrotas = linha.insertCell(4);
+      var celulaGolsMarcados = linha.insertCell(5);
+      var celulaGolsContra = linha.insertCell(6);
+      var celulaSaldo = linha.insertCell(7);
 
-            celulaTime.textContent = nomeTime;
-            celulaPontos.textContent = 0;
-            celulaVitorias.textContent = 0;
-            celulaEmpates.textContent = 0;
-            celulaDerrotas.textContent = 0;
-            celulaGolsMarcados.textContent = 0;
-            celulaGolsContra.textContent = 0;
-            celulaSaldo.textContent = 0;
-            }
+      celulaTime.textContent = nomeTime;
+      celulaPontos.textContent = 0;
+      celulaVitorias.textContent = 0;
+      celulaEmpates.textContent = 0;
+      celulaDerrotas.textContent = 0;
+      celulaGolsMarcados.textContent = 0;
+      celulaGolsContra.textContent = 0;
+      celulaSaldo.textContent = 0;
+
+      var option = document.createElement('option');
+      option.value = linha.id;
+      option.text = nomeTime;
+      document.getElementById('selecaoTime').appendChild(option);
+    }
+
     function adicionarVitoria() {
-      var vitorias = document.getElementById('vitorias');
-      var pontos = document.getElementById('pontos');
+      var selecaoTime = document.getElementById('selecaoTime').value;
+      if (!selecaoTime) return;
+      var vitorias = document.getElementById(selecaoTime).cells[2];
+      var pontos = document.getElementById(selecaoTime).cells[1];
       vitorias.textContent = parseInt(vitorias.textContent) + 1;
       pontos.textContent = parseInt(pontos.textContent) + 3;
     }
 
     function adicionarEmpate() {
-      var empates = document.getElementById('empates');
-      var pontos = document.getElementById('pontos');
+      var selecaoTime = document.getElementById('selecaoTime').value;
+      if (!selecaoTime) return;
+      var empates = document.getElementById(selecaoTime).cells[3];
+      var pontos = document.getElementById(selecaoTime).cells[1];
       empates.textContent = parseInt(empates.textContent) + 1;
       pontos.textContent = parseInt(pontos.textContent) + 1;
     }
+
     function adicionarDerrota() {
-      var derrotas = document.getElementById('derrotas');
+      var selecaoTime = document.getElementById('selecaoTime').value;
+      if (!selecaoTime) return;
+      var derrotas = document.getElementById(selecaoTime).cells[4];
       derrotas.textContent = parseInt(derrotas.textContent) + 1;
     }
+
     function adicionar_golsContra() {
-      var golsContra = document.getElementById('golsContra'); 
-      var saldo = document.getElementById('saldo');
+      var selecaoTime = document.getElementById('selecaoTime').value;
+      if (!selecaoTime) return;
+      var golsContra = document.getElementById(selecaoTime).cells[6];
+      var saldo = document.getElementById(selecaoTime).cells[7];
       golsContra.textContent = parseInt(golsContra.textContent) + 1;
       saldo.textContent = parseInt(saldo.textContent) - 1;
     }
+
     function adicionarGol() {
-      var golsMarcados = document.getElementById('golsMarcados');
-      var saldo = document.getElementById('saldo');
+      var selecaoTime = document.getElementById('selecaoTime').value;
+      if (!selecaoTime) return;
+      var golsMarcados = document.getElementById(selecaoTime).cells[5];
+      var saldo = document.getElementById(selecaoTime).cells[7];
       golsMarcados.textContent = parseInt(golsMarcados.textContent) + 1;
       saldo.textContent = parseInt(saldo.textContent) + 1;
     }
-    var selecaoTime = document.getElementById('selecaoTime');
-    selecaoTime.onchange = function() {
-      var linha = selecaoTime.value;
-      if (linha === '') return;
-      adicionarVitoria(linha);
-      adicionarEmpate(linha);
-      adicionarDerrota(linha);
-      adicionar_golsContra(linha);
-      adicionarGol(linha);
-    };
   </script>
 </body>
 </html>
