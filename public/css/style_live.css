@@ -144,15 +144,3 @@
         .jogos:hover {
             transform: scale(1.1);
         }
-
-
-        /*videos do insta*/
-        .old-games{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            
-        }
-        .last4games{
-            margin-top: 20px;
-        }
