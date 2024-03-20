@@ -4,17 +4,13 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-#Titulo {
-    text-shadow: 1px 1px 1px gray;
-}
-
 body {
     color: white;
 }
 
 header {
     position: relative;
-    height: 120px;
+    height: 140px;
     width: 100%;
     background-image: linear-gradient(to left top, #df1331, #9d000d);
     display: flex;
@@ -32,15 +28,14 @@ header img{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 50%;
 }
 
 nav {
     display: flex;
     height: auto;
-    width: 50%;
+    width: 70%;
     font-size: 140%;
-
+    padding-right: 20px;
 
 }
 
@@ -119,12 +114,18 @@ main {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .videojogo{
     width: 20%;
     height: 60%;
     background-color: green;
+}
+
+.videojogo img{
+    width: 100%;
+    height: 100%;
 }
 
 .container-historico{
@@ -135,10 +136,11 @@ main {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 95%;
-    height: 400px;
+    width: 75%;
+    height: 475px;
     text-wrap: wrap;
     font-size: 120%;
+    margin-bottom: 60px;
 }
 
 .a{
@@ -149,23 +151,30 @@ main {
     align-items: center;
 }
 
-.container-historico h2{
-    border-bottom: 3px solid black;
+#tit-hist{
+    color: black; font-size: 200%; margin-bottom: 10px;
 }
-#text-hist{
 
-    width: 30%;
+#texto-hist{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+    text-wrap: wrap;
+    width: 60%;
     height: 100%;
 }
 
 
-#text-hist p{
-    font-size: 120%;
-    width: 50%;
+#texto-hist p{
+    font-size: 100%;
+    width: 70%;
+    height: 90%;
 }
 
 #img-hist{
-    width: 70%; 
+    width: 40%; 
     height: 100%;
 }
 
@@ -173,20 +182,24 @@ main {
     width: 100%;
     height: 100%;
 }
+.redes-sociais{
+    display: flex;
+    align-items: center;
+    height: auto;
+    width: auto;
+}
 
-
-
-/*
 .redes-sociais img{
     padding-top: 2px;
-    width: 8%;
-    height: 8%;
+    padding-left: 10px;
+    width: 10%;
+    height: 20%;
 }
-*/
+
 
 footer {
     position: relative;
-    font-size: larger;
+    font-size: 130%;
     width: 100%;
     height: 130px;
     margin: 0 auto;
@@ -200,4 +213,44 @@ footer img{
     width: 100%;
 }
 
-/*@media (max-width:)
+@media (max-width: 768px){
+
+    header{
+        justify-content: center;
+    }
+
+    nav{
+        display: none;
+    }
+
+    .Container1{
+        flex-direction: column;
+        width: 100%;
+    }
+    .container-video, .Container-jogos{
+        width: 100%;
+        height: 300px;
+    }
+
+    .videojogo{
+        width: 45%;
+        height: 150px;
+    }
+
+    .container-historico{
+        height: 225px;
+        width: 95%;
+    }
+
+    #texto-hist p{
+        font-size: 50%;
+        width: 70%;
+        height: 90%;
+    }
+
+    footer{
+        font-size: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+}
