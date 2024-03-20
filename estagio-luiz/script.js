@@ -1,18 +1,24 @@
-var player;
-
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: 'jfKfPfyJRdk',
+  // Função para inicializar o player
+  function onYouTubeIframeAPIReady() {
+    // Cria um novo player do YouTube
+    var player = new YT.Player('player', {
+        // ID do vídeo que deseja reproduzir
+        videoId: 'K8FVmLT94WQ',
+        // Opções do player
         playerVars: {
-            'autoplay': 1,
-            'controls': 1   
+            // Define a reprodução automática
+            autoplay: 1,
+            // Controles do player
+            controls: 1,
+            // Mostra o título do vídeo
+            showinfo: 1,
+            // Qualidade do vídeo
+            vq: 'hd720'
         }
-
-
     });
 }
-// Adicione este código para selecionar a div específica
-var divPlayer = document.getElementById('player');
-player.setSize(divPlayer.clientWidth, divPlayer.clientHeight);
+
+// Carrega a API do YouTube
+window.onload = function() {
+    onYouTubeIframeAPIReady();
+};
