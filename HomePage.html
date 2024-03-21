@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,51 +8,86 @@
 
     <title>COPA DAS PANELAS</title>
 </head>
+
 <body>
     <header>
         <div class="logo">
             <a href="HomePage.html"><img src="IMG/ESCUDO COPA DAS PANELAS.png" height="130px" width="130px"></a>
         </div>
-        
+
         <nav>
             <ul>
-                <li><a href="#">Página Principal</a></li>
-                <li><a href="#">Cadastro</a></li>
-                <li><a href="#">Transmissão</a></li>
-                <li><a href="#">Campeonato</a></li>
-                <li><a href="#">Jogadores</a></li>
-                <li><a href="#">Sobre Nós</a></li>
+                <li><a href="#">Página Principal</a>
+                    <ul>
+                        <li><a href="#">Notícias</a></li>
+                        <li><a href="#">Eventos</a></li>
+                        <li><a href="#">Galeria</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Cadastro</a>
+                    <ul>
+                        <li><a href="">Cadastro de Jogadores</a></li>
+                        <li><a href="">Cadastro de Times</a></li>
+                        <li><a href="">Cadastro de Juízes</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Transmissão</a>
+                    <ul>
+                        <li><a href="#">Ao Vivo</a></li>
+                        <li><a href="#">Replays</a></li>
+                        <li><a href="#">Programação</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Campeonato</a>
+                    <ul>
+                        <li><a href="#">Tabela</a></li>
+                        <li><a href="#">Resultados</a></li>
+                        <li><a href="#">Estatísticas</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Jogadores</a>
+                    <ul>
+                        <li><a href="#">Perfil</a></li>
+                        <li><a href="#">Estatísticas</a></li>
+                        <li><a href="#">Contratos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sobre Nós</a>
+                    <ul>
+                        <li><a href="#">Missão</a></li>
+                        <li><a href="#">Equipe</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="Container1">        
-            <div class="container-video">
-                <video id="video" width="100%" height="200px" controls>
-                    <source src="VIDEO/UEFA_INTRO.mp4" type="video/mp4">
-                </video>
-            </div>
+        <div class="Container1">
+
 
             <div class="Container-jogos">
                 <h2 id="tit-jogos">JOGOS RECENTES</h2>
 
-                <div class="jogodia">
-                    <img src="cup/logotime1.jpg" alt="">
-                    <p>VERSUS</p>
-                    <img src="cup/logotime1.jpg" alt="">
+                <div class="jogos">
+                    <!-- Primeiro slide -->
+                    <div class="jogodia">
+                        <img src="cup/logotime1.jpg" alt="">
+                        <p>VERSUS</p>
+                        <img src="cup/logotime1.jpg" alt="">
+                    </div>
+
+                    <!-- Segundo slide genérico -->
+                    <div class="jogodia">
+                        <img src="public/imgs/Juventus_FC_2017_logo.png" alt="">
+                        <p>VERSUS</p>
+                        <img src="public/imgs/2017_logobahia.png" alt="">
+                    </div>
                 </div>
-
-
-                <div class="jogodia">
-                    <img src="cup/logotime1.jpg" alt="" width="150px" height="150px">
-                    <p>VERSUS</p>
-                    <img src="cup/logotime1.jpg" alt="" width="150px" height="150px">
-                </div>
-
-                
             </div>
         </div>
+
 
 
         <div class="containerfilm">
@@ -86,10 +122,15 @@
                     </a>
                 </div>
                 <div id="texto-hist">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nisi praesentium est fugit, dolor cumque eligendi eius minima. Ut dolores veniam voluptas temporibus, perferendis reiciendis nesciunt quod fugit sed architecto?</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab atque velit aspernatur consequatur, eos cupiditate exercitationem rem reprehenderit sint obcaecati aut molestias quae, nostrum incidunt recusandae suscipit veniam nobis amet!</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nisi praesentium est fugit, dolor
+                        cumque eligendi eius minima. Ut dolores veniam voluptas temporibus, perferendis reiciendis
+                        nesciunt quod fugit sed architecto?</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab atque velit aspernatur consequatur,
+                        eos cupiditate exercitationem rem reprehenderit sint obcaecati aut molestias quae, nostrum
+                        incidunt recusandae suscipit veniam nobis amet!</p>
 
-                    <a href="sobrenósCOPA/index.html" style="color: rgb(178, 24, 24); font-weight: bold; margin-bottom: 10px;">VEJA AQUI!</a>
+                    <a href="sobrenósCOPA/index.html"
+                        style="color: rgb(178, 24, 24); font-weight: bold; margin-bottom: 10px;">VEJA AQUI!</a>
                 </div>
             </div>
         </div>
@@ -101,7 +142,9 @@
                     <img src="IMG/placeholder-bola.jpg" alt="placeholder-bola">
                 </div>
                 <div id="texto-hist">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nisi praesentium est fugit, dolor cumque eligendi eius minima. Ut dolores veniam voluptas temporibus, perferendis reiciendis nesciunt quod fugit sed architecto?</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nisi praesentium est fugit, dolor
+                        cumque eligendi eius minima. Ut dolores veniam voluptas temporibus, perferendis reiciendis
+                        nesciunt quod fugit sed architecto?</p>
 
                     <a href="" style="color: rgb(178, 24, 24); font-weight: bold; margin-bottom: 10px;">VEJA AQUI!</a>
                 </div>
@@ -113,19 +156,44 @@
         <p id="copyright-text">©️ Todos os direitos reservados a Campus BJL</p>
         <p id="local-text">BR-349, Km 14 - Zona Rural,<br> Bom Jesus da Lapa - BA,<br>CEP: 47600-000</p>
 
-        
+
         <div class="redes-sociais">
             <p>Redes Sociais:</p>
-            <a href="https://www.instagram.com/pan_cup/"><img src="IMG/instagram-removebg-preview.png" alt="" width="40px" height="40px"></a>
+            <a href="https://www.instagram.com/pan_cup/"><img src="IMG/instagram-removebg-preview.png" alt=""
+                    width="40px" height="40px"></a>
         </div>
-        
+
     </footer>
 
     <script>
         function playVideo() {
-        const video = document.getElementById("video");
-        video.play();
+            const video = document.getElementById("video");
+            video.play();
         }
+
+        // Captura todos os elementos de jogodia
+        const jogos = document.querySelectorAll('.jogos .jogodia');
+
+        // Inicia o índice atual do slider
+        let currentIndex = 0;
+
+        // Função para mostrar o próximo slide
+        function nextSlide() {
+            // Esconde o slide atual
+            jogos[currentIndex].style.display = 'none';
+            // Incrementa o índice atual ou volta para o início se for o último slide
+            currentIndex = (currentIndex + 1) % jogos.length;
+            // Mostra o próximo slide
+            jogos[currentIndex].style.display = 'flex';
+        }
+
+        // Mostra o primeiro slide
+        jogos[currentIndex].style.display = 'flex';
+
+        // Altera o slide a cada 5 segundos (5000 milissegundos)
+        setInterval(nextSlide, 5000);
+
     </script>
 </body>
+
 </html>
