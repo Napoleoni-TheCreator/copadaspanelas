@@ -1,0 +1,223 @@
+/* Estilos do corpo da página */
+body {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    transform: scale(1.2); /* Ajuste o valor conforme necessário para aumentar o zoom */
+    transform-origin: center top;
+    overflow-x: hidden; /* Para evitar a barra de rolagem horizontal */
+    overflow-y: auto; 
+    background-image: url(../img/img1.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Estilos para tabelas */
+table {
+    border-collapse: collapse;
+}
+
+/* titulo */
+h1 {
+    font-size: 30px;
+    color: red;
+    text-shadow: 2px 1px 1px black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: 2px;
+}
+
+/* Estilos para células de cabeçalho e dados */
+th {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Estilos para cabeçalhos de coluna */
+th {
+    border-bottom: 3px solid red;
+}
+
+/* Estilos para células de dados */
+td {
+    text-align: center;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.241);
+}
+
+/* Estilos para última linha sem borda inferior */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Estilos para a seção de tabelas */
+#tabelas {
+    display: block;
+    border: 5px solid red;
+    background: white;
+    padding: 20px;
+    border-radius: 4%;
+}
+
+/* Estilos para logotipos de times */
+.logTime {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 100%;
+}
+
+/* Estilos para informações do clube */
+.clube {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    font-size: 12px;
+    font-family: arial, sans-serif;
+    color: #202124;
+    flex-wrap: wrap;
+}
+
+.num_time {
+    font-size: large;
+    margin-right: 10px;
+}
+
+/* nome time */
+.nomeTime {
+    font-size: large;
+    margin-left: 10px;
+}
+
+/* Estilos para grupos */
+.grupos {
+    background: red;
+    width: 80px;
+    border-radius: 8%;
+    padding-left: 15px;
+    font-size: 16px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+}
+
+/* Estilos para caixas de cores */
+.caixa,
+.caixa2 {
+    width: 8px;
+    height: 8px;
+    margin-left: 10px;
+}
+
+.caixa {
+    background: blue;
+}
+
+.caixa2 {
+    background: rgb(252, 136, 5);
+}
+
+/* Estilos para container flexível */
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Estilos para cabeçalho ao passar o mouse */
+/* h1:hover {
+    border-bottom: red solid 2px; 
+    border-radius: 4%;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+} */
+
+/* Estilos para linhas laranjas */
+.linha-laranja {
+    border-left: 5px solid orange;
+}
+
+/* Estilos para a seção de classificação */
+.classificacao {
+    display: flex;
+    border: 4px solid blue;
+    margin-top: 30px;
+    background: #efede4;
+    padding: 1px;
+    border-radius: 4%;
+    margin-left: 30px;
+}
+
+/* Estilos para títulos */
+.titulo {
+    font-size: 30px;
+    /* padding-left: 10px; */
+}
+
+/* Estilos para informações */
+.info {
+    display: flex;
+    align-items: center;
+}
+/* Estilos para Ultimas */
+
+/* Estilos para títulos de informações */
+.info h5 {
+    margin-left: 15px;
+    font-size: 12px;
+}
+
+#td1 {
+    padding-left: none;
+}
+
+.td_time {
+    padding: 0%;
+}
+
+#botoes_adicionar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#containerDiv {
+    display: none;
+}
+
+#containerDiv2 {
+    display: none;
+}
+
+tr.times:hover {
+    background: gainsboro;
+}
+.imagem-ultima-partida {
+    margin-right: 5px; /* Você pode ajustar o valor conforme necessário */
+}
+
+.navbar h1{
+    text-align: center;
+    margin-top: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.navbar h1{
+    color: white;
+    text-decoration: none;
+    padding: 0px 50px 10px 0;
+    font-size: 28pt;
+    position: relative;
+}
+
+.navbar h1::after{
+    content: " ";
+    width: 0;
+    height: 4px;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.5s ease-in-out;
+}
+
+.navbar h1:hover::after{
+    width: 100%;
+}
