@@ -1,9 +1,12 @@
   // Função para inicializar o player
+var link_live = window.prompt("Por favor digite o link atual da live","")
+link_live = link_live.replace("https://www.youtube.com/watch?v=","")
+
   function onYouTubeIframeAPIReady() {
     // Cria um novo player do YouTube
     var player = new YT.Player('player', {
         // ID do vídeo que deseja reproduzir
-        videoId: 'K8FVmLT94WQ',
+        videoId: link_live,
         // Opções do player
         playerVars: {
             // Define a reprodução automática
