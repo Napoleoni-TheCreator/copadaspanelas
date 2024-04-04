@@ -11,7 +11,6 @@ body {
 
 header {
     position: relative;
-    height: auto;
     width: 100%;
     background-image: linear-gradient(to left top, #df1331, #9d000d);
     display: flex;
@@ -35,69 +34,64 @@ nav {
     margin-top: 10px;
     display: flex;
     justify-content: center;
-    width: 50%;
+    width: 85%;
+    height: 100%;
     font-size: 140%;
 }
 
-ul {
-    display: flex;
-    list-style-type: none;
-    text-align: justify;
+nav ul{
+
+    display: inline-flex;
+    list-style: none;
 }
 
-li {
-    margin-right: 20px;
-    position: relative;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-nav ul li a{
-    padding: 5px;
-
-}
-nav ul li a:hover {
-    background-color: #9d000d;
-    transition: 0.5s;
-    
-}
-
-/* Sublistas */
-nav ul ul {
-    display: none;
-    position: absolute;
-    background-color: #c50010;
+nav ul li{
+    width: 130px;
+    margin: 10px;
     padding: 10px;
-    top: 100%;
-    left: 0;
-    width: max-content;
+    text-align: center;
 }
 
-nav ul li:hover > ul {
-    display: block;
-}
-
-nav ul ul li {
-    display: block;
-    margin-top: 5px;
-}
-
-nav ul ul li a {
-    width: 100%;
+nav ul li a{
+    
+    text-decoration: none;
     color: #fff;
-    text-decoration: none;
-    border-top: 2px solid transparent;
-    transition: border-color 0.3s ease;
 }
 
-nav ul ul li a:hover {
-    background-color: #97000d;
-    text-decoration: none;
-    transition: 1s;
-    border-color: #fff;
+.submenu1{
+    display: none;
 }
+
+nav ul li:hover .submenu1{
+    display: block;
+    position: absolute;
+    background-color: #df1331;
+    margin-top: 20px;
+    margin-left: -30px;
+}
+
+nav ul li:hover .submenu1 ul{
+    display: block;
+}
+
+nav ul li:hover .submenu1 ul li{
+    width: 150px;
+    text-align: center;
+    border-radius: 10px;
+    transition: 0.7s;
+}
+
+nav ul li:hover .submenu1 ul li:hover{
+    background-color: darkred;
+}
+
+
+
+
+
+
+
+
 
 main {
     color: #ffffff;
@@ -126,7 +120,7 @@ main {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 570px;
+    height: 450px;
     background-color: rgb(255, 255, 255);
 }
 
@@ -135,7 +129,7 @@ main {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: 120%;
 }
 
 #tit-jogos {
@@ -198,10 +192,10 @@ main {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 75%;
-    height: 475px;
+    width: 60%;
+    height: 300px;
     text-wrap: wrap;
-    font-size: 120%;
+    font-size: 110%;
     margin-bottom: 60px;
 }
 
@@ -247,8 +241,7 @@ main {
 .redes-sociais{
     display: flex;
     align-items: center;
-    height: auto;
-    width: auto;
+    width: fit-content;
 }
 
 .redes-sociais img{
@@ -275,7 +268,7 @@ footer img{
     width: 100%;
 }
 
-@media (max-width: 768px){
+@media (max-width: 968px){
 
     header{
         justify-content: center;
@@ -308,7 +301,7 @@ footer img{
     }
 
     #texto-hist p{
-        font-size: 50%;
+        font-size: 80%;
         width: 70%;
         height: 90%;
     }
@@ -317,5 +310,10 @@ footer img{
         font-size: 100%;
         flex-direction: column;
         text-align: center;
+    }
+
+    .redes-sociais img{
+        width: 50%;
+        height: 10px;
     }
 }

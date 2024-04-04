@@ -17,48 +17,36 @@
 
         <nav>
             <ul>
-                <li><a href="#">Página Principal</a>
-                    <ul>
-                        <li><a href="#">Notícias</a></li>
-                        <li><a href="#">Eventos</a></li>
-                        <li><a href="#">Galeria</a></li>
-                    </ul>
-                </li>
                 <li><a href="#">Cadastro</a>
-                    <ul>
-                        <li><a href="">Cadastro de Jogadores</a></li>
-                        <li><a href="">Cadastro de Times</a></li>
-                        <li><a href="">Cadastro de Juízes</a></li>
-                    </ul>
+                
+                    <div class="submenu1">
+                        <ul>
+                            <li><a href="#">Cadastro Times</a></li>
+                            <li><a href="#">Cadastro Jogadores</a></li>
+                        </ul>
+                    </div>
                 </li>
-                <li><a href="#">Transmissão</a>
-                    <ul>
-                        <li><a href="#">Ao Vivo</a></li>
-                        <li><a href="#">Replays</a></li>
-                        <li><a href="#">Programação</a></li>
-                    </ul>
-                </li>
+
                 <li><a href="#">Campeonato</a>
-                    <ul>
-                        <li><a href="#">Tabela</a></li>
-                        <li><a href="#">Resultados</a></li>
-                        <li><a href="#">Estatísticas</a></li>
-                    </ul>
+                    <div class="submenu1">
+                        <ul>
+                            <li><a href="#">Tabela</a></li>
+                            <li><a href="#">Estatísticas</a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li><a href="#">Jogadores</a>
-                    <ul>
-                        <li><a href="#">Perfil</a></li>
-                        <li><a href="#">Estatísticas</a></li>
-                        <li><a href="#">Contratos</a></li>
-                    </ul>
+                    <div class="submenu1">
+                        <ul>
+                            <li><a href="#">Perfis</a></li>
+                            <li><a href="#">Artilharia</a></li>
+                            <li><a href="#">Assistências</a></li>
+                        </ul>
+                    </div>
                 </li>
-                <li><a href="#">Sobre Nós</a>
-                    <ul>
-                        <li><a href="#">Missão</a></li>
-                        <li><a href="#">Equipe</a></li>
-                        <li><a href="#">Contato</a></li>
-                    </ul>
-                </li>
+
+                <li><a href="estagio-luiz/Jogos Proximos.html">Transmissão</a></li>
+                <li><a href="#">Sobre Nós</a></li>
             </ul>
         </nav>
     </header>
@@ -68,23 +56,21 @@
 
 
             <div class="Container-jogos">
-                <h2 id="tit-jogos">JOGOS RECENTES</h2>
-
+                <!--
                 <div class="jogos">
-                    <!-- Primeiro slide -->
                     <div class="jogodia">
                         <img src="cup/logotime1.jpg" alt="">
                         <p>VERSUS</p>
                         <img src="cup/logotime1.jpg" alt="">
                     </div>
-
-                    <!-- Segundo slide genérico -->
                     <div class="jogodia">
-                        <img src="public/imgs/Juventus_FC_2017_logo.png" alt="">
+                        <img src="public/imgs/Juventus_FC_2017_logo.png"    lt="">
                         <p>VERSUS</p>
                         <img src="public/imgs/2017_logobahia.png" alt="">
                     </div>
                 </div>
+                -->
+                <h1>BANNER DA COPA DAS PANELAS</h1>
             </div>
         </div>
 
@@ -118,13 +104,10 @@
             <div class="a">
                 <div id="img-hist">
                     <a href="sobrenósCOPA/index.html">
-                        <img src="IMG/placeholder-bola.jpg" alt="placeholder-bola">
+                        <img src="IMG/IMG-20240404-WA0002.jpg" alt="placeholder-bola">
                     </a>
                 </div>
                 <div id="texto-hist">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nisi praesentium est fugit, dolor
-                        cumque eligendi eius minima. Ut dolores veniam voluptas temporibus, perferendis reiciendis
-                        nesciunt quod fugit sed architecto?</p>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab atque velit aspernatur consequatur,
                         eos cupiditate exercitationem rem reprehenderit sint obcaecati aut molestias quae, nostrum
                         incidunt recusandae suscipit veniam nobis amet!</p>
@@ -139,7 +122,7 @@
         <div class="container-historico">
             <div class="a">
                 <div id="img-hist">
-                    <img src="IMG/placeholder-bola.jpg" alt="placeholder-bola">
+                    <img src="IMG/IMG-20240404-WA0002.jpg" alt="placeholder-bola">
                 </div>
                 <div id="texto-hist">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nisi praesentium est fugit, dolor
@@ -159,18 +142,12 @@
 
         <div class="redes-sociais">
             <p>Redes Sociais:</p>
-            <a href="https://www.instagram.com/pan_cup/"><img src="IMG/instagram-removebg-preview.png" alt=""
-                    width="40px" height="40px"></a>
+            <a href="https://www.instagram.com/pan_cup/"><img src="IMG/instagram-removebg-preview.png" alt=""width="40px" height="40px"></a>
         </div>
 
     </footer>
 
     <script>
-        function playVideo() {
-            const video = document.getElementById("video");
-            video.play();
-        }
-
         // Captura todos os elementos de jogodia
         const jogos = document.querySelectorAll('.jogos .jogodia');
 
