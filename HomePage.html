@@ -1,176 +1,171 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/HomePage.css">
-
-    <title>COPA DAS PANELAS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="shortcut icon" href="IMG/ESCUDO COPA DAS PANELAS.png" type="image/x-icon">    
+    <title>Copa das Panelas</title>
 </head>
-
 <body>
     <header>
-        <div class="logo">
-            <a href="HomePage.html"><img src="IMG/ESCUDO COPA DAS PANELAS.png" height="130px" width="130px"></a>
+        <div id="Icon">
+            <img src="IMG/ESCUDO COPA DAS PANELAS.png" alt="">
         </div>
+        <H1 id="titulo">COPA DAS PANELAS</H1>
 
-        <nav>
-            <ul>
-                <li><a href="#">Cadastro</a>
-                
-                    <div class="submenu1">
-                        <ul>
-                            <li><a href="#">Cadastro Times</a></li>
-                            <li><a href="#">Cadastro Jogadores</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li><a href="#">Campeonato</a>
-                    <div class="submenu1">
-                        <ul>
-                            <li><a href="#">Tabela</a></li>
-                            <li><a href="#">Estatísticas</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li><a href="#">Jogadores</a>
-                    <div class="submenu1">
-                        <ul>
-                            <li><a href="#">Perfis</a></li>
-                            <li><a href="#">Artilharia</a></li>
-                            <li><a href="#">Assistências</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li><a href="estagio-luiz/Jogos Proximos.html">Transmissão</a></li>
-                <li><a href="#">Sobre Nós</a></li>
-            </ul>
-        </nav>
+        <div class="cadastro">
+            <a href=""><i class="fas fa-user"></i>Login</a>
+        </div>
     </header>
 
+    <nav>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li>
+                <a href="">Cadastros ▾</a>
+                <ul class="dropdown">
+                    <li><a href="">Times</a></li>
+                    <li><a href="">Jogadores</a></li>
+                    <li><a href="">Info C</a></li>
+                    <li><a href="">Info D</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="">Tabelas de Jogos ▾</a>
+                <ul class="dropdown">
+                   <li><a href="">Grupos</a></li>
+                   <li><a href="">Eliminatórias</a></li>
+                </ul>
+                
+            </li>
+
+            <li><a href="">Transmissão</a></li>
+            <li><a href="">Sobre Nós</a></li>
+        </ul>
+    </nav>
+
     <main>
-        <div class="Container1">
-
-
-            <div class="Container-jogos">
-                <!--
-                <div class="jogos">
-                    <div class="jogodia">
-                        <img src="cup/logotime1.jpg" alt="">
-                        <p>VERSUS</p>
-                        <img src="cup/logotime1.jpg" alt="">
-                    </div>
-                    <div class="jogodia">
-                        <img src="public/imgs/Juventus_FC_2017_logo.png"    lt="">
-                        <p>VERSUS</p>
-                        <img src="public/imgs/2017_logobahia.png" alt="">
-                    </div>
+        <section class="Slideshare">
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <img src="IMG/pngtree-banner-background-of-football-colorful-game-publicity-poster-image_924290.jpg" style="width:100%">
                 </div>
-                -->
-                <h1>BANNER DA COPA DAS PANELAS</h1>
+                <div class="mySlides fade">
+                    <img src="IMG/TSF-2022-EH-1400x500-banner.png" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="IMG/Banner04-RBA-1400x500-1.jpg" style="width:100%">
+                </div>
             </div>
-        </div>
 
+        </section>
 
+        <section class="noticias">
 
-        <div class="containerfilm">
-            <div class="videojogo">
-                <a href="#">
-                    <img src="IMG/neymar.jpeg" alt="">
-                </a>
-            </div>
-            <div class="videojogo">
-                <a href="#">
-                    <img src="IMG/neymar.jpeg" alt="">
-                </a>
-            </div>
-            <div class="videojogo">
-                <a href="#">
-                    <img src="IMG/neymar.jpeg" alt="">
-                </a>
-            </div>
-            <div class="videojogo">
-                <a href="#">
-                    <img src="IMG/neymar.jpeg" alt="">
-                </a>
-            </div>
-        </div>
-
-        <h2 id="tit-hist">História da Copa das Panelas</h2>
-        <div class="container-historico">
-            <div class="a">
-                <div id="img-hist">
-                    <a href="sobrenósCOPA/index.html">
-                        <img src="IMG/IMG-20240404-WA0002.jpg" alt="placeholder-bola">
+            <div class="news-container">
+                <div class="news-block">
+                    <a href="https://www.example.com/noticia1" target="_blank">
+                        <img src="noticia1.jpg" alt="Notícia 1">
+                        <div class="news-text">
+                            <h3>Título da Notícia 1</h3>
+                            <p>Descrição breve da notícia 1.</p>
+                        </div>
                     </a>
                 </div>
-                <div id="texto-hist">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab atque velit aspernatur consequatur,
-                        eos cupiditate exercitationem rem reprehenderit sint obcaecati aut molestias quae, nostrum
-                        incidunt recusandae suscipit veniam nobis amet!</p>
-
-                    <a href="sobrenósCOPA/index.html"
-                        style="color: rgb(178, 24, 24); font-weight: bold; margin-bottom: 10px;">VEJA AQUI!</a>
+                <div class="news-block">
+                    <a href="https://www.example.com/noticia2" target="_blank">
+                        <img src="noticia2.jpg" alt="Notícia 2">
+                        <div class="news-text">
+                            <h3>Título da Notícia 2</h3>
+                            <p>Descrição breve da notícia 2.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="news-block">
+                    <a href="https://www.example.com/noticia3" target="_blank">
+                        <img src="noticia3.jpg" alt="Notícia 3">
+                        <div class="news-text">
+                            <h3>Título da Notícia 3</h3>
+                            <p>Descrição breve da notícia 3.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="news-block">
+                    <a href="https://www.example.com/noticia4" target="_blank">
+                        <img src="noticia4.jpg" alt="Notícia 4">
+                        <div class="news-text">
+                            <h3>Título da Notícia 4</h3>
+                            <p>Descrição breve da notícia 4.</p>
+                        </div>
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <h2 id="tit-hist">Galeria da Copa das Panelas</h2>
-        <div class="container-historico">
-            <div class="a">
-                <div id="img-hist">
-                    <img src="IMG/IMG-20240404-WA0002.jpg" alt="placeholder-bola">
-                </div>
-                <div id="texto-hist">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nisi praesentium est fugit, dolor
-                        cumque eligendi eius minima. Ut dolores veniam voluptas temporibus, perferendis reiciendis
-                        nesciunt quod fugit sed architecto?</p>
-
-                    <a href="" style="color: rgb(178, 24, 24); font-weight: bold; margin-bottom: 10px;">VEJA AQUI!</a>
-                </div>
+        </section>
+        
+        <section class="conteudo">
+            <div class="image-block">
+                <img src="IMG/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
             </div>
-        </div>
+            <div class="text-block">
+                <h2><a href="">Historia Copa das Panelas</a></h2>
+                <p>Descrição detalhada sobre o conteúdo do bloco. Este texto fornece mais informações sobre o que é representado pela imagem e o contexto relevante.</p>
+            </div>
+
+            <div class="image-block">
+                <img src="IMG/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
+            </div>
+            <div class="text-block">
+                <h2><a href="">Jogadores da Copa</a></h2>
+                <p>Descrição detalhada sobre o conteúdo do bloco. Este texto fornece mais informações sobre o que é representado pela imagem e o contexto relevante.</p>
+            </div>
+        </section>
+
     </main>
 
     <footer>
-        <p id="copyright-text">©️ Todos os direitos reservados a Campus BJL</p>
-        <p id="local-text">BR-349, Km 14 - Zona Rural,<br> Bom Jesus da Lapa - BA,<br>CEP: 47600-000</p>
+        <div class="footerContain">
+            <div class="socialIcons">
+                <a href=""><i class="fa-brands fa-youtube"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+                <a href=""><i class="fa-brands fa-google-plus"></i></a>
+            </div>
 
+            <div class="footerNav">
+                <ul>
+                    <li><a href="">Página Inicial</a></li>
+                    <li><a href="">Sobre Nós</a></li>
+                    <li><a href="">Contato</a></li>
+                    <li><a href="">Equipe Dev</a></li>
+                </ul>
+            </div>
 
-        <div class="redes-sociais">
-            <p>Redes Sociais:</p>
-            <a href="https://www.instagram.com/pan_cup/"><img src="IMG/instagram-removebg-preview.png" alt=""width="40px" height="40px"></a>
+            <div class="footerButton">
+                <p>Copyright <copy> 2024; Desenvolvido por <span class="dev">PANELASCUP</span></p>
+                <p>Instituto Federal de Educação, Ciência e Tecnologia Baiano – Campus Bom Jesus da Lapa
+                    BR 349, Km 14 - Zona Rural, Bom Jesus da Lapa - Bahia, CEP: 47600-000</p>
+            </div>
         </div>
-
     </footer>
 
-    <script>
-        // Captura todos os elementos de jogodia
-        const jogos = document.querySelectorAll('.jogos .jogodia');
 
-        // Inicia o índice atual do slider
-        let currentIndex = 0;
+<script>
+    let slideIndex = 0;
+    showSlides();
 
-        // Função para mostrar o próximo slide
-        function nextSlide() {
-            // Esconde o slide atual
-            jogos[currentIndex].style.display = 'none';
-            // Incrementa o índice atual ou volta para o início se for o último slide
-            currentIndex = (currentIndex + 1) % jogos.length;
-            // Mostra o próximo slide
-            jogos[currentIndex].style.display = 'flex';
+    function showSlides() {
+        let slides = document.getElementsByClassName("mySlides");
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
         }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}    
+        slides[slideIndex-1].style.display = "block";  
+        setTimeout(showSlides, 10000); // Change image every 5 seconds
+    }
 
-        // Mostra o primeiro slide
-        jogos[currentIndex].style.display = 'flex';
-
-        // Altera o slide a cada 5 segundos (5000 milissegundos)
-        setInterval(nextSlide, 5000);
-
-    </script>
+</script>
 </body>
-
 </html>
