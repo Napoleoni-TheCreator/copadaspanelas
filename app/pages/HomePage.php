@@ -14,7 +14,7 @@
     <?php include 'header.php'?>
     <nav>
         <ul>
-            <li><a href="">Home</a></li>
+            <li><a href="../pages/HomePage.php">Home</a></li>
 
             <!--<li>
                 <a href="">Cadastros ▾</a>
@@ -32,7 +32,15 @@
                    <li><a href="">Eliminatórias</a></li>
                 </ul>     
             </li>
-            <li><a href="">Transmissão</a></li>
+            <li>
+                <a href="">Dados da Copa ▾</a>
+                <ul class="dropdown">
+                    <li><a href="">História</a></li>
+                    <li><a href="">Estatísticas</a></li>
+                </ul>
+            </li>
+            <li><a href="Jogos Proximos.php">Transmissão</a></li>
+            <li><a href="sobreNos.html">Sobre nós</a></li>
         </ul>
     </nav>
 
@@ -77,7 +85,7 @@
                 </div>
                 <div class="news-block">
                     <a href="https://www.example.com/noticia3" target="_blank">
-                        <img src="noticia3.jpg" alt="Notícia 3">
+                        <img src="../../public/imgs/neymar.jpeg" alt="Notícia 3">
                         <div class="news-text">
                             <h3>Título da Notícia 3</h3>
                             <p>Descrição breve da notícia 3.</p>
