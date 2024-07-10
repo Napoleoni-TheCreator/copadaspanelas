@@ -3,27 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="CSS/HomePage.css">
+    <link rel="stylesheet" href="../../public/css/HomePage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="shortcut icon" href="IMG/ESCUDO COPA DAS PANELAS.png" type="image/x-icon">    
+    <link rel="shortcut icon" href="../../public/imgs/ESCUDO COPA DAS PANELAS.png" type="image/x-icon">    
     <title>Copa das Panelas</title>
 </head>
 <body>
-    <header>
-        <div id="Icon">
-            <img src="IMG/ESCUDO COPA DAS PANELAS.png" alt="">
-        </div>
-        <H1 id="titulo">COPA DAS PANELAS</H1>
-
-        <div class="cadastro">
-            <a href=""><i class="fas fa-user"></i>Login</a>
-        </div>
-    </header>
-
+    <?php include 'header.php'?>
     <nav>
         <ul>
             <li><a href="">Home</a></li>
-            <li>
+
+            <!--<li>
                 <a href="">Cadastros ▾</a>
                 <ul class="dropdown">
                     <li><a href="">Times</a></li>
@@ -31,18 +22,15 @@
                     <li><a href="">Info C</a></li>
                     <li><a href="">Info D</a></li>
                 </ul>
-            </li>
+            </li>-->
             <li>
                 <a href="">Tabelas de Jogos ▾</a>
                 <ul class="dropdown">
                    <li><a href="">Grupos</a></li>
                    <li><a href="">Eliminatórias</a></li>
-                </ul>
-                
+                </ul>     
             </li>
-
             <li><a href="">Transmissão</a></li>
-            <li><a href="">Sobre Nós</a></li>
         </ul>
     </nav>
 
@@ -50,17 +38,19 @@
         <section class="Slideshare">
             <div class="slideshow-container">
                 <div class="mySlides fade">
-                    <img src="IMG/pngtree-banner-background-of-football-colorful-game-publicity-poster-image_924290.jpg" style="width:100%">
+                    <img src="../../public/imgs/pngtree-banner-background-of-football-colorful-game-publicity-poster-image_924290.jpg" style="width:100%">
                 </div>
                 <div class="mySlides fade">
-                    <img src="IMG/TSF-2022-EH-1400x500-banner.png" style="width:100%">
+                    <img src="../../public/imgs/TSF-2022-EH-1400x500-banner.png" style="width:100%">
                 </div>
                 <div class="mySlides fade">
-                    <img src="IMG/Banner04-RBA-1400x500-1.jpg" style="width:100%">
+                    <img src="../../public/imgs/Banner04-RBA-1400x500-1.jpg" style="width:100%">
                 </div>
             </div>
 
         </section>
+    <h3>NOTICIAS</h3>
+    <hr>
 
         <section class="noticias">
 
@@ -104,10 +94,13 @@
             </div>
 
         </section>
-        
+
+    <H3>CONTEÚDO DA COPA</H3>
+    <hr>
+
         <section class="conteudo">
             <div class="image-block">
-                <img src="IMG/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
+                <img src="../../public/imgs/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
             </div>
             <div class="text-block">
                 <h2><a href="">Historia Copa das Panelas</a></h2>
@@ -115,7 +108,7 @@
             </div>
 
             <div class="image-block">
-                <img src="IMG/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
+                <img src="../../public/imgs/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
             </div>
             <div class="text-block">
                 <h2><a href="">Jogadores da Copa</a></h2>
@@ -125,47 +118,19 @@
 
     </main>
 
-    <footer>
-        <div class="footerContain">
-            <div class="socialIcons">
-                <a href=""><i class="fa-brands fa-youtube"></i></a>
-                <a href=""><i class="fa-brands fa-instagram"></i></a>
-                <a href=""><i class="fa-brands fa-google-plus"></i></a>
-            </div>
+    <?php include 'footer.php'?>
 
-            <div class="footerNav">
-                <ul>
-                    <li><a href="">Página Inicial</a></li>
-                    <li><a href="">Sobre Nós</a></li>
-                    <li><a href="">Contato</a></li>
-                    <li><a href="">Equipe Dev</a></li>
-                </ul>
-            </div>
-
-            <div class="footerButton">
-                <p>Copyright <copy> 2024; Desenvolvido por <span class="dev">PANELASCUP</span></p>
-                <p>Instituto Federal de Educação, Ciência e Tecnologia Baiano – Campus Bom Jesus da Lapa
-                    BR 349, Km 14 - Zona Rural, Bom Jesus da Lapa - Bahia, CEP: 47600-000</p>
-            </div>
+    <div id="countdown-balloon">
+        <span id="close-btn">&times;</span>
+        <div id="description">INICIO DA COPA DAS PANELAS</div>
+        <div id="countdown">
+            <div id="days">00</div> dias
+            <div id="hours">00</div> horas
+            <div id="minutes">00</div> minutos
+            <div id="seconds">00</div> segundos
         </div>
-    </footer>
+    </div>
 
-
-<script>
-    let slideIndex = 0;
-    showSlides();
-
-    function showSlides() {
-        let slides = document.getElementsByClassName("mySlides");
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";  
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}    
-        slides[slideIndex-1].style.display = "block";  
-        setTimeout(showSlides, 10000); // Change image every 5 seconds
-    }
-
-</script>
+    <script src="../../public/js/homepage.js"></script>
 </body>
 </html>

@@ -1,8 +1,18 @@
+/*EXTRA*/
 *{
 
     padding: 0;
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+hr{
+    border-color: red;
+    border-width: 3px;
+}
+
+h3{
+    margin-top: 20px;
 }
 
 /*HEADER*/
@@ -27,8 +37,8 @@ header{
 
 #titulo{
     color: rgb(255, 255, 255);
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 500;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 700;
 }
 
 .cadastro{
@@ -55,7 +65,7 @@ header{
 
 .cadastro a:hover{
     color: rgb(150, 0, 0);
-    transition: 0.8s;
+    transition: 0.3s;
 } 
 /*NAV*/
 
@@ -359,4 +369,51 @@ footer{
     letter-spacing: 1px;
     font-weight: 400;
     margin: 0px 5px;
+}
+
+/* CONTADOR */
+
+#countdown-balloon {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    padding: 40px 80px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 2px 5px;
+    background-color: #ff4444;
+    color: white;
+}
+
+#description {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #000000;
+}
+
+#countdown {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#countdown div {
+    font-size: 24px;
+    margin: 0 5px;
 }
