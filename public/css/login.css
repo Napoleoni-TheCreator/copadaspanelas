@@ -6,60 +6,67 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    width: 100vw;
     margin: 0;
 }
 
-.login-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    margin: auto; /* Para centralizar o formulário */
+header {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(201, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 h1 {
     text-align: center;
-    color: #333333;
+    color: #ffffff;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 30px; /* Aumentar o padding */
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Aumentar a largura */
+    margin: auto;
+    transform: scale(1.2); /* Aumentar a escala */
 }
 
 label {
     margin-top: 10px;
     display: block;
     font-weight: bold;
+    font-size: 20px; /* Aumentar o tamanho da fonte */
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
     width: calc(100% - 20px);
-    padding: 10px;
+    padding: 12px; /* Aumentar o padding */
     margin-top: 5px;
     margin-bottom: 10px;
     border: 1px solid #cccccc;
     border-radius: 3px;
-    font-size: 14px;
+    font-size: 16px; /* Aumentar o tamanho da fonte */
 }
 
 input[type="submit"] {
-    width: 100%;
-    background-color: #FF6347; /* Vermelho escuro */
+    width: 100%;    
+    background-color: #FF6347;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 15px; /* Aumentar o padding */
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px; /* Aumentar o tamanho da fonte */
     border-radius: 3px;
-    transition: background-color 0.3s ease; /* Transição suave */
+    transition: background-color 0.3s ease;
 }
 
 input[type="submit"]:hover {
-    background-color: #D64036; /* Vermelho mais claro */
+    background-color: #D64036;
 }
 
 p.error-message {
@@ -73,5 +80,22 @@ p.error-message {
     form {
         width: 90%;
         max-width: 350px;
+        transform: scale(1); /* Reduzir a escala para telas menores */
+    }
+}
+    
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    form {
+        width: 80%;
+        max-width: 600px;
+        transform: scale(1.1); /* Ajustar a escala para telas intermediárias */
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    form {
+        width: 60%;
+        max-width: 800px;
+        transform: scale(1.2); /* Manter a escala para telas maiores */
     }
 }
