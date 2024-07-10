@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transmissão E jogos</title>
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="script.js"></script>
+    <script src="../../public/js/jogosProximos.js"></script>
     <link rel="stylesheet" href="../../public/css/style_live.css">
     <link rel="stylesheet" href="../../public/css/cssheader.css">
     <link rel="stylesheet" href="../../public/css/cssfooter.css">
@@ -18,20 +18,16 @@
     <main>
 
         <section class="transmit">
-            <div id="player">
+            <div id="player"></div>
+            <?php
+      // Verifica se o usuário é um administrador 
+      $usuario_eh_admin = true; // Você deve substituir isso pela lógica real de verificação
 
-                <?php
-                // Verifica se o usuário é um administrador 
-                $usuario_eh_admin = true; // Você deve substituir isso pela lógica real de verificação
-
-                if ($usuario_eh_admin) {
-                    // Se o usuário for um administrador, exiba o botão "Adicionar link"
-                    echo '<button>Adicionar link</button>';
-                }
-                ?>
-
-            </div>
-
+      if ($usuario_eh_admin) {
+          // Se o usuário for um administrador, exiba o botão "Adicionar link"
+          echo '<button class="adc_live">Adicionar live</button>';
+      }
+    ?>
         </section>
         <h1 style="padding-left: 20px;">Jogos Proximos</h1>
         <section class="nxtGames">
