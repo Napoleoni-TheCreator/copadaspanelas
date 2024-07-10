@@ -16,6 +16,59 @@ h3{
 }
 
 
+<<<<<<< Updated upstream
+=======
+header{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, rgb(214, 0, 0),rgb(156, 0, 0));
+}   
+
+#Icon{
+    width: 125px;
+    height: 125px;
+}
+
+#Icon img{
+    width: 100%;
+}
+
+#titulo{
+    color: rgb(255, 255, 255);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 700;
+}
+
+.cadastro{
+    font-size: 1.1em;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.cadastro a{
+    text-decoration: none;
+    color: white;
+}
+
+.cadastro a i{
+    padding-right: 8px;
+}
+
+
+.cadastro:hover{
+    background-color: rgb(255, 255, 255);
+    transition: 0.8s;
+}
+
+.cadastro a:hover{
+    color: rgb(150, 0, 0);
+    transition: 0.3s;
+} 
+>>>>>>> Stashed changes
 /*NAV*/
 
 nav{
@@ -28,22 +81,24 @@ nav{
 
 nav ul {
     width: auto;
+    display: flex;
     background-color: none;
     list-style: none;
 }
 
 nav ul li{
+    position: relative;
     display: inline-block;
     position: relative;
 }
 
 nav ul li a{
     display: block;
-    padding: 20px 25px;
+    padding: 20px 15px;
     color: white;
     text-decoration: none;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 nav ul li ul.dropdown li{
@@ -51,12 +106,19 @@ nav ul li ul.dropdown li{
 }
 
 nav ul li ul.dropdown{
-
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgb(109, 0, 0);
+    display: none;
+    width: 200px; /* Adjust width as needed */
+    z-index: 999;
+    /*
     width: 100%;
     background-color: rgb(109, 0, 0);
     position: absolute;
     z-index: 999;
-    display: none;
+    display: none;*/
 }
 
 nav ul li a:hover{
@@ -84,7 +146,7 @@ main{
 
 .Slideshare{
     width: 100%;
-    height: 500px;
+    height: 300px;
     background-color: white;
 }
 
@@ -277,4 +339,77 @@ main{
 #countdown div {
     font-size: 24px;
     margin: 0 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    /* Header */
+    header {
+        height: 60px; /* Reduz a altura do cabeçalho */
+    }
+
+    /* Navigation */
+    nav {
+        flex-direction: column; /* Altera para layout de coluna */
+        align-items: stretch; /* Alinha itens à esquerda */
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: column; /* Altera para layout de coluna */
+        padding: 0;
+    }
+
+    nav ul li {
+        position: static; /* Restaura a posição estática */
+        width: 100%; /* Garante que os itens ocupem a largura total */
+    }
+
+    nav ul li a {
+        padding: 15px; /* Espaçamento menor nos links */
+        font-size: 14px; /* Tamanho menor de fonte */
+    }
+
+    nav ul li ul.dropdown {
+        position: static; /* Restaura a posição estática */
+        width: 100%; /* Garante que o submenu ocupe a largura total */
+        display: none; /* Esconde submenu por padrão */
+    }
+
+    nav ul li:hover ul.dropdown {
+        display: block; /* Mostra submenu ao passar o mouse */
+    }
+
+    /* Slides */
+    .Slideshare {
+        height: 250px; /* Reduz altura dos slides */
+    }
+
+    .mySlides img {
+        height: 100%; /* Garante que as imagens dos slides ocupem a altura total */
+        object-fit: cover; /* Ajusta para cobrir o container */
+    }
+
+    /* Notícias */
+    .news-block {
+        width: 100%; /* Define largura total para ocupar a linha */
+        margin: 10px 0; /* Margens menores entre blocos */
+    }
+
+    /* Conteúdo */
+    .conteudo {
+        flex-direction: column; /* Altera para layout de coluna */
+        align-items: center; /* Centraliza os itens na coluna */
+    }
+
+    .image-block,
+    .text-block {
+        width: 100%; /* Garante largura total */
+        margin: 10px 0; /* Margens menores entre blocos */
+        text-align: center; /* Centraliza texto */
+    }
+
+    .image-block img {
+        width: 100%; /* Imagens ocupam a largura total */
+        height: auto; /* Altura automática */
+    }   
 }
