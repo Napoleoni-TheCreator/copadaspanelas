@@ -87,3 +87,31 @@ footer{
     font-weight: 400;
     margin: 0px 5px;
 }
+
+@media only screen and (max-width: 768px) {
+    .socialIcons {
+        flex-wrap: wrap; /* Quebra os ícones sociais em várias linhas */
+        justify-content: center; /* Centraliza os ícones social no centro */
+    }
+
+    .socialIcons a {
+        margin: 5px; /* Espaçamento menor entre os ícones */
+    }
+
+    .footerNav {
+        padding: 20px 0; /* Reduz o padding dos links de navegação */
+    }
+
+    .footerNav ul {
+        flex-direction: column; /* Ajusta os links de navegação para uma coluna */
+        align-items: center; /* Centraliza os links de navegação */
+    }
+
+    .footerNav ul li a {
+        padding: 10px; /* Reduz o padding dos links de navegação */
+    }
+
+    .footerButton p {
+        font-size: 0.9em; /* Reduz o tamanho da fonte do texto do footer */
+    }
+}

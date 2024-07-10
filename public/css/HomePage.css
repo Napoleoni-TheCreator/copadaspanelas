@@ -16,59 +16,7 @@ h3{
 }
 
 
-<<<<<<< Updated upstream
-=======
-header{
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(90deg, rgb(214, 0, 0),rgb(156, 0, 0));
-}   
 
-#Icon{
-    width: 125px;
-    height: 125px;
-}
-
-#Icon img{
-    width: 100%;
-}
-
-#titulo{
-    color: rgb(255, 255, 255);
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-weight: 700;
-}
-
-.cadastro{
-    font-size: 1.1em;
-    text-decoration: none;
-    padding: 15px 20px;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-.cadastro a{
-    text-decoration: none;
-    color: white;
-}
-
-.cadastro a i{
-    padding-right: 8px;
-}
-
-
-.cadastro:hover{
-    background-color: rgb(255, 255, 255);
-    transition: 0.8s;
-}
-
-.cadastro a:hover{
-    color: rgb(150, 0, 0);
-    transition: 0.3s;
-} 
->>>>>>> Stashed changes
 /*NAV*/
 
 nav{
@@ -146,7 +94,7 @@ main{
 
 .Slideshare{
     width: 100%;
-    height: 300px;
+    height: 380px;
     background-color: white;
 }
 
@@ -184,8 +132,7 @@ main{
 
 
 /*NOTICIAS E INFO*/
-
-.noticias{
+.noticias {
     width: 100%;
     height: auto;
 }
@@ -203,7 +150,7 @@ main{
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: calc(50% - 20px); 
+    width: calc(50% - 20px);
     transition: transform 0.2s;
 }
 
@@ -213,7 +160,8 @@ main{
 
 .news-block img {
     width: 100%;
-    height: auto;
+    max-height: 200px; /* Ajuste a altura máxima conforme necessário */
+    object-fit: cover;
 }
 
 .news-text {

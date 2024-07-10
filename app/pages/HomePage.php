@@ -62,48 +62,46 @@
     <h3>NOTICIAS</h3>
     <hr>
 
-        <section class="noticias">
-
-            <div class="news-container">
-                <div class="news-block">
-                    <a href="https://www.example.com/noticia1" target="_blank">
-                        <img src="noticia1.jpg" alt="Notícia 1">
-                        <div class="news-text">
-                            <h3>Título da Notícia 1</h3>
-                            <p>Descrição breve da notícia 1.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="news-block">
-                    <a href="https://www.example.com/noticia2" target="_blank">
-                        <img src="noticia2.jpg" alt="Notícia 2">
-                        <div class="news-text">
-                            <h3>Título da Notícia 2</h3>
-                            <p>Descrição breve da notícia 2.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="news-block">
-                    <a href="https://www.example.com/noticia3" target="_blank">
-                        <img src="../../public/imgs/neymar.jpeg" alt="Notícia 3">
-                        <div class="news-text">
-                            <h3>Título da Notícia 3</h3>
-                            <p>Descrição breve da notícia 3.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="news-block">
-                    <a href="https://www.example.com/noticia4" target="_blank">
-                        <img src="noticia4.jpg" alt="Notícia 4">
-                        <div class="news-text">
-                            <h3>Título da Notícia 4</h3>
-                            <p>Descrição breve da notícia 4.</p>
-                        </div>
-                    </a>
-                </div>
+    <section class="noticias">
+        <div class="news-container">
+            <div class="news-block">
+                <a href="https://www.example.com/noticia1" target="_blank">
+                    <img src="noticia1.jpg" alt="Notícia 1">
+                    <div class="news-text">
+                        <h3>Título da Notícia 1</h3>
+                        <p>Descrição breve da notícia 1.</p>
+                    </div>
+                </a>
             </div>
-
-        </section>
+            <div class="news-block">
+                <a href="https://www.example.com/noticia2" target="_blank">
+                    <img src="noticia2.jpg" alt="Notícia 2">
+                    <div class="news-text">
+                        <h3>Título da Notícia 2</h3>
+                        <p>Descrição breve da notícia 2.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="news-block">
+                <a href="https://www.example.com/noticia3" target="_blank">
+                    <img src="../../public/imgs/neymar.jpeg" alt="Notícia 3">
+                    <div class="news-text">
+                        <h3>Título da Notícia 3</h3>
+                        <p>Descrição breve da notícia 3.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="news-block">
+                <a href="https://www.example.com/noticia4" target="_blank">
+                    <img src="noticia4.jpg" alt="Notícia 4">
+                    <div class="news-text">
+                        <h3>Título da Notícia 4</h3>
+                        <p>Descrição breve da notícia 4.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <H3>CONTEÚDO DA COPA</H3>
     <hr>
