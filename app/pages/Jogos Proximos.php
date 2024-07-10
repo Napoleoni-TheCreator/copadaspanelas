@@ -8,6 +8,9 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="../../public/css/style_live.css">
+    <link rel="stylesheet" href="../../public/css/cssheader.css">
+    <link rel="stylesheet" href="../../public/css/cssfooter.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
@@ -18,7 +21,7 @@
             <div id="player">
 
                 <?php
-                // Verifica se o usuário é um administrador (coloque sua lógica de verificação aqui)
+                // Verifica se o usuário é um administrador 
                 $usuario_eh_admin = true; // Você deve substituir isso pela lógica real de verificação
 
                 if ($usuario_eh_admin) {
@@ -35,12 +38,12 @@
 
             <div id="seg" class="jogos">
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/2017_logobahia.png" alt="Foto do time"></div>
+                    <div class="spc-logo"><img src="../../public/imgs/2017_logobahia.png" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/506.png" alt="foto Time 2"></div>
+                    <div class="spc-logo"><img src="../../public/imgs/506.png" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
                 <div class="situation">
@@ -52,12 +55,12 @@
 
             <div id="ter" class="jogos">
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/2017_logobahia.png" alt="Foto do time"></div>
+                    <div class="spc-logo"><img src="../../public/imgs/2017_logobahia.png" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/506.png" alt="foto Time 2"></div>
+                    <div class="spc-logo"><img src="../../public/imgs/506.png" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
                 <div class="situation">
@@ -69,12 +72,12 @@
 
             <div id="qua" class="jogos">
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/2017_logobahia.png" alt="Foto do time"></div>
+                    <div class="spc-logo"><img src="../../public/../../public/imgs/2017_logobahia.png" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/506.png" alt="foto Time 2"></div>
+                    <div class="spc-logo"><img src="../../public/imgs/506.png" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
                 <div class="situation">
@@ -86,12 +89,12 @@
 
             <div id="qui" class="jogos">
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/2017_logobahia.png" alt="Foto do time"></div>
+                    <div class="spc-logo"><img src="../../public/imgs/2017_logobahia.png" alt="Foto do time"></div>
                     <p>Bahia</p>
                 </div>
                 <p id="versus">X</p>
                 <div class="jogos-team1">
-                    <div class="spc-logo"><img src="imgs/506.png" alt="foto Time 2"></div>
+                    <div class="spc-logo"><img src="../../public/imgs/506.png" alt="foto Time 2"></div>
                     <p>Juventus</p>
                 </div>
                 <div class="situation">

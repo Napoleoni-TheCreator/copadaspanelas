@@ -1,0 +1,52 @@
+/*HEADER*/
+
+header{
+    width: 100%;
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, rgb(214, 0, 0),rgb(156, 0, 0));
+}   
+
+#Icon{
+    width: 125px;
+    height: 125px;
+}
+
+#Icon img{
+    width: 100%;
+}
+
+#titulo{
+    color: rgb(255, 255, 255);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 700;
+}
+
+.cadastro{
+    font-size: 1.1em;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.cadastro a{
+    text-decoration: none;
+    color: white;
+}
+
+.cadastro a i{
+    padding-right: 8px;
+}
+
+
+.cadastro:hover{
+    background-color: rgb(255, 255, 255);
+    transition: 0.8s;
+}
+
+.cadastro a:hover{
+    color: rgb(150, 0, 0);
+    transition: 0.3s;
+} 
