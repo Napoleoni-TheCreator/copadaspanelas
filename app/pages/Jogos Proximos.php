@@ -21,7 +21,7 @@
             <div id="player"></div>
             <?php
       // Verifica se o usuário é um administrador 
-      $usuario_eh_admin = false; // Você deve substituir isso pela lógica real de verificação
+      $usuario_eh_admin = true; // Você deve substituir isso pela lógica real de verificação
 
       if ($usuario_eh_admin) {
           // Se o usuário for um administrador, exiba o botão "Adicionar link"
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </section>
-        <h1 style="padding: 20px;">Ultimos 4 Jogos</h1>
+        <h1 style="padding: 20px;">Ultimos 3 Jogos</h1>
         <section class="old-games">
 
             <div class="last4games" id="game1">
