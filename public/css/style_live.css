@@ -94,12 +94,14 @@
             display: flex;
             
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: space-around;
             width: auto;
         }
         .last4games{
             width: auto;
             height: auto;
+            margin-bottom: 10px;
+            
         }
 
         /*parte dos jogos*/
