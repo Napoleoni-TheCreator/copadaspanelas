@@ -10,31 +10,7 @@
             height: auto;
         }
 
-     
-        header {
-            width: 100%;
-            height: 70px;
-            background-image: linear-gradient(to left top, #df1331, #9d000d);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            padding-left: 20px;
-        }
-
-        header img {
-            width: 120px;
-            height: 100px;
-        }
-
-        header a {
-            text-decoration: none;
-            color: white;
-            margin-right: 20px;
-        }
+ 
 
         .transmit {
             width: 100%;
@@ -116,23 +92,6 @@
         }
 
         /*parte dos jogos*/
-
-        /*para o footer*/
-
-        footer {
-            font-size: larger;
-            width: 100%;
-            height: 130px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            background-image: linear-gradient(to left top, rgb(138, 6, 6), rgb(114, 17, 17));
-            color: white;
-            
-            
- 
-        }
 
         /*dica do site*/
         .jogos {

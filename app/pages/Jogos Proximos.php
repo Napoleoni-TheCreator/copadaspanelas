@@ -7,15 +7,11 @@
     <title>Transmissão E jogos</title>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style_live.css">
+    <link rel="stylesheet" href="../../public/css/style_live.css">
 </head>
 
 <body>
-    <header>
-        <h1>Trasmissão e jogos</h1>
-        <img src="imgs/ESCUDO COPA DAS PANELAS.png" alt="Logo Copa das panelas">
-        <a href="HomePage.html">Voltar a Pagina Inicial</a>
-    </header>
+    <?php include 'header.php'?>
     <main>
 
         <section class="transmit">
@@ -383,10 +379,7 @@
         </section>
 
     </main>
-    <footer>
-        <p id="copyright-text">©️ Todos os direitos reservados a Campus BJL</p>
-        <p id="local-text">BR-349, Km 14 - Zona Rural,<br> Bom Jesus da Lapa - BA,<br>CEP: 47600-000</p>
-    </footer>
+    <?php include 'footer.php'?>
 
 </body>
 
