@@ -1,0 +1,700 @@
+<?php
+include '/opt/lampp/htdocs/CLASSIFICACAO/app/config/conexao.php';
+
+// Verifica a conexão com o banco de dados
+if (!$conn) {
+    die("Conexão falhou: " . mysqli_connect_error());
+}
+
+// Define a tabela de acordo com a fase final
+$faseFinal = $_POST['fase_final'] ?? 'oitavas';
+$tabelaConfrontos = '';
+
+switch ($faseFinal) {
+    case 'oitavas':
+        $tabelaConfrontos = 'oitavas_de_final_confrontos';
+        break;
+    case 'quartas':
+        $tabelaConfrontos = 'quartas_de_final_confrontos';
+        break;
+    case 'semifinais':
+        $tabelaConfrontos = 'semifinais_confrontos';
+        break;
+    case 'final':
+        $tabelaConfrontos = 'final_confrontos';
+        break;
+    default:
+        die("Fase final desconhecida.");
+}
+
+// Função para atualizar dados do confronto
+function atualizarConfronto($conn, $tabelaConfrontos, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB) {
+    $golsContraTimeA = $golsMarcadosTimeB;
+    $golsContraTimeB = $golsMarcadosTimeA;
+
+    $sqlUpdate = "UPDATE $tabelaConfrontos
+                  SET gols_marcados_timeA = ?, gols_marcados_timeB = ?, gols_contra_timeA = ?, gols_contra_timeB = ?
+                  WHERE id = ?";
+    $stmtUpdate = $conn->prepare($sqlUpdate);
+    if (!$stmtUpdate) {
+        die("Erro na preparação da consulta de atualização: " . $conn->error);
+    }
+    $stmtUpdate->bind_param('iiiii', $golsMarcadosTimeA, $golsMarcadosTimeB, $golsContraTimeA, $golsContraTimeB, $confrontoId);
+    if (!$stmtUpdate->execute()) {
+        die("Erro ao atualizar confronto ID $confrontoId: " . $stmtUpdate->error);
+    }
+    $stmtUpdate->close();
+}
+
+// Função para inserir os dados dos jogos na tabela 'jogos'
+function inserirJogo($conn, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB) {
+    // Definir os resultados dos times
+    $resultadoTimeA = ($golsMarcadosTimeA > $golsMarcadosTimeB) ? 'V' : (($golsMarcadosTimeA < $golsMarcadosTimeB) ? 'D' : 'E');
+    $resultadoTimeB = ($golsMarcadosTimeB > $golsMarcadosTimeA) ? 'V' : (($golsMarcadosTimeB < $golsMarcadosTimeA) ? 'D' : 'E');
+    
+    // Obter ids dos times A e B (substituir pelos ids reais dos times no banco de dados)
+    $timeA_id = $confrontoId * 2 - 1; // Exemplo de obtenção de id
+    $timeB_id = $confrontoId * 2;     // Exemplo de obtenção de id
+    
+    // Inserir jogo para time A
+    $sqlInsertJogoA = "INSERT INTO jogos (time_id, resultado, data_jogo) VALUES (?, ?, NOW())";
+    $stmtInsertJogoA = $conn->prepare($sqlInsertJogoA);
+    $stmtInsertJogoA->bind_param('is', $timeA_id, $resultadoTimeA);
+    $stmtInsertJogoA->execute();
+    $stmtInsertJogoA->close();
+    
+    // Inserir jogo para time B
+    $sqlInsertJogoB = "INSERT INTO jogos (time_id, resultado, data_jogo) VALUES (?, ?, NOW())";
+    $stmtInsertJogoB = $conn->prepare($sqlInsertJogoB);
+    $stmtInsertJogoB->bind_param('is', $timeB_id, $resultadoTimeB);
+    $stmtInsertJogoB->execute();
+    $stmtInsertJogoB->close();
+}
+
+// Processa o formulário de adição de dados
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confrontos'])) {
+    $confrontos = $_POST['confrontos'];
+    foreach ($confrontos as $confrontoId => $dados) {
+        $golsMarcadosTimeA = intval($dados['gols_marcados_timeA']);
+        $golsMarcadosTimeB = intval($dados['gols_marcados_timeB']);
+
+        // Atualiza o confronto
+        atualizarConfronto($conn, $tabelaConfrontos, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB);
+        
+        // Insere os dados na tabela 'jogos'
+        inserirJogo($conn, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB);
+    }
+
+    echo "<p>Dados atualizados com sucesso!</p>";
+
+    // Atualiza a fase final para a próxima fase se necessário
+    if ($faseFinal === 'semifinais') {
+        // Atualiza a fase final para 'final' se for a fase semifinal
+        $sqlUpdateFase = "UPDATE configuracoes SET fase_final = 'final' WHERE id = 1";
+        if (!$conn->query($sqlUpdateFase)) {
+            die("Erro ao atualizar fase final: " . $conn->error);
+        }
+        echo "<p>Fase final atualizada para final!</p>";
+    }
+
+    // Resetar dados das semifinais ou das quartas de final se necessário
+    if ($faseFinal === 'oitavas') {
+        // Não deve zerar dados de oitavas
+    } elseif ($faseFinal === 'quartas') {
+        // Zerando dados de oitavas de final se estamos na fase das quartas
+        $sqlResetOitavas = "UPDATE oitavas_de_final_confrontos SET gols_marcados_timeA = 0, gols_marcados_timeB = 0, gols_contra_timeA = 0, gols_contra_timeB = 0";
+        if (!$conn->query($sqlResetOitavas)) {
+            die("Erro ao zerar dados da fase de oitavas: " . $conn->error);
+        }
+        echo "<p>Dados da fase 'oitavas_de_final_confrontos' zerados com sucesso!</p>";
+    } elseif ($faseFinal === 'semifinais') {
+        // Zerando dados das quartas de final se estamos na fase das semifinais
+        $sqlResetQuartas = "UPDATE quartas_de_final_confrontos SET gols_marcados_timeA = 0, gols_marcados_timeB = 0, gols_contra_timeA = 0, gols_contra_timeB = 0";
+        if (!$conn->query($sqlResetQuartas)) {
+            die("Erro ao zerar dados da fase de quartas: " . $conn->error);
+        }
+        echo "<p>Dados da fase 'quartas_de_final_confrontos' zerados com sucesso!</p>";
+    } elseif ($faseFinal === 'final') {
+        // Zerando dados das semifinais se estamos na fase final
+        $sqlResetSemifinais = "UPDATE semifinais_confrontos SET gols_marcados_timeA = 0, gols_marcados_timeB = 0, gols_contra_timeA = 0, gols_contra_timeB = 0";
+        if (!$conn->query($sqlResetSemifinais)) {
+            die("Erro ao zerar dados da fase de semifinais: " . $conn->error);
+        }
+        echo "<p>Dados da fase 'semifinais_confrontos' zerados com sucesso!</p>";
+    }
+}
+
+// Obtém os confrontos para exibir no formulário
+$sqlConfrontos = "SELECT id, 
+                          timeA_nome, 
+                          timeB_nome,
+                          gols_marcados_timeA,
+                          gols_marcados_timeB
+                   FROM $tabelaConfrontos";
+$resultConfrontos = $conn->query($sqlConfrontos);
+if (!$resultConfrontos) {
+    die("Erro na consulta de confrontos: " . $conn->error);
+}
+$confrontos = [];
+while ($row = $resultConfrontos->fetch_assoc()) {
+    $confrontos[] = $row;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Dados dos Confrontos das Finais</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+        #form-wrapper {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-wrapper">
+        <h2>Adicionar Dados dos Confrontos das Finais</h2>
+        <form method="POST" action="">
+            <input type="hidden" name="fase_final" value="<?php echo htmlspecialchars($faseFinal); ?>">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Time A</th>
+                        <th>Time B</th>
+                        <th>Gols Marcados Time A</th>
+                        <th>Gols Marcados Time B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($confrontos as $confronto) : ?>
+                        <tr>
+                            <input type="hidden" name="confrontos[<?php echo $confronto['id']; ?>][id]" value="<?php echo $confronto['id']; ?>">
+                            <td><?php echo htmlspecialchars($confronto['id']); ?></td>
+                            <td><?php echo htmlspecialchars($confronto['timeA_nome']); ?></td>
+                            <td><?php echo htmlspecialchars($confronto['timeB_nome']); ?></td>
+                            <td><input type="number" name="confrontos[<?php echo $confronto['id']; ?>][gols_marcados_timeA]" value="<?php echo htmlspecialchars($confronto['gols_marcados_timeA']); ?>" min="0"></td>
+                            <td><input type="number" name="confrontos[<?php echo $confronto['id']; ?>][gols_marcados_timeB]" value="<?php echo htmlspecialchars($confronto['gols_marcados_timeB']); ?>" min="0"></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <button type="submit">Atualizar Dados</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+include '/opt/lampp/htdocs/CLASSIFICACAO/app/config/conexao.php';
+
+// Verifica a conexão com o banco de dados
+if (!$conn) {
+    die("Conexão falhou: " . mysqli_connect_error());
+}
+
+// Define a tabela de acordo com a fase final
+$faseFinal = $_POST['fase_final'] ?? 'oitavas';
+$tabelaConfrontos = '';
+
+switch ($faseFinal) {
+    case 'oitavas':
+        $tabelaConfrontos = 'oitavas_de_final_confrontos';
+        break;
+    case 'quartas':
+        $tabelaConfrontos = 'quartas_de_final_confrontos';
+        break;
+    case 'semifinais':
+        $tabelaConfrontos = 'semifinais_confrontos';
+        break;
+    case 'final':
+        $tabelaConfrontos = 'final_confrontos';
+        break;
+    default:
+        die("Fase final desconhecida.");
+}
+
+// Função para atualizar dados do confronto
+function atualizarConfronto($conn, $tabelaConfrontos, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB) {
+    $golsContraTimeA = $golsMarcadosTimeB;
+    $golsContraTimeB = $golsMarcadosTimeA;
+
+    $sqlUpdate = "UPDATE $tabelaConfrontos
+                  SET gols_marcados_timeA = ?, gols_marcados_timeB = ?, gols_contra_timeA = ?, gols_contra_timeB = ?
+                  WHERE id = ?";
+    $stmtUpdate = $conn->prepare($sqlUpdate);
+    if (!$stmtUpdate) {
+        die("Erro na preparação da consulta de atualização: " . $conn->error);
+    }
+    $stmtUpdate->bind_param('iiiii', $golsMarcadosTimeA, $golsMarcadosTimeB, $golsContraTimeA, $golsContraTimeB, $confrontoId);
+    if (!$stmtUpdate->execute()) {
+        die("Erro ao atualizar confronto ID $confrontoId: " . $stmtUpdate->error);
+    }
+    $stmtUpdate->close();
+}
+
+// Processa o formulário de adição de dados
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confrontos'])) {
+    $confrontos = $_POST['confrontos'];
+    foreach ($confrontos as $confrontoId => $dados) {
+        $golsMarcadosTimeA = intval($dados['gols_marcados_timeA']);
+        $golsMarcadosTimeB = intval($dados['gols_marcados_timeB']);
+
+        // Atualiza o confronto
+        atualizarConfronto($conn, $tabelaConfrontos, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB);
+        
+        // Insere os dados na tabela 'jogos'
+        inserirJogo($conn, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB);
+    }
+
+    echo "<p>Dados atualizados com sucesso!</p>";
+
+    // Atualiza a fase final para a próxima fase se necessário
+    if ($faseFinal === 'semifinais') {
+        // Atualiza a fase final para 'final' se for a fase semifinal
+        $sqlUpdateFase = "UPDATE configuracoes SET fase_final = 'final' WHERE id = 1";
+        if (!$conn->query($sqlUpdateFase)) {
+            die("Erro ao atualizar fase final: " . $conn->error);
+        }
+        echo "<p>Fase final atualizada para final!</p>";
+    }
+
+    // Resetar dados das semifinais ou das quartas de final se necessário
+    if ($faseFinal === 'oitavas') {
+        // Não deve zerar dados de oitavas
+    } elseif ($faseFinal === 'quartas') {
+        // Zerando dados de oitavas de final se estamos na fase das quartas
+        $sqlResetOitavas = "UPDATE oitavas_de_final_confrontos SET gols_marcados_timeA = 0, gols_marcados_timeB = 0, gols_contra_timeA = 0, gols_contra_timeB = 0";
+        if (!$conn->query($sqlResetOitavas)) {
+            die("Erro ao zerar dados da fase de oitavas: " . $conn->error);
+        }
+        echo "<p>Dados da fase 'oitavas_de_final_confrontos' zerados com sucesso!</p>";
+    } elseif ($faseFinal === 'semifinais') {
+        // Zerando dados das quartas de final se estamos na fase das semifinais
+        $sqlResetQuartas = "UPDATE quartas_de_final_confrontos SET gols_marcados_timeA = 0, gols_marcados_timeB = 0, gols_contra_timeA = 0, gols_contra_timeB = 0";
+        if (!$conn->query($sqlResetQuartas)) {
+            die("Erro ao zerar dados da fase de quartas: " . $conn->error);
+        }
+        echo "<p>Dados da fase 'quartas_de_final_confrontos' zerados com sucesso!</p>";
+    } elseif ($faseFinal === 'final') {
+        // Zerando dados das semifinais se estamos na fase final
+        $sqlResetSemifinais = "UPDATE semifinais_confrontos SET gols_marcados_timeA = 0, gols_marcados_timeB = 0, gols_contra_timeA = 0, gols_contra_timeB = 0";
+        if (!$conn->query($sqlResetSemifinais)) {
+            die("Erro ao zerar dados da fase de semifinais: " . $conn->error);
+        }
+        echo "<p>Dados da fase 'semifinais_confrontos' zerados com sucesso!</p>";
+    }
+}
+
+// Função para inserir os dados dos jogos na tabela 'jogos'
+function inserirJogo($conn, $confrontoId, $golsMarcadosTimeA, $golsMarcadosTimeB) {
+    // Definir os resultados dos times
+    $resultadoTimeA = ($golsMarcadosTimeA > $golsMarcadosTimeB) ? 'V' : (($golsMarcadosTimeA < $golsMarcadosTimeB) ? 'D' : 'E');
+    $resultadoTimeB = ($golsMarcadosTimeB > $golsMarcadosTimeA) ? 'V' : (($golsMarcadosTimeB < $golsMarcadosTimeA) ? 'D' : 'E');
+    
+    // Obter ids dos times A e B (substituir pelos ids reais dos times no banco de dados)
+    $timeA_id = $confrontoId * 2 - 1; // Exemplo de obtenção de id
+    $timeB_id = $confrontoId * 2;     // Exemplo de obtenção de id
+    
+    // Inserir jogo para time A
+    $sqlInsertJogoA = "INSERT INTO jogos (time_id, resultado, data_jogo) VALUES (?, ?, NOW())";
+    $stmtInsertJogoA = $conn->prepare($sqlInsertJogoA);
+    $stmtInsertJogoA->bind_param('is', $timeA_id, $resultadoTimeA);
+    $stmtInsertJogoA->execute();
+    $stmtInsertJogoA->close();
+    
+    // Inserir jogo para time B
+    $sqlInsertJogoB = "INSERT INTO jogos (time_id, resultado, data_jogo) VALUES (?, ?, NOW())";
+    $stmtInsertJogoB = $conn->prepare($sqlInsertJogoB);
+    $stmtInsertJogoB->bind_param('is', $timeB_id, $resultadoTimeB);
+    $stmtInsertJogoB->execute();
+    $stmtInsertJogoB->close();
+}
+
+// Obtém os confrontos para exibir no formulário
+$sqlConfrontos = "SELECT id, 
+                          timeA_nome, 
+                          timeB_nome,
+                          gols_marcados_timeA,
+                          gols_marcados_timeB
+                   FROM $tabelaConfrontos";
+$resultConfrontos = $conn->query($sqlConfrontos);
+if (!$resultConfrontos) {
+    die("Erro na consulta de confrontos: " . $conn->error);
+}
+$confrontos = [];
+while ($row = $resultConfrontos->fetch_assoc()) {
+    $confrontos[] = $row;
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Dados dos Confrontos das Finais</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+        #form-wrapper {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        td input {
+            width: 50px;
+            text-align: center;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-wrapper">
+        <h1>Adicionar Dados dos Confrontos das Finais</h1>
+        <form action="adiciona_dados_finais.php" method="POST">
+            <input type="hidden" name="fase_final" value="<?php echo $faseFinal; ?>">
+            <table>
+                <tr>
+                    <th>Confronto</th>
+                    <th>Time A</th>
+                    <th>Gols Marcados (Time A)</th>
+                    <th>Time B</th>
+                    <th>Gols Marcados (Time B)</th>
+                </tr>
+                <?php foreach ($confrontos as $confronto) { ?>
+                <tr>
+                    <td><?php echo $confronto['id']; ?></td>
+                    <td><?php echo $confronto['timeA_nome']; ?></td>
+                    <td><input type="number" name="confrontos[<?php echo $confronto['id']; ?>][gols_marcados_timeA]" value="<?php echo $confronto['gols_marcados_timeA']; ?>" required></td>
+                    <td><?php echo $confronto['timeB_nome']; ?></td>
+                    <td><input type="number" name="confrontos[<?php echo $confronto['id']; ?>][gols_marcados_timeB]" value="<?php echo $confronto['gols_marcados_timeB']; ?>" required></td>
+                </tr>
+                <?php } ?>
+            </table>
+            <div class="button-container">
+                <button type="submit" class="submit-button">Salvar Dados</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+atual:
+
+-- Remove o banco de dados existente, se existir
+DROP DATABASE IF EXISTS gerenciador_grupos;
+
+-- Cria o novo banco de dados
+CREATE DATABASE gerenciador_grupos;
+
+-- Usa o banco de dados criado
+USE gerenciador_grupos;
+
+-- Cria a tabela de grupos
+CREATE TABLE grupos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Cria a tabela de times
+CREATE TABLE times (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    logo BLOB NOT NULL,
+    grupo_id INT NOT NULL,
+    pts INT DEFAULT 0,
+    vitorias INT DEFAULT 0,
+    empates INT DEFAULT 0,
+    derrotas INT DEFAULT 0,
+    gm INT DEFAULT 0,
+    gc INT DEFAULT 0,
+    sg INT DEFAULT 0,
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+);
+
+-- Cria a tabela de jogos
+CREATE TABLE jogos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela de configurações com as fases finais atualizadas
+CREATE TABLE configuracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipes_por_grupo INT NOT NULL,
+    numero_grupos INT NOT NULL,
+    fase_final ENUM('oitavas', 'quartas', 'semifinais', 'final') NOT NULL
+);
+
+-- Cria a tabela para armazenar os times classificados para as oitavas de finais
+CREATE TABLE oitavas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as quartas de finais
+CREATE TABLE quartas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as semifinais
+CREATE TABLE semifinais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para a final
+CREATE TABLE final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os confrontos da final
+CREATE TABLE final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('final') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das oitavas de finais
+CREATE TABLE oitavas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('oitavas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das quartas de finais
+CREATE TABLE quartas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('quartas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+CREATE TABLE jogos_finais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+-- Cria a tabela para armazenar os confrontos das semifinais
+CREATE TABLE semifinais_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('semifinais') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+-- Criação da tabela terceiro_lugar
+-- Cria a tabela para armazenar os times classificados para o terceiro lugar
+CREATE TABLE terceiro_lugar (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+-- Criação da tabela terceiro_lugar_confrontos
+-- Cria a tabela para armazenar os confrontos do terceiro lugar
+CREATE TABLE terceiro_lugar_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('terceiro_lugar') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+CREATE TABLE fase_execucao (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fase VARCHAR(50) NOT NULL,
+    executado BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+select*from  fase_execucao;
+
+select*from oitavas_de_final_confrontos;
+select*from final;
+select*from semifinais;
+select*from oitavas_de_final;
+select*from final_confrontos;
+select*from  semifinais_confrontos;
+-- Comandos para visualização das tabelas
+select*from quartas_de_final_confrontos;
+-- Visualiza todos os registros na tabela quartas_de_final
+SELECT * FROM quartas_de_final;
+
+-- Visualiza todos os registros na tabela jogos
+SELECT * FROM jogos;
+
+-- Visualiza todos os registros na tabela times
+SELECT * FROM times;
+
+-- Visualiza todos os registros na tabela grupos
+SELECT * FROM grupos;
+select*from configuracoes;
+
+
+
+
+
+
+
+
+
+
+
+teste
+-- SET SQL_SAFE_UPDATES = 0;
+-- DELETE FROM fase_execucao WHERE id > 0;
+
+select*from  fase_execucao;
+-- UPDATE configuracoes SET fase_final = 'quartas' WHERE id = "1";
+
+CREATE TABLE jogos_finais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+CREATE TABLE jogos_finais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado ENUM('V', 'D', 'E') NOT NULL,
+    data_jogo DATETIME DEFAULT CURRENT_TIMESTAMP
+);

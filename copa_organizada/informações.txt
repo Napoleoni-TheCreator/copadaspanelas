@@ -1,0 +1,631 @@
+criar uma pagina com todos os jogos
+rodadas 
+time x time 2 
+e quando mudar os dados aqui, adicionar gols vitoria empate..
+
+
+
+BD atualizado
+DROP DATABASE IF EXISTS gerenciador_grupos;
+CREATE DATABASE gerenciador_grupos;
+USE gerenciador_grupos;
+
+CREATE TABLE grupos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE times (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    logo BLOB NOT NULL,
+    grupo_id INT NOT NULL,
+    pts INT DEFAULT 0,
+    vitorias INT DEFAULT 0,
+    empates INT DEFAULT 0,
+    derrotas INT DEFAULT 0,
+    gm INT DEFAULT 0,
+    gc INT DEFAULT 0,
+    sg INT DEFAULT 0,
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+);
+CREATE TABLE jogos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+CREATE TABLE configuracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipes_por_grupo INT NOT NULL,
+    numero_grupos INT NOT NULL,
+    fase_final ENUM('oitavas', 'quartas') NOT NULL
+);
+-- Tabela para armazenar os times classificados para as oitavas de finais
+CREATE TABLE oitavas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    CONSTRAINT fk_time_id FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Tabela para armazenar os times classificados para as quartas de finais
+CREATE TABLE quartas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    CONSTRAINT fk_time_id FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Tabela para armazenar os times classificados para as semifinais
+CREATE TABLE semifinais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    CONSTRAINT fk_time_id FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Tabela para armazenar os times classificados para a final
+CREATE TABLE final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    CONSTRAINT fk_time_id FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+
+
+select*from quartas_de_final;
+select*from jogos;
+select*from times;
+select*from grupos;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Remove o banco de dados existente, se existir
+DROP DATABASE IF EXISTS gerenciador_grupos;
+
+-- Cria o novo banco de dados
+CREATE DATABASE gerenciador_grupos;
+
+-- Usa o banco de dados criado
+USE gerenciador_grupos;
+
+-- Cria a tabela de grupos
+CREATE TABLE grupos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Cria a tabela de times
+CREATE TABLE times (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    logo BLOB NOT NULL,
+    grupo_id INT NOT NULL,
+    pts INT DEFAULT 0,
+    vitorias INT DEFAULT 0,
+    empates INT DEFAULT 0,
+    derrotas INT DEFAULT 0,
+    gm INT DEFAULT 0,
+    gc INT DEFAULT 0,
+    sg INT DEFAULT 0,
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+);
+
+-- Cria a tabela de jogos
+CREATE TABLE jogos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela de configurações
+CREATE TABLE configuracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipes_por_grupo INT NOT NULL,
+    numero_grupos INT NOT NULL,
+    fase_final ENUM('oitavas', 'quartas') NOT NULL
+);
+
+-- Cria a tabela para armazenar os times classificados para as oitavas de finais
+CREATE TABLE oitavas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as quartas de finais
+CREATE TABLE quartas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as semifinais
+CREATE TABLE semifinais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para a final
+CREATE TABLE final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os confrontos da final
+CREATE TABLE final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('final') NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os confrontos das oitavas de finais
+CREATE TABLE oitavas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('oitavas') NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das quartas de finais
+CREATE TABLE quartas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('quartas') NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das semifinais
+CREATE TABLE semifinais_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('semifinais') NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos da final
+CREATE TABLE final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('final') NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Comandos para visualização das tabelas
+select*from quartas_de_final_confrontos;
+-- Visualiza todos os registros na tabela quartas_de_final
+SELECT * FROM quartas_de_final;
+
+-- Visualiza todos os registros na tabela jogos
+SELECT * FROM jogos;
+
+-- Visualiza todos os registros na tabela times
+SELECT * FROM times;
+
+-- Visualiza todos os registros na tabela grupos
+SELECT * FROM grupos;
+
+
+
+
+
+
+
+
+
+
+ATUALIZADA
+-- Remove o banco de dados existente, se existir
+DROP DATABASE IF EXISTS gerenciador_grupos;
+
+-- Cria o novo banco de dados
+CREATE DATABASE gerenciador_grupos;
+
+-- Usa o banco de dados criado
+USE gerenciador_grupos;
+
+-- Cria a tabela de grupos
+CREATE TABLE grupos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Cria a tabela de times
+CREATE TABLE times (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    logo BLOB NOT NULL,
+    grupo_id INT NOT NULL,
+    pts INT DEFAULT 0,
+    vitorias INT DEFAULT 0,
+    empates INT DEFAULT 0,
+    derrotas INT DEFAULT 0,
+    gm INT DEFAULT 0,
+    gc INT DEFAULT 0,
+    sg INT DEFAULT 0,
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+);
+
+-- Cria a tabela de jogos
+CREATE TABLE jogos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela de configurações com as fases finais atualizadas
+CREATE TABLE configuracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipes_por_grupo INT NOT NULL,
+    numero_grupos INT NOT NULL,
+    fase_final ENUM('oitavas', 'quartas', 'semifinais', 'final') NOT NULL
+);
+
+-- Cria a tabela para armazenar os times classificados para as oitavas de finais
+CREATE TABLE oitavas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as quartas de finais
+CREATE TABLE quartas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as semifinais
+CREATE TABLE semifinais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para a final
+CREATE TABLE final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os confrontos da final
+CREATE TABLE final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('final') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das oitavas de finais
+CREATE TABLE oitavas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('oitavas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das quartas de finais
+CREATE TABLE quartas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('quartas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das semifinais
+CREATE TABLE semifinais_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('semifinais') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos da final
+
+
+-- Comandos para visualização das tabelas
+select*from quartas_de_final_confrontos;
+-- Visualiza todos os registros na tabela quartas_de_final
+SELECT * FROM quartas_de_final;
+
+-- Visualiza todos os registros na tabela jogos
+SELECT * FROM jogos;
+
+-- Visualiza todos os registros na tabela times
+SELECT * FROM times;
+
+-- Visualiza todos os registros na tabela grupos
+SELECT * FROM grupos;
+
+COLOCA:
+
+-- Remove o banco de dados existente, se existir
+DROP DATABASE IF EXISTS gerenciador_grupos;
+
+-- Cria o novo banco de dados
+CREATE DATABASE gerenciador_grupos;
+
+-- Usa o banco de dados criado
+USE gerenciador_grupos;
+
+-- Cria a tabela de grupos
+CREATE TABLE grupos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Cria a tabela de times
+CREATE TABLE times (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    logo BLOB NOT NULL,
+    grupo_id INT NOT NULL,
+    pts INT DEFAULT 0,
+    vitorias INT DEFAULT 0,
+    empates INT DEFAULT 0,
+    derrotas INT DEFAULT 0,
+    gm INT DEFAULT 0,
+    gc INT DEFAULT 0,
+    sg INT DEFAULT 0,
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+);
+
+-- Cria a tabela de jogos
+CREATE TABLE jogos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela de configurações com as fases finais atualizadas
+CREATE TABLE configuracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipes_por_grupo INT NOT NULL,
+    numero_grupos INT NOT NULL,
+    fase_final ENUM('oitavas', 'quartas', 'semifinais', 'final') NOT NULL
+);
+
+-- Cria a tabela para armazenar os times classificados para as oitavas de finais
+CREATE TABLE oitavas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as quartas de finais
+CREATE TABLE quartas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para as semifinais
+CREATE TABLE semifinais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os times classificados para a final
+CREATE TABLE final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+
+-- Cria a tabela para armazenar os confrontos da final
+CREATE TABLE final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('final') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das oitavas de finais
+CREATE TABLE oitavas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('oitavas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das quartas de finais
+CREATE TABLE quartas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('quartas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+
+-- Cria a tabela para armazenar os confrontos das semifinais
+CREATE TABLE semifinais_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_nome VARCHAR(255),
+    timeB_nome VARCHAR(255),
+    fase ENUM('semifinais') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL
+);
+CREATE TABLE fase_execucao (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fase VARCHAR(50) NOT NULL,
+    executado BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+select*from  fase_execucao;
+
+select*from oitavas_de_final_confrontos;
+select*from final;
+select*from semifinais;
+select*from oitavas_de_final;
+select*from final_confrontos;
+select*from  semifinais_confrontos;
+-- Comandos para visualização das tabelas
+select*from quartas_de_final_confrontos;
+-- Visualiza todos os registros na tabela quartas_de_final
+SELECT * FROM quartas_de_final;
+
+-- Visualiza todos os registros na tabela jogos
+SELECT * FROM jogos;
+
+-- Visualiza todos os registros na tabela times
+SELECT * FROM times;
+
+-- Visualiza todos os registros na tabela grupos
+SELECT * FROM grupos;
+select*from configuracoes;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MUDANÇA:
+SET fase_final = 'quartas' -- ou 'oitavas', 'semifinais', 'final', conforme necessário
+WHERE id = 1;
+
+
+
+O QUE FAZER AGORA
+
+ARQUIVO 
+oitavas,QUARTAS DE FINAIS , semifinais,FINAL. PARA adicionar  OS CONFRONTOS NO BANCO DE dados
+
+
+
+
+
+
+
+
+
+
+
+eu quero em outro formato, tipo cria um calculo para dividir a quantidade confrontos de cada final
+ e por uma de um lado esquerdo e outra do lado direito para ficar nesse formato aqui:
+
+ oitavas quartas semifinal final semifinal quartas oitavas
+
+                           terceiro lugar
+
+nesse formato ai exemplo, da oitavas metade de um lado e metade do outro, o mesmo stilo que ta so muda essa logica
