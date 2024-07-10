@@ -90,6 +90,17 @@
             transform: translateX(-50%);
             padding: 10px;
         }
+        .old-games{
+            display: flex;
+            
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: auto;
+        }
+        .last4games{
+            width: auto;
+            height: auto;
+        }
 
         /*parte dos jogos*/
 
