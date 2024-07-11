@@ -30,7 +30,7 @@
     <div id="mensagem"></div>
     <div id="grupos">
         <?php
-        include 'C:\xampp\htdocs\copa_organizada\app\config\conexao.php';
+        include '../../../config/conexao.php';
 
         // Verifica se o formulário foi submetido
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['equipesPorGrupo']) && isset($_POST['numeroGrupos']) && isset($_POST['faseFinal'])) {

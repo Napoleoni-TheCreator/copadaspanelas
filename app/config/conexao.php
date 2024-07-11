@@ -3,7 +3,7 @@
 $servername = "localhost";  // Endereço do servidor MySQL (geralmente 'localhost')
 $username = "root";  // Nome de usuário do MySQL
 $password = "";    // Senha do MySQL
-$database = "gerenciador_grupos"; // Nome do banco de dados
+$database = "copa"; // Nome do banco de dados
 
 // Cria a conexão
 $conn = new mysqli($servername, $username, $password, $database);
