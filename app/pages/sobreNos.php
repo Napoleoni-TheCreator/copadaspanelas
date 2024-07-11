@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>História da Copa das Panelas</title>
 
-
-
-
   <style>
         *{
             margin: 0%;
@@ -16,7 +13,7 @@
         body {
             height: 100vh;
             margin: 0;
-            padding: 0; ''''''''''''''''
+            padding: 0; 
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             background: linear-gradient(70deg, #ffffff, #ffffff);
