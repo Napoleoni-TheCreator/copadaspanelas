@@ -94,7 +94,7 @@ main{
 
 .Slideshare{
     width: 100%;
-    height: 420px;
+    height: 600px;
     background-color: white;
 }
 
@@ -145,23 +145,42 @@ main{
 }
 
 .news-block {
-    background-color: #d8d8d8;
+    background-color: #7e1616;
     margin: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     width: calc(50% - 20px);
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-block a{
+
+    color: white;
+
 }
 
 .news-block:hover {
     transform: scale(1.05);
 }
 
-.news-block img {
+.img-container {
     width: 100%;
-    max-height: 200px; /* Ajuste a altura máxima conforme necessário */
-    object-fit: cover;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    overflow: hidden;
+    position: relative;
+}
+
+.img-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* cover to maintain aspect ratio */
 }
 
 .news-text {

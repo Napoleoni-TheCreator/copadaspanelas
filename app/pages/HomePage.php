@@ -11,7 +11,10 @@
     <title>Copa das Panelas</title>
 </head>
 <body>
-    <?php include 'header.php'?>
+    <?php include 'header.php';
+        include '../config/conexao.php';
+        $noticias = $conn->query("SELECT * FROM noticias ORDER BY data_adicao DESC LIMIT 4");
+    ?>
     <nav>
         <ul>
             <li><a href="../pages/HomePage.php">Home</a></li>
@@ -36,7 +39,7 @@
             <li>
                 <a href="">Dados da Copa ▾</a>
                 <ul class="dropdown">
-                    <li><a href="">Publicações</a></li>
+                    <li><a href="../pages/publicacoes.php">Publicações</a></li>
                     <li><a href="../pages/sobreNos.php">História</a></li>
                     <li><a href="">Estatísticas</a></li> <!--Criar um dropdown para os outros arquivos de estatistica de jogador-->
                 </ul>
@@ -50,13 +53,13 @@
         <section class="Slideshare">
             <div class="slideshow-container">
                 <div class="mySlides fade">
-                    <img src="../../public/imgs/pngtree-banner-background-of-football-colorful-game-publicity-poster-image_924290.jpg" style="width:100%">
+                    <img src="../../public/img/banner_copadaspanelas.jpg" style="width:100%">
                 </div>
                 <div class="mySlides fade">
-                    <img src="../../public/imgs/TSF-2022-EH-1400x500-banner.png" style="width:100%">
+                    <img src="../../public/img/banner_2.jpg " style="width:100%">
                 </div>
                 <div class="mySlides fade">
-                    <img src="../../public/imgs/Banner04-RBA-1400x500-1.jpg" style="width:100%">
+                    <img src="../../public/img/gettyimages-451721881-2048x2048.jpg" style="width:100%">
                 </div>
             </div>
 
@@ -64,44 +67,22 @@
     <h3>NOTICIAS</h3>
     <hr>
 
+
     <section class="noticias">
         <div class="news-container">
-            <div class="news-block">
-                <a href="https://www.example.com/noticia1" target="_blank">
-                    <img src="noticia1.jpg" alt="Notícia 1">
-                    <div class="news-text">
-                        <h3>Título da Notícia 1</h3>
-                        <p>Descrição breve da notícia 1.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="news-block">
-                <a href="https://www.example.com/noticia2" target="_blank">
-                    <img src="noticia2.jpg" alt="Notícia 2">
-                    <div class="news-text">
-                        <h3>Título da Notícia 2</h3>
-                        <p>Descrição breve da notícia 2.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="news-block">
-                <a href="https://www.example.com/noticia3" target="_blank">
-                    <img src="../../public/imgs/neymar.jpeg" alt="Notícia 3">
-                    <div class="news-text">
-                        <h3>Título da Notícia 3</h3>
-                        <p>Descrição breve da notícia 3.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="news-block">
-                <a href="https://www.example.com/noticia4" target="_blank">
-                    <img src="noticia4.jpg" alt="Notícia 4">
-                    <div class="news-text">
-                        <h3>Título da Notícia 4</h3>
-                        <p>Descrição breve da notícia 4.</p>
-                    </div>
-                </a>
-            </div>
+            <?php while($row = $noticias->fetch_assoc()): ?>
+                <div class="news-block">
+                    <a href="<?php echo $row['link']; ?>" target="_blank">
+                        <div class="img-container">
+                            <img src="data:image/jpeg;base64,<?php echo base64_encode($row['imagem']); ?>" alt="<?php echo $row['titulo']; ?>">
+                        </div>
+                        <div class="news-text">
+                            <h3><?php echo $row['titulo']; ?></h3>
+                            <p><?php echo $row['descricao']; ?></p>
+                        </div>
+                    </a>
+                </div>
+            <?php endwhile; ?>
         </div>
     </section>
 
@@ -110,7 +91,7 @@
 
         <section class="conteudo">
             <div class="image-block">
-                <img src="../../public/imgs/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
+                <img src="../../public/img/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
             </div>
             <div class="text-block">
                 <h2><a href="">Historia Copa das Panelas</a></h2>
@@ -118,7 +99,7 @@
             </div>
 
             <div class="image-block">
-                <img src="../../public/imgs/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
+                <img src="../../public/img/IMG-20240404-WA0002.jpg" alt="Imagem Descritiva">
             </div>
             <div class="text-block">
                 <h2><a href="">Jogadores da Copa</a></h2>

@@ -134,6 +134,17 @@ CREATE TABLE fase_execucao (
     fase VARCHAR(50) NOT NULL,
     executado BOOLEAN NOT NULL DEFAULT FALSE
 );
+-- Criando Tabela Noticias Eduardo
+CREATE TABLE noticias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT NOT NULL,
+    imagem LONGBLOB NOT NULL,
+    link VARCHAR(255) NOT NULL,
+    data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 
 select*from  fase_execucao;
 
