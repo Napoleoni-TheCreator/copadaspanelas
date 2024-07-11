@@ -28,15 +28,17 @@
             <li>
                 <a href="">Tabelas de Jogos ▾</a>
                 <ul class="dropdown">
-                   <li><a href="">Grupos</a></li>
-                   <li><a href="">Eliminatórias</a></li>
+                   <li><a href="../pages/tabela_classificacao/tabela_classificação.php">Grupos</a></li>
+                   <li><a href="../pages/tabela_classificacao/exibir_finais.php">Eliminatórias</a></li>
+                   <li><a href="../pages/tabela_classificacao/rodadas.php">Rodadas</a></li>
                 </ul>     
             </li>
             <li>
                 <a href="">Dados da Copa ▾</a>
                 <ul class="dropdown">
-                    <li><a href="">História</a></li>
-                    <li><a href="">Estatísticas</a></li>
+                    <li><a href="">Publicações</a></li>
+                    <li><a href="../pages/sobreNos.php">História</a></li>
+                    <li><a href="">Estatísticas</a></li> <!--Criar um dropdown para os outros arquivos de estatistica de jogador-->
                 </ul>
             </li>
             <li><a href="Jogos Proximos.php">Transmissão</a></li>
