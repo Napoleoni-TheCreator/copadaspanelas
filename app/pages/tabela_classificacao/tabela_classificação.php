@@ -62,6 +62,8 @@
             max-height: 50px; /* Altura máxima da logo (ajuste conforme necessário) */
             vertical-align: middle; /* Centraliza verticalmente a logo */
             margin-right: 5px; /* Espaço mínimo entre a logo e o texto do time */
+            border-radius: 100%;/* Utiliza 50% para criar um círculo*/
+
         }
         .small-col {
             width: 70px; /* Largura das colunas pequenas (P, J, V, E, D, GP, GC, SG) */
@@ -156,7 +158,7 @@
 
     <?php
     function mostrarGrupos() {
-        include 'C:\xampp\htdocs\copa_organizada\app\config\conexao.php';
+        include '../../config/conexao.php';
 
         $sqlGrupos = "SELECT id, nome FROM grupos ORDER BY nome";
         $resultGrupos = $conn->query($sqlGrupos);
@@ -251,7 +253,7 @@
     }
 
     function gerarUltimosJogos($timeId) {
-        include 'C:\xampp\htdocs\copa_organizada\app\config\conexao.php';
+        include '../../config/conexao.php';
 
         // Consulta para buscar os últimos resultados dos jogos ordenados por data decrescente e limitados aos últimos 5 jogos
         $sqlJogos = "SELECT resultado FROM jogos WHERE time_id = $timeId ORDER BY id DESC LIMIT 5";

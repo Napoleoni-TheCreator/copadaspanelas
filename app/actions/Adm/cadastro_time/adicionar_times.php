@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <select id="grupo_id" name="grupo_id" required>
                 <?php
                 // Conexão com o banco de dados para carregar os grupos disponíveis
-                include 'C:\xampp\htdocs\copa_organizada\app\config\conexao.php';
+                include '../../../config/conexao.php';
 
                 $sql = "SELECT id, nome FROM grupos ORDER BY nome";
                 $result = $conn->query($sql);

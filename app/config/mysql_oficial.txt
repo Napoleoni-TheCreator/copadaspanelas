@@ -158,6 +158,15 @@ SELECT * FROM times;
 SELECT * FROM grupos;
 select*from configuracoes;
 
+-- jogadores two
+CREATE TABLE jogadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    posicao VARCHAR(50) NOT NULL,
+    numero INT NOT NULL,
+    time_id INT NOT NULL,
+    imagem LONGBLOB NOT NULL
+);
 
 
 NÃO APAGUE POR FAVOR 

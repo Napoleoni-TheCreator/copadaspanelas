@@ -103,6 +103,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         label {
             font-size: 30px;
         }
+                /* Estilo para o select */
+                select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            appearance: none; /* Remove o estilo padrão do sistema */
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 20 20" fill="currentColor"><path d="M7 9l3 3 3-3h-6z"/></svg>'); /* Ícone de seta dropdown (SVG inline) */
+            background-repeat: no-repeat;
+            background-position: right 10px center; /* Posiciona o ícone à direita */
+            background-size: 20px;
+            background-color: #fff; /* Cor de fundo do select */
+            cursor: pointer;
+        }
+        select:focus {
+            outline: none; /* Remove o contorno ao focar */
+            border-color: #666; /* Cor da borda ao focar */
+        }
+        select option {
+            font-size: 16px; /* Tamanho da fonte das opções */
+        }
     </style>
 </head>
 <body>
@@ -118,8 +142,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="posicao" name="posicao" required>
                 <label for="numero">Número:</label>
                 <input type="text" id="numero" name="numero" required>
-                <label for="time">Time ID:</label>
-                <input type="text" id="time" name="time" required>
+                <label for="time">Time:</label>
+                <select id="time" name="time" required>
+                    <option value="">Selecione o time</option>
+                    <?php
+                    // Conexão com o banco de dados
+                    include '../../../config/conexao.php';
+
+                    // Consulta SQL para obter todos os times
+                    $sql = "SELECT id, nome FROM times";
+                    $result = $conn->query($sql);
+
+                    // Loop para gerar as opções do select
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
+                    }
+
+                    // Fechar a conexão com o banco de dados
+                    $conn->close();
+                    ?>
+                </select>
                 <label for="imagem">Imagem do Jogador:</label>
                 <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()" required>
                 <img id="imagem-preview" src="#" alt="Imagem do Jogador">
