@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\copa_organizada\app\config\conexao.php';
+include '../../../config/conexao.php';
 
 // Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
