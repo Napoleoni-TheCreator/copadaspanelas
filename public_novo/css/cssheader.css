@@ -1,0 +1,81 @@
+/*HEADER*/
+
+header{
+    width: 100%;
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, rgb(214, 0, 0),rgb(156, 0, 0));
+}   
+
+#Icon{
+    width: 125px;
+    height: 125px;
+}
+
+#Icon img{
+    width: 100%;
+}
+
+#titulo{
+    color: rgb(255, 255, 255);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 700;
+}
+
+.cadastro{
+    font-size: 1.1em;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.cadastro a{
+    text-decoration: none;
+    color: white;
+}
+
+.cadastro a i{
+    padding-right: 8px;
+}
+
+
+.cadastro:hover{
+    background-color: rgb(255, 255, 255);
+    transition: 0.8s;
+}
+
+.cadastro a:hover{
+    color: rgb(150, 0, 0);
+    transition: 0.3s;
+}
+
+@media only screen and (max-width: 768px) {
+    header {
+        height: auto; /* Altura automática para ajustar ao conteúdo */
+        padding: 10px; /* Espaçamento interno menor */
+        flex-direction: column; /* Ajusta para uma coluna */
+        align-items: center; /* Centraliza os itens */
+    }
+
+    #Icon {
+        width: 80px; /* Reduz o tamanho do ícone */
+        height: 80px; /* Reduz o tamanho do ícone */
+        margin-bottom: 10px; /* Espaçamento inferior para separar do título */
+    }
+
+    #titulo {
+        font-size: 1.5em; /* Tamanho de fonte maior para o título */
+        margin-bottom: 10px; /* Espaçamento inferior para separar do link de cadastro */
+    }
+
+    .cadastro {
+        margin-right: 0; /* Remove a margem direita */
+    }
+
+    .cadastro a {
+        padding: 10px 15px; /* Reduz o padding do link de cadastro */
+        font-size: 0.9em; /* Reduz o tamanho da fonte do link de cadastro */
+    }
+}

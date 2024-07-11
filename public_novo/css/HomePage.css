@@ -1,0 +1,363 @@
+/*EXTRA*/
+*{
+
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+hr{
+    border-color: red;
+    border-width: 3px;
+}
+
+h3{
+    margin-top: 20px;
+}
+
+
+
+/*NAV*/
+
+nav{
+    width: 100%;
+    background-color: rgb(180, 0, 0);
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul {
+    width: auto;
+    display: flex;
+    background-color: none;
+    list-style: none;
+}
+
+nav ul li{
+    position: relative;
+    display: inline-block;
+    position: relative;
+}
+
+nav ul li a{
+    display: block;
+    padding: 20px 15px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+nav ul li ul.dropdown li{
+    display: block;
+}
+
+nav ul li ul.dropdown{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgb(109, 0, 0);
+    display: none;
+    width: 200px; /* Adjust width as needed */
+    z-index: 999;
+    /*
+    width: 100%;
+    background-color: rgb(109, 0, 0);
+    position: absolute;
+    z-index: 999;
+    display: none;*/
+}
+
+nav ul li a:hover{
+    transition: 1s;
+    background-color: rgb(255, 255, 255);
+    color: rgb(100, 0, 0)
+}
+nav ul li:hover ul.dropdown{
+    transition: 0.5s;
+    display: block;
+}
+
+/* MAIN */
+
+
+main{
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+}
+
+/*SLIDE*/
+
+.Slideshare{
+    width: 100%;
+    height: 420px;
+    background-color: white;
+}
+
+.slideshow-container {
+    position: relative;
+    height: 100%;
+    /*max-width: 1000px;*/
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.mySlides {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.mySlides img {
+    width: 100%;
+    height: 100%;
+    /*object-fit: contain;*/
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: 0.4}
+    to {opacity: 1}
+}
+
+
+/*NOTICIAS E INFO*/
+.noticias {
+    width: 100%;
+    height: auto;
+}
+
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.news-block {
+    background-color: #d8d8d8;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: calc(50% - 20px);
+    transition: transform 0.2s;
+}
+
+.news-block:hover {
+    transform: scale(1.05);
+}
+
+.news-block img {
+    width: 100%;
+    max-height: 200px; /* Ajuste a altura máxima conforme necessário */
+    object-fit: cover;
+}
+
+.news-text {
+    padding: 15px;
+}
+
+.news-text h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.news-text p {
+    margin: 10px 0 0;
+    color: #666;
+}
+
+.noticias a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/*SESSAO DE CONTEUDO*/
+.conteudo {
+    display: flex;
+    height: auto;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.image-block {
+    flex: 0 0 600px; /* largura fixa */
+    height: 400px; /* altura fixa */
+    overflow: hidden;
+    border-radius: 8px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-block img {
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-block:hover img {
+    transform: scale(1.1);
+}
+
+.text-block {
+    flex: 1;
+}
+
+.text-block h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+.text-block p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+}
+
+.text-block h2 a{
+
+    color: rgb(202, 0, 0);
+    
+}
+
+
+
+/* CONTADOR */
+
+#countdown-balloon {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    padding: 40px 80px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 2px 5px;
+    background-color: #ff4444;
+    color: white;
+}
+
+#description {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #000000;
+}
+
+#countdown {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#countdown div {
+    font-size: 24px;
+    margin: 0 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    /* Header */
+    header {
+        height: 60px; /* Reduz a altura do cabeçalho */
+    }
+
+    /* Navigation */
+    nav {
+        flex-direction: column; /* Altera para layout de coluna */
+        align-items: stretch; /* Alinha itens à esquerda */
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: column; /* Altera para layout de coluna */
+        padding: 0;
+    }
+
+    nav ul li {
+        position: static; /* Restaura a posição estática */
+        width: 100%; /* Garante que os itens ocupem a largura total */
+    }
+
+    nav ul li a {
+        padding: 15px; /* Espaçamento menor nos links */
+        font-size: 14px; /* Tamanho menor de fonte */
+    }
+
+    nav ul li ul.dropdown {
+        position: static; /* Restaura a posição estática */
+        width: 100%; /* Garante que o submenu ocupe a largura total */
+        display: none; /* Esconde submenu por padrão */
+    }
+
+    nav ul li:hover ul.dropdown {
+        display: block; /* Mostra submenu ao passar o mouse */
+    }
+
+    /* Slides */
+    .Slideshare {
+        height: 250px; /* Reduz altura dos slides */
+    }
+
+    .mySlides img {
+        height: 100%; /* Garante que as imagens dos slides ocupem a altura total */
+        object-fit: cover; /* Ajusta para cobrir o container */
+    }
+
+    /* Notícias */
+    .news-block {
+        width: 100%; /* Define largura total para ocupar a linha */
+        margin: 10px 0; /* Margens menores entre blocos */
+    }
+
+    /* Conteúdo */
+    .conteudo {
+        flex-direction: column; /* Altera para layout de coluna */
+        align-items: center; /* Centraliza os itens na coluna */
+    }
+
+    .image-block,
+    .text-block {
+        width: 100%; /* Garante largura total */
+        margin: 10px 0; /* Margens menores entre blocos */
+        text-align: center; /* Centraliza texto */
+    }
+
+    .image-block img {
+        width: 100%; /* Imagens ocupam a largura total */
+        height: auto; /* Altura automática */
+    }   
+}
