@@ -639,5 +639,14 @@ nesse formato ai exemplo, da oitavas metade de um lado e metade do outro, o mesm
 
 
 UPDATE configuracoes
-SET fase_final = 'semifinais'
+SET fase_final = 'quartas'
 LIMIT 1;
+TRUNCATE TABLE quartas_de_final_confrontos;
+
+
+drop table fase_execucao;
+CREATE TABLE fase_execucao (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fase VARCHAR(50) NOT NULL,
+    executado BOOLEAN NOT NULL DEFAULT FALSE
+);

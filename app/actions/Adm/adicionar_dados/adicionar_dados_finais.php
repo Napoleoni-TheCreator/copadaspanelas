@@ -1,6 +1,104 @@
 <?php
 include '../../../config/conexao.php';
 
+// Função para limpar o status das fases subsequentes
+function limparFases($fase_atual) {
+    global $conn;
+    
+    // Ordem das fases
+    $ordem_fases = ['oitavas', 'quartas', 'semifinais', 'final'];
+    
+    // Encontra o índice da fase atual
+    $indice_atual = array_search($fase_atual, $ordem_fases);
+    
+    if ($indice_atual !== false) {
+        // Atualiza o status das fases subsequentes
+        foreach ($ordem_fases as $indice => $fase) {
+            if ($indice > $indice_atual) {
+                $status = FALSE;
+                $stmt = $conn->prepare("UPDATE fase_execucao SET executado = ? WHERE fase = ?");
+                $stmt->bind_param("is", $status, $fase);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+    }
+}
+
+// Função para atualizar o status das fases com base na fase selecionada
+function atualizarFases($fase_selecionada) {
+    global $conn;
+    
+    // Ordem das fases
+    $ordem_fases = ['oitavas', 'quartas', 'semifinais', 'final'];
+    
+    // Encontra o índice da fase selecionada
+    $indice_selecionado = array_search($fase_selecionada, $ordem_fases);
+    
+    if ($indice_selecionado !== false) {
+        // Atualiza o status das fases
+        foreach ($ordem_fases as $indice => $fase) {
+            $status = ($indice < $indice_selecionado) ? TRUE : FALSE;
+            $stmt = $conn->prepare("UPDATE fase_execucao SET executado = ? WHERE fase = ?");
+            $stmt->bind_param("is", $status, $fase);
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+}
+
+// Função para verificar se uma fase já foi executada
+function faseJaExecutada($fase) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM fase_execucao WHERE fase = ? AND executado = 1");
+    $stmt->bind_param("s", $fase);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $executado = $row['count'] > 0;
+    $stmt->close();
+    return $executado;
+}
+
+// Função para inicializar as fases fixas na tabela
+function inicializarFaseExecucao() {
+    global $conn;
+    $fases = ['oitavas', 'quartas', 'semifinais', 'final'];
+    foreach ($fases as $fase) {
+        // Verifica se a fase já existe na tabela
+        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM fase_execucao WHERE fase = ?");
+        $stmt->bind_param("s", $fase);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        if ($row['count'] == 0) {
+            // Insere a fase somente se não existir
+            $stmt = $conn->prepare("INSERT INTO fase_execucao (fase) VALUES (?)");
+            $stmt->bind_param("s", $fase);
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+}
+
+// Inicializa as fases na tabela (evita duplicatas)
+inicializarFaseExecucao();
+
+// Processa a mudança de fase final
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['fase_final'])) {
+    $nova_fase_final = $_POST['fase_final'];
+
+    // Atualiza a fase final na tabela de configurações
+    $stmt = $conn->prepare("UPDATE configuracoes SET fase_final = ? WHERE id = (SELECT MAX(id) FROM configuracoes)");
+    $stmt->bind_param("s", $nova_fase_final);
+    $stmt->execute();
+    $stmt->close();
+    
+    // Atualiza o status das fases
+    atualizarFases($nova_fase_final);
+}
+
 // Obtém a fase final configurada
 $sql = "SELECT fase_final FROM configuracoes ORDER BY id DESC LIMIT 1";
 $result = $conn->query($sql);
@@ -30,15 +128,15 @@ switch ($fase_final) {
         die("Fase final desconhecida.");
 }
 
-// Manipula a atualização individual dos gols
+// Manipula a atualização dos dados dos confrontos
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['atualizar_individual'])) {
     $id = $_POST['id'];
     $gols_marcados_timeA = $_POST['gols_marcados_timeA'];
     $gols_marcados_timeB = $_POST['gols_marcados_timeB'];
 
-    // Verifica se é um empate
+    // Verifica se os gols marcados são iguais
     if ($gols_marcados_timeA == $gols_marcados_timeB) {
-        echo "<script>alert('Não é possível adicionar um empate.');</script>";
+        echo "<script>alert('Empate detectado. Os gols marcados pelos dois times são iguais.');</script>";
     } else {
         $gols_contra_timeA = $gols_marcados_timeB; // Gols contra do Time A é igual aos gols marcados do Time B
         $gols_contra_timeB = $gols_marcados_timeA; // Gols contra do Time B é igual aos gols marcados do Time A
@@ -52,6 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['atualizar_individual']
         $stmt->bind_param('iiiii', $gols_marcados_timeA, $gols_contra_timeA, $gols_marcados_timeB, $gols_contra_timeB, $id);
 
         if ($stmt->execute()) {
+            // Limpa as fases subsequentes
+            limparFases($fase_final);
             echo "Dados atualizados com sucesso!";
         } else {
             echo "Erro ao atualizar os dados: " . $conn->error;
@@ -94,56 +194,65 @@ $result_confrontos = $conn->query($sql_confrontos);
         .form-inline button {
             margin-left: 10px;
         }
-        #input{
+        #input {
             width: 29px;
         }
-
         input[type=number] {
             -webkit-appearance: none; /* Remove os botões em navegadores baseados em WebKit (Chrome, Safari) */
             -moz-appearance: textfield !important; /* Remove os botões em Firefox */
-            appearance: none; /* Remova os botões em navegadores que suportam a propriedade padrão */
+            appearance: none; /* Remove os botões em navegadores que suportam a propriedade padrão */
         }
-
     </style>
 </head>
 <body>
     <h1>Adicionar Dados Finais - Fase: <?php echo ucfirst($fase_final); ?></h1>
-    <form method="post" action="adicionar_dados_finais.php">
+    
+    <!-- Formulário para selecionar e atualizar a fase final -->
+    <form method="post" action="">
+        <label for="fase_final">Selecionar Fase Final:</label>
+        <select id="fase_final" name="fase_final" onchange="this.form.submit()">
+            <option value="oitavas" <?php if ($fase_final == 'oitavas') echo 'selected'; ?>>Oitavas de Final</option>
+            <option value="quartas" <?php if ($fase_final == 'quartas') echo 'selected'; ?>>Quartas de Final</option>
+            <option value="semifinais" <?php if ($fase_final == 'semifinais') echo 'selected'; ?>>Semifinais</option>
+            <option value="final" <?php if ($fase_final == 'final') echo 'selected'; ?>>Final</option>
+        </select>
+    </form>
+    
+    <!-- Tabela com confrontos -->
+    <form method="post" action="">
         <table>
-            <tr>
-                <th>Time A</th>
-                <th>Gols Time A</th>
-                <th></th>
-                <th>Gols Time B</th>
-                <th>Time B</th>
-                <th>Ação</th>
-            </tr>
-            <?php
-            if ($result_confrontos->num_rows > 0) {
-                while ($row = $result_confrontos->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<form method='post' action='adicionar_dados_finais.php' class='form-inline'>";
-                    echo "<td>" . htmlspecialchars($row['timeA_nome']) . "</td>";
-                    echo "<td><input type='number' id = 'input' name='gols_marcados_timeA' value='" . htmlspecialchars($row['gols_marcados_timeA']) . "' required></td>";
-                    echo "<td>vs</td>";
-                    echo "<td><input type='number' id = 'input' name='gols_marcados_timeB' value='" . htmlspecialchars($row['gols_marcados_timeB']) . "' required></td>";
-                    echo "<td>" . htmlspecialchars($row['timeB_nome']) . "</td>";
-                    echo "<td>
-                            <input type='hidden' id = 'input' name='id' value='" . htmlspecialchars($row['id']) . "'>
-                            <button type='submit' name='atualizar_individual'>Atualizar</button>
-                          </td>";
-                    echo "</form>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='6'>Nenhum confronto encontrado.</td></tr>";
-            }
-            ?>
+            <thead>
+                <tr>
+                    <th>Time A</th>
+                    <th>Gols Time A</th>
+                    <th>vs</th>
+                    <th>Gols Time B</th>
+                    <th>Time B</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { ?>
+                <tr>
+                    <form method="post" action="">
+                        <td><?php echo htmlspecialchars($row_confrontos['timeA_nome']); ?></td>
+                        <td>
+                            <input type="number" name="gols_marcados_timeA" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
+                        </td>
+                        <td>vs</td>
+                        <td>
+                            <input type="number" name="gols_marcados_timeB" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
+                        </td>
+                        <td><?php echo htmlspecialchars($row_confrontos['timeB_nome']); ?></td>
+                        <td>
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
+                            <button type="submit" name="atualizar_individual">Atualizar</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php } ?>
+            </tbody>
         </table>
     </form>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

@@ -1,6 +1,7 @@
 <?php
 // include '/opt/lampp/htdocs/CLASSIFICACAO/app/config/conexao.php';
 include '../../config/conexao.php';
+// Atualiza o status da fase como executada
 function atualizarFaseExecutada($fase) {
     global $conn;
     $stmt = $conn->prepare("UPDATE fase_execucao SET executado = TRUE WHERE fase = ?");
@@ -9,16 +10,7 @@ function atualizarFaseExecutada($fase) {
     $stmt->close();
 }
 
-// function faseJaExecutada($fase) {
-//     global $conn;
-//     $stmt = $conn->prepare("SELECT executado FROM fase_execucao WHERE fase = ?");
-//     $stmt->bind_param("s", $fase);
-//     $stmt->execute();
-//     $stmt->bind_result($executado);
-//     $stmt->fetch();
-//     $stmt->close();
-//     return $executado;
-// }
+// Verifica se a fase já foi executada
 function faseJaExecutada($fase) {
     global $conn;
     $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM fase_execucao WHERE fase = ? AND executado = 1");
@@ -31,19 +23,37 @@ function faseJaExecutada($fase) {
     return $executado;
 }
 
-
+// Inicializa as fases fixas na tabela, mas evita duplicatas
 function inicializarFaseExecucao() {
     global $conn;
     $fases = ['oitavas', 'quartas', 'semifinais', 'final'];
     foreach ($fases as $fase) {
-        $stmt = $conn->prepare("INSERT IGNORE INTO fase_execucao (fase) VALUES (?)");
+        // Verifica se a fase já existe na tabela
+        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM fase_execucao WHERE fase = ?");
         $stmt->bind_param("s", $fase);
         $stmt->execute();
-        $stmt->close();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        if ($row['count'] == 0) {
+            // Insere a fase somente se não existir
+            $stmt = $conn->prepare("INSERT INTO fase_execucao (fase) VALUES (?)");
+            $stmt->bind_param("s", $fase);
+            $stmt->execute();
+            $stmt->close();
+        }
     }
 }
-
-
+// Atualizar uma fase específica
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['fase'])) {
+    $fase = $_POST['fase'];
+    if (!faseJaExecutada($fase)) {
+        atualizarFaseExecutada($fase);
+        echo "Fase '$fase' atualizada para executada.";
+    } else {
+        echo "Fase '$fase' já foi executada.";
+    }
+}
 function classificarOitavasDeFinal() {
     global $conn;
     if (faseJaExecutada('oitavas')) {
@@ -186,14 +196,23 @@ function classificarOitavasDeFinal() {
 }
 
 function classificarQuartasDeFinal() {
-    
     global $conn;
+
+    // Verificar se a fase de quartas de final já foi executada
     if (faseJaExecutada('quartas')) {
-        return;
+        return; // Se já foi executada, não faz nada
     }
-    // Limpar a tabela de quartas de final e confrontos
-    $conn->query("TRUNCATE TABLE quartas_de_final");
-    $conn->query("TRUNCATE TABLE quartas_de_final_confrontos");
+
+    // Verificar se já existem times classificados para as quartas de final
+    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM quartas_de_final");
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($count > 0) {
+        die("Já existem times classificados para as quartas de final.");
+    }
 
     // Obter a fase final
     $stmt = $conn->prepare("SELECT fase_final FROM configuracoes LIMIT 1");
@@ -280,19 +299,28 @@ function classificarQuartasDeFinal() {
         $config = $result->fetch_assoc();
         $faseFinal = $config['fase_final'];
         $numeroGrupos = (int) $config['numero_grupos'];
-    
+
         if ($faseFinal == 'quartas') {
+            // Verificar se já existem times classificados para as quartas de final
+            $result = $conn->query("SELECT COUNT(*) AS count FROM quartas_de_final");
+            $row = $result->fetch_assoc();
+            $timesExistentes = $row['count'];
+
+            if ($timesExistentes > 0) {
+                die("Já existem times classificados para as quartas de final.");
+            }
+
             // Calcular a quantidade de times por grupo para as quartas
             $timesPorGrupo = 8 / $numeroGrupos;
-    
+
             if ($timesPorGrupo <= 0 || $timesPorGrupo != intval($timesPorGrupo)) {
                 die("Número de times por grupo inválido para as quartas de final.");
             }
-    
+
             // Limpar a tabela de quartas de final e confrontos
             $conn->query("TRUNCATE TABLE quartas_de_final");
             $conn->query("TRUNCATE TABLE quartas_de_final_confrontos");
-    
+
             // Obter os times classificados de cada grupo
             $timesClassificados = [];
             $gruposClassificados = [];
@@ -303,12 +331,12 @@ function classificarQuartasDeFinal() {
                     $gruposClassificados[$i][] = $row;
                 }
             }
-    
+
             // Verificar se temos exatamente 8 times classificados
             if (count($timesClassificados) != 8) {
                 die("Erro na classificação dos times para as quartas de final.");
             }
-    
+
             // Inserir os times classificados na tabela de quartas de final
             foreach ($timesClassificados as $time) {
                 $stmt = $conn->prepare("INSERT INTO quartas_de_final (time_id, grupo_nome, time_nome) VALUES (?, ?, ?)");
@@ -317,29 +345,30 @@ function classificarQuartasDeFinal() {
                 $stmt->execute();
                 $stmt->close();
             }
-    
+
             // Organizar os confrontos das quartas de final
             $confrontos = [];
             $numGrupos = $numeroGrupos;
-    
+
             for ($i = 1; $i <= $numGrupos / 2; $i++) {
                 $grupoA = $i;
                 $grupoB = $i + $numGrupos / 2;
-    
+
                 $timesGrupoA = $gruposClassificados[$grupoA];
                 $timesGrupoB = $gruposClassificados[$grupoB];
-    
+
                 // Criação dos confrontos
                 for ($j = 0; $j < count($timesGrupoA); $j++) {
                     $timeA = $timesGrupoA[$j];
                     $timeB = $timesGrupoB[count($timesGrupoB) - $j - 1];
-    
+
                     $confrontos[] = [
                         'timeA' => $timeA,
                         'timeB' => $timeB
                     ];
                 }
             }
+
             // Inserir os confrontos das quartas de final
             foreach ($confrontos as $confronto) {
                 $stmt = $conn->prepare("INSERT INTO quartas_de_final_confrontos (timeA_nome, timeB_nome, fase) VALUES (?, ?, 'quartas')");
@@ -347,10 +376,15 @@ function classificarQuartasDeFinal() {
                 $stmt->execute();
                 $stmt->close();
             }
+
+            // Atualizar o status da fase como executada
+            atualizarFaseExecutada('quartas');
         }
     }
-    atualizarFaseExecutada('quartas');
 }
+
+
+// Função para classificar os times para as semifinais
 function classificarSemifinais() {
     global $conn;
 
@@ -425,7 +459,6 @@ function classificarSemifinais() {
     // Atualizar o status da fase como executada
     atualizarFaseExecutada('semifinais');
 }
-
 function classificarFinal() {
     global $conn;
 
@@ -446,7 +479,7 @@ function classificarFinal() {
         return;
     }
 
-    // Verificar se a fase de final já foi executada
+    // Verificar se a fase final já foi executada
     if (faseJaExecutada('final')) {
         echo "A fase final já foi executada.";
         return;
@@ -537,11 +570,14 @@ function classificarFinal() {
 
     // Atualizar o status da fase como executada
     atualizarFaseExecutada('final');
+
     // Atualizar a fase final para 'final'
     $stmt = $conn->prepare("UPDATE configuracoes SET fase_final = 'final' WHERE id = 1");
     $stmt->execute();
     $stmt->close();
 }
+
+
 
 
 // function classificarFinal() {
