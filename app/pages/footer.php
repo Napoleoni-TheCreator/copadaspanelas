@@ -8,10 +8,10 @@
 
         <div class="footerNav">
             <ul>
-                <li><a href="">Página Inicial</a></li>
-                <li><a href="">Sobre Nós</a></li>
+                <li><a href="../pages/HomePage.php">Página Inicial</a></li>
+                <li><a href="../pages/sobreNos.php">Sobre Nós</a></li>
                 <li><a href="">Contato</a></li>
-                <li><a href="">Equipe Dev</a></li>
+                <li><a href="../pages/equipedev.php">Equipe Dev</a></li>
             </ul>
         </div>
 
