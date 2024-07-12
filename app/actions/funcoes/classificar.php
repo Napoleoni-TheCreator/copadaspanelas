@@ -1,6 +1,6 @@
 <?php
 // include '/opt/lampp/htdocs/CLASSIFICACAO/app/config/conexao.php';
-include '../../app/config/conexao.php';
+include '../../config/conexao.php';
 function atualizarFaseExecutada($fase) {
     global $conn;
     $stmt = $conn->prepare("UPDATE fase_execucao SET executado = TRUE WHERE fase = ?");

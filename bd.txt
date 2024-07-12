@@ -629,3 +629,15 @@ eu quero em outro formato, tipo cria um calculo para dividir a quantidade confro
                            terceiro lugar
 
 nesse formato ai exemplo, da oitavas metade de um lado e metade do outro, o mesmo stilo que ta so muda essa logica
+
+
+
+
+
+
+
+
+
+UPDATE configuracoes
+SET fase_final = 'semifinais'
+LIMIT 1;
