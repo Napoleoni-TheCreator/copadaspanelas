@@ -203,6 +203,15 @@ function classificarQuartasDeFinal() {
         return; // Se já foi executada, não faz nada
     }
 
+    // Limpar a tabela de final e confrontos
+    if (!$conn->query("TRUNCATE TABLE final")) {
+        echo "Erro ao truncar tabela final: " . $conn->error;
+        return;
+    }
+    if (!$conn->query("TRUNCATE TABLE final_confrontos")) {
+        echo "Erro ao truncar tabela final_confrontos: " . $conn->error;
+        return;
+    }
     // Verificar se já existem times classificados para as quartas de final
     $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM quartas_de_final");
     $stmt->execute();
@@ -394,9 +403,27 @@ function classificarSemifinais() {
     }
 
     // Limpar a tabela de semifinais e confrontos
-    $conn->query("TRUNCATE TABLE semifinais");
-    $conn->query("TRUNCATE TABLE semifinais_confrontos");
 
+    // Limpar a tabela de semifinais e confrontos
+    if (!$conn->query("TRUNCATE TABLE semifinais")) {
+        echo "Erro ao truncar tabela semifinais: " . $conn->error;
+        return;
+    }
+    if (!$conn->query("TRUNCATE TABLE semifinais_confrontos")) {
+        echo "Erro ao truncar tabela semifinais_confrontos: " . $conn->error;
+        return;
+    }
+
+    // Limpar a tabela final
+    if (!$conn->query("TRUNCATE TABLE final")) {
+        echo "Erro ao truncar tabela final: " . $conn->error;
+        return;
+    }
+    if (!$conn->query("TRUNCATE TABLE final_confrontos")){
+        echo "Erro ao truncar table final: " . $conn->error;
+    }
+
+    
     // Obter os vencedores dos confrontos das quartas de finais
     $result = $conn->query("
         SELECT 

@@ -254,5 +254,78 @@ $result_confrontos = $conn->query($sql_confrontos);
             </tbody>
         </table>
     </form>
+    <!-- Botão para executar classificar.php sem abrir uma nova página -->
+    <button id="classificarButton">Classificar</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Função para buscar e atualizar o conteúdo da página
+        function atualizarConteudo() {
+            $.ajax({
+                url: 'atualizar_conteudo.php', // URL do script que fornece os dados atualizados
+                method: 'POST', // Método HTTP
+                dataType: 'json',
+                success: function(response) {
+                    // Atualiza o conteúdo da página com o HTML retornado
+                    $('#conteudo').html(response.html);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro:', error); // Log de erro para depuração
+                }
+            });
+        }
+
+        // Configura a função para ser chamada a cada 1 segundo (1000 milissegundos)
+        setInterval(atualizarConteudo, 1000); // 1000 milissegundos = 1 segundo
+
+
+        // Configura a função para ser chamada a cada 1 segundo (1000 milissegundos)
+        setInterval(atualizarConteudo, 1000); // 1000 milissegundos = 1 segundo
+        document.getElementById('classificarButton').addEventListener('click', function() {
+            fetch('../../funcoes/classificar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'classificar': '1'
+                })
+            })
+            // .then(response => response.text())
+            // .then(data => {
+            //     // Exibir mensagem ou atualizar a página conforme necessário
+            //     console.log(data);
+            //     alert('Classificação concluída!');
+            // })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        });
+    </script>
+                     <!-- Botão para executar classificar.php sem abrir uma nova página
+                     <script>
+        // Função para executar classificar.php em intervalos regulares
+        function executarClassificacao() {
+            fetch('../../funcoes/classificar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'classificar': '1'
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Exibir mensagem ou atualizar a página conforme necessário
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        }
+
+        // Executar a função a cada 10 minutos (600000 milissegundos)
+          setInterval(executarClassificacao, 1000); // 1000 milissegundos = 1 segundo
+    </script> -->
 </body>
 </html>

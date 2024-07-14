@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+.bracket {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+}
+
+
+.round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+.match {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+
+.team {
+  display: flex;
+  align-items: center;
+}
+
+
+.flag {
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
+}
+
+
+.team-name {
+  font-weight: bold;
+}
+
+
+.round-label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+.connector {
+  width: 100%;
+  border-bottom: 1px dashed #ccc;
+  margin-bottom: 10px;
+}
+
+
+.final {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+.disputa {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+
+<h1 style="text-align: center;">MATA-MATA</h1>
+
+
+<div class="container">
+
+
+  <div class="bracket">
+    <div class="round-label">Oitavas de final</div>
+    <div class="round">
+      <div class="match">
+        <div class="team">
+          <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">HOLANDA</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+          <!-- time a -->
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">    <!-- LOGO DO TIME -->
+          <span class="team-name">ARGENTINA</span>   <!-- NOME TIME A -->
+        </div>
+      </div>
+       <!-- VS -->
+      <div class="match">
+         <!-- time B -->
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">  <!-- LOGO DO TIMEB -->
+          <span class="team-name">JAPÃO</span>   <!-- NOME DO TIME B -->
+        </div>
+      </div>
+      <div class="match">
+         <!-- time A -->
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">  <!-- LOGO TIME A -->
+          <span class="team-name">BRASIL</span>    <!-- NOME DO TIME A -->
+        </div>
+      </div>
+       <!-- VS -->
+      <div class="match">
+         <!-- time B -->
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">  <!-- LOGO TIME B -->
+          <span class="team-name">HOLANDA</span>  <!-- NOME DO TIME B -->
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">ARGENTINA</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">JAPÃO</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">BRASIL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="bracket">
+    <div class="round-label">Quartas de final</div>
+    <div class="round">
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+    </div>
+    <div class="round">
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+    </div>
+  </div>
+
+<!-- SEMIFINAL -->
+<div class="bracket">
+    <div class="round-label">SEMIFINAL</div>
+    <div class="round">
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bracket">
+    <div class="round-label">Final</div>
+    <div class="round">
+      <div class="final">
+        DOM 18. 12h
+      </div>
+    </div>
+    <div class="round-label">Disputa de 3º lugar</div>
+    <div class="round">
+      <div class="disputa">
+        SÁB 17. 12h
+      </div>
+      <div class="final">
+        DOM 18. 12h
+      </div>
+    </div>
+  </div>
+<!-- SEMIFINAL -->
+  <div class="bracket">
+    <div class="round-label">SEMIFINAL</div>
+    <div class="round">
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bracket">
+    <div class="round-label">Quartas de final</div>
+    <div class="round">
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+    </div>
+    <div class="round">
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+      <div class="match">
+        <div class="team"></div>
+        <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+        <div class="team"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="bracket">
+    <div class="round-label">Oitavas de final</div>
+    <div class="round">
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">HOLANDA</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">ARGENTINA</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">JAPÃO</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">BRASIL</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">HOLANDA</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">ARGENTINA</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">JAPÃO</span>
+        </div>
+      </div>
+      <div class="match">
+        <div class="team">
+            <img class="flag" src="logo.png" alt="Bandeira da Holanda">
+          <span class="team-name">BRASIL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>
+

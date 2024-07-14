@@ -129,12 +129,15 @@ CREATE TABLE semifinais_confrontos (
     gols_contra_timeA INT DEFAULT NULL,
     gols_contra_timeB INT DEFAULT NULL
 );
+
+-- Cria a tabela de execução das fases
 CREATE TABLE fase_execucao (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     fase VARCHAR(50) NOT NULL,
     executado BOOLEAN NOT NULL DEFAULT FALSE
 );
--- Criando Tabela Noticias Eduardo
+
+-- Cria a tabela de notícias
 CREATE TABLE noticias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
@@ -144,40 +147,28 @@ CREATE TABLE noticias (
     data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
-select*from  fase_execucao;
-
-select*from oitavas_de_final_confrontos;
-select*from final;
-select*from semifinais;
-select*from oitavas_de_final;
-select*from final_confrontos;
-select*from  semifinais_confrontos;
--- Comandos para visualização das tabelas
-select*from quartas_de_final_confrontos;
--- Visualiza todos os registros na tabela quartas_de_final
-SELECT * FROM quartas_de_final;
-
--- Visualiza todos os registros na tabela jogos
-SELECT * FROM jogos;
-
--- Visualiza todos os registros na tabela times
-SELECT * FROM times;
-
--- Visualiza todos os registros na tabela grupos
-SELECT * FROM grupos;
-select*from configuracoes;
-
--- jogadores two
+-- Cria a tabela de jogadores
 CREATE TABLE jogadores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     posicao VARCHAR(50) NOT NULL,
     numero INT NOT NULL,
     time_id INT NOT NULL,
-    imagem LONGBLOB NOT NULL
+    imagem LONGBLOB NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id)
 );
 
-
-NÃO APAGUE POR FAVOR 
+-- Comandos para visualização das tabelas
+SELECT * FROM fase_execucao;
+SELECT * FROM oitavas_de_final_confrontos;
+SELECT * FROM final;
+SELECT * FROM semifinais;
+SELECT * FROM oitavas_de_final;
+SELECT * FROM final_confrontos;
+SELECT * FROM semifinais_confrontos;
+SELECT * FROM quartas_de_final_confrontos;
+SELECT * FROM quartas_de_final;
+SELECT * FROM jogos;
+SELECT * FROM times;
+SELECT * FROM grupos;
+SELECT * FROM configuracoes;
