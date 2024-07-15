@@ -1,5 +1,6 @@
 <?php
-include '/opt/lampp/htdocs/CLASSIFICACAO/app/config/conexao.php';
+include '../../../app/config/conexao.php';
+
 function classificarQuartas() {
     global $conn;
 
@@ -7,8 +8,8 @@ function classificarQuartas() {
     $conn->query("TRUNCATE TABLE quartas_de_final");
     $conn->query("TRUNCATE TABLE quartas_de_final_confrontos");
 
-    // Obter os times classificados para as quartas de final
-    $result = $conn->query("SELECT * FROM oitavas_de_final");
+    // Obter todos os times classificados
+    $result = $conn->query("SELECT * FROM times");
     $times = [];
     while ($row = $result->fetch_assoc()) {
         $times[] = $row;
@@ -28,15 +29,19 @@ function classificarQuartas() {
 
         // Inserir os times classificados para as quartas de final
         $stmt = $conn->prepare("INSERT INTO quartas_de_final (time_id, grupo_nome, time_nome) VALUES (?, ?, ?)");
-        $stmt->bind_param("iss", $timeA['time_id'], $timeA['grupo_nome'], $timeA['time_nome']);
+        $stmt->bind_param("iss", $timeA['id'], $timeA['grupo_nome'], $timeA['nome']);
         $stmt->execute();
-        $stmt->bind_param("iss", $timeB['time_id'], $timeB['grupo_nome'], $timeB['time_nome']);
+        $stmt->bind_param("iss", $timeB['id'], $timeB['grupo_nome'], $timeB['nome']);
         $stmt->execute();
         $stmt->close();
 
+        // Obter os IDs dos times inseridos
+        $timeA_id = $conn->insert_id - 1;
+        $timeB_id = $conn->insert_id;
+
         // Inserir os confrontos das quartas de final
-        $stmt = $conn->prepare("INSERT INTO quartas_de_final_confrontos (timeA_nome, timeB_nome, fase) VALUES (?, ?, 'quartas')");
-        $stmt->bind_param("ss", $timeA['time_nome'], $timeB['time_nome']);
+        $stmt = $conn->prepare("INSERT INTO quartas_de_final_confrontos (timeA_id, timeA_nome, timeB_id, timeB_nome, fase) VALUES (?, ?, ?, ?, 'quartas')");
+        $stmt->bind_param("issi", $timeA_id, $timeA['nome'], $timeB_id, $timeB['nome']);
         $stmt->execute();
         $stmt->close();
     }

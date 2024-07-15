@@ -650,3 +650,27 @@ CREATE TABLE fase_execucao (
     fase VARCHAR(50) NOT NULL,
     executado BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+
+
+
+
+ADICONA:
+drop table quartas_de_final_confrontos;
+CREATE TABLE quartas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeA_nome VARCHAR(100) NOT NULL,
+    timeB_id INT NOT NULL,
+    timeB_nome VARCHAR(100) NOT NULL,
+    fase ENUM('quartas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id)
+);
+
+select*from quartas_de_final;
+select*from quartas_de_final_confrontos;
