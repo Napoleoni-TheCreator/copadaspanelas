@@ -37,6 +37,13 @@ CREATE TABLE jogos (
     data_jogo DATE,
     FOREIGN KEY (time_id) REFERENCES times(id)
 );
+CREATE TABLE jogos_finais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado VARCHAR(50) NOT NULL,
+    data_jogo DATETIME NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
 
 -- Cria a tabela de configurações com as fases finais atualizadas
 CREATE TABLE configuracoes (
