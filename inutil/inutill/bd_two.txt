@@ -344,17 +344,26 @@ CREATE TABLE noticias (
     data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Cria a tabela jogadores
+-- Cria a tabela de jogadores
 CREATE TABLE jogadores (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    posicao VARCHAR(50) NOT NULL,
-    numero INT NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    gols INT DEFAULT 0,
+    assistencias INT DEFAULT 0,
+    cartoes_amarelos INT DEFAULT 0,
+    cartoes_vermelhos INT DEFAULT 0,
+    imagem LONGBLOB,
     time_id INT NOT NULL,
-    imagem LONGBLOB NOT NULL,
     FOREIGN KEY (time_id) REFERENCES times(id)
 );
-
+-- tabela para armazenar o raking de estatistica jogadores
+CREATE TABLE posicoes_jogadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    jogador_id INT NOT NULL,
+    categoria ENUM('gols', 'assistencias', 'cartoes_amarelos', 'cartoes_vermelhos') NOT NULL,
+    posicao INT DEFAULT 0,
+    FOREIGN KEY (jogador_id) REFERENCES jogadores(id)
+);
 -- Comandos para visualização das tabelas
 SELECT * FROM fase_execucao;
 SELECT * FROM oitavas_de_final_confrontos;

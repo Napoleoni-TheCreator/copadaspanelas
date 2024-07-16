@@ -39,11 +39,20 @@ CREATE TABLE jogos (
 );
 CREATE TABLE jogos_finais (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    time_id INT NOT NULL,
-    resultado VARCHAR(50) NOT NULL,
+    timeA_id INT NOT NULL,          -- ID do Time A
+    timeB_id INT NOT NULL,          -- ID do Time B
+    nome_timeA VARCHAR(100) NOT NULL, -- Nome do Time A
+    nome_timeB VARCHAR(100) NOT NULL, -- Nome do Time B
+    gols_marcados_timeA INT NOT NULL, -- Gols marcados pelo Time A
+    gols_marcados_timeB INT NOT NULL, -- Gols marcados pelo Time B
+    resultado_timeA CHAR(1),        -- Resultado do Time A ('V', 'D', 'E')
+    resultado_timeB CHAR(1),        -- Resultado do Time B ('V', 'D', 'E')
     data_jogo DATETIME NOT NULL,
-    FOREIGN KEY (time_id) REFERENCES times(id)
+    fase VARCHAR(50) NOT NULL,      -- Armazena a fase do torneio (oitavas, quartas, etc.)
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id)
 );
+
 
 -- Cria a tabela de configurações com as fases finais atualizadas
 CREATE TABLE configuracoes (
@@ -151,8 +160,26 @@ CREATE TABLE noticias (
     data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
+-- Cria a tabela de jogadores
+CREATE TABLE jogadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    gols INT DEFAULT 0,
+    assistencias INT DEFAULT 0,
+    cartoes_amarelos INT DEFAULT 0,
+    cartoes_vermelhos INT DEFAULT 0,
+    imagem LONGBLOB,
+    time_id INT NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id)
+);
+-- tabela para armazenar o raking de estatistica jogadores
+CREATE TABLE posicoes_jogadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    jogador_id INT NOT NULL,
+    categoria ENUM('gols', 'assistencias', 'cartoes_amarelos', 'cartoes_vermelhos') NOT NULL,
+    posicao INT DEFAULT 0,
+    FOREIGN KEY (jogador_id) REFERENCES jogadores(id)
+);
 select*from  fase_execucao;
 
 select*from oitavas_de_final_confrontos;
@@ -176,15 +203,6 @@ SELECT * FROM times;
 SELECT * FROM grupos;
 select*from configuracoes;
 
--- jogadores two
-CREATE TABLE jogadores (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    posicao VARCHAR(50) NOT NULL,
-    numero INT NOT NULL,
-    time_id INT NOT NULL,
-    imagem LONGBLOB NOT NULL
-);
 
 
 NÃO APAGUE POR FAVOR 

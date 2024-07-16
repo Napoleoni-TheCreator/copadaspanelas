@@ -134,28 +134,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['atualizar_individual']
     $gols_marcados_timeA = $_POST['gols_marcados_timeA'];
     $gols_marcados_timeB = $_POST['gols_marcados_timeB'];
 
-    // Verifica se os gols marcados são iguais
-    if ($gols_marcados_timeA == $gols_marcados_timeB) {
-        echo "<script>alert('Empate detectado. Os gols marcados pelos dois times são iguais.');</script>";
+    // Determina o resultado com base nos gols marcados
+    if ($gols_marcados_timeA > $gols_marcados_timeB) {
+        $resultado_timeA = 'V'; // Vitória para o Time A
+        $resultado_timeB = 'D'; // Derrota para o Time B
+    } elseif ($gols_marcados_timeA < $gols_marcados_timeB) {
+        $resultado_timeA = 'D'; // Derrota para o Time A
+        $resultado_timeB = 'V'; // Vitória para o Time B
     } else {
-        $gols_contra_timeA = $gols_marcados_timeB; // Gols contra do Time A é igual aos gols marcados do Time B
-        $gols_contra_timeB = $gols_marcados_timeA; // Gols contra do Time B é igual aos gols marcados do Time A
+        $resultado_timeA = 'E'; // Empate para o Time A
+        $resultado_timeB = 'E'; // Empate para o Time B
+    }
 
-        $sql_update = "UPDATE $tabela_confrontos SET 
-                       gols_marcados_timeA = ?, gols_contra_timeA = ?, 
-                       gols_marcados_timeB = ?, gols_contra_timeB = ? 
-                       WHERE id = ?";
+    // Atualiza o confronto com os gols marcados e contra
+    $sql_update = "UPDATE $tabela_confrontos SET 
+                   gols_marcados_timeA = ?, gols_contra_timeB = ?, 
+                   gols_marcados_timeB = ?, gols_contra_timeA = ? 
+                   WHERE id = ?";
 
-        $stmt = $conn->prepare($sql_update);
-        $stmt->bind_param('iiiii', $gols_marcados_timeA, $gols_contra_timeA, $gols_marcados_timeB, $gols_contra_timeB, $id);
+    $stmt = $conn->prepare($sql_update);
+    $stmt->bind_param('iiiii', $gols_marcados_timeA, $gols_marcados_timeA, $gols_marcados_timeB, $gols_marcados_timeB, $id);
 
-        if ($stmt->execute()) {
-            // Limpa as fases subsequentes
-            limparFases($fase_final);
-            echo "Dados atualizados com sucesso!";
+    if ($stmt->execute()) {
+        // Obtém os dados do confronto
+        $data_jogo = date('Y-m-d H:i:s'); // Data atual
+        $stmt_select = $conn->prepare("SELECT timeA_id, timeB_id, timeA_nome, timeB_nome FROM $tabela_confrontos WHERE id = ?");
+        $stmt_select->bind_param('i', $id);
+        $stmt_select->execute();
+        $result_select = $stmt_select->get_result();
+        $row_confronto = $result_select->fetch_assoc();
+        $stmt_select->close();
+
+        // Debug: Verifique os valores de $resultado_timeA e $resultado_timeB
+        echo "Debug - resultado_timeA: $resultado_timeA, resultado_timeB: $resultado_timeB\n";
+
+        // Insere o resultado na tabela jogos_finais
+        $stmt_insert = $conn->prepare("INSERT INTO jogos_finais (timeA_id, timeB_id, nome_timeA, nome_timeB, gols_marcados_timeA, gols_marcados_timeB, resultado_timeA, resultado_timeB, data_jogo, fase) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt_insert->bind_param('iissssssss', 
+            $row_confronto['timeA_id'], $row_confronto['timeB_id'], 
+            $row_confronto['timeA_nome'], $row_confronto['timeB_nome'], 
+            $gols_marcados_timeA, $gols_marcados_timeB, 
+            $resultado_timeA, $resultado_timeB, 
+            $data_jogo, $fase_final
+        );
+
+        if ($stmt_insert->execute()) {
+            echo "<script>alert('Dados atualizados com sucesso!');</script>";
         } else {
-            echo "Erro ao atualizar os dados: " . $conn->error;
+            echo "<script>alert('Erro ao inserir dados: " . $stmt_insert->error . "');</script>";
         }
+        $stmt_insert->close();
+    } else {
+        echo "<script>alert('Erro ao atualizar dados: " . $stmt->error . "');</script>";
     }
 }
 
