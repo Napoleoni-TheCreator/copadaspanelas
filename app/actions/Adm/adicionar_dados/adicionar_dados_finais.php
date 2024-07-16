@@ -128,6 +128,9 @@ switch ($fase_final) {
         die("Fase final desconhecida.");
 }
 
+// Define o fuso horário para o horário de Brasília
+date_default_timezone_set('America/Sao_Paulo');
+
 // Manipula a atualização dos dados dos confrontos
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['atualizar_individual'])) {
     $id = $_POST['id'];
@@ -157,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['atualizar_individual']
 
     if ($stmt->execute()) {
         // Obtém os dados do confronto
-        $data_jogo = date('Y-m-d H:i:s'); // Data atual
+        $data_jogo = date('Y-m-d H:i:s'); // Data e hora atual no fuso horário de Brasília
         $stmt_select = $conn->prepare("SELECT timeA_id, timeB_id, timeA_nome, timeB_nome FROM $tabela_confrontos WHERE id = ?");
         $stmt_select->bind_param('i', $id);
         $stmt_select->execute();
