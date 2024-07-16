@@ -378,3 +378,9 @@ SELECT * FROM jogos;
 SELECT * FROM times;
 SELECT * FROM grupos;
 SELECT * FROM configuracoes;
+
+
+
+SELECT * 
+FROM jogos_finais 
+WHERE DATE(data_jogo) = '2024-07-15';
