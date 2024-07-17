@@ -21,26 +21,26 @@
         }
         h1 {
             margin-bottom: 20px;
+            text-align: center;
         }
         .table-container {
             display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
+            flex-direction: column;
             overflow-x: auto;
         }
         .grupo-container {
-            flex: 1;
-            min-width: 300px;
-            margin-right: 20px;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            word-wrap: break-word;
         }
         th {
             background-color: #f2f2f2;
@@ -68,111 +68,76 @@
 <body>
     <div id="rodadas-wrapper">
         <h1>Rodadas das Fases de Grupo</h1>
-        <?php exibirRodadas(); ?>
+        <div class="table-container">
+            <?php exibirRodadas(); ?>
+        </div>
     </div>
-
     <?php
+    include "../pages/rodadas_teste.php";
     function exibirRodadas() {
         include '../config/conexao.php';
+        $sqlRodadas = "SELECT r.rodada, g.nome AS grupo_nome, 
+                              tA.nome AS nome_timeA, tB.nome AS nome_timeB, 
+                              tA.logo AS logo_timeA, tB.logo AS logo_timeB
+                       FROM jogos_fase_grupos r
+                       JOIN grupos g ON r.grupo_id = g.id
+                       JOIN times tA ON r.timeA_id = tA.id
+                       JOIN times tB ON r.timeB_id = tB.id
+                       ORDER BY r.rodada, g.nome";
 
-        $sqlGrupos = "SELECT id, nome FROM grupos ORDER BY nome";
-        $resultGrupos = $conn->query($sqlGrupos);
+        $resultRodadas = $conn->query($sqlRodadas);
 
-        $grupos = [];
-        if ($resultGrupos->num_rows > 0) {
-            while ($rowGrupos = $resultGrupos->fetch_assoc()) {
-                $grupoId = $rowGrupos['id'];
-                $grupoNome = $rowGrupos['nome'];
+        if ($resultRodadas->num_rows > 0) {
+            $rodadas = [];
+            while ($row = $resultRodadas->fetch_assoc()) {
+                $rodadas[$row['rodada']][$row['grupo_nome']][] = [
+                    'timeA' => ['nome' => $row['nome_timeA'], 'logo' => $row['logo_timeA']],
+                    'timeB' => ['nome' => $row['nome_timeB'], 'logo' => $row['logo_timeB']]
+                ];
+            }
 
-                // Buscar times no grupo
-                $sqlTimes = "SELECT id, nome, logo FROM times WHERE grupo_id = $grupoId";
-                $resultTimes = $conn->query($sqlTimes);
+            foreach ($rodadas as $rodada => $grupos) {
+                echo '<div class="grupo-container">';
+                echo '<h2>Rodada ' . $rodada . '</h2>';
+                echo '<table>';
+                echo '<tr>';
+                echo '<th>Time A</th>';
+                echo '<th>VS</th>';
+                echo '<th>Time B</th>';
+                echo '</tr>';
 
-                $times = [];
-                if ($resultTimes->num_rows > 0) {
-                    while ($rowTimes = $resultTimes->fetch_assoc()) {
-                        $times[] = $rowTimes;
+                foreach ($grupos as $grupoNome => $partidas) {
+                    echo '<tr><td colspan="3" class="grupo-header">' . $grupoNome . '</td></tr>';
+                    foreach ($partidas as $partida) {
+                        $logoA = !empty($partida['timeA']['logo']) ? 'data:image/jpeg;base64,' . base64_encode($partida['timeA']['logo']) : '';
+                        $logoB = !empty($partida['timeB']['logo']) ? 'data:image/jpeg;base64,' . base64_encode($partida['timeB']['logo']) : '';
+
+                        echo '<tr>';
+                        echo '<td class="time-row">';
+                        if ($logoA) {
+                            echo '<img src="' . $logoA . '" class="logo-time">';
+                        }
+                        echo '<span class="time-name">' . $partida['timeA']['nome'] . '</span>';
+                        echo '</td>';
+                        echo '<td>VS</td>';
+                        echo '<td class="time-row">';
+                        if ($logoB) {
+                            echo '<img src="' . $logoB . '" class="logo-time">';
+                        }
+                        echo '<span class="time-name">' . $partida['timeB']['nome'] . '</span>';
+                        echo '</td>';
+                        echo '</tr>';
                     }
                 }
 
-                $grupos[$grupoNome] = $times;
+                echo '</table>';
+                echo '</div>';
             }
+        } else {
+            echo '<p>Nenhum jogo encontrado.</p>';
         }
 
         $conn->close();
-
-        $rodadas = [];
-        foreach ($grupos as $grupoNome => $times) {
-            $quantidadeTimes = count($times);
-            if ($quantidadeTimes % 2 != 0) {
-                $times[] = ["nome" => "BYE", "logo" => null]; // Adiciona um BYE se o número de times for ímpar
-                $quantidadeTimes++;
-            }
-
-            $totalRodadas = $quantidadeTimes - 1;
-            $jogosPorRodada = $quantidadeTimes / 2;
-
-            // Gerar todas as rodadas usando o algoritmo round-robin
-            $rodadasGrupo = [];
-            for ($rodada = 0; $rodada < $totalRodadas; $rodada++) {
-                $rodadasGrupo[$rodada] = [];
-                for ($jogo = 0; $jogo < $jogosPorRodada; $jogo++) {
-                    $timeA = $times[$jogo];
-                    $timeB = $times[$quantidadeTimes - 1 - $jogo];
-                    if ($timeA["nome"] != "BYE" && $timeB["nome"] != "BYE") {
-                        $rodadasGrupo[$rodada][] = ['timeA' => $timeA, 'timeB' => $timeB];
-                    }
-                }
-                // Rotaciona os times, exceto o primeiro
-                $times = array_merge([$times[0]], array_slice($times, -1), array_slice($times, 1, -1));
-            }
-
-            foreach ($rodadasGrupo as $index => $partidas) {
-                $rodadas[$index + 1][$grupoNome] = $partidas;
-            }
-        }
-
-        echo '<div class="table-container">';
-
-        foreach ($rodadas as $rodada => $grupos) {
-            echo '<div class="grupo-container">';
-            echo '<h2>Rodada ' . $rodada . '</h2>';
-            echo '<table>';
-            echo '<tr>';
-            echo '<th>Time A</th>';
-            echo '<th>VS</th>';
-            echo '<th>Time B</th>';
-            echo '</tr>';
-
-            foreach ($grupos as $grupoNome => $partidas) {
-                echo '<tr><td colspan="3" class="grupo-header">' . $grupoNome . '</td></tr>';
-                foreach ($partidas as $partida) {
-                    $logoA = !empty($partida['timeA']['logo']) ? 'data:image/jpeg;base64,' . base64_encode($partida['timeA']['logo']) : '';
-                    $logoB = !empty($partida['timeB']['logo']) ? 'data:image/jpeg;base64,' . base64_encode($partida['timeB']['logo']) : '';
-
-                    echo '<tr>';
-                    echo '<td class="time-row">';
-                    if ($logoA) {
-                        echo '<img src="' . $logoA . '" class="logo-time">';
-                    }
-                    echo '<span class="time-name">' . $partida['timeA']['nome'] . '</span>';
-                    echo '</td>';
-                    echo '<td>VS</td>';
-                    echo '<td class="time-row">';
-                    if ($logoB) {
-                        echo '<img src="' . $logoB . '" class="logo-time">';
-                    }
-                    echo '<span class="time-name">' . $partida['timeB']['nome'] . '</span>';
-                    echo '</td>';
-                    echo '</tr>';
-                }
-            }
-
-            echo '</table>';
-            echo '</div>';
-        }
-
-        echo '</div>';
     }
     ?>
 </body>
