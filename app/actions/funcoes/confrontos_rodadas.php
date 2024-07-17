@@ -1,5 +1,5 @@
 <?php
-include '../config/conexao.php';
+include '../../config/conexao.php';
 
 function gerarRodadas() {
     global $conn;
@@ -103,7 +103,7 @@ function inserirOuAtualizarConfrontos($rodadas) {
     }
 }
 
-$rodadas = gerarRodadas();
+// $rodadas = gerarRodadas();
 inserirOuAtualizarConfrontos($rodadas);
 
 $conn->close();

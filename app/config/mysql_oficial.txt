@@ -7,6 +7,30 @@ CREATE DATABASE copa;
 -- Usa o banco de dados criado
 USE copa;
 
+--REGIAO DOS ADMIM E TECNICOS
+
+-- Criação da tabela admin
+CREATE TABLE admin (
+    cod_adm VARCHAR(15) PRIMARY KEY,
+    nome VARCHAR(30) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela tecnico
+CREATE TABLE tecnico (
+    matricula VARCHAR(255) PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+
+
+
+
+
+
+
 -- Cria a tabela de grupos
 CREATE TABLE grupos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -180,6 +204,7 @@ CREATE TABLE posicoes_jogadores (
     posicao INT DEFAULT 0,
     FOREIGN KEY (jogador_id) REFERENCES jogadores(id)
 );
+
 CREATE TABLE jogos_fase_grupos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     grupo_id INT NOT NULL,         -- ID do Grupo
@@ -187,8 +212,8 @@ CREATE TABLE jogos_fase_grupos (
     timeB_id INT NOT NULL,         -- ID do Time B
     nome_timeA VARCHAR(100) NOT NULL, -- Nome do Time A
     nome_timeB VARCHAR(100) NOT NULL, -- Nome do Time B
-    gols_marcados_timeA INT,       -- Gols marcados pelo Time A
-    gols_marcados_timeB INT,       -- Gols marcados pelo Time B
+    gols_marcados_timeA INT 0,       -- Gols marcados pelo Time A
+    gols_marcados_timeB INT 0,       -- Gols marcados pelo Time B
     resultado_timeA CHAR(1),       -- Resultado do Time A ('V', 'D', 'E')
     resultado_timeB CHAR(1),       -- Resultado do Time B ('V', 'D', 'E')
     data_jogo DATETIME NOT NULL,   -- Data do Jogo
