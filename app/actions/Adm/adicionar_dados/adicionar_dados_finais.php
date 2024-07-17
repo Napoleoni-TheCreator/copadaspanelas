@@ -284,8 +284,52 @@ $result_confrontos = $conn->query($sql_confrontos);
             <option value="final" <?php if ($fase_final == 'final') echo 'selected'; ?>>Final</option>
         </select>
     </form>
-    
     <!-- Tabela com confrontos -->
+<form method="post" action="">
+    <table>
+        <thead>
+            <tr>
+                <th>Time A</th>
+                <th>Gols Time A</th>
+                <th>vs</th>
+                <th>Gols Time B</th>
+                <th>Time B</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { ?>
+            <tr>
+                <form method="post" action="">
+                    <td><?php echo htmlspecialchars($row_confrontos['timeA_nome']); ?></td>
+                    <td>
+                        <select name="gols_marcados_timeA">
+                            <?php for ($i = 0; $i <= 10; $i++) { ?>
+                                <option value="<?php echo $i; ?>" <?php if ($row_confrontos['gols_marcados_timeA'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                    <td>vs</td>
+                    <td>
+                        <select name="gols_marcados_timeB">
+                            <?php for ($i = 0; $i <= 10; $i++) { ?>
+                                <option value="<?php echo $i; ?>" <?php if ($row_confrontos['gols_marcados_timeB'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                    <td><?php echo htmlspecialchars($row_confrontos['timeB_nome']); ?></td>
+                    <td>
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
+                        <button type="submit" name="atualizar_individual">Atualizar</button>
+                    </td>
+                </form>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</form>
+
+    <!-- Tabela com confrontos
     <form method="post" action="">
         <table>
             <thead>
@@ -320,7 +364,7 @@ $result_confrontos = $conn->query($sql_confrontos);
                 <?php } ?>
             </tbody>
         </table>
-    </form>
+    </form> -->
     <!-- Botão para executar classificar.php sem abrir uma nova página -->
     <button id="classificarButton">Classificar</button>
 

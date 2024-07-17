@@ -12,11 +12,13 @@
             background-color: #f0f8ff;
         }
         #rodadas-wrapper {
+            margin-top: 5%;
+            margin-bottom: 5%;
             background-color: #f0f8ff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
+            width: 90%; /* Ajuste para ocupar mais largura na página */
             overflow-x: auto;
         }
         h1 {
@@ -25,43 +27,55 @@
         }
         .table-container {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between; /* Espaçamento entre as colunas */
             overflow-x: auto;
         }
-        .grupo-container {
+        .rodada-container {
+            width: 60%; /* Ajuste a largura para espaço entre as colunas */
+            background-color: #ffffff; /* Cor de fundo */
             margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin-right: 10px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed;
         }
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
-            word-wrap: break-word;
         }
         th {
             background-color: #f2f2f2;
         }
-        .grupo-header {
+        .rodada-header {
             font-size: 1.2em;
             margin-bottom: 10px;
+            text-align: center;
         }
         .logo-time {
-            width: 30px;
-            height: 30px;
+            width: 20px; /* Tamanho do logo ajustável conforme necessário */
+            height: 20px; /* Tamanho do logo ajustável conforme necessário */
             vertical-align: middle;
         }
         .time-row {
             display: flex;
             align-items: center;
-            justify-content: center;
         }
         .time-name {
             margin-left: 5px;
             margin-right: 5px;
+        }
+        #input {
+            width: 40px;
+        }
+        input[type=number] {
+            -webkit-appearance: none; /* Remove os botões em navegadores baseados em WebKit (Chrome, Safari) */
+            -moz-appearance: textfield !important; /* Remove os botões em Firefox */
+            appearance: none; /* Remove os botões em navegadores que suportam a propriedade padrão */
         }
     </style>
 </head>
@@ -73,72 +87,87 @@
         </div>
     </div>
     <?php
-    include "../pages/rodadas_teste.php";
-    function exibirRodadas() {
-        include '../config/conexao.php';
-        $sqlRodadas = "SELECT r.rodada, g.nome AS grupo_nome, 
-                              tA.nome AS nome_timeA, tB.nome AS nome_timeB, 
-                              tA.logo AS logo_timeA, tB.logo AS logo_timeB
-                       FROM jogos_fase_grupos r
-                       JOIN grupos g ON r.grupo_id = g.id
-                       JOIN times tA ON r.timeA_id = tA.id
-                       JOIN times tB ON r.timeB_id = tB.id
-                       ORDER BY r.rodada, g.nome";
+include "../actions/funcoes/confrontos_rodadas.php";
 
-        $resultRodadas = $conn->query($sqlRodadas);
+function exibirRodadas() {
+    include '../config/conexao.php';
+    
+    $sqlRodadas = "SELECT DISTINCT rodada FROM jogos_fase_grupos ORDER BY rodada";
+    $resultRodadas = $conn->query($sqlRodadas);
 
-        if ($resultRodadas->num_rows > 0) {
-            $rodadas = [];
-            while ($row = $resultRodadas->fetch_assoc()) {
-                $rodadas[$row['rodada']][$row['grupo_nome']][] = [
-                    'timeA' => ['nome' => $row['nome_timeA'], 'logo' => $row['logo_timeA']],
-                    'timeB' => ['nome' => $row['nome_timeB'], 'logo' => $row['logo_timeB']]
-                ];
-            }
+    if ($resultRodadas->num_rows > 0) {
+        while ($rowRodada = $resultRodadas->fetch_assoc()) {
+            $rodada = $rowRodada['rodada'];
 
-            foreach ($rodadas as $rodada => $grupos) {
-                echo '<div class="grupo-container">';
-                echo '<h2>Rodada ' . $rodada . '</h2>';
-                echo '<table>';
-                echo '<tr>';
-                echo '<th>Time A</th>';
-                echo '<th>VS</th>';
-                echo '<th>Time B</th>';
-                echo '</tr>';
+            echo '<div class="rodada-container">';
+            echo '<h2 class="rodada-header">' . $rodada . 'ª RODADA</h2>';
+            echo '<table>';
 
-                foreach ($grupos as $grupoNome => $partidas) {
-                    echo '<tr><td colspan="3" class="grupo-header">' . $grupoNome . '</td></tr>';
-                    foreach ($partidas as $partida) {
-                        $logoA = !empty($partida['timeA']['logo']) ? 'data:image/jpeg;base64,' . base64_encode($partida['timeA']['logo']) : '';
-                        $logoB = !empty($partida['timeB']['logo']) ? 'data:image/jpeg;base64,' . base64_encode($partida['timeB']['logo']) : '';
+            $sqlGrupos = "SELECT DISTINCT grupo_id, nome AS grupo_nome FROM jogos_fase_grupos JOIN grupos ON jogos_fase_grupos.grupo_id = grupos.id ORDER BY grupo_id";
+            $resultGrupos = $conn->query($sqlGrupos);
+
+            while ($rowGrupo = $resultGrupos->fetch_assoc()) {
+                $grupoId = $rowGrupo['grupo_id'];
+                $grupoNome = substr($rowGrupo['grupo_nome'], -1); // Extrai apenas a última letra do nome do grupo
+
+                $sqlConfrontos = "SELECT jfg.id, tA.nome AS nome_timeA, tB.nome AS nome_timeB, tA.logo AS logo_timeA, tB.logo AS logo_timeB, jfg.gols_marcados_timeA, jfg.gols_marcados_timeB
+                                  FROM jogos_fase_grupos jfg
+                                  JOIN times tA ON jfg.timeA_id = tA.id
+                                  JOIN times tB ON jfg.timeB_id = tB.id
+                                  WHERE jfg.grupo_id = $grupoId AND jfg.rodada = $rodada";
+
+                $resultConfrontos = $conn->query($sqlConfrontos);
+
+                if ($resultConfrontos->num_rows > 0) {
+                    while ($rowConfronto = $resultConfrontos->fetch_assoc()) {
+                        $jogoId = $rowConfronto['id'];
+                        $timeA_nome = $rowConfronto['nome_timeA'];
+                        $timeB_nome = $rowConfronto['nome_timeB'];
+                        $logoA = !empty($rowConfronto['logo_timeA']) ? 'data:image/jpeg;base64,' . base64_encode($rowConfronto['logo_timeA']) : '';
+                        $logoB = !empty($rowConfronto['logo_timeB']) ? 'data:image/jpeg;base64,' . base64_encode($rowConfronto['logo_timeB']) : '';
+                        $golsA = $rowConfronto['gols_marcados_timeA'];
+                        $golsB = $rowConfronto['gols_marcados_timeB'];
 
                         echo '<tr>';
+                        if ($grupoNome) {
+                            echo '<td>' . $grupoNome . '</td>';
+                        } else {
+                            echo '<td>-</td>';
+                        }
                         echo '<td class="time-row">';
                         if ($logoA) {
                             echo '<img src="' . $logoA . '" class="logo-time">';
                         }
-                        echo '<span class="time-name">' . $partida['timeA']['nome'] . '</span>';
+                        echo '<span class="time-name">' . $timeA_nome . '</span>';
                         echo '</td>';
-                        echo '<td>VS</td>';
+                        echo '<td> <input type="number" id = "input" name="golsA_' . $jogoId . '" value="' . $golsA . '"> </td>';
+                        echo '<td> X </td>';
+                        echo '<td> <input type="number" id = "input" name="golsB_' . $jogoId . '" value="' . $golsB . '"> </td>';
                         echo '<td class="time-row">';
                         if ($logoB) {
                             echo '<img src="' . $logoB . '" class="logo-time">';
                         }
-                        echo '<span class="time-name">' . $partida['timeB']['nome'] . '</span>';
+                        echo '<span class="time-name">' . $timeB_nome . '</span>';
                         echo '</td>';
                         echo '</tr>';
                     }
+                } else {
+                    echo '<tr>';
+                    echo '<td colspan="4">Nenhum confronto encontrado para o grupo ' . $grupoNome . ' na ' . $rodada . 'ª rodada.</td>';
+                    echo '</tr>';
                 }
-
-                echo '</table>';
-                echo '</div>';
             }
-        } else {
-            echo '<p>Nenhum jogo encontrado.</p>';
-        }
 
-        $conn->close();
+            echo '</table>';
+            echo '</div>';
+        }
+    } else {
+        echo '<p>Nenhuma rodada encontrada.</p>';
     }
-    ?>
+
+    $conn->close();
+}
+?>
+
 </body>
 </html>
