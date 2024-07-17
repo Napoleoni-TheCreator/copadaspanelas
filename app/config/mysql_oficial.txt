@@ -7,6 +7,30 @@ CREATE DATABASE copa;
 -- Usa o banco de dados criado
 USE copa;
 
+--REGIAO DOS ADMIM E TECNICOS
+
+-- Criação da tabela admin
+CREATE TABLE admin (
+    cod_adm VARCHAR(15) PRIMARY KEY,
+    nome VARCHAR(30) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela tecnico
+CREATE TABLE tecnico (
+    matricula VARCHAR(255) PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+
+
+
+
+
+
+
 -- Cria a tabela de grupos
 CREATE TABLE grupos (
     id INT AUTO_INCREMENT PRIMARY KEY,
