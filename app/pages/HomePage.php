@@ -14,6 +14,9 @@
     <?php include 'header.php';
         include '../config/conexao.php';
         $noticias = $conn->query("SELECT * FROM noticias ORDER BY data_adicao DESC LIMIT 4");
+        $endDate = new DateTime();
+        $endDate->modify('+6 days');
+        $endTimestamp = $endDate->getTimestamp();
     ?>
     <nav>
         <ul>
@@ -53,10 +56,10 @@
         <section class="Slideshare">
             <div class="slideshow-container">
                 <div class="mySlides fade">
-                    <img src="../../public/img/banner_copadaspanelas.jpg" style="width:100%">
+                    <img src="../../public/img/banner_2.jpg" style="width:100%">
                 </div>
                 <div class="mySlides fade">
-                    <img src="../../public/img/banner_2.jpg " style="width:100%">
+                    <img src="../../public/img/banner_2.jpg" style="width:100%">
                 </div>
                 <div class="mySlides fade">
                     <img src="../../public/img/gettyimages-451721881-2048x2048.jpg" style="width:100%">
@@ -64,27 +67,27 @@
             </div>
 
         </section>
-    <h3>NOTICIAS</h3>
-    <hr>
+        <h3>NOTICIAS</h3>
+        <hr>
 
 
-    <section class="noticias">
-        <div class="news-container">
-            <?php while($row = $noticias->fetch_assoc()): ?>
-                <div class="news-block">
-                    <a href="<?php echo $row['link']; ?>" target="_blank">
-                        <div class="img-container">
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($row['imagem']); ?>" alt="<?php echo $row['titulo']; ?>">
-                        </div>
-                        <div class="news-text">
-                            <h3><?php echo $row['titulo']; ?></h3>
-                            <p><?php echo $row['descricao']; ?></p>
-                        </div>
-                    </a>
-                </div>
-            <?php endwhile; ?>
-        </div>
-    </section>
+        <section class="noticias">
+            <div class="news-container">
+                <?php while($row = $noticias->fetch_assoc()): ?>
+                    <div class="news-block small">
+                        <a href="<?php echo $row['link']; ?>" target="_blank">
+                            <div class="img-container">
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($row['imagem']); ?>" alt="<?php echo $row['titulo']; ?>">
+                            </div>
+                            <div class="news-text">
+                                <h3><?php echo $row['titulo']; ?></h3>
+                                <p><?php echo $row['descricao']; ?></p>
+                            </div>
+                        </a>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </section>
 
     <H3>CONTEÚDO DA COPA</H3>
     <hr>
@@ -109,7 +112,7 @@
 
     </main>
 
-    <?php include 'footer.php'?>
+    <?php include 'footer.php'?>        
 
     <div id="countdown-balloon">
         <span id="close-btn">&times;</span>

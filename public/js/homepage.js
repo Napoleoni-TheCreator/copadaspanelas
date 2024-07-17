@@ -16,8 +16,8 @@ document.getElementById('close-btn').addEventListener('click', function() {
     document.getElementById('countdown-balloon').style.display = 'none';
 });
 
-// Set the date we're counting down to
-var countDownDate = new Date("Dec 31, 2024 23:59:59").getTime();
+// Set the date we're counting down to (6 days from now)
+var countDownDate = new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000).getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {

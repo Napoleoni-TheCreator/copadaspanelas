@@ -1,11 +1,11 @@
 
 <header>
     <div id="Icon">
-        <img src="../../public/imgs/ESCUDO COPA DAS PANELAS.png" alt="">
+        <a href="../pages/Homepage.php"><img src="../../public/img/ESCUDO COPA DAS PANELAS.png" alt=""></a>
     </div>
     <H1 id="titulo">COPA DAS PANELAS</H1>
 
     <div class="cadastro">
-        <a href="../actions/login.php"><i class="fas fa-user"></i>Login</a>
+        <a href="../actions/cadastro_adm/login.php" class="fas fa-user"></i> Login</a>
     </div>
 </header>
