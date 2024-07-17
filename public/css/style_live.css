@@ -1,118 +1,112 @@
-        @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-        }
-        body{
-            width: 100%;
-            height: auto;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
 
- 
+body {
+    width: 100%;
+    height: auto;
+}
 
-        .transmit {
-            width: 100%;
-            height: auto;
-            background-color: rgba(0, 0, 0, 0.233);
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
+/* Container de transmissão */
+.transmit {
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.233);
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
+main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-        main {
-            width: 100%;
-            min-height: 100vh;
-        }
+/* Parte dos jogos */
+.nxtGames {
+    width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
-        /*parte dos jogos*/
-        .nxtGames {
-            width: 100%;
-            height: auto;
-            background-color: rgb(255, 255, 255);
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
+.nxtGames .jogos {
+    margin: 10px;
+    display: flex;
+    width: 400px;
+    height: 200px;
+    background-color: #00000028;
+    justify-content: space-between;
+    align-items: center; /* Adicionado */
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
 
+.nxtGames .jogos:hover {
+    transform: scale(1.1);
+}
 
-        .nxtGames .jogos {
-            margin: 10px;
-            display: flex;
-            width: 400px;
-            height: 200px;
-            background-color: #00000028;
-            justify-content: space-between;
-            position: relative;
-            /* Adicionado */
-            border-radius: 10px;
-        }
+.nxtGames .jogos .jogos-team1, .nxtGames .jogos .jogos-team2 {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: center;
+}
 
-        .nxtGames .jogos .jogos-team1 {
-            display: flex;
-            flex-direction: column;
-            width: 40%;
-            align-items: center;
-            margin-top: 20px;
-        }
+.nxtGames .jogos .spc-logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px; /* Adicionado */
+}
 
-        .nxtGames .jogos .jogos-team1 .spc-logo {
-            width: 50px;
-            height: 50px;
-        }
+.nxtGames .jogos .spc-logo img {
+    height: 50px;
+    width: 50px;
+    max-width: inherit;
+    object-fit: contain;
+}
 
-        .nxtGames .jogos .jogos-team1 .spc-logo img {
-            height: 50px;
-            width: 50px;
-            max-width: inherit;
-            object-fit: contain;
-        }
+.nxtGames .jogos #versus {
+    font-size: x-large;
+    margin-top: 45px;
+}
 
-        .nxtGames .jogos #versus {
-            font-size: x-large;
-            margin-top: 45px;
-        }
+.nxtGames .jogos .jogos-team1 p, .nxtGames .jogos .jogos-team2 p {
+    margin-top: 5px;
+}
 
-        .nxtGames .jogos .jogos-team1 p {
-            margin-top: 5px;
-        }
+.situation {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    text-align: center; /* Adicionado */
+    width: 100%; /* Adicionado */
+}
 
-        .situation {
-            /* Modificado */
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px;
-        }
-        .old-games{
-            display: flex;
-            
-            flex-wrap: wrap;
-            justify-content: space-around;
-            width: auto;
-        }
-        .last4games{
-            width: auto;
-            height: auto;
-            margin-bottom: 10px;
-            
-        }
+.old-games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: auto;
+}
 
-        /*parte dos jogos*/
-
-        /*dica do site*/
-        .jogos {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .jogos:hover {
-            transform: scale(1.1);
-        }
+.last4games {
+    width: auto;
+    height: auto;
+    margin-bottom: 10px;
+}
