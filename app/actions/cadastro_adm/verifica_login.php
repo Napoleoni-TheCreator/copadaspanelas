@@ -2,22 +2,21 @@
 session_start(); // Inicia a sessão
 
 // Verifica se todos os campos foram preenchidos
-if (empty($_POST['nome']) || empty($_POST['senha'])) {
+if (empty($_POST['email']) || empty($_POST['senha'])) {
     header("location: ../cadastro_adm/login.php?msgLogin=Preencha todos os campos!");
     exit();
-
 }
 
 // Inclui o arquivo de conexão
 include_once("../../config/conexao.php");
 
-$nome = $_POST['nome'];
+$email = $_POST['email'];
 $senha = $_POST['senha'];
 
 // Consulta na tabela admin usando prepared statement
-$query_admin = "SELECT cod_adm, nome, senha FROM admin WHERE nome = ?";
+$query_admin = "SELECT nome, senha FROM admin WHERE email = ?";
 $stmt_admin = $conn->prepare($query_admin);
-$stmt_admin->bind_param("s", $nome);
+$stmt_admin->bind_param("s", $email);
 $stmt_admin->execute();
 $result_admin = $stmt_admin->get_result();
 
@@ -30,7 +29,6 @@ if ($result_admin->num_rows == 1) {
         // Senha correta, inicia a sessão para admin
         $_SESSION['usuario'] = $admin['nome'];
         $_SESSION['tipo'] = 'admin';
-        $_SESSION['id'] = $admin['cod_adm'];
         header("location: ../../pages/HomePage.php"); // Redireciona para o painel do admin
         exit();
     } else {
@@ -41,9 +39,9 @@ if ($result_admin->num_rows == 1) {
 }
 
 // Consulta na tabela tecnico usando prepared statement
-$query_tecnico = "SELECT nome, senha FROM tecnico WHERE nome = ?";
+$query_tecnico = "SELECT nome, senha FROM tecnico WHERE email = ?";
 $stmt_tecnico = $conn->prepare($query_tecnico);
-$stmt_tecnico->bind_param("s", $nome);
+$stmt_tecnico->bind_param("s", $email);
 $stmt_tecnico->execute();
 $result_tecnico = $stmt_tecnico->get_result();
 
@@ -66,7 +64,7 @@ if ($result_tecnico->num_rows == 1) {
 }
 
 // Se nenhum usuário foi encontrado
-header("location: ../cadastro_adm/login.php?msgLogin=Nem um usuario encontrado no banco de dados");
+header("location: ../cadastro_adm/login.php?msgLogin=Nenhum usuário encontrado no banco de dados");
 exit();
 
 // Fecha as consultas e a conexão
