@@ -9,8 +9,10 @@
 body {
     width: 100%;
     height: auto;
+    display: flex;
+    flex-direction: column;
 }
-
+#desgracinha{ align-self: center;}
 /* Container de transmissão */
 .transmit {
     width: 100%;
@@ -25,8 +27,7 @@ body {
 main {
     width: 100%;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    
 }
 
 /* Parte dos jogos */
