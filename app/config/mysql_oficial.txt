@@ -6,8 +6,12 @@ CREATE DATABASE copa;
 
 -- Usa o banco de dados criado
 USE copa;
+-- link da live
+CREATE TABLE linklive(
+    codlive VARCHAR(255) PRIMARY KEY
+);
 
---REGIAO DOS ADMIM E TECNICOS
+-- REGIAO DOS ADMIM E TECNICOS
 
 -- Criação da tabela admin
 -- Estrutura da tabela admin
