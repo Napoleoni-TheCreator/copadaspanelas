@@ -1,14 +1,5 @@
 <?php
-$host = 'localhost';
-$usuario = 'root';
-$senha = '';
-$banco = 'teste2';
-
-$conn = new mysqli($host, $usuario, $senha, $banco);
-
-if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
-}
+include "../../../config/conexao.php";
 
 // Verifica se o formulário foi submetido
 if(isset($_POST['submit'])) {

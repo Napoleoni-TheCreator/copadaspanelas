@@ -4,10 +4,27 @@ include '../../../config/conexao.php';
 // Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepara os dados do formulário para inserção no banco de dados
-    $nome = $_POST['nome'];
-    $posicao = $_POST['posicao'];
-    $numero = $_POST['numero'];
-    $time_id = $_POST['time'];
+    $nome = trim($_POST['nome']);
+    $posicao = trim($_POST['posicao']);
+    $numero = trim($_POST['numero']);
+    $time_id = trim($_POST['time']);
+  // Valida o nome (deve ser uma string sem números)
+  if (!preg_match("/^[a-zA-Z\s]+$/", $nome)) {
+    echo "Nome do jogador deve ser uma string sem números.";
+    exit;
+}
+
+    // Valida se todos os campos estão preenchidos
+    if (empty($nome) || empty($posicao) || empty($numero) || empty($time_id)) {
+        echo "Todos os campos são obrigatórios.";
+        exit;
+    }
+
+    // Valida o número (deve ser um número entre 0 e 99, com no máximo 2 dígitos)
+    if (!is_numeric($numero) || $numero < 0 || $numero > 99 || strlen($numero) > 2) {
+        echo "Número deve ser um valor entre 0 e 99, com no máximo 2 dígitos.";
+        exit;
+    }
 
     // Processa a imagem do jogador
     $imagem = $_FILES['imagem'];
@@ -32,10 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="stylesheet" href="../../../../public/css/cssheader.css">
+    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Jogadores</title>
@@ -48,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: Arial, sans-serif;
             background-color: rgb(218, 215, 215);
         }
-        .titulo-barra {
+        /* .titulo-barra {
             background-color: #fe0000;
             color: #fff;
             padding: 10px;
@@ -56,17 +74,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: Arial, sans-serif;
             text-shadow: 3px 3px 3px black;
             font-size: 20px;
-        }
+        } */
         .formulario {
+            /* margin-top: %; */
+            margin-bottom: 5%;
             display: flex;
-            height: 85vh;
+            height: 100%;
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
         }
+        #main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         form {
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 400px;
+            margin-top: 5%;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 80px;
             border-radius: 30px;
@@ -96,16 +122,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
         }
         #imagem-preview {
-            max-width: 100%;
+            max-width: 20%;
             height: auto;
             display: none;
         }
         label {
             font-size: 30px;
         }
-                /* Estilo para o select */
-                select {
-            width: 100%;
+        /* Estilo para o select */
+        select {
+            width: 105%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
@@ -130,59 +156,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <div class="fundo-tela">
-        <div class="titulo-barra">
-            <h1>Cadastro de Jogadores</h1>
-        </div>
-        <div class="formulario">
-            <form action="" method="post" enctype="multipart/form-data">
-                <label for="nome">Nome do Jogador:</label>
-                <input type="text" id="nome" name="nome" required>
-                <label for="posicao">Posição:</label>
-                <input type="text" id="posicao" name="posicao" required>
-                <label for="numero">Número:</label>
-                <input type="text" id="numero" name="numero" required>
-                <label for="time">Time:</label>
-                <select id="time" name="time" required>
-                    <option value="">Selecione o time</option>
-                    <?php
-                    // Conexão com o banco de dados
-                    include '../../../config/conexao.php';
+<div class="fundo-tela">
+    <!-- <div class="titulo-barra">
+        <h1>Cadastro de Jogadores</h1>
+    </div> -->
+    <?php include '../../../pages/header.php' ?>
+    <div class="formulario" id="main-content">
+        <form id="form-jogador" action="" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+            <label for="nome">Nome do Jogador:</label>
+            <input type="text" id="nome" name="nome" required>
+            <label for="posicao">Posição:</label>
+            <select id="posicao" name="posicao" required>
+                <option value="">Selecione a posição</option>
+                <option value="Fixo">Fixo</option>
+                <option value="Ala Direita">Ala Direita</option>
+                <option value="Ala Esquerda">Ala Esquerda</option>
+                <option value="Pivô">Pivô</option>
+            </select>
+            <label for="numero">Número:</label>
+            <input type="text" id="numero" name="numero" required>
+            <label for="time">Time:</label>
+            <select id="time" name="time" required>
+                <option value="">Selecione o time</option>
+                <?php
+                // Conexão com o banco de dados
+                include '../../../config/conexao.php';
 
-                    // Consulta SQL para obter todos os times
-                    $sql = "SELECT id, nome FROM times";
-                    $result = $conn->query($sql);
+                // Consulta SQL para obter todos os times
+                $sql = "SELECT id, nome FROM times";
+                $result = $conn->query($sql);
 
-                    // Loop para gerar as opções do select
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
-                    }
+                // Loop para gerar as opções do select
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
+                }
 
-                    // Fechar a conexão com o banco de dados
-                    $conn->close();
-                    ?>
-                </select>
-                <label for="imagem">Imagem do Jogador:</label>
-                <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()" required>
-                <img id="imagem-preview" src="#" alt="Imagem do Jogador">
-                <input type="submit" value="Cadastrar">
-            </form>
-        </div>
+                // Fechar a conexão com o banco de dados
+                $conn->close();
+                ?>
+            </select>
+            <label for="imagem">Imagem do Jogador:</label>
+            <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()" required>
+            <img id="imagem-preview" src="#" alt="Imagem do Jogador">
+            <input type="submit" value="Cadastrar">
+        </form>
     </div>
-    <script>
-        function previewImage() {
-            const fileInput = document.getElementById('imagem');
-            const imagePreview = document.getElementById('imagem-preview');
-            const file = fileInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
+    <?php include '../../../pages/footer.php' ?>
+</div>
+<script>
+    function previewImage() {
+        const fileInput = document.getElementById('imagem');
+        const imagePreview = document.getElementById('imagem-preview');
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
         }
-    </script>
+    }
+
+    function validarFormulario() {
+        const nome = document.getElementById('nome').value;
+        const numero = document.getElementById('numero').value;
+        const nomeRegex = /^[a-zA-Z\s]+$/; // Regex para aceitar apenas letras e espaços
+        const numeroRegex = /^[0-9]{1,2}$/; // Regex para aceitar apenas números de 1 a 2 dígitos
+
+        if (!nomeRegex.test(nome)) {
+            alert('Nome do jogador deve ser uma string sem números.');
+            return false;
+        }
+
+        if (!numeroRegex.test(numero) || parseInt(numero) > 99) {
+            alert('Número deve ser entre 0 e 99, com no máximo 2 dígitos.\n Não pode ser letras.\n Por favor tente novamente.');
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

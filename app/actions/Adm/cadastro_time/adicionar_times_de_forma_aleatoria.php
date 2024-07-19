@@ -68,6 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="stylesheet" href="../../../../public/css/cssheader.css">
+    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Time</title>
@@ -80,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: rgb(218, 215, 215);
         }
         /* Estilos para a barra de título */
-        .titulo-barra {
+        /* .titulo-barra {
             background-color: #fe0000;
             color: #fff;
             padding: 10px;
@@ -88,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: Arial, sans-serif;
             text-shadow: 3px 3px 3px black;
             font-size: 20px;
-        }
+        } */
         /* Estilos para o formulário */
         .formulario {
             display: flex;
@@ -135,9 +137,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <div class="titulo-barra">
+    <!-- <div class="titulo-barra">
         <h1>Adicionar Time</h1>
-    </div>
+    </div> -->
+    <?php include "../../../pages/header.php";  ?>
     <div class="formulario">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
             <label for="nome_time">Nome do Time:</label>

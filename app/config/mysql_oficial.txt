@@ -189,6 +189,8 @@ CREATE TABLE jogadores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     gols INT DEFAULT 0,
+    posicao VARCHAR(255),
+    numero INT,
     assistencias INT DEFAULT 0,
     cartoes_amarelos INT DEFAULT 0,
     cartoes_vermelhos INT DEFAULT 0,

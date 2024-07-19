@@ -61,44 +61,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="stylesheet" href="../../../../public/css/cssheader.css">
+    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Times</title>
     <style>
-        body {
+        html, body {
             height: 100vh;
-            background-size: cover;
             margin: 0;
-            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
             font-family: Arial, sans-serif;
             background-color: rgb(218, 215, 215);
+            background-size: cover;
         }
-        /* Estilos para a barra de título */
-        .titulo-barra {
-            background-color: #fe0000;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            text-shadow: 3px 3px 3px black;
-            font-size: 20px;
+        #main-content {
+            flex: 1; /* Faz com que o conteúdo principal ocupe o espaço restante */
         }
-        /* Estilos para o formulário */
-        .formulario {
-            display: flex;
-            height: 85vh;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-        }
-        form {
-            max-width: 700px;
+
+        footer {
+            background-color: rgb(27, 25, 25);
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            bottom: 0;
+            /* Garantia para o footer */
         }
+
         label {
             display: block;
             margin-bottom: 15px;
@@ -127,13 +119,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         input[type="submit"]:hover {
             background-color: #a60000;
         }
+        /* Estilos padrão para o formulário */
+        .formulario {
+            display: flex;
+            margin-bottom: 5%;
+            margin-top: 5%;
+            height: auto;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 700px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .formulario{
+                margin-top:10%;
+                height:100%;
+            }
+            form {
+                width: 300px;
+                /* padding: 20px; */
+                /* box-shadow: none; */
+            }
+
+            label {
+                font-size: 16px;
+            }
+
+            input[type="text"],
+            input[type="file"],
+            select {
+                width: 90%;
+                font-size: 14px;
+            }
+
+            input[type="submit"] {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            form {
+                padding: 15px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input[type="text"],
+            input[type="file"],
+            select {
+                font-size: 12px;
+            }
+
+            input[type="submit"] {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <div class="titulo-barra">
+<?php include "../../../pages/header.php";  ?>
+    <!-- <div class="titulo-barra">
         <h1>Adicionar Times</h1>
-    </div>
-    <div class="formulario">
+    </div> -->
+    <div class="formulario" id="main-content">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
             <!-- Repetição para dois times -->
             <?php for ($i = 0; $i < 2; $i++): ?>
@@ -168,5 +231,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" value="Adicionar Times">
         </form>
     </div>
+    <?php include "../../../pages/footer.php";  ?>
 </body>
 </html>

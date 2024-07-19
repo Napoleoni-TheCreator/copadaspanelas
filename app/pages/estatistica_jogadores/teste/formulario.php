@@ -11,16 +11,7 @@
         <label for="jogador_id">Selecione o jogador:</label>
         <select id="jogador_id" name="jogador_id">
             <?php
-            $host = 'localhost';
-            $usuario = 'root';
-            $senha = '';
-            $banco = 'teste2';
-
-            $conn = new mysqli($host, $usuario, $senha, $banco);
-
-            if ($conn->connect_error) {
-                die("Erro de conexão: " . $conn->connect_error);
-            }
+            include "../../../config/conexao.php";
 
             $sql = "SELECT id, nome FROM jogadores";
             $result = $conn->query($sql);
