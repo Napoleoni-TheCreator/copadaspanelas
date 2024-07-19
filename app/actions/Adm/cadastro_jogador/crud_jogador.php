@@ -51,6 +51,7 @@ $conn->close();
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 70%;
             overflow-x: auto;
+            text-align: center;
         }
         .time-wrapper {
             display: flex;
@@ -108,11 +109,13 @@ $conn->close();
             border: 3px solid; /* A cor da borda será definida via CSS inline */
         }
         .player-image {
-            max-width: 100px;
-            height: auto;
+            width: 100px; /* Defina o tamanho desejado */
+            height: auto; /* Defina o tamanho desejado */
+            /* object-fit: contain; Ajusta a imagem sem cortar */
             border-radius: 5px;
             margin-right: 20px;
         }
+
         .player-details {
             flex: 1;
             margin-right: 20px;
@@ -135,7 +138,7 @@ $conn->close();
 <body>
 
     <div class="container">
-        <h1>CRUD de Jogadores</h1>
+        <h1>EDITAR JOGADORES</h1>
         <div class="time-wrapper">
             <?php
             $borderColors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A0', '#33F0FF', '#FFBF00', '#8CFF33']; // Defina as cores que você deseja usar

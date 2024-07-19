@@ -203,14 +203,26 @@ function classificarQuartasDeFinal() {
         return; // Se já foi executada, não faz nada
     }
 
-    // Limpar a tabela de final e confrontos
+    // Limpar a tabela de quartas de final e confrontos
+    $conn->query("TRUNCATE TABLE quartas_de_final");
+    $conn->query("TRUNCATE TABLE quartas_de_final_confrontos");
+        // Limpar a tabela de semifinais e confrontos
+    if (!$conn->query("TRUNCATE TABLE semifinais")) {
+        echo "Erro ao truncar tabela semifinais: " . $conn->error;
+        return;
+    }
+    if (!$conn->query("TRUNCATE TABLE semifinais_confrontos")) {
+        echo "Erro ao truncar tabela semifinais_confrontos: " . $conn->error;
+        return;
+    }
+
+    // Limpar a tabela final
     if (!$conn->query("TRUNCATE TABLE final")) {
         echo "Erro ao truncar tabela final: " . $conn->error;
         return;
     }
-    if (!$conn->query("TRUNCATE TABLE final_confrontos")) {
-        echo "Erro ao truncar tabela final_confrontos: " . $conn->error;
-        return;
+    if (!$conn->query("TRUNCATE TABLE final_confrontos")){
+        echo "Erro ao truncar table final: " . $conn->error;
     }
     // Verificar se já existem times classificados para as quartas de final
     $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM quartas_de_final");
@@ -219,9 +231,9 @@ function classificarQuartasDeFinal() {
     $stmt->fetch();
     $stmt->close();
 
-    if ($count > 0) {
-        die("Já existem times classificados para as quartas de final.");
-    }
+    // if ($count > 0) {
+    //     die("Já existem times classificados para as quartas de final.");
+    // }
 
     // Obter a fase final
     $stmt = $conn->prepare("SELECT fase_final FROM configuracoes LIMIT 1");
@@ -315,9 +327,9 @@ function classificarQuartasDeFinal() {
             $row = $result->fetch_assoc();
             $timesExistentes = $row['count'];
 
-            if ($timesExistentes > 0) {
-                die("Já existem times classificados para as quartas de final.");
-            }
+            // if ($timesExistentes > 0) {
+            //     die("Já existem times classificados para as quartas de final.");
+            // }
 
             // Calcular a quantidade de times por grupo para as quartas
             $timesPorGrupo = 8 / $numeroGrupos;
@@ -325,10 +337,6 @@ function classificarQuartasDeFinal() {
             if ($timesPorGrupo <= 0 || $timesPorGrupo != intval($timesPorGrupo)) {
                 die("Número de times por grupo inválido para as quartas de final.");
             }
-
-            // Limpar a tabela de quartas de final e confrontos
-            $conn->query("TRUNCATE TABLE quartas_de_final");
-            $conn->query("TRUNCATE TABLE quartas_de_final_confrontos");
 
             // Obter os times classificados de cada grupo
             $timesClassificados = [];
@@ -674,6 +682,7 @@ inicializarFaseExecucao();
 
 // Executar a classificação das fases
 classificarFases();
-
+header("Location: /copadaspanelas/app/actions/Adm/adicionar_dados/adicionar_dados_finais.php");
+exit();
 echo "Classificação concluída com sucesso!";
 ?>

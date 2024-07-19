@@ -13,16 +13,6 @@ body {
     font-family: Arial, sans-serif; /* Fonte para toda a página */
 }
 
-.header {
-    width: 100%;
-    background-color: #0056b3; /* Azul escuro para o fundo do cabeçalho */
-    color: #ffffff; /* Cor do texto do cabeçalho */
-    padding: 10px; /* Espaçamento interno do cabeçalho */
-    text-align: center; /* Centraliza o texto no cabeçalho */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra leve no cabeçalho */
-    margin-bottom: 0px; /* Espaço abaixo do cabeçalho */
-}
-
 .container {
     display: flex;
     height: 700px;
@@ -39,6 +29,7 @@ body {
     background-size: 15% auto; /* Ajusta o tamanho da imagem */
     background-position: top center; /* Posiciona a imagem no topo e centraliza horizontalmente */
     background-repeat: no-repeat; /* Impede que a imagem se repita */
+    overflow-x: auto;
 }
 
 .bracket {
@@ -129,11 +120,7 @@ body {
 </style>
 </head>
 <body>
-
-<div class="header">
-    <h1>MATA-MATA</h1>
-</div>
-
+<?php include 'header_classificacao.php'; ?>
 <div class="container">
   <div class="bracket">
     <div class="round">

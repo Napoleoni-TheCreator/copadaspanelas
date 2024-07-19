@@ -9,15 +9,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $golsA = $_POST['golsA_' . $confrontoId];
                 $golsB = $_POST['golsB_' . $confrontoId];
 
-                // Preparar e executar a query SQL
-                $sqlUpdate = "UPDATE jogos_fase_grupos SET gols_marcados_timeA = ?, gols_marcados_timeB = ? WHERE id = ?";
+                // Determina o resultado do jogo
+                if ($golsA > $golsB) {
+                    $resultadoA = 'V';
+                    $resultadoB = 'D';
+                } elseif ($golsA < $golsB) {
+                    $resultadoA = 'D';
+                    $resultadoB = 'V';
+                } else {
+                    $resultadoA = 'E';
+                    $resultadoB = 'E';
+                }
+
+                // Preparar e executar a query SQL para atualizar os gols e resultados
+                $sqlUpdate = "UPDATE jogos_fase_grupos SET 
+                              gols_marcados_timeA = ?, 
+                              gols_marcados_timeB = ?, 
+                              resultado_timeA = ?, 
+                              resultado_timeB = ? 
+                              WHERE id = ?";
                 $stmt = $conn->prepare($sqlUpdate);
-                $stmt->bind_param('iii', $golsA, $golsB, $confrontoId);
+                $stmt->bind_param('iisss', $golsA, $golsB, $resultadoA, $resultadoB, $confrontoId);
 
                 if ($stmt->execute()) {
-                    echo "Gols atualizados com sucesso para o confronto ID $confrontoId.";
+                    echo "Gols e resultados atualizados com sucesso para o confronto ID $confrontoId.";
                 } else {
-                    echo "Erro ao atualizar gols para o confronto ID $confrontoId: " . $conn->error;
+                    echo "Erro ao atualizar gols e resultados para o confronto ID $confrontoId: " . $conn->error;
                 }
             } else {
                 echo "Dados insuficientes para o confronto ID $confrontoId.";
@@ -29,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo "Método de requisição inválido. Apenas POST é permitido.";
 }
-header('Location: /copadaspanelas/app/pages/rodadas.php');
+
 $conn->close();
+header('Location: /copadaspanelas/app/pages/rodadas.php');
 ?>
