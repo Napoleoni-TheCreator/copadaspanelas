@@ -8,9 +8,9 @@ if (isset($_GET['delete'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {
-        echo "Jogador excluído com sucesso!";
+        echo "<script>alert('Jogador excluído com sucesso!');</script>";
     } else {
-        echo "Erro ao excluir jogador: " . $conn->error;
+        echo "<script>alert('Erro ao excluir jogador: " . $conn->error . "');</script>";
     }
     $stmt->close();
 }
@@ -26,32 +26,76 @@ while ($row = $result->fetch_assoc()) {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Jogadores</title>
-    <link rel="stylesheet" href="../../../../public/css/cssheader.css">
-    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: rgb(218, 215, 215);
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .container {
+            margin: 4%;
+            background-color: #f0f8ff;
             padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            overflow-x: auto;
+        }
+        .time-wrapper {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 20px;
         }
         .time-container {
-            margin-bottom: 30px;
+            flex: 0 0 auto;
+            margin-right: 1.6%;
+            /* margin-bottom: 30px; */
+            display: flex;
+            flex-direction: column;
+            width: 350px; /* Ajuste conforme necessário */
+            margin-left: 1.6%;
+            text-align: center;
         }
         .time-title {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: #333;
         }
+        @keyframes borderColorChange {
+                0% {
+                    border-color: borderColorChange; /* Usa a cor da borda definida no inline CSS */
+                }
+                50% {
+                    border-color: #FFFFFF; /* Cor intermediária (branco) */
+                }
+                100% {
+                    border-color: borderColorChange; /* Volta à cor inicial */
+                }
+            }
+
+            .player-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves para a transformação e sombra */
+            }
+
+            .player-card:hover {
+                animation: borderColorChange 2s infinite; /* Aplica a animação quando o mouse passa por cima */
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.4); /* Aumenta o efeito de sombra */
+                transform: scale(1.1); /* Aumenta o tamanho da caixa em 10% */
+                margin: 0.5%;
+            }
+
         .player-card {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
@@ -60,6 +104,8 @@ $conn->close();
             margin-bottom: 10px;
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
+            border: 3px solid; /* A cor da borda será definida via CSS inline */
         }
         .player-image {
             max-width: 100px;
@@ -69,6 +115,8 @@ $conn->close();
         }
         .player-details {
             flex: 1;
+            margin-right: 20px;
+            text-align: left;
         }
         .player-actions {
             margin-top: 10px;
@@ -79,65 +127,53 @@ $conn->close();
             color: #007bff;
             text-decoration: none;
         }
-        .player-actions a:hover {
+        /* .player-actions a:hover {
             text-decoration: underline;
-        }
-        .form-container {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-        .form-container input,
-        .form-container select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form-container input[type="submit"] {
-            background-color: #c60909;
-            color: #fff;
-            border: none;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+        } */
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>CRUD de Jogadores</h1>
+        <div class="time-wrapper">
+            <?php
+            $borderColors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A0', '#33F0FF', '#FFBF00', '#8CFF33']; // Defina as cores que você deseja usar
+            $colorIndex = 0;
+            ?>
+            <?php foreach ($players as $timeNome => $playersList): ?>
+                <div class="time-container">
+                    <h2 class="time-title"><?php echo htmlspecialchars($timeNome); ?></h2>
+                    <?php foreach ($playersList as $player): ?>
+                        <div class="player-card" style="border-color: <?php echo $borderColors[$colorIndex]; ?>;">
+                            <?php if ($player['imagem']): ?>
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($player['imagem']); ?>" class="player-image" alt="Imagem do Jogador">
+                            <?php else: ?>
+                                <img src="../../../../public/images/default-player.png" class="player-image" alt="Imagem do Jogador">
+                            <?php endif; ?>
+                            <div class="player-details">
+                                <strong>Nome:</strong> <?php echo htmlspecialchars($player['nome']); ?><br>
+                                <strong>Posição:</strong> <?php echo htmlspecialchars($player['posicao']); ?><br>
+                                <strong>Número:</strong> <?php echo htmlspecialchars($player['numero']); ?><br>
+                                <strong>Gols:</strong> <?php echo htmlspecialchars($player['gols']); ?><br>
+                                <strong>Assistências:</strong> <?php echo htmlspecialchars($player['assistencias']); ?><br>
+                                <strong>Cartões Amarelos:</strong> <?php echo htmlspecialchars($player['cartoes_amarelos']); ?><br>
+                                <strong>Cartões Vermelhos:</strong> <?php echo htmlspecialchars($player['cartoes_vermelhos']); ?><br>
+                            </div>
+                            <div class="player-actions">
+                                <a href="editar_jogador.php?id=<?php echo $player['id']; ?>">Editar</a>
+                                <a href="?delete=<?php echo $player['id']; ?>" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
+                            </div>
+                        </div>
 
-        <?php foreach ($players as $timeNome => $playersList): ?>
-            <div class="time-container">
-                <h2 class="time-title"><?php echo htmlspecialchars($timeNome); ?></h2>
-                <?php foreach ($playersList as $player): ?>
-                    <div class="player-card">
-                        <?php if ($player['imagem']): ?>
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($player['imagem']); ?>" class="player-image" alt="Imagem do Jogador">
-                        <?php else: ?>
-                            <img src="../../../../public/images/default-player.png" class="player-image" alt="Imagem do Jogador">
-                        <?php endif; ?>
-                        <div class="player-details">
-                            <strong>Nome:</strong> <?php echo htmlspecialchars($player['nome']); ?><br>
-                            <strong>Posição:</strong> <?php echo htmlspecialchars($player['posicao']); ?><br>
-                            <strong>Número:</strong> <?php echo htmlspecialchars($player['numero']); ?><br>
-                            <strong>Gols:</strong> <?php echo htmlspecialchars($player['gols']); ?><br>
-                            <strong>Assistências:</strong> <?php echo htmlspecialchars($player['assistencias']); ?><br>
-                            <strong>Cartões Amarelos:</strong> <?php echo htmlspecialchars($player['cartoes_amarelos']); ?><br>
-                            <strong>Cartões Vermelhos:</strong> <?php echo htmlspecialchars($player['cartoes_vermelhos']); ?><br>
-                        </div>
-                        <div class="player-actions">
-                            <a href="editar_jogador.php?id=<?php echo $player['id']; ?>">Editar</a>
-                            <a href="?delete=<?php echo $player['id']; ?>" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+                <?php
+                        // Atualize o índice da cor para a próxima
+                        $colorIndex = ($colorIndex + 1) % count($borderColors);
+                        ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 </body>
 </html>
