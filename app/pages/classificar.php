@@ -9,7 +9,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
             margin: 0;
             background-color: #f0f8ff;
             font-family: Arial, sans-serif;
@@ -21,7 +21,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
-            margin-top: 10%;
+            margin-top: 3%;
             margin-bottom: 10%;
             display: flex;
             flex-direction: column;

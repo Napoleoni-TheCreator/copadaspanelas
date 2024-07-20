@@ -68,7 +68,7 @@
             width: 70px;
         }
         .larger-col {
-            width: 50px;
+            width: 70px;
         }
         .resultado-vitoria {
             display: inline-block;

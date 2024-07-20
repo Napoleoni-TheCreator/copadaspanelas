@@ -8,7 +8,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
             margin: 0;
             background-color: #f0f8ff;
             transition: background-color 0.3s, color 0.3s;
@@ -19,11 +19,12 @@
             color: white;
         } */
         #rodadas-wrapper {
-            margin-top: 30%;
+            margin-top: 1%;
             margin-bottom: 5%;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
+            border: 1px solid black;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 70%;
             /* overflow-x: auto; */
@@ -44,8 +45,11 @@
 
         }
         .time_teste{
+            display: flex;
+            justify-content: space-between;
             border: 1px solid black;
             margin-top: 5px;
+            border-radius: 5px;
             padding: 20px;
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.1); /* Aumenta o efeito de sombra */
         }
@@ -60,7 +64,7 @@
         h1 {
             font-size: 40px; /* Define o tamanho da fonte */
             margin-top: 5%; /* Define a margem superior */
-            margin-bottom: 5%; /* Define a margem inferior */
+            margin-bottom: 10px; /* Define a margem inferior */
             text-align: center; /* Alinha o texto ao centro */
             text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra ao texto */
         }
@@ -76,8 +80,8 @@
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
-            border: 3px solid #d32f2f; /* Adiciona uma borda de 3px de cor vermelha */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            /* border: 1px solid #d32f2f; Adiciona uma borda de 3px de cor vermelha */
+            /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); */
             margin-right: 10px;
             margin-left: 5%;
             margin-top: 2%;
@@ -129,7 +133,8 @@
             /* margin-right: 5px; */
         }
         #input {
-            width: 40px;
+            width: 20px;
+            background-color: #66bb6a;
         }
         input[type=number] {
             -webkit-appearance: none;
@@ -186,8 +191,8 @@
 </head>
 <body>
 <?php include 'header_classificacao.php'; ?>
+<h1>RODADAS DAS FASES DE GRUPO</h1>
     <div id="rodadas-wrapper">
-        <h1>RODADAS DAS FASES DE GRUPO</h1>
         <div class="table-container">
             <?php exibirRodadas(); ?>
         </div>
