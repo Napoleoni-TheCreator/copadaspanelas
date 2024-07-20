@@ -187,6 +187,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['atualizar_individual']
 // Obtém os confrontos para exibir na tabela
 $sql_confrontos = "SELECT * FROM $tabela_confrontos";
 $result_confrontos = $conn->query($sql_confrontos);
+
+// Função para obter o nome do time pelo ID
+function obterNomeTime($id_time) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT nome FROM times WHERE id = ?");
+    $stmt->bind_param("i", $id_time);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $nome = $row['nome'];
+    $stmt->close();
+    return $nome;
+}
 ?>
 
 <!DOCTYPE html>
@@ -318,10 +331,13 @@ $result_confrontos = $conn->query($sql_confrontos);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { ?>
+                    <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { 
+                        $nome_timeA = obterNomeTime($row_confrontos['timeA_id']);
+                        $nome_timeB = obterNomeTime($row_confrontos['timeB_id']);
+                    ?>
                     <tr>
                         <form method="post" action="">
-                            <td><?php echo htmlspecialchars($row_confrontos['timeA_nome']); ?></td>
+                            <td><?php echo htmlspecialchars($nome_timeA); ?></td>
                             <td>
                                 <input type="number" name="gols_marcados_timeA" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
                             </td>
@@ -329,7 +345,7 @@ $result_confrontos = $conn->query($sql_confrontos);
                             <td>
                                 <input type="number" name="gols_marcados_timeB" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
                             </td>
-                            <td><?php echo htmlspecialchars($row_confrontos['timeB_nome']); ?></td>
+                            <td><?php echo htmlspecialchars($nome_timeB); ?></td>
                             <td>
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
                                 <button type="submit" name="atualizar_individual">Atualizar</button>
@@ -377,7 +393,5 @@ $result_confrontos = $conn->query($sql_confrontos);
         }
     });
 </script>
-
 </body>
 </html>
-
