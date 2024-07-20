@@ -209,87 +209,119 @@ function obterNomeTime($id_time) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atualizar Confrontos</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .form-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 800px;
-        }
-        
-        h1 {
-            margin-bottom: 20px;
-            color: #333;
-        }
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+h1 {
+    font-size: 2em;
+    color: #444;
+    margin-top: 20px;
+}
 
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+    margin: 20px;
+}
 
-        th {
-            background-color: #f4f4f4;
-        }
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
 
-        input[type="number"] {
-            width: 60px;
-            text-align: center;
-        }
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    background-color: #fafafa;
+}
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+th {
+    background-color: #e0e0e0;
+}
 
-        button:hover {
-            background-color: #45a049;
-        }
+td input[type="number"] {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
 
-        .error-message, .success-message {
-            margin-bottom: 20px;
-        }
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 
-        .error-message {
-            color: red;
-        }
+button:hover {
+    background-color: #0056b3;
+}
 
-        .success-message {
-            color: green;
-        }
+.error-message, .success-message {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
 
-        select {
-            padding: 5px;
-            font-size: 1em;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
+.error-message {
+    color: #e74c3c;
+    background-color: #fdd;
+}
+
+.success-message {
+    color: #2ecc71;
+    background-color: #dff0d8;
+}
+
+select {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    width: 100%;
+    max-width: 250px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 0;
+}
+
+iframe {
+    display: none;
+}
+
     </style>
 </head>
 <body>
