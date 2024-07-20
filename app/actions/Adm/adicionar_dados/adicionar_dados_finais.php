@@ -195,75 +195,189 @@ $result_confrontos = $conn->query($sql_confrontos);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atualizar Confrontos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message, .success-message {
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        select {
+            padding: 5px;
+            font-size: 1em;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
     <h1>Atualizar Confrontos para a Fase de <?php echo ucfirst($fase_final); ?></h1>
 
-    <!-- Exibe a mensagem de erro ou sucesso -->
-    <?php if (isset($_SESSION['error_message'])): ?>
-        <p style="color: red;"><?php echo $_SESSION['error_message']; ?></p>
-        <?php unset($_SESSION['error_message']); ?>
-    <?php elseif (isset($_SESSION['success_message'])): ?>
-        <p style="color: green;"><?php echo $_SESSION['success_message']; ?></p>
-        <?php unset($_SESSION['success_message']); ?>
-    <?php endif; ?>
-
-    <!-- Formulário para selecionar a fase final -->
-    <form method="post" action="">
-        <label for="fase_final">Selecionar Fase Final:</label>
-        <select id="fase_final" name="fase_final" onchange="this.form.submit()">
-            <option value="oitavas" <?php if ($fase_final == 'oitavas') echo 'selected'; ?>>Oitavas de Final</option>
-            <option value="quartas" <?php if ($fase_final == 'quartas') echo 'selected'; ?>>Quartas de Final</option>
-            <option value="semifinais" <?php if ($fase_final == 'semifinais') echo 'selected'; ?>>Semifinais</option>
-            <option value="final" <?php if ($fase_final == 'final') echo 'selected'; ?>>Final</option>
-        </select>
-    </form>
-
-    <!-- Formulário para atualizar os confrontos -->
-    <form method="post" action="">
-        <?php if ($result_confrontos->num_rows > 0): ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>Time A</th>
-                    <th>Gols Time A</th>
-                    <th>vs</th>
-                    <th>Gols Time B</th>
-                    <th>Time B</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { ?>
-                <tr>
-                    <form method="post" action="">
-                        <td><?php echo htmlspecialchars($row_confrontos['timeA_nome']); ?></td>
-                        <td>
-                            <input type="number" name="gols_marcados_timeA" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
-                        </td>
-                        <td>vs</td>
-                        <td>
-                            <input type="number" name="gols_marcados_timeB" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
-                        </td>
-                        <td><?php echo htmlspecialchars($row_confrontos['timeB_nome']); ?></td>
-                        <td>
-                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
-                            <button type="submit" name="atualizar_individual">Atualizar</button>
-                        </td>
-                    </form>
-                </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-        <?php else: ?>
-        <p>Não existem times classificados para a fase.</p>
+    <div class="form-container">
+        <!-- Exibe a mensagem de erro ou sucesso -->
+        <?php if (isset($_SESSION['error_message'])): ?>
+            <p class="error-message"><?php echo $_SESSION['error_message']; ?></p>
+            <?php unset($_SESSION['error_message']); ?>
+        <?php elseif (isset($_SESSION['success_message'])): ?>
+            <p class="success-message"><?php echo $_SESSION['success_message']; ?></p>
+            <?php unset($_SESSION['success_message']); ?>
         <?php endif; ?>
-    </form>
-    <!-- Formulário para classificar os confrontos -->
-    <form method="post" action="../../funcoes/classificar.php" target="result_frame">
+
+        <!-- Formulário para selecionar a fase final -->
+        <form method="post" action="">
+            <label for="fase_final">Selecionar Fase Final:</label>
+            <select id="fase_final" name="fase_final" onchange="this.form.submit()">
+                <option value="oitavas" <?php if ($fase_final == 'oitavas') echo 'selected'; ?>>Oitavas de Final</option>
+                <option value="quartas" <?php if ($fase_final == 'quartas') echo 'selected'; ?>>Quartas de Final</option>
+                <option value="semifinais" <?php if ($fase_final == 'semifinais') echo 'selected'; ?>>Semifinais</option>
+                <option value="final" <?php if ($fase_final == 'final') echo 'selected'; ?>>Final</option>
+            </select>
+        </form>
+
+        <!-- Formulário para atualizar os confrontos -->
+        <form method="post" action="">
+            <?php if ($result_confrontos->num_rows > 0): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time A</th>
+                        <th>Gols Time A</th>
+                        <th>vs</th>
+                        <th>Gols Time B</th>
+                        <th>Time B</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { ?>
+                    <tr>
+                        <form method="post" action="">
+                            <td><?php echo htmlspecialchars($row_confrontos['timeA_nome']); ?></td>
+                            <td>
+                                <input type="number" name="gols_marcados_timeA" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
+                            </td>
+                            <td>vs</td>
+                            <td>
+                                <input type="number" name="gols_marcados_timeB" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
+                            </td>
+                            <td><?php echo htmlspecialchars($row_confrontos['timeB_nome']); ?></td>
+                            <td>
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
+                                <button type="submit" name="atualizar_individual">Atualizar</button>
+                            </td>
+                        </form>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+            <p>Não existem times classificados para a fase.</p>
+            <?php endif; ?>
+        </form>
+    </div>
+
+<!-- Formulário para classificar os confrontos -->
+<div class="form-container">
+    <form id="classificacao-form" method="post" action="../../funcoes/classificar.php" target="result_frame">
+        <h3>Deseja classificar os times para a próxima fase final?</h3>
+        <p>Selecione uma opção:</p>
+        <label>
+            <input type="radio" name="opcao" value="sim" required>
+            Sim, aperte o botão Classificar;
+        </label>
+        <label>
+            <input type="radio" name="opcao" value="nao" required>
+            Não, aperte o botão Classificar;
+        </label>
         <button type="submit" name="classificar">Classificar</button>
     </form>
-        <!-- Frame para redirecionamento após classificação -->
-        <iframe name="result_frame" style="display:none;"></iframe>
+    <!-- Frame para redirecionamento após classificação -->
+    <iframe name="result_frame" style="display:none;"></iframe>
+</div>
+
+<script>
+    document.getElementById('classificacao-form').addEventListener('submit', function(event) {
+        // Obtém o valor selecionado
+        var selecionado = document.querySelector('input[name="opcao"]:checked');
+        
+        // Verifica se a opção "Não" foi selecionada
+        if (selecionado && selecionado.value === 'nao') {
+            // Previne o envio do formulário
+            event.preventDefault();
+            // alert('Você selecionou "Não". O botão Classificar não será executado.');
+        }
+    });
+</script>
+
 </body>
 </html>
+
