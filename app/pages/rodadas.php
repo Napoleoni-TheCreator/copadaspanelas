@@ -13,29 +13,58 @@
             background-color: #f0f8ff;
             transition: background-color 0.3s, color 0.3s;
         }
-        .dark-mode {
+        
+        /* .dark-mode {
             background-color: #121212;
-            color: #e0e0e0;
-        }
+            color: white;
+        } */
         #rodadas-wrapper {
-            margin-top: 5%;
+            margin-top: 30%;
             margin-bottom: 5%;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            overflow-x: auto;
+            width: 70%;
+            /* overflow-x: auto; */
             transition: background-color 0.3s, box-shadow 0.3s;
+            height: auto;
         }
         .dark-mode #rodadas-wrapper {
             background-color: #1e1e1e;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            color: white; 
+
+        }
+        tr{
+            display: flex;
+            /* justify-content: space-between; */
+            align-items: center;
+            text-align: center;
+
+        }
+        .time_teste{
+            border: 1px solid black;
+            margin-top: 5px;
+            padding: 20px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1); /* Aumenta o efeito de sombra */
+        }
+        .time_teste img{
+            width: 30px;
+            height:30px;
+        }
+        .tr_teste{
+            display: flex;
+            justify-content: center;
         }
         h1 {
-            margin-bottom: 20px;
-            text-align: center;
+            font-size: 40px; /* Define o tamanho da fonte */
+            margin-top: 5%; /* Define a margem superior */
+            margin-bottom: 5%; /* Define a margem inferior */
+            text-align: center; /* Alinha o texto ao centro */
+            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra ao texto */
         }
+
         .table-container {
             display: flex;
             justify-content: space-between;
@@ -47,10 +76,19 @@
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
+            border: 3px solid #d32f2f; /* Adiciona uma borda de 3px de cor vermelha */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             margin-right: 10px;
+            margin-left: 5%;
+            margin-top: 2%;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
+
+        .rodada-container:hover {
+            box-shadow: 0 0 40px hsl(0, 100%, 50%);
+                /* transform: scale(1.0); Aumenta o tamanho da caixa em 10% */
+                margin-left: 5%;
+            }
         .dark-mode .rodada-container {
             background-color: #2c2c2c;
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
@@ -60,7 +98,7 @@
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid #ddd;
+            /* border: 1px solid #ddd; */
             padding: 8px;
             text-align: center;
             transition: background-color 0.3s, color 0.3s;
@@ -86,8 +124,9 @@
             align-items: center;
         }
         .time-name {
-            margin-left: 5px;
-            margin-right: 5px;
+            font-size: 20px;
+            margin-left: 8px;
+            /* margin-right: 5px; */
         }
         #input {
             width: 40px;
@@ -136,13 +175,19 @@
         .dark-mode .btn-toggle-mode:hover {
             background-color: #333;
         }
+        /* Estilo para evitar quebra de linha */
+        .no-break {
+            white-space: nowrap; /* Evita quebra de linha no conteúdo */
+            font-size: 20px;
+
+        }
+
     </style>
 </head>
 <body>
-    <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
-    <?php include 'header_classificacao.php'; ?>
+<?php include 'header_classificacao.php'; ?>
     <div id="rodadas-wrapper">
-        <h1>Rodadas das Fases de Grupo</h1>
+        <h1>RODADAS DAS FASES DE GRUPO</h1>
         <div class="table-container">
             <?php exibirRodadas(); ?>
         </div>
@@ -203,9 +248,9 @@
                                 $resultadoA = 'E';
                                 $resultadoB = 'E';
                             }
-    
-                            echo '<tr>';
-                            echo '<td>' . $grupoNome . '</td>';
+                            echo '<td class="no-break">Grupo | ' . $grupoNome . '</td>';
+                            echo '<tr class="time_teste">';
+                            
                             echo '<td class="time-row">';
                             if ($logoA) {
                                 echo '<img src="' . $logoA . '" class="logo-time">';
@@ -226,7 +271,7 @@
                             echo '<input type="hidden" name="resultadoB_' . $jogoId . '" value="' . $resultadoB . '">';
                             echo '</tr>';
                         }
-                        echo '<tr><td colspan="7" style="text-align: center;"><input type="submit" class="btn-save" value="Salvar Todos"></td></tr>';
+                        echo '<tr class= "tr_teste"><td colspan="7" style="text-align: center;"><input type="submit" class="btn-save" value="Salvar Todos"></td></tr>';
                         echo '</form>';
                     } else {
                         echo '<tr>';
