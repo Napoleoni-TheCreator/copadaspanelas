@@ -10,6 +10,11 @@ USE copa;
 CREATE TABLE linklive(
     codlive VARCHAR(255) PRIMARY KEY
 );
+-- link instagram
+CREATE TABLE linkinstagram(
+    codinsta INT AUTO_INCREMENT PRIMARY KEY, 
+    linklive VARCHAR(255)
+);
 
 -- REGIAO DOS ADMIM E TECNICOS
 
