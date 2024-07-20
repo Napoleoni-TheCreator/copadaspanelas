@@ -393,5 +393,6 @@ function obterNomeTime($id_time) {
         }
     });
 </script>
+
 </body>
 </html>
