@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Times Classificados para as Finais</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            height: 100vh;
             margin: 0;
             background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
         }
         #tabela-wrapper {
-            background-color: #f0f8ff;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -22,9 +26,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: background-color 0.3s, color 0.3s;
         }
         h1 {
             margin-bottom: 20px;
+            font-size: 2em;
+            color: #333;
+            transition: color 0.3s;
+        }
+        h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            color: #666;
         }
         table {
             width: 100%;
@@ -32,12 +45,14 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
             text-align: left;
             vertical-align: middle;
+            transition: background-color 0.3s, color 0.3s;
         }
         th {
             background-color: #f2f2f2;
+            color: #333;
         }
         .logo-time {
             max-width: 50px;
@@ -48,10 +63,49 @@
         .posicao-col {
             width: 50px;
         }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode #tabela-wrapper {
+            background-color: #1e1e1e;
+        }
+        .dark-mode th {
+            background-color: #333;
+            color: #ffffff;
+        }
+        .dark-mode td {
+            background-color: #2e2e2e;
+        }
+        .dark-mode h1, .dark-mode h2 {
+            color: #ffffff;
+        }
+        .dark-mode .logo-time {
+            border: 1px solid #ffffff;
+        }
+        .toggle-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-<?php include 'header_classificacao.php'; ?>
+    <button class="toggle-button" onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+    
+    <?php include 'header_classificacao.php'; ?>
+    
     <div id="tabela-wrapper">
         <h1>Times Classificados para as Finais</h1>
 
@@ -74,7 +128,7 @@
                 while ($row = $result->fetch_assoc()) {
                     // Codifica a imagem em base64 se necessário
                     $logoData = !empty($row['logo']) ? 'data:image/jpeg;base64,' . base64_encode($row['logo']) : '';
-                    
+
                     echo "<tr>";
                     echo "<td class='posicao-col'>" . $posicao . "</td>";
                     echo "<td><img src=\"$logoData\" class=\"logo-time\" alt=\"Logo\"></td>";
@@ -103,5 +157,10 @@
 
         ?>
     </div>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
 </body>
 </html>

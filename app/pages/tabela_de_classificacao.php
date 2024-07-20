@@ -126,6 +126,48 @@
             display: inline-block;
             margin-left: 5px;
         }
+        body.dark-mode #legenda-simbolos {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+        }
+        body.dark-mode th {
+            background-color: #333333;
+            padding: 10px;
+        }
+        body.dark-mode td {
+            background-color:#333333;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        body.dark-mode #tabela-wrapper {
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        .dark-mode-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+            border-radius: 5px;
+        }
+        .dark-mode-button:hover {
+            background-color: #0056b3;
+        }
+        .dark-mode .small-col:hover{
+            background-color: white;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -297,5 +339,10 @@
         return $output;
     }
     ?>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
 </body>
 </html>

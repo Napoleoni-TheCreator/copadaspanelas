@@ -67,6 +67,24 @@
             color: white;
             font-size: 14px;
         }
+        .dark-mode {
+            background: #121212;
+            /* color: #ffffff; */
+        }
+        .dark-mode table {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dark-mode th {
+            color: #00ff00; /* Verde */
+            border-bottom: 3px solid #ff0000; /* Vermelho */
+        }
+        .dark-mode .dados {
+            color: #ff0000; /* Vermelho */
+        }
+        .dark-mode .clube {
+            color: #00ff00; /* Verde */
+        }
+
     </style>
 </head>
 <body>
@@ -92,8 +110,20 @@
                     <a href="../pages/exibir_finais.php"><img src="../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
                     <span>Finais</span>
                 </div>
+                <div class="nav-item">
+                    <a href="../pages/estatistica.php"><img src="../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <span>Estatistica</span>
+                </div>
             </nav>
+            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+            <script>
+                function toggleDarkMode() {
+                    var element = document.body;
+                    element.classList.toggle("dark-mode");
+                }
+            </script>
         </div>
+
     </header>
 </body>
 </html>

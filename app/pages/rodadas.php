@@ -5,21 +5,32 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            height: 100vh;
             margin: 0;
             background-color: #f0f8ff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
         }
         #rodadas-wrapper {
-            margin-top: 10%;
+            margin-top: 5%;
             margin-bottom: 5%;
-            background-color: #f0f8ff;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 90%;
             overflow-x: auto;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .dark-mode #rodadas-wrapper {
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
         h1 {
             margin-bottom: 20px;
@@ -38,6 +49,11 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             margin-right: 10px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .dark-mode .rodada-container {
+            background-color: #2c2c2c;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
         }
         table {
             width: 100%;
@@ -47,9 +63,13 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            transition: background-color 0.3s, color 0.3s;
         }
         th {
             background-color: #f2f2f2;
+        }
+        .dark-mode th {
+            background-color: #333;
         }
         .rodada-header {
             font-size: 1.2em;
@@ -84,14 +104,43 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .btn-save {
+            background-color: #66bb6a;
         }
         .btn-save:hover {
             background-color: #45a049;
         }
+        .dark-mode .btn-save:hover {
+            background-color: #5eae5e;
+        }
+        .btn-toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .btn-toggle-mode {
+            background-color: #444;
+        }
+        .btn-toggle-mode:hover {
+            background-color: #0056b3;
+        }
+        .dark-mode .btn-toggle-mode:hover {
+            background-color: #333;
+        }
     </style>
 </head>
-<body> 
-<?php include 'header_classificacao.php'; ?>
+<body>
+    <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+    <?php include 'header_classificacao.php'; ?>
     <div id="rodadas-wrapper">
         <h1>Rodadas das Fases de Grupo</h1>
         <div class="table-container">
@@ -195,8 +244,17 @@
     
         $conn->close();
     }
-    
-    
     ?>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const modeButton = document.querySelector('.btn-toggle-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                modeButton.textContent = 'Modo Claro';
+            } else {
+                modeButton.textContent = 'Modo Escuro';
+            }
+        }
+    </script>
 </body>
 </html>
