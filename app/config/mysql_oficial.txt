@@ -124,24 +124,26 @@ CREATE TABLE final (
     time_nome VARCHAR(100),
     FOREIGN KEY (time_id) REFERENCES times(id)
 );
-
+drop table final_confrontos;
 -- Cria a tabela para armazenar os confrontos da final
 CREATE TABLE final_confrontos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    timeA_nome VARCHAR(255),
-    timeB_nome VARCHAR(255),
+    timeA_id INT NOT NULL,           -- ID do Time A
+    timeB_id INT NOT NULL,           -- ID do Time B
     fase ENUM('final') NOT NULL,
     gols_marcados_timeA INT DEFAULT NULL,
     gols_marcados_timeB INT DEFAULT NULL,
     gols_contra_timeA INT DEFAULT NULL,
-    gols_contra_timeB INT DEFAULT NULL
+    gols_contra_timeB INT DEFAULT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(time_id),
+    FOREIGN KEY (timeB_id) REFERENCES times(time_id)
 );
 
 -- Cria a tabela para armazenar os confrontos das oitavas de finais
 CREATE TABLE oitavas_de_final_confrontos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    timeA_nome VARCHAR(255),
-    timeB_nome VARCHAR(255),
+    timeA_id INT NOT NULL,           -- ID do Time A
+    timeB_id INT NOT NULL,           -- ID do Time B
     fase ENUM('oitavas') NOT NULL,
     gols_marcados_timeA INT DEFAULT NULL,
     gols_marcados_timeB INT DEFAULT NULL,
@@ -152,8 +154,8 @@ CREATE TABLE oitavas_de_final_confrontos (
 -- Cria a tabela para armazenar os confrontos das quartas de finais
 CREATE TABLE quartas_de_final_confrontos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    timeA_nome VARCHAR(255),
-    timeB_nome VARCHAR(255),
+    timeA_id INT NOT NULL,           -- ID do Time A
+    timeB_id INT NOT NULL,           -- ID do Time B
     fase ENUM('quartas') NOT NULL,
     gols_marcados_timeA INT DEFAULT NULL,
     gols_marcados_timeB INT DEFAULT NULL,
@@ -164,14 +166,15 @@ CREATE TABLE quartas_de_final_confrontos (
 -- Cria a tabela para armazenar os confrontos das semifinais
 CREATE TABLE semifinais_confrontos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    timeA_nome VARCHAR(255),
-    timeB_nome VARCHAR(255),
+    timeA_id INT NOT NULL,           -- ID do Time A
+    timeB_id INT NOT NULL,           -- ID do Time B
     fase ENUM('semifinais') NOT NULL,
     gols_marcados_timeA INT DEFAULT NULL,
     gols_marcados_timeB INT DEFAULT NULL,
     gols_contra_timeA INT DEFAULT NULL,
     gols_contra_timeB INT DEFAULT NULL
 );
+
 CREATE TABLE fase_execucao (
     id INT PRIMARY KEY AUTO_INCREMENT,
     fase VARCHAR(50) NOT NULL,

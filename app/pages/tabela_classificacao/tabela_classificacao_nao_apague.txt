@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tabela de Classificação</title>
+    <title>Tabela de classificação</title>
     <style>
-        /* Estilos atualizados para a tabela de classificação */
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100%;
-            margin: 0;
-            background-color: #f0f8ff;
+            margin: 0; /* Remova as margens superior e inferior aqui */
+            /* margin-bottom: 10%; */
+            background-color: #f0f8ff; /* Azul claro como fundo */
         }
         #tabela-wrapper {
-            background-color: #f0f8ff;
+            background-color: #f0f8ff; /* Azul claro como fundo */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            margin-top: 10%;
+            width: 80%; /* Largura da div ajustável conforme necessário */
+            margin-top: 10%; /* Ajusta a margem do topo para o título */
             margin-bottom: 10%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: column; /* Organiza conteúdo em coluna */
+            align-items: center; /* Centraliza itens horizontalmente */
         }
+
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Espaço abaixo do título */
         }
         .grupo-container {
-            width: 100%;
-            margin-bottom: 20px;
+            width: 100%; /* Largura total do conteúdo do grupo */
+            margin-bottom: 20px; /* Espaçamento entre grupos */
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            border: none;
+            border: none; /* Remove todas as bordas da tabela */
         }
         th, td {
-            border: none;
-            padding: 3px 0;
-            text-align: left;
-            vertical-align: middle;
+            border: none; /* Remove todas as bordas das células */
+            padding: 3px 0; /* Padding vertical de 8px e removendo padding horizontal */
+            text-align: left; /* Alinha todo o conteúdo à esquerda */
+            vertical-align: middle; /* Centraliza verticalmente o conteúdo das células */
         }
         th {
             background-color: #f2f2f2;
@@ -50,25 +51,27 @@
             margin-bottom: 10px;
         }
         .time-cell {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: left;
-            vertical-align: middle;
-            max-width: 250px;
+            white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+            overflow: hidden; /* Esconde qualquer conteúdo que exceda a largura máxima */
+            text-overflow: ellipsis; /* Adiciona reticências no final do texto se ele for muito longo */
+            text-align: left; /* Alinha o texto à esquerda dentro da célula */
+            vertical-align: middle; /* Centraliza verticalmente o conteúdo das células */
+            max-width: 250px; /* Largura máxima para o nome do time */
         }
         .logo-time {
-            max-width: 50px;
-            max-height: 50px;
-            vertical-align: middle;
-            margin-right: 5px;
-            border-radius: 100%;
+            max-width: 50px; /* Tamanho máximo da logo (ajuste conforme necessário) */
+            max-height: 50px; /* Altura máxima da logo (ajuste conforme necessário) */
+            vertical-align: middle; /* Centraliza verticalmente a logo */
+            margin-right: 5px; /* Espaço mínimo entre a logo e o texto do time */
+            border-radius: 100%;/* Utiliza 50% para criar um círculo*/
+
         }
         .small-col {
-            width: 70px;
+            width: 70px; /* Largura das colunas pequenas (P, J, V, E, D, GP, GC, SG) */
+            max-width: 70px;
         }
         .larger-col {
-            width: 50px;
+            width: 50px; /* Largura das colunas maiores (% e ÚLT. JOGO) */
         }
         .resultado-vitoria {
             display: inline-block;
@@ -103,7 +106,7 @@
             margin-right: 2px;
         }
         #legenda-simbolos {
-            margin-top: 20px;
+            margin-top: 20px; /* Espaço acima da legenda */
             padding: 10px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -132,7 +135,7 @@
 <?php include 'header_classificacao.php'; ?>
     <div id="tabela-wrapper">
         <h1>FASE DE GRUPOS</h1>
-        <h4>Tabela de Classificação</h4>
+        <h4>tabela de classificacao</h4>
         <?php mostrarGrupos(); ?>
 
         <div id="legenda-simbolos">
@@ -184,19 +187,10 @@
                 echo '<th class="larger-col">ÚLT. JOGOS</th>'; // Coluna de Últimos Jogos
                 echo '</tr>';
 
-                $sqlTimes = "SELECT t.id, t.nome, t.logo, 
-                                    COALESCE(SUM(j.gols_marcados_timeA), 0) + COALESCE(SUM(j.gols_marcados_timeB), 0) AS gm,
-                                    COALESCE(SUM(j.gols_marcados_timeB), 0) + COALESCE(SUM(j.gols_marcados_timeA), 0) AS gc,
-                                    COALESCE(SUM(j.gols_marcados_timeA > j.gols_marcados_timeB), 0) AS vitorias,
-                                    COALESCE(SUM(j.gols_marcados_timeA = j.gols_marcados_timeB), 0) AS empates,
-                                    COALESCE(SUM(j.gols_marcados_timeA < j.gols_marcados_timeB), 0) AS derrotas,
-                                    COALESCE(SUM(j.gols_marcados_timeA - j.gols_marcados_timeB), 0) AS sg,
-                                    COUNT(j.id) AS partidas,
-                                    COALESCE(SUM(j.gols_marcados_timeA > j.gols_marcados_timeB), 0) * 3 + COALESCE(SUM(j.gols_marcados_timeA = j.gols_marcados_timeB), 0) AS pts
-                             FROM times t
-                             LEFT JOIN jogos_fase_grupos j ON t.id = j.timeA_id OR t.id = j.timeB_id
-                             WHERE t.grupo_id = $grupoId
-                             GROUP BY t.id
+                // Consulta para buscar os times deste grupo, ordenados por pts descendentemente, gm descendentemente, gc ascendentemente, sg descendentemente
+                $sqlTimes = "SELECT id, nome, logo, pts, vitorias, empates, derrotas, gm, gc, sg
+                             FROM times 
+                             WHERE grupo_id = $grupoId
                              ORDER BY pts DESC, gm DESC, gc ASC, sg DESC";
                 $resultTimes = $conn->query($sqlTimes);
 
@@ -204,24 +198,28 @@
                     $posicao = 1;
                     while ($rowTimes = $resultTimes->fetch_assoc()) {
                         echo '<tr>';
+                        // Exibir a posição do time ao lado da logo e do nome do time
                         echo '<td>';
                         echo '<span style="font-weight: bold; margin-right: 5px;">' . $posicao . '</span>';
+                        // Exibir a logo do time se disponível
                         if (!empty($rowTimes['logo'])) {
                             $imageData = base64_encode($rowTimes['logo']);
                             $imageSrc = 'data:image/jpeg;base64,'.$imageData;
                             echo '<img src="' . $imageSrc . '" class="logo-time">';
                         }
+                        // Exibir o nome do time
                         echo '<span class="time-cell">' . $rowTimes['nome'] . '</span>';
                         echo '</td>';
                         echo '<td class="small-col">' . $rowTimes['pts'] . '</td>';
-                        echo '<td class="small-col">' . $rowTimes['partidas'] . '</td>';
+                        $partidas = $rowTimes['vitorias'] + $rowTimes['empates'] + $rowTimes['derrotas'];
+                        echo '<td class="small-col">' . $partidas . '</td>';
                         echo '<td class="small-col">' . $rowTimes['vitorias'] . '</td>';
                         echo '<td class="small-col">' . $rowTimes['empates'] . '</td>';
                         echo '<td class="small-col">' . $rowTimes['derrotas'] . '</td>';
                         echo '<td class="small-col">' . $rowTimes['gm'] . '</td>';
                         echo '<td class="small-col">' . $rowTimes['gc'] . '</td>';
                         echo '<td class="small-col">' . $rowTimes['sg'] . '</td>';
-                        echo '<td class="larger-col">' . formatarPorcentagemAproveitamento($rowTimes['vitorias'], $rowTimes['partidas']) . '</td>';
+                        echo '<td class="larger-col">' . formatarPorcentagemAproveitamento($rowTimes['vitorias'], $partidas) . '</td>';
                         echo '<td class="larger-col">';
                         echo gerarUltimosJogos($rowTimes['id']);
                         echo '</td>';
@@ -233,7 +231,7 @@
                 }
 
                 echo '</table>';
-                echo '</div>';
+                echo '</div>'; // Fecha div .grupo-container
             }
         } else {
             echo "Nenhum grupo encontrado.";
@@ -245,6 +243,7 @@
     function formatarPorcentagemAproveitamento($vitorias, $partidas) {
         if ($partidas > 0) {
             $porcentagem = number_format(($vitorias / $partidas) * 100, 1);
+            // Verifica se a porcentagem termina com .0 e remove se for o caso
             if (substr($porcentagem, -2) == '.0') {
                 return substr($porcentagem, 0, -2);
             } else {
@@ -258,15 +257,8 @@
     function gerarUltimosJogos($timeId) {
         include '../config/conexao.php';
 
-        $sqlJogos = "SELECT CASE 
-                        WHEN timeA_id = $timeId THEN resultado_timeA
-                        WHEN timeB_id = $timeId THEN resultado_timeB
-                        ELSE 'G'
-                      END AS resultado
-                      FROM jogos_fase_grupos 
-                      WHERE timeA_id = $timeId OR timeB_id = $timeId 
-                      ORDER BY data_jogo DESC 
-                      LIMIT 5";
+        // Consulta para buscar os últimos resultados dos jogos ordenados por data decrescente e limitados aos últimos 5 jogos
+        $sqlJogos = "SELECT resultado FROM jogos WHERE time_id = $timeId ORDER BY id DESC LIMIT 5";
         $resultJogos = $conn->query($sqlJogos);
 
         $ultimosJogos = [];
@@ -277,10 +269,12 @@
             }
         }
 
+        // Preenche com resultados cinza se houver menos de 5 jogos
         while (count($ultimosJogos) < 5) {
             $ultimosJogos[] = 'G'; // Cinza para jogos não existentes
         }
 
+        // Monta a string HTML para exibir os últimos jogos
         $output = '';
         foreach ($ultimosJogos as $resultado) {
             if ($resultado == 'V') {
@@ -294,6 +288,7 @@
             }
         }
 
+        // Retornar a string HTML dos últimos jogos
         return $output;
     }
     ?>

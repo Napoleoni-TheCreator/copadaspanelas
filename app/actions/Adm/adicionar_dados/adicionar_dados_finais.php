@@ -1,5 +1,6 @@
 <?php
 include '../../../config/conexao.php';
+session_start(); // Inicia a sessão
 
 // Função para limpar o status das fases subsequentes
 function limparFases($fase_atual) {
@@ -128,202 +129,270 @@ switch ($fase_final) {
         die("Fase final desconhecida.");
 }
 
-// Define o fuso horário para o horário de Brasília
-date_default_timezone_set('America/Sao_Paulo');
 
-// Manipula a atualização dos dados dos confrontos
+// Processa o formulário de atualização
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['atualizar_individual'])) {
     $id = $_POST['id'];
     $gols_marcados_timeA = $_POST['gols_marcados_timeA'];
     $gols_marcados_timeB = $_POST['gols_marcados_timeB'];
 
-    // Determina o resultado com base nos gols marcados
-    if ($gols_marcados_timeA > $gols_marcados_timeB) {
-        $resultado_timeA = 'V'; // Vitória para o Time A
-        $resultado_timeB = 'D'; // Derrota para o Time B
-    } elseif ($gols_marcados_timeA < $gols_marcados_timeB) {
-        $resultado_timeA = 'D'; // Derrota para o Time A
-        $resultado_timeB = 'V'; // Vitória para o Time B
+    if (empty($id) || !is_numeric($id)) {
+        $_SESSION['error_message'] = "ID inválido.";
     } else {
-        // Informa ao usuário que empates não são permitidos
-        echo "<script>alert('Empates não são permitidos. Por favor, insira novos dados.');</script>";
-        // Redireciona o usuário de volta para o formulário de entrada ou outra página relevante
-        echo "<script>window.location.href = 'adicionar_dados_finais.php';</script>";
-        exit; // Encerra a execução do script para evitar a inserção do empate
-    }
+        // Determina os gols contra
+        $gols_contra_timeA = $gols_marcados_timeB;
+        $gols_contra_timeB = $gols_marcados_timeA;
 
-    // Atualiza o confronto com os gols marcados e contra
-    $sql_update = "UPDATE $tabela_confrontos SET 
-                   gols_marcados_timeA = ?, gols_contra_timeB = ?, 
-                   gols_marcados_timeB = ?, gols_contra_timeA = ? 
-                   WHERE id = ?";
-
-    $stmt = $conn->prepare($sql_update);
-    $stmt->bind_param('iiiii', $gols_marcados_timeA, $gols_marcados_timeA, $gols_marcados_timeB, $gols_marcados_timeB, $id);
-
-    if ($stmt->execute()) {
-        // Obtém os dados do confronto
-        $data_jogo = date('Y-m-d H:i:s'); // Data e hora atual no fuso horário de Brasília
-        $stmt_select = $conn->prepare("SELECT timeA_id, timeB_id, timeA_nome, timeB_nome FROM $tabela_confrontos WHERE id = ?");
-        $stmt_select->bind_param('i', $id);
-        $stmt_select->execute();
-        $result_select = $stmt_select->get_result();
-        $row_confronto = $result_select->fetch_assoc();
-        $stmt_select->close();
-
-        // Debug: Verifique os valores de $resultado_timeA e $resultado_timeB
-        echo "Debug - resultado_timeA: $resultado_timeA, resultado_timeB: $resultado_timeB\n";
-
-        // Insere o resultado na tabela jogos_finais
-        $stmt_insert = $conn->prepare("INSERT INTO jogos_finais (timeA_id, timeB_id, nome_timeA, nome_timeB, gols_marcados_timeA, gols_marcados_timeB, resultado_timeA, resultado_timeB, data_jogo, fase) 
-                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt_insert->bind_param('iissssssss', 
-            $row_confronto['timeA_id'], $row_confronto['timeB_id'], 
-            $row_confronto['timeA_nome'], $row_confronto['timeB_nome'], 
-            $gols_marcados_timeA, $gols_marcados_timeB, 
-            $resultado_timeA, $resultado_timeB, 
-            $data_jogo, $fase_final
-        );
-
-        if ($stmt_insert->execute()) {
-            echo "<script>alert('Dados atualizados com sucesso!');</script>";
+        // Determina o resultado com base nos gols marcados
+        if ($gols_marcados_timeA > $gols_marcados_timeB) {
+            $resultado_timeA = 'V'; // Vitória para o Time A
+            $resultado_timeB = 'D'; // Derrota para o Time B
+        } elseif ($gols_marcados_timeA < $gols_marcados_timeB) {
+            $resultado_timeA = 'D'; // Derrota para o Time A
+            $resultado_timeB = 'V'; // Vitória para o Time B
         } else {
-            echo "<script>alert('Erro ao inserir dados: " . $stmt_insert->error . "');</script>";
+            // Informa ao usuário que empates não são permitidos
+            $_SESSION['error_message'] = "Empates não são permitidos. Atualização não realizada.";
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            exit;
         }
-        $stmt_insert->close();
-    } else {
-        echo "<script>alert('Erro ao atualizar dados: " . $stmt->error . "');</script>";
+
+        $stmt = $conn->prepare("UPDATE $tabela_confrontos SET 
+            gols_marcados_timeA = ?, gols_contra_timeB = ?, 
+            gols_marcados_timeB = ?, gols_contra_timeA = ? 
+            WHERE id = ?");
+        if ($stmt === false) {
+            $_SESSION['error_message'] = "Erro na preparação da consulta: " . $conn->error;
+        } else {
+            $stmt->bind_param("iiiii", 
+                $gols_marcados_timeA, $gols_contra_timeB, 
+                $gols_marcados_timeB, $gols_contra_timeA, 
+                $id
+            );
+
+            if ($stmt->execute()) {
+                $_SESSION['success_message'] = "Confronto atualizado com sucesso!";
+                // Redireciona para a mesma página para evitar ressubmissão de formulário
+                header('Location: ' . $_SERVER['PHP_SELF']);
+                exit;
+            } else {
+                $_SESSION['error_message'] = "Erro ao atualizar o confronto: " . $stmt->error;
+            }
+
+            $stmt->close();
+        }
     }
 }
 
-// Obtém os confrontos da fase final configurada
+// Obtém os confrontos para exibir na tabela
 $sql_confrontos = "SELECT * FROM $tabela_confrontos";
 $result_confrontos = $conn->query($sql_confrontos);
+
+// Função para obter o nome do time pelo ID
+function obterNomeTime($id_time) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT nome FROM times WHERE id = ?");
+    $stmt->bind_param("i", $id_time);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $nome = $row['nome'];
+    $stmt->close();
+    return $nome;
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Adicionar Dados Finais</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Confrontos</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin-top: 20px;
         }
-        table, th, td {
-            border: 1px solid black;
-        }
+
         th, td {
             padding: 10px;
             text-align: center;
+            border-bottom: 1px solid #ddd;
         }
-        .form-inline {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        th {
+            background-color: #f4f4f4;
         }
-        .form-inline input[type=number] {
-            width: 50px;
-            margin: 0 5px;
+
+        input[type="number"] {
+            width: 60px;
+            text-align: center;
         }
-        .form-inline button {
-            margin-left: 10px;
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
         }
-        #input {
-            width: 29px;
+
+        button:hover {
+            background-color: #45a049;
         }
-        input[type=number] {
-            -webkit-appearance: none; /* Remove os botões em navegadores baseados em WebKit (Chrome, Safari) */
-            -moz-appearance: textfield !important; /* Remove os botões em Firefox */
-            appearance: none; /* Remove os botões em navegadores que suportam a propriedade padrão */
+
+        .error-message, .success-message {
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        select {
+            padding: 5px;
+            font-size: 1em;
+            border-radius: 4px;
+            border: 1px solid #ddd;
         }
     </style>
-    <script>
-        function classificar() {
-            var xhr = new XMLHttpRequest();
-            // Ajuste o caminho para o arquivo PHP conforme necessário
-            xhr.open('POST', '/copadaspanelas/app/actions/funcoes/classificar_teste.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onload = function() {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    // Atualiza a página com a resposta do servidor
-                    document.getElementById('resultado_classificacao').innerHTML = xhr.responseText;
-                } else {
-                    // Exibe uma mensagem de erro se a requisição falhar
-                    alert('Erro ao classificar: ' + xhr.statusText);
-                }
-            };
-
-            xhr.onerror = function() {
-                alert('Erro ao classificar: Ocorreu um erro na requisição.');
-            };
-
-            // Envia a requisição
-            xhr.send();
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('classificarButton').addEventListener('click', classificar);
-            document.getElementById('atualizar').addEventListener('click',classificar)
-        });
-    </script>
 </head>
 <body>
-    <h1>Adicionar Dados Finais - Fase: <?php echo ucfirst($fase_final); ?></h1>
-    
-    <!-- Formulário para selecionar e atualizar a fase final -->
-    <form method="post" action="">
-        <label for="fase_final">Selecionar Fase Final:</label>
-        <select id="fase_final" name="fase_final" onchange="this.form.submit()">
-            <option value="oitavas" <?php if ($fase_final == 'oitavas') echo 'selected'; ?>>Oitavas de Final</option>
-            <option value="quartas" <?php if ($fase_final == 'quartas') echo 'selected'; ?>>Quartas de Final</option>
-            <option value="semifinais" <?php if ($fase_final == 'semifinais') echo 'selected'; ?>>Semifinais</option>
-            <option value="final" <?php if ($fase_final == 'final') echo 'selected'; ?>>Final</option>
-        </select>
-    </form>
-    
-    <!-- Tabela com confrontos -->
-    <form method="post" action="">
-        <table>
-            <thead>
-                <tr>
-                    <th>Time A</th>
-                    <th>Gols Time A</th>
-                    <th>vs</th>
-                    <th>Gols Time B</th>
-                    <th>Time B</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { ?>
-                <tr>
-                    <form method="post" action="">
-                        <td><?php echo htmlspecialchars($row_confrontos['timeA_nome']); ?></td>
-                        <td>
-                            <input type="number" name="gols_marcados_timeA" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
-                        </td>
-                        <td>vs</td>
-                        <td>
-                            <input type="number" name="gols_marcados_timeB" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
-                        </td>
-                        <td><?php echo htmlspecialchars($row_confrontos['timeB_nome']); ?></td>
-                        <td>
-                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
-                            <button type="submit" name="atualizar_individual" id= "atualizar">Atualizar</button>
-                        </td>
-                    </form>
-                </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </form>
-    <!-- Botão para executar classificar.php sem abrir uma nova página -->
-    <button id="classificarButton">Classificar</button>
+    <h1>Atualizar Confrontos para a Fase de <?php echo ucfirst($fase_final); ?></h1>
 
+    <div class="form-container">
+        <!-- Exibe a mensagem de erro ou sucesso -->
+        <?php if (isset($_SESSION['error_message'])): ?>
+            <p class="error-message"><?php echo $_SESSION['error_message']; ?></p>
+            <?php unset($_SESSION['error_message']); ?>
+        <?php elseif (isset($_SESSION['success_message'])): ?>
+            <p class="success-message"><?php echo $_SESSION['success_message']; ?></p>
+            <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
+
+        <!-- Formulário para selecionar a fase final -->
+        <form method="post" action="">
+            <label for="fase_final">Selecionar Fase Final:</label>
+            <select id="fase_final" name="fase_final" onchange="this.form.submit()">
+                <option value="oitavas" <?php if ($fase_final == 'oitavas') echo 'selected'; ?>>Oitavas de Final</option>
+                <option value="quartas" <?php if ($fase_final == 'quartas') echo 'selected'; ?>>Quartas de Final</option>
+                <option value="semifinais" <?php if ($fase_final == 'semifinais') echo 'selected'; ?>>Semifinais</option>
+                <option value="final" <?php if ($fase_final == 'final') echo 'selected'; ?>>Final</option>
+            </select>
+        </form>
+
+        <!-- Formulário para atualizar os confrontos -->
+        <form method="post" action="">
+            <?php if ($result_confrontos->num_rows > 0): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time A</th>
+                        <th>Gols Time A</th>
+                        <th>vs</th>
+                        <th>Gols Time B</th>
+                        <th>Time B</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row_confrontos = $result_confrontos->fetch_assoc()) { 
+                        $nome_timeA = obterNomeTime($row_confrontos['timeA_id']);
+                        $nome_timeB = obterNomeTime($row_confrontos['timeB_id']);
+                    ?>
+                    <tr>
+                        <form method="post" action="">
+                            <td><?php echo htmlspecialchars($nome_timeA); ?></td>
+                            <td>
+                                <input type="number" name="gols_marcados_timeA" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
+                            </td>
+                            <td>vs</td>
+                            <td>
+                                <input type="number" name="gols_marcados_timeB" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
+                            </td>
+                            <td><?php echo htmlspecialchars($nome_timeB); ?></td>
+                            <td>
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
+                                <button type="submit" name="atualizar_individual">Atualizar</button>
+                            </td>
+                        </form>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+            <p>Não existem times classificados para a fase.</p>
+            <?php endif; ?>
+        </form>
+    </div>
+
+<!-- Formulário para classificar os confrontos -->
+<div class="form-container">
+    <form id="classificacao-form" method="post" action="../../funcoes/classificar.php" target="result_frame">
+        <h3>Deseja classificar os times para a próxima fase final?</h3>
+        <p>Selecione uma opção:</p>
+        <label>
+            <input type="radio" name="opcao" value="sim" required>
+            Sim, aperte o botão Classificar;
+        </label>
+        <label>
+            <input type="radio" name="opcao" value="nao" required>
+            Não, aperte o botão Classificar;
+        </label>
+        <button type="submit" name="classificar">Classificar</button>
+    </form>
+    <!-- Frame para redirecionamento após classificação -->
+    <iframe name="result_frame" style="display:none;"></iframe>
+</div>
+
+<script>
+    document.getElementById('classificacao-form').addEventListener('submit', function(event) {
+        // Obtém o valor selecionado
+        var selecionado = document.querySelector('input[name="opcao"]:checked');
+        
+        // Verifica se a opção "Não" foi selecionada
+        if (selecionado && selecionado.value === 'nao') {
+            // Previne o envio do formulário
+            event.preventDefault();
+            // alert('Você selecionou "Não". O botão Classificar não será executado.');
+        }
+    });
+</script>
 
 </body>
 </html>

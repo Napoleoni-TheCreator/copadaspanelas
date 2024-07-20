@@ -34,9 +34,9 @@
             <li>
                 <a href="">Tabelas de Jogos ▾</a>
                 <ul class="dropdown">
-                   <li><a href="../pages/tabela_classificacao/tabela_classificação.php">Grupos</a></li>
-                   <li><a href="../pages/tabela_classificacao/exibir_finais.php">Eliminatórias</a></li>
-                   <li><a href="../pages/tabela_classificacao/rodadas.php">Rodadas</a></li>
+                   <li><a href="../pages/tabela_de_classificacao.php">Grupos</a></li>
+                   <li><a href="../pages/exibir_finais.php">Eliminatórias</a></li>
+                   <li><a href="../pages/rodadas.php">Rodadas</a></li>
                 </ul>     
             </li>
             <li>
