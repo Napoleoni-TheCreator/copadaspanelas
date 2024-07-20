@@ -119,7 +119,6 @@ CREATE TABLE final (
     time_nome VARCHAR(100),
     FOREIGN KEY (time_id) REFERENCES times(id)
 );
-drop table final_confrontos;
 -- Cria a tabela para armazenar os confrontos da final
 CREATE TABLE final_confrontos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -129,9 +128,7 @@ CREATE TABLE final_confrontos (
     gols_marcados_timeA INT DEFAULT NULL,
     gols_marcados_timeB INT DEFAULT NULL,
     gols_contra_timeA INT DEFAULT NULL,
-    gols_contra_timeB INT DEFAULT NULL,
-    FOREIGN KEY (timeA_id) REFERENCES times(time_id),
-    FOREIGN KEY (timeB_id) REFERENCES times(time_id)
+    gols_contra_timeB INT DEFAULT NULL
 );
 
 -- Cria a tabela para armazenar os confrontos das oitavas de finais
