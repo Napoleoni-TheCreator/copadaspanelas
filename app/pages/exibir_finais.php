@@ -27,6 +27,7 @@ body {
     background-size: 15% auto;
     background-position: top center;
     background-repeat: no-repeat;
+    margin-bottom: 5%;
 }
 
 .bracket {
@@ -223,7 +224,7 @@ body {
 
         // Exibir os confrontos das fases na ordem desejada
         echo "<div class='column'>";
-        echo "<div class='round-label'>Oitavas</div>";
+        // echo "<div class='round-label'>Oitavas</div>";
         exibirConfrontos($conn, 'oitavas', 4, 0);
         echo "</div>";
 
@@ -253,7 +254,7 @@ body {
         echo "</div>";
 
         echo "<div class='column'>";
-        echo "<div class='round-label'>Oitavas</div>";
+        // echo "<div class='round-label'>Oitavas</div>";
         exibirConfrontos($conn, 'oitavas', 4, 4);
         echo "</div>";
 
