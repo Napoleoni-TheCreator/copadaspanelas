@@ -250,7 +250,7 @@ function classificarOitavasDeFinal() {
 
     // Obter times classificados de cada grupo
     for ($i = 1; $i <= $numeroGrupos; $i++) {
-        $result = $conn->query("SELECT * FROM times WHERE grupo_id = $i ORDER BY pts DESC, sg DESC, gm DESC LIMIT $times_por_grupo");
+        $result = $conn->query("SELECT * FROM times WHERE grupo_id = $i ORDER BY pts DESC, sg DESC, gm DESC,id ASC LIMIT $times_por_grupo");
         if (!$result) {
             die("Erro ao obter times do grupo $i: " . $conn->error);
         }
@@ -553,7 +553,15 @@ function classificarQuartasDeFinal() {
             $timesClassificados = [];
             $gruposClassificados = [];
             for ($i = 1; $i <= $numeroGrupos; $i++) {
-                $result = $conn->query("SELECT id, nome, grupo_id FROM times WHERE grupo_id = $i ORDER BY pts DESC LIMIT $timesPorGrupo");
+                // $result = $conn->query("SELECT id, nome, grupo_id FROM times WHERE grupo_id = $i ORDER BY pts DESC LIMIT $timesPorGrupo");
+                $result = $conn->query("
+                        SELECT id, nome, grupo_id
+                        FROM times
+                        WHERE grupo_id = $i
+                        ORDER BY pts DESC, sg DESC,gm DESC, id ASC, nome ASC
+                        LIMIT $timesPorGrupo
+                    ");
+
                 while ($row = $result->fetch_assoc()) {
                     $timesClassificados[] = $row;
                     $gruposClassificados[$i][] = $row;

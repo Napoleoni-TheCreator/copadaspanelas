@@ -198,7 +198,7 @@
         </div>
     </div>
     <?php
-    include "../actions/funcoes/confrontos_rodadas.php";
+    echo '<button class="btn-save" onclick="classificarRodadas()">Classificar Rodadas</button>';
     function exibirRodadas() {
         include '../config/conexao.php';
     
@@ -306,5 +306,19 @@
             }
         }
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function classificarRodadas() {
+        $.post('/copadaspanelas/app/actions/funcoes/confrontos_rodadas.php', function(response) {
+            alert(response); // Exibe a resposta do servidor
+            location.reload(); // Recarregar a página para refletir as mudanças
+        }).fail(function() {
+            alert('Ocorreu um erro ao classificar as rodadas.');
+        });
+    }
+</script>
+
+
 </body>
 </html>

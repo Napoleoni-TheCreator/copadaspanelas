@@ -1,19 +1,37 @@
+
 <?php
 include '../../../config/conexao.php';
+session_start(); // Iniciar a sessão para validação CSRF e autenticação
 
 // Função para lidar com a exclusão de um jogador
 if (isset($_GET['delete'])) {
-    $id = intval($_GET['delete']);
+    // Verificação do token CSRF
+    if (!isset($_SESSION['csrf_token']) || $_GET['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token inválido");
+    }
+
+    // Validação e sanitização do ID
+    $id = filter_var($_GET['delete'], FILTER_SANITIZE_NUMBER_INT);
+    $id = intval($id);
+
+    // Verificação de permissões
+    if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
+        die("Acesso negado");
+    }
+
     $sql = "DELETE FROM jogadores WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {
         echo "<script>alert('Jogador excluído com sucesso!');</script>";
     } else {
-        echo "<script>alert('Erro ao excluir jogador: " . $conn->error . "');</script>";
+        echo "<script>alert('Erro ao excluir jogador.');</script>";
     }
     $stmt->close();
 }
+
+// Gerar token CSRF para uso no formulário
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
 // Consulta SQL para obter todos os jogadores
 $sql = "SELECT j.id, j.nome, j.posicao, j.numero, j.gols, j.assistencias, j.cartoes_amarelos, j.cartoes_vermelhos, j.imagem, t.nome AS time_nome FROM jogadores j JOIN times t ON j.time_id = t.id ORDER BY t.nome, j.nome";
@@ -164,17 +182,16 @@ $conn->close();
                                 <strong>Cartões Vermelhos:</strong> <?php echo htmlspecialchars($player['cartoes_vermelhos']); ?><br>
                             </div>
                             <div class="player-actions">
-                                <a href="editar_jogador.php?id=<?php echo $player['id']; ?>">Editar</a>
-                                <a href="?delete=<?php echo $player['id']; ?>" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
+                                <a href="editar_jogador.php?id=<?php echo htmlspecialchars($player['id']); ?>">Editar</a>
+                                <a href="?delete=<?php echo htmlspecialchars($player['id']); ?>&csrf_token=<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>" onclick="return confirm('Tem certeza que deseja excluir este jogador?')">Excluir</a>
                             </div>
                         </div>
-
                     <?php endforeach; ?>
                 </div>
                 <?php
-                        // Atualize o índice da cor para a próxima
-                        $colorIndex = ($colorIndex + 1) % count($borderColors);
-                        ?>
+                    // Atualize o índice da cor para a próxima
+                    $colorIndex = ($colorIndex + 1) % count($borderColors);
+                ?>
             <?php endforeach; ?>
         </div>
     </div>

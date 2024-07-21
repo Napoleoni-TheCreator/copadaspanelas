@@ -183,9 +183,9 @@ iframe {
                             echo "<p class='success-message'>Grupos criados com sucesso!</p>";
                         }
                     } elseif ($faseFinal === 'quartas') {
-                        if (($totalEquipes % 8) !== 0) {
+                        if (($totalEquipes % 2) !== 0) {
                             echo "<p class='error-message'>Para a fase de quartas, o número total de equipes deve ser múltiplo de 8.</p>";
-                        } elseif (($numeroGrupos * $equipesPorGrupo) % 8 !== 0) {
+                        } elseif (($numeroGrupos * $equipesPorGrupo) % 2 !== 0) {
                             echo "<p class='error-message'>Número de grupos ou equipes por grupo não permite uma divisão exata para a fase de quartas.</p>";
                         } else {
                             $sql = "REPLACE INTO configuracoes (id, equipes_por_grupo, numero_grupos, fase_final) VALUES (1, ?, ?, ?)";
