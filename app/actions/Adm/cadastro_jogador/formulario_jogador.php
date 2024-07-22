@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 80px;
             border-radius: 30px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
         }
         label {
             display: block;
@@ -105,10 +105,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
+            border: 2px solid black;
             border-radius: 5px;
-            font-family: Arial, sans-serif;
-            font-size: 20px;
+            font-size: 16px;
         }
         input[type="submit"] {
             background-color: #c60909;
@@ -130,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 105%;
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
+            border: 2px solid black;
             border-radius: 5px;
             font-size: 20px;
             font-family: Arial, sans-serif;
