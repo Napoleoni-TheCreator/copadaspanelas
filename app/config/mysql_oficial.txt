@@ -18,11 +18,10 @@ CREATE TABLE linkinstagram(
 
 -- REGIAO DOS ADMIM E TECNICOS
 
--- Criação da tabela admin
--- Estrutura da tabela admin
 CREATE TABLE admin (
+    cod_adm VARCHAR(200) NOT NULL PRIMARY KEY,
     nome VARCHAR(60) NOT NULL,
-    email VARCHAR(100) NOT NULL PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL
 );
 
