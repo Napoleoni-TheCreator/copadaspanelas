@@ -1,30 +1,52 @@
 <?php
 include '../../../config/conexao.php';
+session_start(); // Iniciar a sessão para validação CSRF e autenticação
+
+// Função para gerar token
+function gerarToken($length = 32) {
+    return bin2hex(random_bytes($length));
+}
 
 // Função para lidar com a exclusão de um time
 if (isset($_GET['delete'])) {
-    $id = intval($_GET['delete']);
+    // Verificação do token CSRF
+    if (!isset($_SESSION['csrf_token']) || $_GET['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token inválido");
+    }
+
+    $token = $_GET['delete'];
 
     // Desativar verificações de chave estrangeira
     $conn->query("SET FOREIGN_KEY_CHECKS=0");
 
-    $sql = "DELETE FROM times WHERE id = ?";
-    if ($stmt = $conn->prepare($sql)) {
+    // Validar o token e obter o ID do time
+    $sql = "SELECT id FROM times WHERE token = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    $stmt->bind_result($id);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($id) {
+        // Excluir o time com o ID correspondente
+        $deleteSql = "DELETE FROM times WHERE id = ?";
+        $stmt = $conn->prepare($deleteSql);
         $stmt->bind_param("i", $id);
         if ($stmt->execute()) {
             if ($stmt->affected_rows > 0) {
-            
-                header("Location: listar_times.php");
+                // Redireciona para a lista de times com uma mensagem de sucesso
+                header("Location: listar_times.php?status=success");
                 exit();
             } else {
-                echo "<script>alert('Nenhum time encontrado com o ID fornecido.'); window.location.href='index.php';</script>";
+                echo "<script>alert('Nenhum time encontrado com o ID fornecido.'); window.location.href='listar_times.php';</script>";
             }
         } else {
-            echo "<script>alert('Erro ao excluir time: " . $stmt->error . "'); window.location.href='index.php';</script>";
+            echo "<script>alert('Erro ao excluir time: " . $stmt->error . "'); window.location.href='listar_times.php';</script>";
         }
         $stmt->close();
     } else {
-        echo "<script>alert('Erro ao preparar a consulta: " . $conn->error . "'); window.location.href='index.php';</script>";
+        die("Token inválido");
     }
 
     // Reativar verificações de chave estrangeira
@@ -32,7 +54,7 @@ if (isset($_GET['delete'])) {
 }
 
 // Consulta SQL para obter todos os times
-$sql = "SELECT t.id, t.nome, t.logo, g.nome AS grupo_nome FROM times t JOIN grupos g ON t.grupo_id = g.id ORDER BY g.nome, t.nome";
+$sql = "SELECT t.id, t.nome, t.logo, t.token, g.nome AS grupo_nome FROM times t JOIN grupos g ON t.grupo_id = g.id ORDER BY g.nome, t.nome";
 $result = $conn->query($sql);
 
 $times = [];
@@ -41,6 +63,10 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $conn->close();
+
+// Gerar token CSRF para uso no formulário
+$csrf_token = gerarToken();
+$_SESSION['csrf_token'] = $csrf_token;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -112,6 +138,9 @@ $conn->close();
 
 <div class="container">
     <h1>LISTAR TIMES</h1>
+    <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
+        <div class="alert alert-success">Time excluído com sucesso!</div>
+    <?php endif; ?>
     <?php foreach ($times as $time): ?>
         <div class="time-card">
             <?php if ($time['logo']): ?>
@@ -124,8 +153,8 @@ $conn->close();
                 <strong>Grupo:</strong> <?php echo htmlspecialchars($time['grupo_nome']); ?><br>
             </div>
             <div class="time-actions">
-                <a href="editar_time.php?id=<?php echo $time['id']; ?>">Editar</a>
-                <a href="?delete=<?php echo $time['id']; ?>" onclick="return confirm('Tem certeza que deseja excluir este time?')">Excluir</a>
+                <a href="editar_time.php?token=<?php echo $time['token']; ?>">Editar</a>
+                <a href="?delete=<?php echo $time['token']; ?>&csrf_token=<?php echo $csrf_token; ?>" onclick="return confirm('Tem certeza que deseja excluir este time?')">Excluir</a>
             </div>
         </div>
     <?php endforeach; ?>

@@ -1,4 +1,9 @@
 <?php
+// Função para gerar um token aleatório
+function gerarToken($length = 32) {
+    return bin2hex(random_bytes($length));
+}
+
 // Verifica se o formulário foi submetido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conexão com o banco de dados
@@ -8,6 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nomeTime = $_POST['nome_time'];
     $logoTime = file_get_contents($_FILES['logo_time']['tmp_name']); // Obtém o conteúdo binário da imagem
     $logoTime = addslashes($logoTime); // Escapa caracteres especiais para evitar problemas de SQL Injection
+
+    // Gera um token para o novo time
+    $token = gerarToken();
 
     // Consulta para obter a quantidade de equipes por grupo
     $configSql = "SELECT equipes_por_grupo FROM configuracoes LIMIT 1";
@@ -43,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $grupoId = $gruposDisponiveis[0]['id'];
 
                 // Inserção dos dados na tabela de times
-                $sql = "INSERT INTO times (nome, logo, grupo_id, pts, vitorias, empates, derrotas, gm, gc, sg) 
-                        VALUES ('$nomeTime', '$logoTime', '$grupoId', 0, 0, 0, 0, 0, 0, 0)";
+                $sql = "INSERT INTO times (nome, logo, grupo_id, pts, vitorias, empates, derrotas, gm, gc, sg, token) 
+                        VALUES ('$nomeTime', '$logoTime', '$grupoId', 0, 0, 0, 0, 0, 0, 0, '$token')";
 
                 if ($conn->query($sql) === TRUE) {
                     echo "Time adicionado com sucesso ao grupo " . $gruposDisponiveis[0]['nome'] . "!";
@@ -81,16 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: Arial, sans-serif;
             background-color: rgb(218, 215, 215);
         }
-        /* Estilos para a barra de título */
-        /* .titulo-barra {
-            background-color: #fe0000;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            text-shadow: 3px 3px 3px black;
-            font-size: 20px;
-        } */
         /* Estilos para o formulário */
         .formulario {
             display: flex;
@@ -137,10 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <!-- <div class="titulo-barra">
-        <h1>Adicionar Time</h1>
-    </div> -->
-    <?php include "../../../pages/header.php";  ?>
+    <?php include "../../../pages/header.php"; ?>
     <div class="formulario">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
             <label for="nome_time">Nome do Time:</label>
