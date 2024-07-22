@@ -85,8 +85,9 @@ $codigo_adm = gerarCodigoAdm($conn);
             max-width: 400px;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 40px;
+            border: 1px solid black;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
             margin-top: 5%;
             width: 100%;
         }
@@ -101,7 +102,7 @@ $codigo_adm = gerarCodigoAdm($conn);
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
+            border: 2px solid black;
             border-radius: 5px;
             font-size: 16px;
         }
@@ -133,11 +134,11 @@ $codigo_adm = gerarCodigoAdm($conn);
             <label for="cod_adm">Código do Administrador:</label>
             <input type="text" id="cod_adm" name="cod_adm" value="<?php echo htmlspecialchars($codigo_adm); ?>" readonly>
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome" name="nome" maxlength="30" required>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" maxlength="40" required>
             <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required>
+            <input type="password" id="senha" name="senha" maxlength="20" required>
             <button type="submit">Cadastrar</button>
 
             <?php if (isset($_GET['error'])): ?>
