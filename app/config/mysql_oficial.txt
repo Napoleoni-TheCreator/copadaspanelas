@@ -1,4 +1,3 @@
-
 -- Remove o banco de dados existente, se existir
 DROP DATABASE IF EXISTS copa;
 
@@ -19,20 +18,15 @@ CREATE TABLE linkinstagram(
 
 -- REGIAO DOS ADMIM E TECNICOS
 
-CREATE TABLE admin (
-    cod_adm VARCHAR(200) NOT NULL PRIMARY KEY,
-    nome VARCHAR(60) NOT NULL,
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL
+    senha VARCHAR(255) NOT NULL,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tecnico BOOLEAN NOT NULL DEFAULT FALSE,
+    adm BOOLEAN NOT NULL DEFAULT FALSE
 );
-
--- Estrutura da tabela tecnico
-CREATE TABLE tecnico (
-    nome VARCHAR(60) NOT NULL,
-    email VARCHAR(100) NOT NULL PRIMARY KEY,
-    senha VARCHAR(255) NOT NULL
-);
-
 
 -- Cria a tabela de grupos
 CREATE TABLE grupos (
@@ -256,4 +250,3 @@ select*from configuracoes;
 
 
 NÃO APAGUE POR FAVOR 
-=======
