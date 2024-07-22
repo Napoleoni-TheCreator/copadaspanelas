@@ -48,4 +48,10 @@ body {
     padding: 10px;
     border-radius: 4px;
     width: 100%;
-   
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-container button:hover {
+    background-color: #c0392b;
+}
