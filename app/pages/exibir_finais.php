@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
+<style>
+/* Estilos Gerais do Corpo da Página */
 body {
     height: 100%;
     display: flex;
@@ -9,10 +10,10 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
-    /* background-color: #f0f8ff; */
     font-family: Arial, sans-serif;
 }
 
+/* Estilos do Contêiner Principal */
 .container {
     display: flex;
     justify-content: center;
@@ -20,7 +21,6 @@ body {
     border: 1px solid red;
     border-radius: 10px;
     box-shadow: 0 4px 8px red;
-    width: 100%;
     max-width: 1200px; /* Limitar a largura máxima */
     overflow: hidden;
     background-image: url('../../public/img/ESCUDO\ COPA\ DAS\ PANELAS.png');
@@ -30,6 +30,7 @@ body {
     margin-bottom: 5%;
 }
 
+/* Estilos do Layout dos Confrontos */
 .bracket {
     display: flex;
     justify-content: space-between;
@@ -38,6 +39,7 @@ body {
     align-items: center;
 }
 
+/* Estilos das Colunas */
 .column {
     flex: 1;
     margin-left: 10px;
@@ -48,9 +50,10 @@ body {
     max-width: 200px; /* Ajustar conforme necessário */
 }
 
+/* Estilos dos Confrontos */
 .match {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     border: 1px solid #ccc;
@@ -60,70 +63,145 @@ body {
     border-radius: 5px;
     box-shadow: 0 4px 8px red;
     text-align: center;
+    box-sizing: border-box; /* Inclui padding e border no tamanho total */
 }
 
+/* Estilos das Equipes */
 .team {
     display: flex;
     align-items: center;
-    text-align: center;
+    text-align: left; /* Alinha o texto à esquerda */
     padding: 10px;
+    box-sizing: border-box; /* Inclui padding e border no tamanho total */
 }
 
+/* Estilos das Imagens das Bandeiras */
 .flag {
-    width: 46px;
-    height: 46px;
-    margin-right: 10px; /* Espaçamento entre a imagem e o nome */
-    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
     object-fit: contain;
 }
 
+/* Estilos dos Nomes dos Times */
 .team-name {
     font-weight: bold;
-    margin-right: 10px; /* Espaçamento entre o nome e o número de gols */
+    margin-right: 10px;
+    max-width: 150px; /* Limitar a largura máxima do nome do time */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.round-label {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
+
+/* Estilos para o Placar dos Jogos */
+.score {
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: auto; /* Move o placar para o lado esquerdo */
+    font-size: 1.2em;
 }
 
+/* Estilos Específicos para a Final */
 .final-match {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px; /* Adicionar espaço abaixo do bloco da final */
-    flex-direction: center; /* Alterar para coluna para nome ficar abaixo da logo */
+    justify-content: space-between;
+    width: 100%; /* Garantir que ocupa a largura total da coluna */
 }
 
-.final-match .team {
-    /* margin: 0 0 1px 0; Espaço entre as equipes */
-    flex-direction: column; /* Alterar para coluna para nome ficar abaixo da logo */
-    /* align-items: center; */
-}
-
-.final-match .flag {
-    margin-bottom: 5px; /* Espaçamento entre a imagem e o nome */
-}
-
-.final-match .vs {
-    font-size: 24px;
+/* Estilos dos Separadores */
+.vs {
+    font-size: 1.2em;
     font-weight: bold;
-    margin: 0 15px;
+    margin: 0 10px;
 }
 
-#titulo_eli {
+/* Modo Escuro */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .container {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    box-shadow: 0 4px 8px #444;
+}
+
+body.dark-mode .match {
+    background-color: #333;
+    border: 1px solid #555;
+    box-shadow: 0 4px 8px #555;
+}
+
+body.dark-mode .round-label {
+    color: #e0e0e0;
+}
+
+body.dark-mode #titulo_eli {
+    color: #e0e0e0;
+    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.7);
+}
+h1{
     margin-top: 5%;
-    font-size: 40px; /* Define o tamanho da fonte */
-    margin-bottom: 20px; /* Define a margem inferior */
-    text-align: center; /* Alinha o texto ao centro */
-    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra ao texto */
-
 }
 
-    </style>
+/* Media Queries para iPhone 12 e dispositivos similares */
+@media (max-width: 768px) { /* iPhone 12 portrait mode */
+    .container {
+        padding: 10px;
+        max-width: 100%; /* Ajustar a largura para ocupar 100% da tela */
+    }
+
+    .column {
+        margin: 5px;
+        max-width: 100%; /* Ajustar a largura máxima para 100% */
+    }
+
+    .flag {
+        width: 30px; /* Reduzir o tamanho das bandeiras */
+        height: 30px;
+    }
+
+    .team-name {
+        max-width: 120px; /* Reduzir a largura máxima do nome do time */
+    }
+}
+
+@media (max-width: 480px) { /* iPhone 12 mini e outros dispositivos menores */
+    .container {
+        /* flex-direction: column; Empilhar os elementos verticalmente */
+        width: 80%;
+        overflow-x:auto;
+    }
+    .match {
+        font-size: 10px;
+        width: auto;
+        height: auto;
+        padding: 0;
+    }
+    h1{
+        margin-top: 20%;
+    }
+    /* Estilos do Layout dos Confrontos */
+    .bracket {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap; /* Garantir que as colunas não quebrem para a próxima linha */
+        align-items: center;
+    }
+
+    .flag {
+        width: 25px; /* Reduzir ainda mais o tamanho das bandeiras */
+        height: 25px;
+    }
+    .column{
+        margin: 0;
+    }
+}
+
+</style>
 </head>
 <body>
 <h1 id="titulo_eli">ELIMINATORIA</h1>
@@ -152,75 +230,151 @@ body {
         }
 
         // Função para exibir confrontos
-        function exibirConfrontos($conn, $fase, $count, $start = 0) {
-            $tabelaConfrontos = '';
-            switch ($fase) {
-                case 'oitavas':
-                    $tabelaConfrontos = 'oitavas_de_final_confrontos';
-                    break;
-                case 'quartas':
-                    $tabelaConfrontos = 'quartas_de_final_confrontos';
-                    break;
-                case 'semifinais':
-                    $tabelaConfrontos = 'semifinais_confrontos';
-                    break;
-                case 'final':
-                    $tabelaConfrontos = 'final_confrontos';
-                    break;
-                default:
-                    die("Fase desconhecida: " . $fase);
-            }
+        // function exibirConfrontos($conn, $fase, $count, $start = 0) {
+        //     $tabelaConfrontos = '';
+        //     switch ($fase) {
+        //         case 'oitavas':
+        //             $tabelaConfrontos = 'oitavas_de_final_confrontos';
+        //             break;
+        //         case 'quartas':
+        //             $tabelaConfrontos = 'quartas_de_final_confrontos';
+        //             break;
+        //         case 'semifinais':
+        //             $tabelaConfrontos = 'semifinais_confrontos';
+        //             break;
+        //         case 'final':
+        //             $tabelaConfrontos = 'final_confrontos';
+        //             break;
+        //         default:
+        //             die("Fase desconhecida: " . $fase);
+        //     }
 
-            $sql = "SELECT * FROM $tabelaConfrontos LIMIT $start, $count";
-            $result = $conn->query($sql);
-            if (!$result) {
-                die("Erro na consulta de confrontos: " . $conn->error);
-            }
+        //     $sql = "SELECT * FROM $tabelaConfrontos LIMIT $start, $count";
+        //     $result = $conn->query($sql);
+        //     if (!$result) {
+        //         die("Erro na consulta de confrontos: " . $conn->error);
+        //     }
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $timeA_id = $row['timeA_id'];
-                    $timeB_id = $row['timeB_id'];
+        //     if ($result->num_rows > 0) {
+        //         while ($row = $result->fetch_assoc()) {
+        //             $timeA_id = $row['timeA_id'];
+        //             $timeB_id = $row['timeB_id'];
 
-                    // Consultar os nomes dos times
-                    $timeA_nome = $conn->query("SELECT nome FROM times WHERE id = $timeA_id")->fetch_assoc()['nome'];
-                    $timeB_nome = $conn->query("SELECT nome FROM times WHERE id = $timeB_id")->fetch_assoc()['nome'];
+        //             // Consultar os nomes dos times
+        //             $timeA_nome = $conn->query("SELECT nome FROM times WHERE id = $timeA_id")->fetch_assoc()['nome'];
+        //             $timeB_nome = $conn->query("SELECT nome FROM times WHERE id = $timeB_id")->fetch_assoc()['nome'];
 
-                    if ($fase == 'final') {
-                        // Exibir o confronto da final em uma única div
-                        echo "<div class='match final-match'>";
-                        echo "<div class='team'>";
-                        exibirImagemLogo($conn, $timeA_id);
-                        echo "<span class='team-name'>{$timeA_nome}</span>";
-                        echo "<span>{$row['gols_marcados_timeA']}</span>";
-                        echo "</div>";
-                        echo "<span class='vs'>X</span>"; // Adiciona um separador 'VS'
-                        echo "<div class='team'>";
-                        exibirImagemLogo($conn, $timeB_id);
-                        echo "<span class='team-name'>{$timeB_nome}</span>";
-                        echo "<span>{$row['gols_marcados_timeB']}</span>";
-                        echo "</div>";
-                        echo "</div>";
-                    } else {
-                        // Exibir confrontos para outras fases no formato atual
-                        echo "<div class='match'>";
-                        echo "<div class='team'>";
-                        exibirImagemLogo($conn, $timeA_id);
-                        echo "<span class='team-name'>{$timeA_nome}</span>";
-                        echo "<span>{$row['gols_marcados_timeA']}</span>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "<div class='match'>";
-                        echo "<div class='team'>";
-                        exibirImagemLogo($conn, $timeB_id);
-                        echo "<span class='team-name'>{$timeB_nome}</span>";
-                        echo "<span>{$row['gols_marcados_timeB']}</span>";
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                }
+        //             $timeA_nome_abreviado = substr($timeA_nome, 0, 3); // Pegar as três primeiras letras do nome
+        //             $timeB_nome_abreviado = substr($timeB_nome, 0, 3); // Pegar as três primeiras letras do nome
+
+        //             if ($fase == 'final') {
+        //                 // Exibir o confronto da final em uma única div
+        //                 echo "<div class='match final-match'>";
+        //                 echo "<div class='team'>";
+        //                 exibirImagemLogo($conn, $timeA_id);
+        //                 // echo "<span class='team-name'>{$timeA_nome_abreviado}</span>";
+        //                 // echo "<span class='score'>{$row['gols_marcados_timeA']}</span>";
+        //                 echo "</div>";
+        //                 echo "<span class='vs'>X</span>"; // Adiciona um separador 'VS'
+        //                 echo "<div class='team'>";
+        //                 exibirImagemLogo($conn, $timeB_id);
+        //                 // echo "<span class='team-name'>{$timeB_nome_abreviado}</span>";
+        //                 // echo "<span class='score'>{$row['gols_marcados_timeB']}</span>";
+        //                 echo "</div>";
+        //                 echo "</div>";
+        //             } else {
+        //                 // Exibir confrontos para outras fases no formato atual
+        //                 echo "<div class='match'>";
+        //                 echo "<div class='team'>";
+        //                 exibirImagemLogo($conn, $timeA_id);
+        //                 echo "<span class='team-name'>{$timeA_nome_abreviado}</span>";
+        //                 echo "<span class='score'>{$row['gols_marcados_timeA']}</span>";
+        //                 echo "</div>";
+        //                 echo "</div>";
+        //                 echo "<div class='match'>";
+        //                 echo "<div class='team'>";
+        //                 exibirImagemLogo($conn, $timeB_id);
+        //                 echo "<span class='team-name'>{$timeB_nome_abreviado}</span>";
+        //                 echo "<span class='score'>{$row['gols_marcados_timeB']}</span>";
+        //                 echo "</div>";
+        //                 echo "</div>";
+        //             }
+        //         }
+        //     }
+        // }
+// Função para exibir confrontos
+function exibirConfrontos($conn, $fase, $count, $start = 0) {
+    $tabelaConfrontos = '';
+    switch ($fase) {
+        case 'oitavas':
+            $tabelaConfrontos = 'oitavas_de_final_confrontos';
+            break;
+        case 'quartas':
+            $tabelaConfrontos = 'quartas_de_final_confrontos';
+            break;
+        case 'semifinais':
+            $tabelaConfrontos = 'semifinais_confrontos';
+            break;
+        case 'final':
+            $tabelaConfrontos = 'final_confrontos';
+            break;
+        default:
+            die("Fase desconhecida: " . $fase);
+    }
+
+    $sql = "SELECT * FROM $tabelaConfrontos LIMIT $start, $count";
+    $result = $conn->query($sql);
+    if (!$result) {
+        die("Erro na consulta de confrontos: " . $conn->error);
+    }
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $timeA_id = $row['timeA_id'];
+            $timeB_id = $row['timeB_id'];
+
+            // Consultar os nomes dos times
+            $timeA_nome = $conn->query("SELECT nome FROM times WHERE id = $timeA_id")->fetch_assoc()['nome'];
+            $timeB_nome = $conn->query("SELECT nome FROM times WHERE id = $timeB_id")->fetch_assoc()['nome'];
+
+            $timeA_nome_abreviado = substr($timeA_nome, 0, 3); // Pegar as três primeiras letras do nome
+            $timeB_nome_abreviado = substr($timeB_nome, 0, 3); // Pegar as três primeiras letras do nome
+
+            if ($fase == 'final') {
+                // Exibir o confronto da final em uma única div
+                echo "<div class='match final-match'>";
+                echo "<div class='team'>";
+                exibirImagemLogo($conn, $timeA_id);
+                // echo "<span class='team-name' title='{$timeA_nome}'>{$timeA_nome_abreviado}</span>";
+                // echo "<span class='score'>{$row['gols_marcados_timeA']}</span>";
+                echo "</div>";
+                echo "<span class='vs'>X</span>"; // Adiciona um separador 'VS'
+                echo "<div class='team'>";
+                exibirImagemLogo($conn, $timeB_id);
+                // echo "<span class='team-name' title='{$timeB_nome}'>{$timeB_nome_abreviado}</span>";
+                // echo "<span class='score'>{$row['gols_marcados_timeB']}</span>";
+                echo "</div>";
+                echo "</div>";
+            } else {
+                // Exibir confrontos para outras fases no formato atual
+                echo "<div class='match'>";
+                echo "<div class='team'>";
+                exibirImagemLogo($conn, $timeA_id);
+                echo "<span class='team-name' title='{$timeA_nome}'>{$timeA_nome_abreviado}</span>";
+                echo "<span class='score'>{$row['gols_marcados_timeA']}</span>";
+                echo "</div>";
+                echo "</div>";
+                echo "<div class='match'>";
+                echo "<div class='team'>";
+                exibirImagemLogo($conn, $timeB_id);
+                echo "<span class='team-name' title='{$timeB_nome}'>{$timeB_nome_abreviado}</span>";
+                echo "<span class='score'>{$row['gols_marcados_timeB']}</span>";
+                echo "</div>";
+                echo "</div>";
             }
         }
+    }
+}
 
         // Exibir os confrontos das fases na ordem desejada
         echo "<div class='column'>";
@@ -240,7 +394,7 @@ body {
 
         echo "<div class='column'>";
         echo "<div class='round-label'>Final</div>";
-        exibirConfrontos($conn, 'final', 1, 0);
+        exibirConfrontos($conn, 'final', 1);
         echo "</div>";
 
         echo "<div class='column'>";
@@ -257,12 +411,8 @@ body {
         // echo "<div class='round-label'>Oitavas</div>";
         exibirConfrontos($conn, 'oitavas', 4, 4);
         echo "</div>";
-
-        // Fechar a conexão com o banco de dados
-        $conn->close();
         ?>
     </div>
 </div>
-
 </body>
 </html>

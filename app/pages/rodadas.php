@@ -25,7 +25,7 @@
             padding: 20px;
             border-radius: 10px;
             border: 1px solid black;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
             width: 70%;
             /* overflow-x: auto; */
             transition: background-color 0.3s, box-shadow 0.3s;
@@ -80,7 +80,7 @@
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
-            /* border: 1px solid #d32f2f; Adiciona uma borda de 3px de cor vermelha */
+            border: 1px solid black; 
             /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); */
             margin-right: 10px;
             margin-left: 5%;
@@ -89,6 +89,7 @@
         }
 
         .rodada-container:hover {
+            background-color: #007bff;
             box-shadow: 0 0 40px hsl(0, 100%, 50%);
                 /* transform: scale(1.0); Aumenta o tamanho da caixa em 10% */
                 margin-left: 5%;

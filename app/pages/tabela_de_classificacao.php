@@ -13,10 +13,10 @@
             background-color: #f0f8ff;
         }
         #tabela-wrapper {
-            background-color: #f0f8ff;
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
             width: 80%;
             margin-top: 10%;
             margin-bottom: 10%;
@@ -41,6 +41,16 @@
             padding: 3px 0;
             text-align: left;
             vertical-align: middle;
+            transition: background-color 0.3s, color 0.3s; /* Suaviza a transição das propriedades */
+        }
+        td{
+            padding: 20px 0;
+
+        }
+        td:hover {
+            background-color: #f0f0f0; /* Cor de fundo quando o mouse está sobre o <td> */
+            color: #333; /* Cor do texto quando o mouse está sobre o <td> */
+            /* cursor: pointer; Muda o cursor para uma mãozinha */
         }
         th {
             background-color: #f2f2f2;
@@ -50,25 +60,29 @@
             margin-bottom: 10px;
         }
         .time-cell {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: nowrap; /* Evita quebra de linha */
+            overflow: hidden; /* Oculta o texto que excede o tamanho do contêiner */
+            text-overflow: ellipsis; /* Adiciona reticências (...) ao texto que não cabe */
             text-align: left;
             vertical-align: middle;
             max-width: 250px;
+            font-size: 20px;
         }
         .logo-time {
             max-width: 50px;
             max-height: 50px;
             vertical-align: middle;
             margin-right: 5px;
-            border-radius: 100%;
+            border-radius: 10%;
+            margin-left: 10px;
         }
         .small-col {
             width: 70px;
+            text-align: center;
         }
         .larger-col {
             width: 70px;
+            text-align: center;
         }
         .resultado-vitoria {
             display: inline-block;
@@ -126,24 +140,32 @@
             display: inline-block;
             margin-left: 5px;
         }
+
+        /* Estilos para o modo escuro */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode #tabela-wrapper {
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode th {
+            background-color: #333333;
+        }
+
+        body.dark-mode td {
+            background-color: #333333;
+            border-radius: 5px;
+        }
+
         body.dark-mode #legenda-simbolos {
             background-color: #2c2c2c;
             border: 1px solid #444;
         }
-        body.dark-mode th {
-            background-color: #333333;
-            padding: 10px;
-        }
-        body.dark-mode td {
-            background-color:#333333;
-            border-radius: 5px;
-            padding: 10px;
-        }
-        body.dark-mode #tabela-wrapper {
-            background-color: #1e1e1e;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-        }
+
         .dark-mode-button {
             position: fixed;
             top: 20px;
@@ -156,17 +178,19 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        body.dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-            border-radius: 5px;
-        }
+
         .dark-mode-button:hover {
             background-color: #0056b3;
         }
-        .dark-mode .small-col:hover{
+
+        .dark-mode td:hover {
             background-color: white;
             color: red;
+        }
+        .posicao_num{
+            font-weight: bold; 
+            margin-right: 5px;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -247,7 +271,7 @@
                     while ($rowTimes = $resultTimes->fetch_assoc()) {
                         echo '<tr>';
                         echo '<td>';
-                        echo '<span style="font-weight: bold; margin-right: 5px;">' . $posicao . '</span>';
+                        echo '<span class="posicao_num">' . $posicao . '</span>';
                         if (!empty($rowTimes['logo'])) {
                             $imageData = base64_encode($rowTimes['logo']);
                             $imageSrc = 'data:image/jpeg;base64,'.$imageData;
