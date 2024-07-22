@@ -100,7 +100,9 @@ $conn->close();
             padding: 20px;
             border: 3px solid rgba(31, 38, 135, 0.37);
             border-radius: 10px;
-            box-shadow: 0 8px 62px 0 rgba(31, 38, 135, 1.2);
+            box-shadow: 10px 0px 62px 0 rgba(255, 0, 0, 1.2);
+            /* box-shadow: 0 0 40px rgba(255, 0, 0, 0.4); Sombra vermelha com opacidade de 0.4 */
+
             width: 100%;
             overflow-x: auto;
             text-align: center;
@@ -142,9 +144,11 @@ $conn->close();
         }
         .player-card:hover {
             animation: borderColorChange 2s infinite; /* Aplica a animação quando o mouse passa por cima */
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4); /* Aumenta o efeito de sombra */
-            transform: scale(1.1); /* Aumenta o tamanho da caixa em 10% */
-            margin: 0.5%;
+            /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.4); Aumenta o efeito de sombra */
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.4); /* Sombra vermelha com opacidade de 0.4 */
+
+            transform: scale(1.05); /* Aumenta o tamanho da caixa em 10% */
+            margin: 3%;
         }
         .player-card {
             background-color: rgba(255, 255, 255, 0.8);

@@ -8,13 +8,13 @@ function gerarToken($length = 32) {
 }
 
 // Função para lidar com a exclusão de um time
-if (isset($_GET['delete'])) {
+if (isset($_POST['delete_token'])) {
     // Verificação do token CSRF
-    if (!isset($_SESSION['csrf_token']) || $_GET['csrf_token'] !== $_SESSION['csrf_token']) {
+    if (!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die("CSRF token inválido");
     }
 
-    $token = $_GET['delete'];
+    $token = $_POST['delete_token'];
 
     // Desativar verificações de chave estrangeira
     $conn->query("SET FOREIGN_KEY_CHECKS=0");
@@ -59,7 +59,7 @@ $result = $conn->query($sql);
 
 $times = [];
 while ($row = $result->fetch_assoc()) {
-    $times[] = $row;
+    $times[$row['grupo_nome']][] = $row;
 }
 
 $conn->close();
@@ -74,91 +74,313 @@ $_SESSION['csrf_token'] = $csrf_token;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Times</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Adicione seu estilo aqui */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: rgb(218, 215, 215);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .container {
-            margin: 4%;
-            background-color: #f0f8ff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 70%;
-            overflow-x: auto;
-            text-align: center;
-        }
-        .time-card {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            border: 2px solid #ccc;
-            position: relative;
-        }
-        .time-image {
-            width: 100px; /* Defina o tamanho desejado */
-            height: auto;
-            border-radius: 5px;
-            margin-right: 20px;
-        }
-        .time-details {
-            flex: 1;
-            margin-right: 20px;
-            text-align: left;
-        }
-        .time-actions {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-        .time-actions a {
-            display: inline-block;
-            margin-right: 10px;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .time-actions a:hover {
-            text-decoration: underline;
-        }
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(218, 215, 215);
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-top: 5%;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.container {
+    margin-top: 3%;
+    background-color: rgb(218, 215, 215);
+    padding: 1.25rem;
+    border: 3px solid rgba(31, 38, 135, 0.37);
+    border-radius: 10px;
+    box-shadow: 0 8px 62px 0 rgba(31, 38, 135, 1.2);
+    width: 100%;
+    overflow-x: auto;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+.time-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 1.25rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid;
+    position: relative;
+    text-align: center;
+}
+
+.time-card:hover {
+    animation: borderColorChange 2s infinite;
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+    transform: scale(1.1);
+    margin: 1rem;
+}
+
+.time-image {
+    width: 80px;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.time-details {
+    margin-bottom: 1.25rem;
+}
+
+.time-actions {
+    display: flex;
+    gap: 0.625rem;
+}
+
+.time-actions a {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.time-actions a.delete {
+    background-color: #dc3545;
+}
+
+.time-actions a.delete:hover {
+    background-color: #c82333;
+    color: #fff;
+}
+
+.time-actions a.edit {
+    background-color: #007bff;
+}
+
+.time-actions a.edit:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.time-actions a:active {
+    transform: scale(0.98);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem; /* Espaço entre as colunas */
+}
+
+.col-md-3 {
+    flex: 1 1 calc(25% - 1rem); /* Ajusta o tamanho da coluna para dispositivos maiores */
+    max-width: calc(25% - 1rem); /* Garante que a coluna não ultrapasse 25% da largura total */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+@media (max-width: 767px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h3 {
+        font-size: 1.22rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .time-card {
+        padding: 0.5rem;
+    }
+
+    .time-image {
+        width: 60px;
+    }
+
+    .time-actions a {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    .col-md-3 {
+        flex: 1 1 calc(50% - 1rem); /* Ajusta o tamanho da coluna para dispositivos menores */
+        max-width: calc(50% - 1rem); /* Garante que a coluna não ultrapasse 50% da largura total */
+    }
+}
+
+/* Consultas de mídia para telas com resolução de 800x1280 */
+@media (max-width: 800px) and (orientation: portrait) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.125rem;
+    }
+
+    .container {
+        padding: 0.75rem;
+    }
+
+    .time-card {
+        padding: 0.75rem;
+    }
+
+    .time-image {
+        width: 50px;
+    }
+
+    .time-actions a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .col-md-3 {
+        flex: 1 1 calc(50% - 0.75rem); /* Ajusta o tamanho da coluna para telas menores */
+        max-width: calc(50% - 0.75rem); /* Garante que a coluna não ultrapasse 50% da largura total */
+    }
+}
+/* Consultas de mídia para telas com resolução de 800x1280 */
+@media (max-width: 810px) and (orientation: portrait) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.125rem;
+    }
+
+    .container {
+        padding: 0.75rem;
+    }
+
+    .time-card {
+        padding: 0.75rem;
+    }
+
+    .time-image {
+        width: 50px;
+    }
+
+    .time-actions a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .col-md-3 {
+        flex: 1 1 calc(50% - 0.75rem); /* Ajusta o tamanho da coluna para telas menores */
+        max-width: calc(50% - 0.75rem); /* Garante que a coluna não ultrapasse 50% da largura total */
+    }
+}
     </style>
 </head>
 <body>
-
+<h1 class="text-center">LISTAR DE TIMES</h1>
 <div class="container">
-    <h1>LISTAR TIMES</h1>
+
     <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
-        <div class="alert alert-success">Time excluído com sucesso!</div>
+        <div class="alert alert-success text-center">Time excluído com sucesso!</div>
     <?php endif; ?>
-    <?php foreach ($times as $time): ?>
-        <div class="time-card">
-            <?php if ($time['logo']): ?>
-                <img src="data:image/jpeg;base64,<?php echo base64_encode($time['logo']); ?>" class="time-image" alt="Logo do Time">
-            <?php else: ?>
-                <img src="../../../../public/images/default-team.png" class="time-image" alt="Logo do Time">
-            <?php endif; ?>
-            <div class="time-details">
-                <strong>Nome:</strong> <?php echo htmlspecialchars($time['nome']); ?><br>
-                <strong>Grupo:</strong> <?php echo htmlspecialchars($time['grupo_nome']); ?><br>
-            </div>
-            <div class="time-actions">
-                <a href="editar_time.php?token=<?php echo $time['token']; ?>">Editar</a>
-                <a href="?delete=<?php echo $time['token']; ?>&csrf_token=<?php echo $csrf_token; ?>" onclick="return confirm('Tem certeza que deseja excluir este time?')">Excluir</a>
-            </div>
+
+    <div class="row">
+    <?php
+        $borderColors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A0', '#33F0FF', '#FFBF00', '#8CFF33'];
+        $colorIndex = 0;
+    ?>
+    <?php foreach ($times as $grupo_nome => $timesGrupo): ?>
+        <div class="col-md-3">
+            <h3><?php echo htmlspecialchars($grupo_nome); ?></h3>
+            <?php foreach ($timesGrupo as $time): ?>
+                <div class="time-card" style="border-color: <?php echo $borderColors[$colorIndex]; ?>;">
+                    <?php if ($time['logo']): ?>
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($time['logo']); ?>" class="time-image" alt="Logo do Time">
+                    <?php else: ?>
+                        <img src="../../../../public/images/default-team.png" class="time-image" alt="Logo do Time">
+                    <?php endif; ?>
+                    <div class="time-details">
+                        <strong>Nome:</strong> <?php echo htmlspecialchars($time['nome']); ?><br>
+                        <strong>TECNICO:</strong> <?php echo htmlspecialchars($time['grupo_nome']); ?><br>
+                    </div>
+                    <div class="time-actions">
+                        <a href="#" class="delete" data-toggle="modal" data-target="#confirmDeleteModal" data-token="<?php echo htmlspecialchars($time['token']); ?>">Excluir</a>
+                        <a href="editar_time.php?token=<?php echo $time['token']; ?>" class="edit">Editar</a>
+                    </div>
+                </div>
+                <?php
+                    $colorIndex = ($colorIndex + 1) % count($borderColors);
+                ?>
+            <?php endforeach; ?>
         </div>
     <?php endforeach; ?>
+    </div>
 </div>
 
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir este time?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post" action="">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+                    <input type="hidden" name="delete_token" id="delete_token" value="">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Adiciona o token ao campo oculto do formulário de exclusão
+    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var token = button.data('token');
+        var modal = $(this);
+        modal.find('#delete_token').val(token);
+    });
+</script>
 </body>
 </html>
