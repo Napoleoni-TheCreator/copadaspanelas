@@ -113,7 +113,7 @@
     </main>
 
     <?php include 'footer.php'?>        
-
+    <!--
     <div id="countdown-balloon">
         <span id="close-btn">&times;</span>
         <div id="description">INICIO DA COPA DAS PANELAS</div>
@@ -124,7 +124,8 @@
             <div id="seconds">00</div> segundos
         </div>
     </div>
-
+    -->
+    
     <script src="../../public/js/homepage.js"></script>
 </body>
 </html>
