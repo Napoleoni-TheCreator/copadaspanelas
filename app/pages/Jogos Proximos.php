@@ -20,43 +20,42 @@
     <?php include 'header.php' ?>
 
     <?php
-    function exibirProximosConfrontos($numeroDeConfrontos = 3)
+    function exibirProximosJogosFaseGrupos($numeroDeJogos = 3)
     {
         include '../config/conexao.php';
-
-
-        // Consulta SQL para obter os próximos confrontos das quartas de final
-        $sqlConfrontos = "
-        SELECT c.timeA_nome AS timeA, c.timeB_nome AS timeB, t1.logo AS logoA, t2.logo AS logoB
-        FROM quartas_de_final_confrontos AS c
-        JOIN times AS t1 ON c.timeA_nome = t1.nome
-        JOIN times AS t2 ON c.timeB_nome = t2.nome
-        WHERE c.fase = 'quartas'
-        ORDER BY c.id ASC
-        LIMIT ?
-    ";
-
-        $stmt = $conn->prepare($sqlConfrontos);
+    
+        // Consulta SQL para obter os próximos jogos da fase de grupos
+        $sqlJogos = "
+            SELECT j.nome_timeA AS timeA, j.nome_timeB AS timeB, t1.logo AS logoA, t2.logo AS logoB, j.data_jogo
+            FROM jogos_fase_grupos AS j
+            JOIN times AS t1 ON j.timeA_id = t1.id
+            JOIN times AS t2 ON j.timeB_id = t2.id
+            ORDER BY j.data_jogo ASC
+            LIMIT ?
+        ";
+    
+        $stmt = $conn->prepare($sqlJogos);
         if ($stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($conn->error));
         }
-
-        $stmt->bind_param("i", $numeroDeConfrontos);
+    
+        $stmt->bind_param("i", $numeroDeJogos);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        $confrontos = [];
+    
+        $jogos = [];
         while ($row = $result->fetch_assoc()) {
-            $confrontos[] = $row;
+            $jogos[] = $row;
         }
-
+    
         $stmt->close();
         $conn->close();
-
-        return $confrontos;
+    
+        return $jogos;
     }
-
-    $proximosConfrontos = exibirProximosConfrontos();
+    
+    $proximosJogos = exibirProximosJogosFaseGrupos();
+    
     ?>
 
 
@@ -80,28 +79,29 @@
             // Inclui a função PHP para obter os próximos confrontos
             //include 'obter_proximos_confrontos.php';
             
-            $proximosConfrontos = exibirProximosConfrontos();
-            foreach ($proximosConfrontos as $confronto):
-                ?>
-                <div class="jogos">
-                    <div class="jogos-team1">
-                        <div class="spc-logo">
-                            <img src="data:image/jpeg;base64,<?= base64_encode($confronto['logoA']) ?>" alt="Foto do time">
-                        </div>
-                        <p><?= htmlspecialchars($confronto['timeA']) ?></p>
-                    </div>
-                    <p id="versus">X</p>
-                    <div class="jogos-team1">
-                        <div class="spc-logo">
-                            <img src="data:image/jpeg;base64,<?= base64_encode($confronto['logoA']) ?>" alt="Foto do time">
-                        </div>
-                        <p><?= htmlspecialchars($confronto['timeB']) ?></p>
-                    </div>
-                    <div class="situation">
-                        <h1>Jogo começa amanhã às 13h</h1>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+            $proximosJogos = exibirProximosJogosFaseGrupos();
+foreach ($proximosJogos as $jogo):
+    ?>
+    <div class="jogos">
+        <div class="jogos-team1">
+            <div class="spc-logo">
+                <img src="data:image/jpeg;base64,<?= base64_encode($jogo['logoA']) ?>" alt="Logo do time A">
+            </div>
+            <p><?= htmlspecialchars($jogo['timeA']) ?></p>
+        </div>
+        <p id="versus">X</p>
+        <div class="jogos-team2">
+            <div class="spc-logo">
+                <img src="data:image/jpeg;base64,<?= base64_encode($jogo['logoB']) ?>" alt="Logo do time B">
+            </div>
+            <p><?= htmlspecialchars($jogo['timeB']) ?></p>
+        </div>
+        <div class="situation">
+            <h1>Jogo começa em: <?= date('d/m/Y H:i', strtotime($jogo['data_jogo'])) ?></h1>
+        </div>
+    </div>
+<?php endforeach; ?>
+
         </section>
         <h2 id="desgracinha">Ultimos 3 Jogos</h1>
 

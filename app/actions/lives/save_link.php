@@ -33,6 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "Método de requisição não é POST.<br>";
 }
-
+ 
 $conn->close();
 ?>

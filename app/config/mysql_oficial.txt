@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- Remove o banco de dados existente, se existir
 DROP DATABASE IF EXISTS copa;
 
@@ -255,3 +256,6 @@ select*from configuracoes;
 
 
 NÃO APAGUE POR FAVOR 
+=======
+ 
+>>>>>>> b402fef9a8ee4579e56dcda0e63092022d63a258

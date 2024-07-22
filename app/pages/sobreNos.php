@@ -134,84 +134,84 @@
 
         <div class="criadores">
             <div class="criador">
-                <img src="/img/akila.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/akila.jpg" alt="" class="foto-criadores">
                 <span>Ákila Fernandes</span>
             </div>
 
 
             <div class="criador">
-                <img src="/img/marcelo.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/marcelo.jpg" alt="" class="foto-criadores">
                 <span>Marcelo Leite</span>
             </div>
 
 
             <div class="criador">
-                <img src="/img/samir.jpg" alt="" class="foto-criadores">              
+                <img src="../../public/img/imgSobreNos/samir.jpg" alt="" class="foto-criadores">              
                 <span>Samir Ferraz</span>
             </div>
 
 
             <div class="criador">
-                <img src="/img/luiscarlos.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/luiscarlos.jpg" alt="" class="foto-criadores">
                 <span>Luis Carlos</span>
             </div>
 
 
             <div class="criador">
-                <img src="/img/analice.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/analice.jpg" alt="" class="foto-criadores">
                 <span>Analice Vianna</span>
             </div>
                      
             
             <div class="criador">
-                <img src="/img/cesar.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/cesar.jpg" alt="" class="foto-criadores">
                 <span>Cesar Augusto</span>
             </div>
 
              
             <div class="criador">
-                <img src="/img/danilo.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/danilo.jpg" alt="" class="foto-criadores">
                 <span>Danilo Teixeira</span>
             </div>
            
 
             <div class="criador">
-                <img src="/img/eduardo.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/eduardo.jpg" alt="" class="foto-criadores">
                 <span>Eduardo Moreira</span>
             </div>
             
 
             <div class="criador">
-                <img src="/img/luis.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/luis.jpg" alt="" class="foto-criadores">
                 <span>Luís Henrique</span>
             </div>
             
 
             <div class="criador">
-                <img src="/img/pedro.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/pedro.jpg" alt="" class="foto-criadores">
                 <span>Pedro Oliveira</span>
             </div>
 
 
             <div class="criador">
-                <img src="/img/ronaldy.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/ronaldy.jpg" alt="" class="foto-criadores">
                 <span>Ronaldy Oliveira</span>
             </div>
 
 
             <div class="criador">
-                <img src="/img/vitor.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/vitor.jpg" alt="" class="foto-criadores">
                 <span>Vitor Manoel</span>
             </div>
 
             <div class="criador">
-                <img src="/img/Deivid.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/Deivid.jpg" alt="" class="foto-criadores">
                 <span>Deivid Adrian</span>
             </div>
 
 
             <div class="criador">
-                <img src="/img/denilson.jpg" alt="" class="foto-criadores">
+                <img src="../../public/img/imgSobreNos/denilson.jpg"     alt="" class="foto-criadores">
                 <span>Denilson Ferreira</span>
             </div>
             
