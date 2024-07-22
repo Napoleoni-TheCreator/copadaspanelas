@@ -2,8 +2,13 @@
 // include '/opt/lampp/htdocs/CLASSIFICACAO/app/config/conexao.php';
 include '../../config/conexao.php';
 // Atualiza o status da fase como executada
+// Função para sanitizar entradas
+function sanitize_input($data) {
+    return htmlspecialchars(trim($data));
+}
 function atualizarFaseExecutada($fase) {
     global $conn;
+    $fase = sanitize_input($fase); // Sanitiza a entrada
     $stmt = $conn->prepare("UPDATE fase_execucao SET executado = TRUE WHERE fase = ?");
     $stmt->bind_param("s", $fase);
     $stmt->execute();
@@ -13,6 +18,7 @@ function atualizarFaseExecutada($fase) {
 // Verifica se a fase já foi executada
 function faseJaExecutada($fase) {
     global $conn;
+    $fase = sanitize_input($fase); // Sanitiza a entrada
     $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM fase_execucao WHERE fase = ? AND executado = 1");
     $stmt->bind_param("s", $fase);
     $stmt->execute();
@@ -194,137 +200,289 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['fase'])) {
 //     }
 //     atualizarFaseExecutada('oitavas');
 // }
+// function classificarOitavasDeFinal() {
+//     global $conn;
+
+//     // Verificar se a fase das oitavas já foi executada
+//     if (faseJaExecutada('oitavas')) {
+//         return;
+//     }
+
+//     // Obter a configuração da fase final
+//     $result = $conn->query("SELECT fase_final, numero_grupos FROM configuracoes WHERE id = 1");
+//     if (!$result) {
+//         die("Erro ao consultar configurações: " . $conn->error);
+//     }
+//     $config = $result->fetch_assoc();
+//     $faseFinal = $config['fase_final'];
+//     $numeroGrupos = (int) $config['numero_grupos'];
+
+//     // Verificar a fase final e chamar a função apropriada
+//     switch ($faseFinal) {
+//         case 'oitavas':
+//             break;
+//         case 'quartas':
+//             classificarQuartasDeFinal();
+//             return;
+//         case 'semifinais':
+//             classificarSemifinais();
+//             return;
+//         case 'final':
+//             classificarFinal();
+//             return;
+//         default:
+//             die("Fase final desconhecida.");
+//     }
+
+//     $num_oitavas = 16; // Número esperado de times para oitavas de final
+
+//     // Verificar se o número de grupos é válido
+//     if ($numeroGrupos <= 0) {
+//         die("Número de grupos inválido.");
+//     }
+
+//     // Calcular a quantidade de times por grupo que devem ser classificados
+//     $times_por_grupo = intdiv($num_oitavas, $numeroGrupos);
+
+//     if ($times_por_grupo < 1) {
+//         die("Número de times classificados insuficiente para iniciar as oitavas de final.");
+//     }
+
+//     // Limpar a tabela de oitavas de final e confrontos
+//     $conn->query("TRUNCATE TABLE oitavas_de_final");
+//     $conn->query("TRUNCATE TABLE oitavas_de_final_confrontos");
+
+//     $times_classificados = [];
+// // Obter times classificados de cada grupo usando prepared statements
+// for ($i = 1; $i <= $numeroGrupos; $i++) {
+//     $stmt = $conn->prepare("SELECT * FROM times WHERE grupo_id = ? ORDER BY pts DESC, sg DESC, gm DESC, id ASC LIMIT ?");
+//     if (!$stmt) {
+//         die("Erro ao preparar consulta para o grupo $i: " . $conn->error);
+//     }
+//     $stmt->bind_param("ii", $i, $times_por_grupo);
+//     if (!$stmt->execute()) {
+//         die("Erro ao executar consulta para o grupo $i: " . $stmt->error);
+//     }
+//     $result = $stmt->get_result();
+//     while ($row = $result->fetch_assoc()) {
+//         $times_classificados[$i][] = $row;
+//     }
+//     $stmt->close();
+// }
+
+//     // Obter times classificados de cada grupo
+//     for ($i = 1; $i <= $numeroGrupos; $i++) {
+//         $result = $conn->query("SELECT * FROM times WHERE grupo_id = $i ORDER BY pts DESC, sg DESC, gm DESC,id ASC LIMIT $times_por_grupo");
+//         if (!$result) {
+//             die("Erro ao obter times do grupo $i: " . $conn->error);
+//         }
+//         while ($row = $result->fetch_assoc()) {
+//             $times_classificados[$i][] = $row;
+//         }
+//     }
+
+//     // Verificar se temos exatamente 16 times classificados
+//     $total_times_classificados = array_reduce($times_classificados, function($carry, $group) {
+//         return $carry + count($group);
+//     }, 0);
+
+//     if ($total_times_classificados != $num_oitavas) {
+//         die("Erro na classificação dos times para as oitavas de final.");
+//     }
+
+//     // Organizar os confrontos das oitavas de final
+//     $confrontos = [];
+//     for ($i = 1; $i <= $numeroGrupos / 2; $i++) {
+//         $grupoA = $i;
+//         $grupoB = $i + $numeroGrupos / 2;
+
+//         // Ordenar times de cada grupo
+//         $timesGrupoA = $times_classificados[$grupoA];
+//         $timesGrupoB = $times_classificados[$grupoB];
+
+//         // Criar confrontos entre os times dos grupos
+//         for ($j = 0; $j < count($timesGrupoA); $j++) {
+//             if ($j >= count($timesGrupoB)) break; // Evitar acesso fora dos limites
+//             $timeA = $timesGrupoA[$j];
+//             $timeB = $timesGrupoB[count($timesGrupoB) - 1 - $j]; // Últimos times de B
+
+//             $confrontos[] = [
+//                 'timeA' => $timeA,
+//                 'timeB' => $timeB
+//             ];
+//         }
+//     }
+
+//     // Inserir os confrontos das oitavas de final
+//     foreach ($confrontos as $confronto) {
+//         $timeA = $confronto['timeA'];
+//         $timeB = $confronto['timeB'];
+
+//         // Inserir os times classificados para as oitavas de final
+//         $stmt = $conn->prepare("INSERT INTO oitavas_de_final (time_id, grupo_nome, time_nome) VALUES (?, ?, ?)");
+//         if (!$stmt) {
+//             die("Erro ao preparar inserção de times: " . $conn->error);
+//         }
+//         $stmt->bind_param("iss", $timeA['id'], $timeA['grupo_nome'], $timeA['nome']);
+//         if (!$stmt->execute()) {
+//             die("Erro ao inserir time A: " . $stmt->error);
+//         }
+//         $stmt->bind_param("iss", $timeB['id'], $timeB['grupo_nome'], $timeB['nome']);
+//         if (!$stmt->execute()) {
+//             die("Erro ao inserir time B: " . $stmt->error);
+//         }
+//         $stmt->close();
+
+//         // Inserir os confrontos das oitavas de final
+//         $stmt = $conn->prepare("INSERT INTO oitavas_de_final_confrontos (timeA_id, timeB_id, fase) VALUES (?, ?, 'oitavas')");
+//         if (!$stmt) {
+//             die("Erro ao preparar inserção de confrontos: " . $conn->error);
+//         }
+//         $stmt->bind_param("ii", $timeA['id'], $timeB['id']);
+//         if (!$stmt->execute()) {
+//             die("Erro ao inserir confronto: " . $stmt->error);
+//         }
+//         $stmt->close();
+//     }
+
+//     // Atualizar a fase como executada
+//     atualizarFaseExecutada('oitavas');
+// }
 function classificarOitavasDeFinal() {
     global $conn;
 
-    // Verificar se a fase das oitavas já foi executada
-    if (faseJaExecutada('oitavas')) {
-        return;
-    }
-
-    // Obter a configuração da fase final
-    $result = $conn->query("SELECT fase_final, numero_grupos FROM configuracoes WHERE id = 1");
-    if (!$result) {
-        die("Erro ao consultar configurações: " . $conn->error);
-    }
-    $config = $result->fetch_assoc();
-    $faseFinal = $config['fase_final'];
-    $numeroGrupos = (int) $config['numero_grupos'];
-
-    // Verificar a fase final e chamar a função apropriada
-    switch ($faseFinal) {
-        case 'oitavas':
-            break;
-        case 'quartas':
-            classificarQuartasDeFinal();
+    try {
+        // Verificar se a fase das oitavas já foi executada
+        if (faseJaExecutada('oitavas')) {
             return;
-        case 'semifinais':
-            classificarSemifinais();
-            return;
-        case 'final':
-            classificarFinal();
-            return;
-        default:
-            die("Fase final desconhecida.");
-    }
-
-    $num_oitavas = 16; // Número esperado de times para oitavas de final
-
-    // Verificar se o número de grupos é válido
-    if ($numeroGrupos <= 0) {
-        die("Número de grupos inválido.");
-    }
-
-    // Calcular a quantidade de times por grupo que devem ser classificados
-    $times_por_grupo = intdiv($num_oitavas, $numeroGrupos);
-
-    if ($times_por_grupo < 1) {
-        die("Número de times classificados insuficiente para iniciar as oitavas de final.");
-    }
-
-    // Limpar a tabela de oitavas de final e confrontos
-    $conn->query("TRUNCATE TABLE oitavas_de_final");
-    $conn->query("TRUNCATE TABLE oitavas_de_final_confrontos");
-
-    $times_classificados = [];
-
-    // Obter times classificados de cada grupo
-    for ($i = 1; $i <= $numeroGrupos; $i++) {
-        $result = $conn->query("SELECT * FROM times WHERE grupo_id = $i ORDER BY pts DESC, sg DESC, gm DESC,id ASC LIMIT $times_por_grupo");
-        if (!$result) {
-            die("Erro ao obter times do grupo $i: " . $conn->error);
         }
-        while ($row = $result->fetch_assoc()) {
-            $times_classificados[$i][] = $row;
-        }
-    }
 
-    // Verificar se temos exatamente 16 times classificados
-    $total_times_classificados = array_reduce($times_classificados, function($carry, $group) {
-        return $carry + count($group);
-    }, 0);
-
-    if ($total_times_classificados != $num_oitavas) {
-        die("Erro na classificação dos times para as oitavas de final.");
-    }
-
-    // Organizar os confrontos das oitavas de final
-    $confrontos = [];
-    for ($i = 1; $i <= $numeroGrupos / 2; $i++) {
-        $grupoA = $i;
-        $grupoB = $i + $numeroGrupos / 2;
-
-        // Ordenar times de cada grupo
-        $timesGrupoA = $times_classificados[$grupoA];
-        $timesGrupoB = $times_classificados[$grupoB];
-
-        // Criar confrontos entre os times dos grupos
-        for ($j = 0; $j < count($timesGrupoA); $j++) {
-            if ($j >= count($timesGrupoB)) break; // Evitar acesso fora dos limites
-            $timeA = $timesGrupoA[$j];
-            $timeB = $timesGrupoB[count($timesGrupoB) - 1 - $j]; // Últimos times de B
-
-            $confrontos[] = [
-                'timeA' => $timeA,
-                'timeB' => $timeB
-            ];
-        }
-    }
-
-    // Inserir os confrontos das oitavas de final
-    foreach ($confrontos as $confronto) {
-        $timeA = $confronto['timeA'];
-        $timeB = $confronto['timeB'];
-
-        // Inserir os times classificados para as oitavas de final
-        $stmt = $conn->prepare("INSERT INTO oitavas_de_final (time_id, grupo_nome, time_nome) VALUES (?, ?, ?)");
-        if (!$stmt) {
-            die("Erro ao preparar inserção de times: " . $conn->error);
-        }
-        $stmt->bind_param("iss", $timeA['id'], $timeA['grupo_nome'], $timeA['nome']);
+        // Obter a configuração da fase final
+        $stmt = $conn->prepare("SELECT fase_final, numero_grupos FROM configuracoes WHERE id = ?");
+        $stmt->bind_param("i", $id); // Assumindo que $id é 1
+        $id = 1;
         if (!$stmt->execute()) {
-            die("Erro ao inserir time A: " . $stmt->error);
+            throw new Exception("Erro ao consultar configurações: " . $stmt->error);
         }
-        $stmt->bind_param("iss", $timeB['id'], $timeB['grupo_nome'], $timeB['nome']);
-        if (!$stmt->execute()) {
-            die("Erro ao inserir time B: " . $stmt->error);
-        }
+        $result = $stmt->get_result();
+        $config = $result->fetch_assoc();
+        $faseFinal = $config['fase_final'];
+        $numeroGrupos = (int) $config['numero_grupos'];
         $stmt->close();
+
+        // Verificar a fase final e chamar a função apropriada
+        switch ($faseFinal) {
+            case 'oitavas':
+                break;
+            case 'quartas':
+                classificarQuartasDeFinal();
+                return;
+            case 'semifinais':
+                classificarSemifinais();
+                return;
+            case 'final':
+                classificarFinal();
+                return;
+            default:
+                throw new Exception("Fase final desconhecida.");
+        }
+
+        $num_oitavas = 16; // Número esperado de times para oitavas de final
+
+        // Verificar o número de grupos e calcular a quantidade de times por grupo
+        if ($numeroGrupos <= 0) {
+            throw new Exception("Número de grupos inválido.");
+        }
+        $times_por_grupo = intdiv($num_oitavas, $numeroGrupos);
+        if ($times_por_grupo < 1) {
+            throw new Exception("Número de times classificados insuficiente para iniciar as oitavas de final.");
+        }
+
+        // Limpar a tabela de oitavas de final e confrontos
+        $conn->query("TRUNCATE TABLE oitavas_de_final");
+        $conn->query("TRUNCATE TABLE oitavas_de_final_confrontos");
+
+        $times_classificados = [];
+
+        // Obter times classificados de cada grupo
+        for ($i = 1; $i <= $numeroGrupos; $i++) {
+            $stmt = $conn->prepare("SELECT * FROM times WHERE grupo_id = ? ORDER BY pts DESC, sg DESC, gm DESC, id ASC LIMIT ?");
+            $stmt->bind_param("ii", $i, $times_por_grupo);
+            if (!$stmt->execute()) {
+                throw new Exception("Erro ao obter times do grupo $i: " . $stmt->error);
+            }
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $times_classificados[$i][] = $row;
+            }
+            $stmt->close();
+        }
+
+        // Verificar se temos exatamente 16 times classificados
+        $total_times_classificados = array_reduce($times_classificados, function($carry, $group) {
+            return $carry + count($group);
+        }, 0);
+
+        if ($total_times_classificados != $num_oitavas) {
+            throw new Exception("Erro na classificação dos times para as oitavas de final.");
+        }
+
+        // Organizar os confrontos das oitavas de final
+        $confrontos = [];
+        for ($i = 1; $i <= $numeroGrupos / 2; $i++) {
+            $grupoA = $i;
+            $grupoB = $i + $numeroGrupos / 2;
+
+            // Ordenar times de cada grupo
+            $timesGrupoA = $times_classificados[$grupoA];
+            $timesGrupoB = $times_classificados[$grupoB];
+
+            // Criar confrontos entre os times dos grupos
+            for ($j = 0; $j < count($timesGrupoA); $j++) {
+                if ($j >= count($timesGrupoB)) break; // Evitar acesso fora dos limites
+                $timeA = $timesGrupoA[$j];
+                $timeB = $timesGrupoB[count($timesGrupoB) - 1 - $j]; // Últimos times de B
+
+                $confrontos[] = [
+                    'timeA' => $timeA,
+                    'timeB' => $timeB
+                ];
+            }
+        }
 
         // Inserir os confrontos das oitavas de final
-        $stmt = $conn->prepare("INSERT INTO oitavas_de_final_confrontos (timeA_id, timeB_id, fase) VALUES (?, ?, 'oitavas')");
-        if (!$stmt) {
-            die("Erro ao preparar inserção de confrontos: " . $conn->error);
-        }
-        $stmt->bind_param("ii", $timeA['id'], $timeB['id']);
-        if (!$stmt->execute()) {
-            die("Erro ao inserir confronto: " . $stmt->error);
-        }
-        $stmt->close();
-    }
+        foreach ($confrontos as $confronto) {
+            $timeA = $confronto['timeA'];
+            $timeB = $confronto['timeB'];
 
-    // Atualizar a fase como executada
-    atualizarFaseExecutada('oitavas');
+            // Inserir os times classificados para as oitavas de final
+            $stmt = $conn->prepare("INSERT INTO oitavas_de_final (time_id, grupo_nome, time_nome) VALUES (?, ?, ?)");
+            $stmt->bind_param("iss", $timeA['id'], $timeA['grupo_nome'], $timeA['nome']);
+            if (!$stmt->execute()) {
+                throw new Exception("Erro ao inserir time A: " . $stmt->error);
+            }
+            $stmt->bind_param("iss", $timeB['id'], $timeB['grupo_nome'], $timeB['nome']);
+            if (!$stmt->execute()) {
+                throw new Exception("Erro ao inserir time B: " . $stmt->error);
+            }
+            $stmt->close();
+
+            // Inserir os confrontos das oitavas de final
+            $stmt = $conn->prepare("INSERT INTO oitavas_de_final_confrontos (timeA_id, timeB_id, fase) VALUES (?, ?, 'oitavas')");
+            $stmt->bind_param("ii", $timeA['id'], $timeB['id']);
+            if (!$stmt->execute()) {
+                throw new Exception("Erro ao inserir confronto: " . $stmt->error);
+            }
+            $stmt->close();
+        }
+
+        // Atualizar a fase como executada
+        atualizarFaseExecutada('oitavas');
+
+    } catch (Exception $e) {
+        error_log("Erro ao classificar oitavas de final: " . $e->getMessage(), 3, '/var/logs/app_errors.log');
+        // Você pode optar por exibir uma mensagem amigável ao usuário ou redirecionar para uma página de erro
+    }
 }
 
 function classificarQuartasDeFinal() {

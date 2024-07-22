@@ -1,6 +1,11 @@
 <?php
 include '../../../config/conexao.php';
 
+// Função para gerar um token único
+function generateToken($length = 32) {
+    return bin2hex(random_bytes($length));
+}
+
 // Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepara os dados do formulário para inserção no banco de dados
@@ -8,11 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $posicao = trim($_POST['posicao']);
     $numero = trim($_POST['numero']);
     $time_id = trim($_POST['time']);
-  // Valida o nome (deve ser uma string sem números)
-  if (!preg_match("/^[a-zA-Z\s]+$/", $nome)) {
-    echo "Nome do jogador deve ser uma string sem números.";
-    exit;
-}
+    
+    // Valida o nome (deve ser uma string sem números)
+    if (!preg_match("/^[a-zA-Z\s]+$/", $nome)) {
+        echo "Nome do jogador deve ser uma string sem números.";
+        exit;
+    }
 
     // Valida se todos os campos estão preenchidos
     if (empty($nome) || empty($posicao) || empty($numero) || empty($time_id)) {
@@ -29,14 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Processa a imagem do jogador
     $imagem = $_FILES['imagem'];
     $imagemTmpName = $imagem['tmp_name'];
-
-    // Lê o conteúdo da imagem
     $imgData = file_get_contents($imagemTmpName);
 
+    // Gera um token único para o jogador
+    $token = generateToken();
+
     // Insere os dados no banco de dados
-    $sql = "INSERT INTO jogadores (nome, posicao, numero, time_id, imagem) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO jogadores (nome, posicao, numero, time_id, imagem, token) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiss", $nome, $posicao, $numero, $time_id, $imgData);
+    $stmt->bind_param("ssisss", $nome, $posicao, $numero, $time_id, $imgData, $token);
 
     if ($stmt->execute()) {
         echo "Jogador adicionado com sucesso!";
@@ -66,17 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: Arial, sans-serif;
             background-color: rgb(218, 215, 215);
         }
-        /* .titulo-barra {
-            background-color: #fe0000;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            text-shadow: 3px 3px 3px black;
-            font-size: 20px;
-        } */
         .formulario {
-            /* margin-top: %; */
             margin-bottom: 5%;
             display: flex;
             height: 100%;
@@ -129,7 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         label {
             font-size: 30px;
         }
-        /* Estilo para o select */
         select {
             width: 105%;
             padding: 10px;
@@ -138,28 +134,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
             font-size: 20px;
             font-family: Arial, sans-serif;
-            appearance: none; /* Remove o estilo padrão do sistema */
-            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 20 20" fill="currentColor"><path d="M7 9l3 3 3-3h-6z"/></svg>'); /* Ícone de seta dropdown (SVG inline) */
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 20 20" fill="currentColor"><path d="M7 9l3 3 3-3h-6z"/></svg>');
             background-repeat: no-repeat;
-            background-position: right 10px center; /* Posiciona o ícone à direita */
+            background-position: right 10px center;
             background-size: 20px;
-            background-color: #fff; /* Cor de fundo do select */
+            background-color: #fff;
             cursor: pointer;
         }
         select:focus {
-            outline: none; /* Remove o contorno ao focar */
-            border-color: #666; /* Cor da borda ao focar */
+            outline: none;
+            border-color: #666;
         }
         select option {
-            font-size: 16px; /* Tamanho da fonte das opções */
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
 <div class="fundo-tela">
-    <!-- <div class="titulo-barra">
-        <h1>Cadastro de Jogadores</h1>
-    </div> -->
     <?php include '../../../pages/header.php' ?>
     <div class="formulario" id="main-content">
         <form id="form-jogador" action="" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario()">
@@ -179,19 +172,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <select id="time" name="time" required>
                 <option value="">Selecione o time</option>
                 <?php
-                // Conexão com o banco de dados
                 include '../../../config/conexao.php';
-
-                // Consulta SQL para obter todos os times
                 $sql = "SELECT id, nome FROM times";
                 $result = $conn->query($sql);
-
-                // Loop para gerar as opções do select
                 while ($row = $result->fetch_assoc()) {
                     echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
                 }
-
-                // Fechar a conexão com o banco de dados
                 $conn->close();
                 ?>
             </select>
@@ -221,8 +207,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function validarFormulario() {
         const nome = document.getElementById('nome').value;
         const numero = document.getElementById('numero').value;
-        const nomeRegex = /^[a-zA-Z\s]+$/; // Regex para aceitar apenas letras e espaços
-        const numeroRegex = /^[0-9]{1,2}$/; // Regex para aceitar apenas números de 1 a 2 dígitos
+        const nomeRegex = /^[a-zA-Z\s]+$/;
+        const numeroRegex = /^[0-9]{1,2}$/;
 
         if (!nomeRegex.test(nome)) {
             alert('Nome do jogador deve ser uma string sem números.');
@@ -238,3 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </script>
 </body>
 </html>
+
+
+
+

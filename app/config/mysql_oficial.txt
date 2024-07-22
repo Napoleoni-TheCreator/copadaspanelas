@@ -197,6 +197,7 @@ CREATE TABLE jogadores (
     assistencias INT DEFAULT 0,
     cartoes_amarelos INT DEFAULT 0,
     cartoes_vermelhos INT DEFAULT 0,
+    token VARCHAR(64) UNIQUE,
     imagem LONGBLOB,
     time_id INT NOT NULL,
     FOREIGN KEY (time_id) REFERENCES times(id)
