@@ -1,3 +1,19 @@
+<?php
+// Verificar se o usuário está autenticado
+session_start();
+
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: ./../../cadastro_adm/login.php");
+    exit();
+}
+
+include("../../cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +30,10 @@
             transition: background-color 0.3s, color 0.3s;
         }
         
+        /* .dark-mode {
+            background-color: #121212;
+            color: white;
+        } */
         #rodadas-wrapper {
             margin-top: 1%;
             margin-bottom: 5%;
@@ -23,6 +43,7 @@
             border: 1px solid black;
             box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
             width: 70%;
+            /* overflow-x: auto; */
             transition: background-color 0.3s, box-shadow 0.3s;
             height: auto;
         }
@@ -33,6 +54,7 @@
         }
         tr {
             display: flex;
+            /* justify-content: space-between; */
             align-items: center;
             text-align: center;
         }
@@ -43,7 +65,7 @@
             margin-top: 5px;
             border-radius: 5px;
             padding: 20px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1); /* Aumenta o efeito de sombra */
         }
         .time_teste img {
             width: 30px;
@@ -54,11 +76,11 @@
             justify-content: center;
         }
         h1 {
-            font-size: 40px;
-            margin-top: 5%;
-            margin-bottom: 10px;
-            text-align: center;
-            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 40px; /* Define o tamanho da fonte */
+            margin-top: 5%; /* Define a margem superior */
+            margin-bottom: 10px; /* Define a margem inferior */
+            text-align: center; /* Alinha o texto ao centro */
+            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra ao texto */
         }
         .table-container {
             display: flex;
@@ -71,7 +93,8 @@
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid black;
+            border: 1px solid black; 
+            /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); */
             margin-right: 10px;
             margin-left: 5%;
             margin-top: 2%;
@@ -80,6 +103,7 @@
         .rodada-container:hover {
             background-color: #007bff;
             box-shadow: 0 0 40px hsl(0, 100%, 50%);
+            /* transform: scale(1.0); Aumenta o tamanho da caixa em 10% */
             margin-left: 5%;
         }
         .dark-mode .rodada-container {
@@ -91,6 +115,7 @@
             border-collapse: collapse;
         }
         th, td {
+            /* border: 1px solid #ddd; */
             padding: 8px;
             text-align: center;
             transition: background-color 0.3s, color 0.3s;
@@ -118,27 +143,121 @@
         .time-name {
             font-size: 20px;
             margin-left: 8px;
+            /* margin-right: 5px; */
         }
+        #input {
+            width: 20px;
+            background-color: #66bb6a;
+        }
+        input[type=number] {
+            -webkit-appearance: none;
+            -moz-appearance: textfield !important;
+            appearance: none;
+        }
+        .btn-save {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .btn-save {
+            background-color: #66bb6a;
+        }
+        .btn-save:hover {
+            background-color: #45a049;
+        }
+        .dark-mode .btn-save:hover {
+            background-color: #5eae5e;
+        }
+        .btn-toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .btn-toggle-mode {
+            background-color: #444;
+        }
+        .btn-toggle-mode:hover {
+            background-color: #0056b3;
+        }
+        .dark-mode .btn-toggle-mode:hover {
+            background-color: #333;
+        }
+        /* Estilo para evitar quebra de linha */
         .no-break {
-            white-space: nowrap;
+            white-space: nowrap; /* Evita quebra de linha no conteúdo */
             font-size: 20px;
         }
-        .btn-save, .btn-toggle-mode {
-            display: none; /* Remove os botões */
+        /* Esconde elementos para usuários não administradores */
+        .admin-only {
+            display: <?php echo $isAdmin ? 'block' : 'none'; ?>;
         }
     </style>
 </head>
 <body>
-<?php include 'header_classificacao.php'; ?>
+<?php include '../../../pages/header_classificacao.php'; ?>
+<header class="header">
+        <div class="containerr">
+            <div class="logo">
+                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+            </div>
+            <nav class="nav-icons">
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
+                    <span>Rodadas</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../../pages/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <span>Classificação</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                    <span>editar times</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
+                    <span>editar finais</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <span>Editar jogadores</span>
+                </div>
+            </nav>
+            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+            <script>
+                function toggleDarkMode() {
+                    var element = document.body;
+                    element.classList.toggle("dark-mode");
+                }
+            </script>
+        </div>
+
+    </header>
 <h1>RODADAS DAS FASES DE GRUPO</h1>
 <div id="rodadas-wrapper">
     <div class="table-container">
         <?php exibirRodadas(); ?>
     </div>
 </div>
+
+<!-- Exibe o botão "Classificar Rodadas" apenas para administradores -->
+<div class="admin-only">
+    <button class="btn-save" onclick="classificarRodadas()">Classificar Rodadas</button>
+</div>
+
 <?php
 function exibirRodadas() {
-    include '../config/conexao.php';
+    include '../../../config/conexao.php';
 
     $sqlRodadas = "SELECT DISTINCT rodada FROM jogos_fase_grupos ORDER BY rodada";
     $resultRodadas = $conn->query($sqlRodadas);
@@ -157,7 +276,7 @@ function exibirRodadas() {
 
             while ($rowGrupo = $resultGrupos->fetch_assoc()) {
                 $grupoId = $rowGrupo['grupo_id'];
-                $grupoNome = substr($rowGrupo['grupo_nome'], -1);
+                $grupoNome = substr($rowGrupo['grupo_nome'], -1); // Extrai apenas a última letra do nome do grupo
 
                 $sqlConfrontos = "SELECT jfg.id, tA.nome AS nome_timeA, tB.nome AS nome_timeB, 
                                          tA.logo AS logo_timeA, tB.logo AS logo_timeB, 
@@ -170,7 +289,9 @@ function exibirRodadas() {
                 $resultConfrontos = $conn->query($sqlConfrontos);
 
                 if ($resultConfrontos->num_rows > 0) {
+                    echo '<form method="POST" action="../actions/funcoes/atualizar_gols.php" class="admin-only">';
                     while ($rowConfronto = $resultConfrontos->fetch_assoc()) {
+                        $jogoId = $rowConfronto['id'];
                         $timeA_nome = $rowConfronto['nome_timeA'];
                         $timeB_nome = $rowConfronto['nome_timeB'];
                         $logoA = !empty($rowConfronto['logo_timeA']) ? 'data:image/jpeg;base64,' . base64_encode($rowConfronto['logo_timeA']) : '';
@@ -191,24 +312,29 @@ function exibirRodadas() {
                         }
                         echo '<td class="no-break">Grupo | ' . $grupoNome . '</td>';
                         echo '<tr class="time_teste">';
-                        
+
                         echo '<td class="time-row">';
                         if ($logoA) {
                             echo '<img src="' . $logoA . '" class="logo-time">';
                         }
                         echo '<span class="time-name">' . $timeA_nome . '</span>';
                         echo '</td>';
-                        echo '<td>' . $golsA . '</td>';
+                        echo '<td> <input type="number" id="input" name="golsA_' . $jogoId . '" value="' . $golsA . '"> </td>';
                         echo '<td> X </td>';
-                        echo '<td>' . $golsB . '</td>';
+                        echo '<td> <input type="number" id="input" name="golsB_' . $jogoId . '" value="' . $golsB . '"> </td>';
                         echo '<td class="time-row">';
                         if ($logoB) {
                             echo '<img src="' . $logoB . '" class="logo-time">';
                         }
                         echo '<span class="time-name">' . $timeB_nome . '</span>';
                         echo '</td>';
+                        echo '<input type="hidden" name="confrontos[]" value="' . $jogoId . '">';
+                        echo '<input type="hidden" name="resultadoA_' . $jogoId . '" value="' . $resultadoA . '">';
+                        echo '<input type="hidden" name="resultadoB_' . $jogoId . '" value="' . $resultadoB . '">';
                         echo '</tr>';
                     }
+                    echo '<tr class="tr_teste"><td colspan="7" style="text-align: center;"><input type="submit" class="btn-save" value="Salvar Todos"></td></tr>';
+                    echo '</form>';
                 } else {
                     echo '<tr>';
                     echo '<td colspan="7">Nenhum confronto encontrado para o grupo ' . $grupoNome . ' na ' . $rodada . 'ª rodada.</td>';
@@ -229,15 +355,26 @@ function exibirRodadas() {
 <script>
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
-        const darkMode = document.body.classList.contains('dark-mode');
-        localStorage.setItem('dark-mode', darkMode);
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-        const darkMode = localStorage.getItem('dark-mode') === 'true';
-        if (darkMode) {
-            document.body.classList.add('dark-mode');
+        const modeButton = document.querySelector('.btn-toggle-mode');
+        if (document.body.classList.contains('dark-mode')) {
+            modeButton.textContent = 'Modo Claro';
+        } else {
+            modeButton.textContent = 'Modo Escuro';
         }
-    });
+    }
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function classificarRodadas() {
+        $.post('/copadaspanelas/app/actions/funcoes/confrontos_rodadas.php', function(response) {
+            alert(response); // Exibe a resposta do servidor
+            location.reload(); // Recarregar a página para refletir as mudanças
+        }).fail(function() {
+            alert('Ocorreu um erro ao classificar as rodadas.');
+        });
+    }
+</script>
+
 </body>
 </html>

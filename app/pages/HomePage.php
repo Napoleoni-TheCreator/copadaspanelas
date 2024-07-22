@@ -48,7 +48,7 @@
                 </ul>
             </li>
             <li><a href="Jogos Proximos.php">Transmissão</a></li>
-            <li><a href="sobreNos.html">Sobre nós</a></li>
+            <li><a href="../pages/sobreNos.php">Sobre nós</a></li>
         </ul>
     </nav>
 
