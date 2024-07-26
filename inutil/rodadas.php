@@ -15,16 +15,14 @@
         }
         
         #rodadas-wrapper {
-            display: flex;
-            align-items: center;
             margin-top: 1%;
             margin-bottom: 5%;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             border: 1px solid black;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
-            width: 60%;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
+            width: 70%;
             transition: background-color 0.3s, box-shadow 0.3s;
             height: auto;
         }
@@ -45,11 +43,11 @@
             margin-top: 5px;
             border-radius: 5px;
             padding: 20px;
-            /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.1); */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
         }
         .time_teste img {
-            width: 80px;
-            height: auto;
+            width: 30px;
+            height: 30px;
         }
         .tr_teste {
             display: flex;
@@ -66,25 +64,24 @@
             display: flex;
             justify-content: space-between;
             overflow-x: auto;
-            width: 100%;
         }
         .rodada-container {
-            width: 100%;
+            width: 60%;
             background-color: #ffffff;
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
-            /* border: 1px solid black; */
-            /* margin-right: 10px;
-            margin-left: 5%; */
+            border: 1px solid black;
+            margin-right: 10px;
+            margin-left: 5%;
             margin-top: 2%;
-            /* transition: background-color 0.3s, box-shadow 0.3s; */
+            transition: background-color 0.3s, box-shadow 0.3s;
         }
-        /* .rodada-container:hover {
+        .rodada-container:hover {
             background-color: #007bff;
             box-shadow: 0 0 40px hsl(0, 100%, 50%);
             margin-left: 5%;
-        } */
+        }
         .dark-mode .rodada-container {
             background-color: #2c2c2c;
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
@@ -121,7 +118,6 @@
         .time-name {
             font-size: 20px;
             margin-left: 8px;
-            margin-right: 8px;
         }
         .no-break {
             white-space: nowrap;
@@ -130,29 +126,15 @@
         .btn-save, .btn-toggle-mode {
             display: none; /* Remove os botões */
         }
-        .arrow {
-            cursor: pointer;
-            padding: 10px;
-            font-size: 24px;
-            user-select: none;
-        }
-        .arrow.left {
-            margin-right: 10px;
-        }
-        .arrow.right {
-            margin-left: 10px;
-        }
     </style>
 </head>
 <body>
 <?php include 'header_classificacao.php'; ?>
 <h1>RODADAS DAS FASES DE GRUPO</h1>
 <div id="rodadas-wrapper">
-    <div class="arrow left" onclick="previousRodada()">&#9664;</div>
     <div class="table-container">
         <?php exibirRodadas(); ?>
     </div>
-    <div class="arrow right" onclick="nextRodada()">&#9654;</div>
 </div>
 <?php
 function exibirRodadas() {
@@ -220,10 +202,10 @@ function exibirRodadas() {
                         echo '<td> X </td>';
                         echo '<td>' . $golsB . '</td>';
                         echo '<td class="time-row">';
-                        echo '<span class="time-name">' . $timeB_nome . '</span>';
                         if ($logoB) {
                             echo '<img src="' . $logoB . '" class="logo-time">';
                         }
+                        echo '<span class="time-name">' . $timeB_nome . '</span>';
                         echo '</td>';
                         echo '</tr>';
                     }
@@ -245,37 +227,17 @@ function exibirRodadas() {
 }
 ?>
 <script>
-    var currentRodadaIndex = 0;
-    var rodadaContainers = document.getElementsByClassName('rodada-container');
-
-    function showRodada(index) {
-        for (var i = 0; i < rodadaContainers.length; i++) {
-            rodadaContainers[i].style.display = i === index ? 'block' : 'none';
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const darkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('dark-mode', darkMode);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const darkMode = localStorage.getItem('dark-mode') === 'true';
+        if (darkMode) {
+            document.body.classList.add('dark-mode');
         }
-    }
-
-    function previousRodada() {
-        if (currentRodadaIndex > 0) {
-            currentRodadaIndex--;
-            showRodada(currentRodadaIndex);
-        }
-    }
-
-    function nextRodada() {
-        if (currentRodadaIndex < rodadaContainers.length - 1) {
-            currentRodadaIndex++;
-            showRodada(currentRodadaIndex);
-        }
-    }
-
-    showRodada(currentRodadaIndex);
-
-    // Toggle dark mode
-    var isDarkMode = false;
-    function toggleMode() {
-        isDarkMode = !isDarkMode;
-        document.body.classList.toggle('dark-mode', isDarkMode);
-    }
+    });
 </script>
 </body>
 </html>

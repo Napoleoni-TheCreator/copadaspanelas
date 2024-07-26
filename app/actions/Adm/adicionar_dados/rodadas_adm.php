@@ -289,7 +289,7 @@ function exibirRodadas() {
                 $resultConfrontos = $conn->query($sqlConfrontos);
 
                 if ($resultConfrontos->num_rows > 0) {
-                    echo '<form method="POST" action="../actions/funcoes/atualizar_gols.php" class="admin-only">';
+                    echo '<form method="POST" action="../../funcoes/atualizar_gols.php" class="admin-only">';
                     while ($rowConfronto = $resultConfrontos->fetch_assoc()) {
                         $jogoId = $rowConfronto['id'];
                         $timeA_nome = $rowConfronto['nome_timeA'];

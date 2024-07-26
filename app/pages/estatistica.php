@@ -10,17 +10,55 @@ function exibirImagem($imagem) {
     }
 }
 
-// Buscar dados dos jogadores
-$sql = "SELECT j.nome, j.gols, j.assistencias, j.cartoes_amarelos, j.cartoes_vermelhos, j.imagem, t.nome AS nome_time
-        FROM jogadores j
-        JOIN times t ON j.time_id = t.id";
+// Buscar dados dos jogadores ordenados por gols
+$sql_gols = "SELECT j.nome, j.gols, j.assistencias, j.cartoes_amarelos, j.cartoes_vermelhos, j.imagem, t.nome AS nome_time
+             FROM jogadores j
+             JOIN times t ON j.time_id = t.id
+             ORDER BY j.gols DESC";
+$result_gols = $conn->query($sql_gols);
+$jogadores_gols = [];
+if ($result_gols->num_rows > 0) {
+    while ($row = $result_gols->fetch_assoc()) {
+        $jogadores_gols[] = $row;
+    }
+}
 
-$result = $conn->query($sql);
+// Buscar dados dos jogadores ordenados por assistências
+$sql_assistencias = "SELECT j.nome, j.gols, j.assistencias, j.cartoes_amarelos, j.cartoes_vermelhos, j.imagem, t.nome AS nome_time
+                     FROM jogadores j
+                     JOIN times t ON j.time_id = t.id
+                     ORDER BY j.assistencias DESC";
+$result_assistencias = $conn->query($sql_assistencias);
+$jogadores_assistencias = [];
+if ($result_assistencias->num_rows > 0) {
+    while ($row = $result_assistencias->fetch_assoc()) {
+        $jogadores_assistencias[] = $row;
+    }
+}
 
-$jogadores = [];
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $jogadores[] = $row;
+// Buscar dados dos jogadores ordenados por cartões amarelos
+$sql_cartoes_amarelos = "SELECT j.nome, j.gols, j.assistencias, j.cartoes_amarelos, j.cartoes_vermelhos, j.imagem, t.nome AS nome_time
+                         FROM jogadores j
+                         JOIN times t ON j.time_id = t.id
+                         ORDER BY j.cartoes_amarelos DESC";
+$result_cartoes_amarelos = $conn->query($sql_cartoes_amarelos);
+$jogadores_cartoes_amarelos = [];
+if ($result_cartoes_amarelos->num_rows > 0) {
+    while ($row = $result_cartoes_amarelos->fetch_assoc()) {
+        $jogadores_cartoes_amarelos[] = $row;
+    }
+}
+
+// Buscar dados dos jogadores ordenados por cartões vermelhos
+$sql_cartoes_vermelhos = "SELECT j.nome, j.gols, j.assistencias, j.cartoes_amarelos, j.cartoes_vermelhos, j.imagem, t.nome AS nome_time
+                          FROM jogadores j
+                          JOIN times t ON j.time_id = t.id
+                          ORDER BY j.cartoes_vermelhos DESC";
+$result_cartoes_vermelhos = $conn->query($sql_cartoes_vermelhos);
+$jogadores_cartoes_vermelhos = [];
+if ($result_cartoes_vermelhos->num_rows > 0) {
+    while ($row = $result_cartoes_vermelhos->fetch_assoc()) {
+        $jogadores_cartoes_vermelhos[] = $row;
     }
 }
 
@@ -39,35 +77,29 @@ $conn->close();
         box-sizing: border-box;
     }
     body {
-        background-image: url(ifbaiano.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
         width: 100%;
         display: flex;
-        justify-content: center;
         flex-direction: column;
-        padding: 30px;
         align-items: center;
-        overflow-x: auto;
-        color: #ffffff;
+        background-color: #f0f8ff;
     }
     table {
         border-collapse: collapse;
-        width: 90%;
-        margin-bottom: 20px;
-        background: rgba(0, 0, 0, 0.7);
-        border-radius: 10px;
-        overflow: hidden;
+        width: 100%;
+        /* margin-bottom: 20px; */
+        /* background: rgba(0, 0, 0, 0.7); */
+        /* border-radius: 10px; */
+        /* overflow: hidden; */
     }
     th, td {
         text-align: right;
-        padding: 10px;
-        color: #ffffff;
+        /* padding: 10px; */
+        /* color: #ffffff; */
     }
     th {
-        border-radius: 3%;
+        /* border-radius: 3%; */
         font-size: 20px;
-        color: #00ffff;
+        /* color: #00ffff; */
         border-bottom: 3px solid #adff2f; /* Borda inferior para células de cabeçalho */
     }
     .titulo_th {
@@ -80,49 +112,53 @@ $conn->close();
         width: 50px; /* Defina o tamanho desejado */
         height: auto; /* Defina o tamanho desejado */
          /* object-fit: contain; Ajusta a imagem sem cortar */
-        border-radius: 5px;
-        margin-right: 20px;
+        /* border-radius: 5px;
+        margin-right: 20px; */
     }
     .clube {
         display: flex;
         align-items: center; /* Centraliza verticalmente */
         margin-top: 10px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
     .nomeTime {
-        color: #ffffff;
+        /* color: #ffffff; */
         margin-left: 10px; /* Adapte conforme necessário para ajustar a distância entre a imagem e o texto */
-        font-weight: bold;
-        font-size: 20px;
+        /* font-weight: bold; */
+        font-size: 18px;
     }
     .dados {
-        color: #00ffff;
+        /* color: #00ffff; */
         margin-right: 15px;
-        font-size: 24px;
+        font-size: 30px;
     }
     .grupos {
-        font-size: 32px;
+        font-size: 30px;
         font-family: Arial, sans-serif;
-        color: #ffffff;
-        margin-bottom: 50px;
-        text-shadow: 2px 2px 4px #000000;
+        /* color: #ffffff; */
+        margin-top: 4%;
+        margin-bottom: 0px;
+        /* text-shadow: 2px 2px 4px #000000; */
     }
     .clube {
         font-size: 30px;
         font-family: Arial, sans-serif;
         margin-left: 10px;
-        color: #adff2f;
+        /* color: #adff2f; */
     }
     .center {
-        width: 90%;
+        width: 80%;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 30px;
-        margin-top: 1%;
-        border: 3px solid #adff2f;
+        /* margin-top: 1%; */
+        border: 1px solid black;
         border-radius: 15px;
-        background: rgba(0, 0, 0, 0.5);
+        /* background: rgba(0, 0, 0, 0.5); */
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
+        margin-bottom: 10%;
     }
     img {
         margin-left: 10px;
@@ -143,30 +179,29 @@ $conn->close();
     }
     #tituloh1{
         font-size: 40px;
-
         font-family: Arial, sans-serif;
         color: red;
-        margin-bottom: 2%;
-        margin-top: 2%;
+        margin-bottom: 3%;
+        margin-top: 6%;
         text-shadow: 2px 2px 4px #000000;
     }
 </style>
-
 </head>
 <body>
-        <?php include '../pages/header_classificacao.php'?>
-        <h1 id ="tituloh1"> Estatísticas dos Jogadores</h1>
+    <?php include '../pages/header_classificacao.php'?>
+    <h1 id="tituloh1"> Estatísticas dos Jogadores</h1>
     <div class="container center">
         
+        <!-- Tabela de Gols -->
         <table class="tabela_center">
             <h1 class="grupos">Gols</h1>
             <tr>
                 <th class="titulo_th">Jogador</th>
                 <th>Gols</th>
             </tr>
-            <?php if (!empty($jogadores)) {
+            <?php if (!empty($jogadores_gols)) {
                 $i = 1;
-                foreach ($jogadores as $jogador) {
+                foreach ($jogadores_gols as $jogador) {
                     echo "<tr>";
                     echo "<td>
                             <div class='clube'>
@@ -184,15 +219,16 @@ $conn->close();
             } ?>
         </table>
 
+        <!-- Tabela de Assistências -->
         <table class="tabela_center">
             <h1 class="grupos">Assistências</h1>
             <tr>
                 <th class="titulo_th">Jogador</th>
                 <th>Assistências</th>
             </tr>
-            <?php if (!empty($jogadores)) {
+            <?php if (!empty($jogadores_assistencias)) {
                 $i = 1;
-                foreach ($jogadores as $jogador) {
+                foreach ($jogadores_assistencias as $jogador) {
                     echo "<tr>";
                     echo "<td>
                             <div class='clube'>
@@ -210,15 +246,16 @@ $conn->close();
             } ?>
         </table>
 
+        <!-- Tabela de Cartões Amarelos -->
         <table class="tabela_center">
             <h1 class="grupos">Cartões Amarelos</h1>
             <tr>
                 <th class="titulo_th">Jogador</th>
                 <th>Cartões Amarelos</th>
             </tr>
-            <?php if (!empty($jogadores)) {
+            <?php if (!empty($jogadores_cartoes_amarelos)) {
                 $i = 1;
-                foreach ($jogadores as $jogador) {
+                foreach ($jogadores_cartoes_amarelos as $jogador) {
                     echo "<tr>";
                     echo "<td>
                             <div class='clube'>
@@ -236,15 +273,16 @@ $conn->close();
             } ?>
         </table>
 
+        <!-- Tabela de Cartões Vermelhos -->
         <table class="tabela_center">
             <h1 class="grupos">Cartões Vermelhos</h1>
             <tr>
                 <th class="titulo_th">Jogador</th>
                 <th>Cartões Vermelhos</th>
             </tr>
-            <?php if (!empty($jogadores)) {
+            <?php if (!empty($jogadores_cartoes_vermelhos)) {
                 $i = 1;
-                foreach ($jogadores as $jogador) {
+                foreach ($jogadores_cartoes_vermelhos as $jogador) {
                     echo "<tr>";
                     echo "<td>
                             <div class='clube'>
