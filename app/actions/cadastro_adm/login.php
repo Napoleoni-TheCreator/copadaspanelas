@@ -24,7 +24,7 @@ function processarLogin($conn, $cod_adm, $senha) {
                 $_SESSION['admin_nome'] = $admin['nome'];
 
                 // Redirecionar para a URL de referência ou para uma página padrão
-                $redirect_url = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : '../../pages/HomePage.php';
+                $redirect_url = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : '../Adm/adicionar_dados/rodadas_adm.php';
                 unset($_SESSION['redirect_url']); // Limpar a URL de redirecionamento após login
                 header("Location: $redirect_url");
                 exit();

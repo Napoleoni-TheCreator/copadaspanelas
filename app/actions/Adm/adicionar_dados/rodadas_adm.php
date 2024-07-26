@@ -217,11 +217,11 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                     <span>Rodadas</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../../pages/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
                     <span>Classificação</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
                     <span>editar times</span>
                 </div>
                 <div class="nav-item">
@@ -229,7 +229,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                     <span>editar finais</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/estatistica.png" alt="Trophy Icon"></a>
                     <span>Editar jogadores</span>
                 </div>
             </nav>

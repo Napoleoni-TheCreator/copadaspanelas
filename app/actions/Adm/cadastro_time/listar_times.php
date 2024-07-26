@@ -304,6 +304,44 @@ h3 {
 }
     </style>
 </head>
+<?php include '../../../pages/header_classificacao.php'; ?>
+<header class="header">
+        <div class="containerr">
+            <div class="logo">
+                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+            </div>
+            <nav class="nav-icons">
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
+                    <span>Rodadas</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <span>Classificação</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                    <span>editar times</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
+                    <span>editar finais</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <span>Editar jogadores</span>
+                </div>
+            </nav>
+            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+            <script>
+                function toggleDarkMode() {
+                    var element = document.body;
+                    element.classList.toggle("dark-mode");
+                }
+            </script>
+        </div>
+
+    </header>
 <body>
 <h1 class="text-center">LISTAR DE TIMES</h1>
 <div class="container">

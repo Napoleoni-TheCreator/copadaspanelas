@@ -19,7 +19,7 @@ if (empty($_SESSION['csrf_token'])) {
 // Função para gerar o código do administrador
 function gerarCodigoAdm($conn) {
     $ano_atual = date("Y"); // Ano atual
-    $prefixo = "cupsPanelaTelsr";  // Prefixo fixo
+    $prefixo = "cpTelsr";  // Prefixo fixo
 
     // Consultar IDs existentes para o ano atual
     $stmt = $conn->prepare("
