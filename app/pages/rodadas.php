@@ -3,6 +3,12 @@
 <head>
     <title>Rodadas das Fases de Grupo</title>
     <style>
+        * {
+            /* margin: 0; */
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
             flex-direction: column;
@@ -34,19 +40,14 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
             color: white; 
         }
-        tr {
-            display: flex;
-            align-items: center;
-            text-align: center;
-        }
         .time_teste {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             border: 1px solid black;
             margin-top: 5px;
             border-radius: 5px;
             padding: 20px;
-            /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.1); */
         }
         .time_teste img {
             width: 80px;
@@ -74,35 +75,11 @@
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
-            /* border: 1px solid black; */
-            /* margin-right: 10px;
-            margin-left: 5%; */
             margin-top: 2%;
-            /* transition: background-color 0.3s, box-shadow 0.3s; */
         }
-        /* .rodada-container:hover {
-            background-color: #007bff;
-            box-shadow: 0 0 40px hsl(0, 100%, 50%);
-            margin-left: 5%;
-        } */
         .dark-mode .rodada-container {
             background-color: #2c2c2c;
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .dark-mode th {
-            background-color: #333;
         }
         .rodada-header {
             font-size: 1.2em;
@@ -126,6 +103,8 @@
         .no-break {
             white-space: nowrap;
             font-size: 20px;
+            text-align: center; /* Alinha o texto horizontalmente */
+            flex: 1; /* Permite que o elemento ocupe a largura disponível */
         }
         .btn-save, .btn-toggle-mode {
             display: none; /* Remove os botões */
@@ -167,7 +146,6 @@ function exibirRodadas() {
 
             echo '<div class="rodada-container">';
             echo '<h2 class="rodada-header">' . $rodada . 'ª RODADA</h2>';
-            echo '<table>';
 
             $sqlGrupos = "SELECT DISTINCT grupo_id, nome AS grupo_nome FROM jogos_fase_grupos 
                           JOIN grupos ON jogos_fase_grupos.grupo_id = grupos.id ORDER BY grupo_id";
@@ -207,34 +185,27 @@ function exibirRodadas() {
                             $resultadoA = 'E';
                             $resultadoB = 'E';
                         }
-                        echo '<td class="no-break">Grupo | ' . $grupoNome . '</td>';
-                        echo '<tr class="time_teste">';
-                        
-                        echo '<td class="time-row">';
+                        echo '<div class="time_teste">';
+                        echo '<div class="time-row">';
                         if ($logoA) {
                             echo '<img src="' . $logoA . '" class="logo-time">';
                         }
                         echo '<span class="time-name">' . $timeA_nome . '</span>';
-                        echo '</td>';
-                        echo '<td>' . $golsA . '</td>';
-                        echo '<td> X </td>';
-                        echo '<td>' . $golsB . '</td>';
-                        echo '<td class="time-row">';
+                        echo '</div>';
+                        echo '<div class="no-break">' . $golsA . ' X ' . $golsB . '</div>';
+                        echo '<div class="time-row">';
                         echo '<span class="time-name">' . $timeB_nome . '</span>';
                         if ($logoB) {
                             echo '<img src="' . $logoB . '" class="logo-time">';
                         }
-                        echo '</td>';
-                        echo '</tr>';
+                        echo '</div>';
+                        echo '</div>';
                     }
                 } else {
-                    echo '<tr>';
-                    echo '<td colspan="7">Nenhum confronto encontrado para o grupo ' . $grupoNome . ' na ' . $rodada . 'ª rodada.</td>';
-                    echo '</tr>';
+                    echo '<p>Nenhum confronto encontrado para o grupo ' . $grupoNome . ' na ' . $rodada . 'ª rodada.</p>';
                 }
             }
 
-            echo '</table>';
             echo '</div>';
         }
     } else {
