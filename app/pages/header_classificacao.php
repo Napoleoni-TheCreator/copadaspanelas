@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            /* font-family: Arial, sans-serif; */
             padding-top: 80px; /* Espaçamento para o cabeçalho fixo */
         }
 

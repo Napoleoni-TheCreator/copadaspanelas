@@ -7,12 +7,12 @@
     <style>
         body {
             display: flex;
-            justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100%;
             margin: 0;
             background-color: #f0f8ff;
-            font-family: Arial, sans-serif;
+            /* font-family: Arial, sans-serif; */
         }
         #tabela-wrapper {
             background-color: rgba(255, 255, 255, 0.8);
@@ -20,15 +20,18 @@
             border-radius: 10px;
             box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
             width: 80%;
-            margin-top: 10%;
+            margin-top: 1%;
             margin-bottom: 10%;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         h1 {
-            margin-bottom: 20px;
-            font-size: 2em;
+            font-size: 40px;
+            margin-top: 5%;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
         }
         h2 {
             margin-bottom: 10px;
@@ -193,9 +196,8 @@
     <button class="dark-mode-button" onclick="toggleDarkMode()">Modo Escuro/Claro</button>
     
     <?php include 'header_classificacao.php'; ?>
-    
+    <h1>CLASSIFICADOS</h1>
     <div id="tabela-wrapper">
-        <h1>Times Classificados para as Finais</h1>
 
         <?php
         function exibirTimes($titulo, $tabela) {

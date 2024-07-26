@@ -12,8 +12,9 @@
             margin: 0;
             background-color: #f0f8ff;
             transition: background-color 0.3s, color 0.3s;
+            font-family: "Times New Roman", serif;
         }
-        
+
         #rodadas-wrapper {
             display: flex;
             align-items: center;
