@@ -434,7 +434,7 @@ iframe {
 <!-- Formulário para classificar os confrontos -->
 <div class="form-container">
     <form id="classificacao-form" method="post" action="../../funcoes/classificar.php" target="result_frame">
-        <h3>Deseja classificar os times para a próxima fase final?</h3>
+        <h3>Deseja classificar os times para essa fase final?</h3>
         <p>Selecione uma opção:</p>
         <label>
             <input type="radio" name="opcao" value="sim" required>
