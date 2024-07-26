@@ -12,13 +12,13 @@
             height: 100%;
             margin: 0;
             background-color: #f0f8ff;
-            /* font-family: Arial, sans-serif; */
+            font-family: "Times New Roman", serif;
         }
         #tabela-wrapper {
             background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
+            padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
             width: 80%;
             margin-top: 1%;
             margin-bottom: 10%;
@@ -27,37 +27,14 @@
             align-items: center;
         }
         h1 {
-            font-size: 40px;
+            font-size: 30px;
             margin-top: 5%;
             margin-bottom: 10px;
             text-align: center;
-            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
         }
         h2 {
             margin-bottom: 10px;
             font-size: 1.5em;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border: none;
-        }
-        th, td {
-            border: none;
-            padding: 3px 0;
-            text-align: left;
-            vertical-align: middle;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        td {
-            padding: 20px 0;
-        }
-        td:hover {
-            background-color: #f0f0f0;
-            color: #333;
-        }
-        th {
-            background-color: #f2f2f2;
         }
         .grupo-container {
             width: 100%;
@@ -67,34 +44,38 @@
             font-size: 1.2em;
             margin-bottom: 10px;
         }
-        .time-cell {
+        .grupo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            background-color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .grupo-item:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .grupo-item img {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 10%;
+            margin-right: 10px;
+        }
+        .grupo-item .time-info {
+            flex: 1;
+        }
+        .grupo-item .time-info .time-name {
+            font-size: 20px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            text-align: left;
-            vertical-align: middle;
-            max-width: 250px;
-            font-size: 20px;
         }
-        .logo-time {
-            max-width: 50px;
-            max-height: 50px;
-            vertical-align: middle;
-            margin-right: 5px;
-            border-radius: 10%;
-            margin-left: 10px;
-        }
-        .small-col {
-            width: 70px;
-            text-align: center;
-        }
-        .larger-col {
-            width: 70px;
-            text-align: center;
-        }
-        .descricao {
-            display: inline-block;
-            margin-left: 5px;
+        .grupo-item .time-info .grupo-name {
+            font-size: 16px;
+            color: #666;
         }
         .dark-mode {
             background-color: #121212;
@@ -105,23 +86,15 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
             border-radius: 5px;
         }
-        .dark-mode th {
+        .dark-mode .grupo-item {
             background-color: #333;
+            border: 1px solid #444;
         }
-        .dark-mode td {
-            background-color: #333;
-            border-radius: 5px;
-            padding: 10px;
+        .dark-mode .grupo-item img {
+            border: 1px solid #ffffff;
         }
         .dark-mode h1, .dark-mode h2 {
             color: #ffffff;
-        }
-        .dark-mode .logo-time {
-            border: 1px solid #ffffff;
-        }
-        .dark-mode #legenda-simbolos {
-            background-color: #2c2c2c;
-            border: 1px solid #444;
         }
         .dark-mode-button {
             position: fixed;
@@ -139,57 +112,49 @@
             background-color: #0056b3;
         }
 
-/* Media Queries para Ajustar o Layout em Telas Menores */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 1.5em;
-    }
+        /* Media Queries para Ajustar o Layout em Telas Menores */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
 
-    h2 {
-        font-size: 1.2em;
-    }
+            h2 {
+                font-size: 1.2em;
+            }
 
-    .time-cell {
-        font-size: 14px;
-    }
+            .grupo-item .time-info .time-name {
+                font-size: 14px;
+            }
 
-    .logo-time {
-        max-width: 30px;
-        max-height: 30px;
-    }
+            .grupo-item img {
+                max-width: 30px;
+                max-height: 30px;
+            }
+        }
 
-    .small-col, .larger-col {
-        width: 50px;
-    }
-}
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2em;
+            }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.2em;
-    }
+            h2 {
+                font-size: 1em;
+            }
 
-    h2 {
-        font-size: 1em;
-    }
+            .grupo-item .time-info .time-name {
+                font-size: 12px;
+            }
 
-    .time-cell {
-        font-size: 12px;
-    }
+            .grupo-item img {
+                max-width: 25px;
+                max-height: 25px;
+            }
 
-    .logo-time {
-        max-width: 25px;
-        max-height: 25px;
-    }
-
-    .small-col, .larger-col {
-        width: 40px;
-    }
-
-    #tabela-wrapper {
-        padding: 10px;
-        width: 95%; /* Ajusta a largura para dispositivos ainda menores */
-    }
-}
+            #tabela-wrapper {
+                padding: 10px;
+                width: 95%; /* Ajusta a largura para dispositivos ainda menores */
+            }
+        }
     </style>
 </head>
 <body>
@@ -209,32 +174,33 @@
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
-                echo "<h2>$titulo</h2>";
-                echo "<table>";
-                echo "<tr><th>Posição</th><th>Logo</th><th>Nome do Time</th><th>Grupo</th></tr>";
+                echo "<div class='grupo-container'>";
+                echo "<h2 class='grupo-header'>$titulo</h2>";
 
                 $posicao = 1;
                 while ($row = $result->fetch_assoc()) {
                     $logoData = !empty($row['logo']) ? 'data:image/jpeg;base64,' . base64_encode($row['logo']) : '';
 
-                    echo "<tr>";
-                    echo "<td class='small-col'>" . $posicao . "</td>";
-                    echo "<td><img src=\"$logoData\" class=\"logo-time\" alt=\"Logo\"></td>";
-                    echo "<td class='time-cell'>" . htmlspecialchars($row['time_nome']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['grupo_nome']) . "</td>";
-                    echo "</tr>";
+                    echo "<div class='grupo-item'>";
+                    echo "<img src=\"$logoData\" alt=\"Logo\">";
+                    echo "<div class='time-info'>";
+                    echo "<div class='time-name'>" . htmlspecialchars($row['time_nome']) . "</div>";
+                    echo "<div class='grupo-name'>" . htmlspecialchars($row['grupo_nome']) . "</div>";
+                    echo "</div>";
+                    echo "<div class='position'>Posição: " . $posicao . "</div>";
+                    echo "</div>";
 
                     $posicao++;
                 }
 
-                echo "</table>";
+                echo "</div>";
             }
         }
 
-        exibirTimes('Times Classificados para as Oitavas de Final', 'oitavas_de_final');
-        exibirTimes('Times Classificados para as Quartas de Final', 'quartas_de_final');
-        exibirTimes('Times Classificados para as Semifinais', 'semifinais');
-        exibirTimes('Times Classificados para a Final', 'final');
+        exibirTimes('Oitavas de Final', 'oitavas_de_final');
+        exibirTimes('Quartas de Final', 'quartas_de_final');
+        exibirTimes('Semifinais', 'semifinais');
+        exibirTimes('Final', 'final');
         ?>
     <script>
         function toggleDarkMode() {

@@ -71,234 +71,251 @@ $conn->close();
     <meta charset="UTF-8">
     <title>Estatísticas dos Jogadores</title>
     <style>
-    * {
-        margin: 0;
-        padding: 0%;
-        box-sizing: border-box;
-    }
-    body {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #f0f8ff;
-    }
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        /* margin-bottom: 20px; */
-        /* background: rgba(0, 0, 0, 0.7); */
-        /* border-radius: 10px; */
-        /* overflow: hidden; */
-    }
-    th, td {
-        text-align: right;
-        /* padding: 10px; */
-        /* color: #ffffff; */
-    }
-    th {
-        /* border-radius: 3%; */
-        font-size: 20px;
-        /* color: #00ffff; */
-        border-bottom: 3px solid #adff2f; /* Borda inferior para células de cabeçalho */
-    }
-    .titulo_th {
-        text-align: left;
-    }
-    td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Borda inferior para células de dados */
-    }
-    .logTime {
-        width: 50px; /* Defina o tamanho desejado */
-        height: auto; /* Defina o tamanho desejado */
-         /* object-fit: contain; Ajusta a imagem sem cortar */
-        /* border-radius: 5px;
-        margin-right: 20px; */
-    }
-    .clube {
-        display: flex;
-        align-items: center; /* Centraliza verticalmente */
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    .nomeTime {
-        /* color: #ffffff; */
-        margin-left: 10px; /* Adapte conforme necessário para ajustar a distância entre a imagem e o texto */
-        /* font-weight: bold; */
-        font-size: 18px;
-    }
-    .dados {
-        /* color: #00ffff; */
-        margin-right: 15px;
-        font-size: 30px;
-    }
-    .grupos {
-        font-size: 30px;
-        font-family: Arial, sans-serif;
-        /* color: #ffffff; */
-        margin-top: 4%;
-        margin-bottom: 0px;
-        /* text-shadow: 2px 2px 4px #000000; */
-    }
-    .clube {
-        font-size: 30px;
-        font-family: Arial, sans-serif;
-        margin-left: 10px;
-        /* color: #adff2f; */
-    }
-    .center {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 30px;
-        /* margin-top: 1%; */
-        border: 1px solid black;
-        border-radius: 15px;
-        /* background: rgba(0, 0, 0, 0.5); */
-        background-color: rgba(255, 255, 255, 0.8);
-        box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
-        margin-bottom: 10%;
-    }
-    img {
-        margin-left: 10px;
-    }
-    /* h1:hover {
-        font-size: 32px;
-        font-family: Arial, Helvetica, sans-serif;
-        color: #00ffff;
-        background: rgba(206, 72, 72, 0.226);
-        padding: 1px;
-        border-bottom: 1px solid #adff2f;
-    } */
-    .tabela_center:hover {
-        cursor: pointer;
-    }
-    tr:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-    #tituloh1{
-        font-size: 40px;
-        font-family: Arial, sans-serif;
-        color: red;
-        margin-bottom: 3%;
-        margin-top: 6%;
-        text-shadow: 2px 2px 4px #000000;
-    }
-</style>
+        * {
+            /* margin: 0; */
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f8ff;
+            font-family: "Times New Roman", serif;
+        }
+
+        .container {
+            width: 80%;
+            margin-bottom: 10%;
+            padding: 30px;
+            border: 1px solid black;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h1 {
+            font-size: 30px;
+            font-family: Arial, sans-serif;
+            color: red;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px #000000;
+            text-align: center; /* Centraliza apenas o título h1 */
+        }
+
+        .player-card {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .player-card:hover {
+            background-color: #f0f0f0;
+        }
+
+        .player-card img {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .player-card .info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin-right: 10px; /* Margin between image and info */
+        }
+
+        .player-card .info .name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .player-card .info .team {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .player-card .info .stat {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            margin-left: auto; /* Move stat to the right */
+        }
+
+        .index {
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+            text-align: center;
+            width: 30px;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .container {
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-mode .section h1 {
+            color: #ffffff;
+        }
+
+        .dark-mode .player-card {
+            background-color: #333;
+            border: 1px solid #444;
+        }
+
+        .dark-mode .player-card img {
+            border: 1px solid #ffffff;
+        }
+
+        .dark-mode .player-card .info .name,
+        .dark-mode .player-card .info .stat,
+        .dark-mode .player-card .info .team {
+            color: #ffffff;
+        }
+
+        .dark-mode-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode-button:hover {
+            background-color: #0056b3;
+        }
+        #tituloh1{
+            margin-top: 5%;
+        }
+
+    </style>
 </head>
 <body>
-    <?php include '../pages/header_classificacao.php'?>
-    <h1 id="tituloh1"> Estatísticas dos Jogadores</h1>
-    <div class="container center">
-        
-        <!-- Tabela de Gols -->
-        <table class="tabela_center">
-            <h1 class="grupos">Gols</h1>
-            <tr>
-                <th class="titulo_th">Jogador</th>
-                <th>Gols</th>
-            </tr>
+    <button class="dark-mode-button" onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+    
+    <?php include '../pages/header_classificacao.php'; ?>
+    <h1 id="tituloh1">Estatísticas dos Jogadores</h1>
+    <div class="container">
+
+        <!-- Seção de Gols -->
+        <div class="section">
+            <h1>Gols</h1>
             <?php if (!empty($jogadores_gols)) {
                 $i = 1;
                 foreach ($jogadores_gols as $jogador) {
-                    echo "<tr>";
-                    echo "<td>
-                            <div class='clube'>
-                                <span>$i</span> 
-                                <img src='" . exibirImagem($jogador['imagem']) . "' alt='' class='logTime'>
-                                <span class='nomeTime'>" . $jogador['nome'] . "</span>
-                            </div>
-                          </td>";
-                    echo "<td><span class='dados'>" . $jogador['gols'] . "</span></td>";
-                    echo "</tr>";
+                    echo "<div class='player-card'>";
+                    echo "<div class='index'>$i</div>";
+                    echo "<img src='" . exibirImagem($jogador['imagem']) . "' alt='Imagem do Jogador'>";
+                    echo "<div class='info'>";
+                    echo "<span class='name'>" . htmlspecialchars($jogador['nome']) . "</span>";
+                    echo "<span class='team'>" . htmlspecialchars($jogador['nome_time']) . "</span>";
+                    echo "</div>";
+                    echo "<span class='stat'>" . htmlspecialchars($jogador['gols']) . "</span>";
+                    echo "</div>";
                     $i++;
                 }
             } else {
-                echo "<tr><td colspan='2'>Nenhum jogador encontrado</td></tr>";
+                echo "<div class='player-card'>Nenhum jogador encontrado</div>";
             } ?>
-        </table>
+        </div>
 
-        <!-- Tabela de Assistências -->
-        <table class="tabela_center">
-            <h1 class="grupos">Assistências</h1>
-            <tr>
-                <th class="titulo_th">Jogador</th>
-                <th>Assistências</th>
-            </tr>
+        <!-- Seção de Assistências -->
+        <div class="section">
+            <h1>Assistências</h1>
             <?php if (!empty($jogadores_assistencias)) {
                 $i = 1;
                 foreach ($jogadores_assistencias as $jogador) {
-                    echo "<tr>";
-                    echo "<td>
-                            <div class='clube'>
-                                <span>$i</span> 
-                                <img src='" . exibirImagem($jogador['imagem']) . "' alt='' class='logTime'>
-                                <span class='nomeTime'>" . $jogador['nome'] . "</span>
-                            </div>
-                          </td>";
-                    echo "<td><span class='dados'>" . $jogador['assistencias'] . "</span></td>";
-                    echo "</tr>";
+                    echo "<div class='player-card'>";
+                    echo "<div class='index'>$i</div>";
+                    echo "<img src='" . exibirImagem($jogador['imagem']) . "' alt='Imagem do Jogador'>";
+                    echo "<div class='info'>";
+                    echo "<span class='name'>" . htmlspecialchars($jogador['nome']) . "</span>";
+                    echo "<span class='team'>" . htmlspecialchars($jogador['nome_time']) . "</span>";
+                    echo "</div>";
+                    echo "<span class='stat'>" . htmlspecialchars($jogador['assistencias']) . "</span>";
+                    echo "</div>";
                     $i++;
                 }
             } else {
-                echo "<tr><td colspan='2'>Nenhum jogador encontrado</td></tr>";
+                echo "<div class='player-card'>Nenhum jogador encontrado</div>";
             } ?>
-        </table>
+        </div>
 
-        <!-- Tabela de Cartões Amarelos -->
-        <table class="tabela_center">
-            <h1 class="grupos">Cartões Amarelos</h1>
-            <tr>
-                <th class="titulo_th">Jogador</th>
-                <th>Cartões Amarelos</th>
-            </tr>
+        <!-- Seção de Cartões Amarelos -->
+        <div class="section">
+            <h1>Cartões Amarelos</h1>
             <?php if (!empty($jogadores_cartoes_amarelos)) {
                 $i = 1;
                 foreach ($jogadores_cartoes_amarelos as $jogador) {
-                    echo "<tr>";
-                    echo "<td>
-                            <div class='clube'>
-                                <span>$i</span> 
-                                <img src='" . exibirImagem($jogador['imagem']) . "' alt='' class='logTime'>
-                                <span class='nomeTime'>" . $jogador['nome'] . "</span>
-                            </div>
-                          </td>";
-                    echo "<td><span class='dados'>" . $jogador['cartoes_amarelos'] . "</span></td>";
-                    echo "</tr>";
+                    echo "<div class='player-card'>";
+                    echo "<div class='index'>$i</div>";
+                    echo "<img src='" . exibirImagem($jogador['imagem']) . "' alt='Imagem do Jogador'>";
+                    echo "<div class='info'>";
+                    echo "<span class='name'>" . htmlspecialchars($jogador['nome']) . "</span>";
+                    echo "<span class='team'>" . htmlspecialchars($jogador['nome_time']) . "</span>";
+                    echo "</div>";
+                    echo "<span class='stat'>" . htmlspecialchars($jogador['cartoes_amarelos']) . "</span>";
+                    echo "</div>";
                     $i++;
                 }
             } else {
-                echo "<tr><td colspan='2'>Nenhum jogador encontrado</td></tr>";
+                echo "<div class='player-card'>Nenhum jogador encontrado</div>";
             } ?>
-        </table>
+        </div>
 
-        <!-- Tabela de Cartões Vermelhos -->
-        <table class="tabela_center">
-            <h1 class="grupos">Cartões Vermelhos</h1>
-            <tr>
-                <th class="titulo_th">Jogador</th>
-                <th>Cartões Vermelhos</th>
-            </tr>
+        <!-- Seção de Cartões Vermelhos -->
+        <div class="section">
+            <h1>Cartões Vermelhos</h1>
             <?php if (!empty($jogadores_cartoes_vermelhos)) {
                 $i = 1;
                 foreach ($jogadores_cartoes_vermelhos as $jogador) {
-                    echo "<tr>";
-                    echo "<td>
-                            <div class='clube'>
-                                <span>$i</span> 
-                                <img src='" . exibirImagem($jogador['imagem']) . "' alt='' class='logTime'>
-                                <span class='nomeTime'>" . $jogador['nome'] . "</span>
-                            </div>
-                          </td>";
-                    echo "<td><span class='dados'>" . $jogador['cartoes_vermelhos'] . "</span></td>";
-                    echo "</tr>";
+                    echo "<div class='player-card'>";
+                    echo "<div class='index'>$i</div>";
+                    echo "<img src='" . exibirImagem($jogador['imagem']) . "' alt='Imagem do Jogador'>";
+                    echo "<div class='info'>";
+                    echo "<span class='name'>" . htmlspecialchars($jogador['nome']) . "</span>";
+                    echo "<span class='team'>" . htmlspecialchars($jogador['nome_time']) . "</span>";
+                    echo "</div>";
+                    echo "<span class='stat'>" . htmlspecialchars($jogador['cartoes_vermelhos']) . "</span>";
+                    echo "</div>";
                     $i++;
                 }
             } else {
-                echo "<tr><td colspan='2'>Nenhum jogador encontrado</td></tr>";
+                echo "<div class='player-card'>Nenhum jogador encontrado</div>";
             } ?>
-        </table>
+        </div>
+
     </div>
+
+    <script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+    </script>
 </body>
 </html>

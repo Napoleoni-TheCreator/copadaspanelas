@@ -57,11 +57,10 @@
             justify-content: center;
         }
         h1 {
-            font-size: 40px;
+            font-size: 30px;
             margin-top: 5%;
             margin-bottom: 10px;
             text-align: center;
-            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
         }
         .table-container {
             display: flex;
