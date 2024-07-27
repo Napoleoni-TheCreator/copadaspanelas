@@ -233,6 +233,161 @@
             text-overflow: ellipsis; /* Adiciona '...' ao final do texto que excede o limite */
             white-space: nowrap; /* Evita que o texto quebre em várias linhas */
         }
+        .inf{
+            display: inline-block; 
+            width: 10px; 
+            height: 10px; 
+            background-color: green; 
+            border-radius: 50%; 
+            margin-right: 2px;
+        }
+        /* 2 = red , 3 = gray, 4 = lightgray */
+        /* Media Queries */
+        .inf2{
+            display: inline-block; 
+            width: 10px; 
+            height: 10px; 
+            background-color: red; 
+            border-radius: 50%; 
+            margin-right: 2px;
+        }
+        .inf3{
+            display: inline-block; 
+            width: 10px; 
+            height: 10px; 
+            background-color: gray; 
+            border-radius: 50%; 
+            margin-right: 2px;
+        }
+        .inf4{
+            display: inline-block; 
+            width: 10px; 
+            height: 10px; 
+            background-color: lightgray; 
+            border-radius: 50%; 
+            margin-right: 2px;
+        }
+@media (max-width: 1200px) {
+    .larger-col {
+        min-width: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1,h2 {
+        font-size: 10px;
+    }
+    h1{
+        margin-top: 10%;
+    }
+    /* .tabela-flex-header, .tabela-flex-row {
+        flex-direction: column;
+        align-items: stretch;
+    } */
+
+    .small-col{
+        min-width: 0%;
+        max-width: 20px;
+        text-align: center;
+    }
+    .larger-col{
+        min-width: 50px;
+        max-width: 50px;
+    }
+    .inf{
+        width: 5px;
+        height: 5px;
+    }
+    .inf2{
+        width: 5px;
+        height: 5px;
+    }
+    .inf3{
+        width: 5px;
+        height: 5px;
+    }
+    .inf4{
+        width: 5px;
+        height: 5px;
+    }
+    .grupo-header{
+        font-size: 10px;
+    }
+    #tabela-wrapper{
+        width: 100%;
+    }
+    .tabela-flex-header > div, .tabela-flex-row > div{
+        padding: 0px;
+        margin: 0px;
+    }
+    .time-info{
+        display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            min-width: 100px; /* Largura mínima */
+            min-height: 8px;
+            max-width: 100px;
+            max-height: 20px;
+            overflow: hidden;
+    }
+    .tabela-flex-header {
+        font-size: 10px;
+    }
+
+    .logo-time {
+        max-width: 10px;
+        max-height: 10px;
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .posicao_num {
+        font-size: 1em;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .time-name {
+        font-size: 7px;
+        min-width: 10px;
+        max-width: 30px;
+    }
+    .clube{
+            min-width: 100px; /* Largura mínima */
+            max-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 10px;
+    }
+
+    .tabela-flex-header, .tabela-flex-row {
+        flex-direction: center;
+        align-items: stretch;
+    }
+
+    .small-col, .larger-col {
+        min-width:23px;
+        text-align: center;
+        font-size: 7px;
+    }
+
+    .logo-time {
+        max-width: 10px;
+        max-height: 10px;
+    }
+
+    .posicao_num {
+        font-size: 10px;
+    }
+
+    .time-name {
+        font-size: 10px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -287,7 +442,7 @@ function mostrarGrupos() {
             echo '<div class="small-col">GP</div>'; // Coluna de Gols Pró
             echo '<div class="small-col">GC</div>'; // Coluna de Gols Contra
             echo '<div class="small-col">SG</div>'; // Coluna de Saldo de Gols
-            echo '<div class="larger-col">%</div>'; // Coluna de Porcentagem de Aproveitamento
+            echo '<div class="small-col">%</div>'; // Coluna de Porcentagem de Aproveitamento
             echo '<div class="larger-col">ÚLT. JOGOS</div>'; // Coluna de Últimos Jogos
             echo '</div>';
 
@@ -328,7 +483,7 @@ function mostrarGrupos() {
                     echo '<div class="small-col">' . $rowTimes['gm'] . '</div>';
                     echo '<div class="small-col">' . $rowTimes['gc'] . '</div>';
                     echo '<div class="small-col">' . $rowTimes['sg'] . '</div>';
-                    echo '<div class="larger-col">' . formatarPorcentagemAproveitamento($rowTimes['vitorias'], $rowTimes['partidas']) . '</div>';
+                    echo '<div class="small-col">' . formatarPorcentagemAproveitamento($rowTimes['vitorias'], $rowTimes['partidas']) . '</div>';
                     echo '<div class="larger-col">';
                     echo gerarUltimosJogos($rowTimes['id']);
                     echo '</div>';
@@ -391,14 +546,14 @@ function gerarUltimosJogos($timeId) {
     $output = '';
     foreach ($ultimosJogos as $resultado) {
         if ($resultado == 'V') {
-            $output .= '<div style="display: inline-block; width: 10px; height: 10px; background-color: green; border-radius: 50%; margin-right: 2px;"></div>';
+            $output .= '<div class="inf"></div>';
         } elseif ($resultado == 'D') {
-            $output .= '<div style="display: inline-block; width: 10px; height: 10px; background-color: red; border-radius: 50%; margin-right: 2px;"></div>';
+            $output .= '<div class="inf2" ></div>';
         } elseif ($resultado == 'E') {
-            $output .= '<div style="display: inline-block; width: 10px; height: 10px; background-color: gray; border-radius: 50%; margin-right: 2px;"></div>';
+            $output .= '<div class="inf3" ></div>';
         } else {
-            $output .= '<div style="display: inline-block; width: 10px; height: 10px; background-color: lightgray; border-radius: 50%; margin-right: 2px;"></div>';
-        }
+            $output .= '<div class="inf4" ></div>';
+        }   
     }
 
     return $output;

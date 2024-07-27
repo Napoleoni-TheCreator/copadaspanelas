@@ -120,7 +120,8 @@
         .arrow {
             cursor: pointer;
             padding: 10px;
-            font-size: 24px;
+            font-size: 10px;
+            
             user-select: none;
         }
         .arrow.left {
@@ -129,6 +130,68 @@
         .arrow.right {
             margin-left: 10px;
         }
+        /* Media queries para diferentes tamanhos de tela */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 12px;
+    }
+    .rodada-container{
+        width: 100%;
+    }
+    .rodada-header{
+        font-size: 12px;
+    }
+    .arrow.right{
+        margin-left: 0px;
+        width: 10px;
+    }
+    .arrow.left{
+        margin-right: 0px;
+        width: 10px;
+    }
+    .arrow{
+        padding: 0px;
+    }
+    .time_teste img {
+            width: 10px;
+            height: auto;
+        }
+
+    .time-name {
+        font-size: 0.5em;
+    }
+
+    .no-break {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1, h2{
+        margin-top: 10%;
+        font-size: 12px;
+    }
+
+    .time_teste {
+        flex-direction: center;
+        padding: 5px;
+    }
+    #rodadas-wrapper{
+        width: auto;
+    }
+/* 
+    .logo-time {
+        width: 10px;
+    } */
+
+    .time-name {
+        font-size: 12px
+    }
+
+    .no-break {
+        font-size: 12px;
+    }
+}
     </style>
 </head>
 <body>
