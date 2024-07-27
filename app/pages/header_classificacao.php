@@ -9,6 +9,7 @@
             margin: 0;
             /* font-family: Arial, sans-serif; */
             padding-top: 80px; /* Espaçamento para o cabeçalho fixo */
+            transition: background-color 0.3s, color 0.3s; /* Transição suave */
         }
 
         .header {
@@ -67,24 +68,37 @@
             color: white;
             font-size: 14px;
         }
+
+        /* Estilos para o modo escuro */
         .dark-mode {
             background: #121212;
-            /* color: #ffffff; */
+            color: #ffffff;
         }
+
+        .dark-mode .header {
+            background-color: #333;
+        }
+
+        .dark-mode .nav-item span {
+            color: #ffffff;
+        }
+
         .dark-mode table {
             background: rgba(255, 255, 255, 0.1);
         }
+
         .dark-mode th {
             color: #00ff00; /* Verde */
             border-bottom: 3px solid #ff0000; /* Vermelho */
         }
+
         .dark-mode .dados {
             color: #ff0000; /* Vermelho */
         }
+
         .dark-mode .clube {
             color: #00ff00; /* Verde */
         }
-
     </style>
 </head>
 <body>
@@ -116,14 +130,30 @@
                 </div>
             </nav>
             <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
-            <script>
-                function toggleDarkMode() {
-                    var element = document.body;
-                    element.classList.toggle("dark-mode");
-                }
-            </script>
         </div>
-
     </header>
+
+    <script>
+        // Função para alternar o modo escuro
+        function toggleDarkMode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+
+            // Salvar a preferência no localStorage
+            if (element.classList.contains("dark-mode")) {
+                localStorage.setItem("theme", "dark");
+            } else {
+                localStorage.setItem("theme", "light");
+            }
+        }
+
+        // Aplicar o tema salvo ao carregar a página
+        document.addEventListener("DOMContentLoaded", function() {
+            var theme = localStorage.getItem("theme");
+            if (theme === "dark") {
+                document.body.classList.add("dark-mode");
+            }
+        });
+    </script>
 </body>
 </html>

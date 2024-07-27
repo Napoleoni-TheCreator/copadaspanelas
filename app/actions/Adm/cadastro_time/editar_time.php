@@ -99,7 +99,7 @@ $conn->close();
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: red;
+            /* background-color: red; */
             margin: 0;
             padding: 0;
             display: flex;
@@ -110,14 +110,14 @@ $conn->close();
         .container {
             padding: 20px;
             width: 100%;
-            max-width: 80%;
+            max-width: 60%;
         }
         .form-container {
-            background-color: rgb(218, 215, 215);
+            /* background-color: rgb(218, 215, 215);
             border-radius: 15px;
-            box-shadow: 0 8px 62px 0 rgba(31, 38, 135, 1.2);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); */
             border: 3px solid rgba(31, 38, 135, 0.37);
             padding: 40px;
             margin-top: 10%;
@@ -125,15 +125,15 @@ $conn->close();
         }
         .form-container h2 {
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 50px;
+            margin-bottom: 2px;
+            font-size: 20px;
         }
         form {
             display: flex;
             flex-direction: column;
         }
         label {
-            font-size: 45px;
+            font-size: 18px;
             margin-bottom: 5px;
         }
         input[type="text"], input[type="number"], select {
@@ -141,7 +141,7 @@ $conn->close();
             border: 3px solid rgba(31, 38, 135, 0.37);
             border-radius: 5px;
             margin-bottom: 15px;
-            font-size: 20px;
+            font-size: 12px;
             background: rgba(255, 255, 255, 0.2);
         }
         input[type="file"] {
@@ -149,7 +149,7 @@ $conn->close();
             border: 3px solid rgba(31, 38, 135, 0.37);
             border-radius: 5px;
             margin-bottom: 15px;
-            font-size: 20px;
+            font-size: 12px;
             background: rgba(255, 255, 255, 0.2);
         }
         input[type="submit"] {
@@ -159,8 +159,8 @@ $conn->close();
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
-            margin-top: 50px;
-            font-size: 30px;
+            margin-top: 10px;
+            font-size: 12px;
             transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover {
@@ -175,7 +175,7 @@ $conn->close();
             text-decoration: none;
             font-weight: bold;
             border-radius: 5px;
-            font-size: 30px;
+            font-size: 12px;
             margin-top: 10px;
             transition: background-color 0.3s ease;
         }
@@ -183,7 +183,7 @@ $conn->close();
             background-color: #c82333;
         }
         #imagem-preview {
-            max-width: 600px;
+            max-width: 200px;
             height: auto;
             display: block;
             margin-top: 10px;
@@ -199,6 +199,49 @@ $conn->close();
             -webkit-appearance: none; /* Chrome, Safari, Edge */
             margin: 0; /* Remove margin */
         }
+         /* Modo escuro */
+         .dark-mode {
+            background-color: #121212; /* Cor de fundo escura */
+            color: #e0e0e0; /* Cor do texto escura */
+        }
+
+        .dark-mode .form-container {
+            background-color: #1e1e1e; /* Cor de fundo escura para o formulário */
+            border: 3px solid #444; /* Borda do formulário escura */
+        }
+
+        .dark-mode input[type="text"], 
+        .dark-mode input[type="number"], 
+        .dark-mode select, 
+        .dark-mode input[type="file"] {
+            background: #333; /* Fundo escuro para campos */
+            color: #e0e0e0; /* Cor do texto escuro para campos */
+            border: 1px solid #555; /* Borda escura para campos */
+        }
+
+        .dark-mode input[type="submit"] {
+            background-color: #007bff; /* Cor do botão escura */
+            border: 1px solid #0056b3; /* Borda escura para o botão */
+        }
+
+        .dark-mode input[type="submit"]:hover {
+            background-color: #0056b3; /* Cor do botão escura ao passar o mouse */
+        }
+
+        .dark-mode .btn-cancel {
+            background-color: #ff3d3d; /* Cor do botão cancelar escura */
+            border: 1px solid #cc0000; /* Borda escura para o botão cancelar */
+        }
+
+        .dark-mode .btn-cancel:hover {
+            background-color: #cc0000; /* Cor do botão cancelar ao passar o mouse */
+        }
+
+        .dark-mode #imagem-preview {
+            border: 1px solid #444; /* Borda escura para a imagem */
+        }
+
+    
     </style>
     <script>
         function previewImage(input) {

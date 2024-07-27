@@ -76,232 +76,233 @@ $_SESSION['csrf_token'] = $csrf_token;
     <title>CRUD Times</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-/* Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(218, 215, 215);
-    margin: 0;
-    padding: 0;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(218, 215, 215);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s; /* Transição suave */
+        }
 
-h1 {
-    font-size: 4rem;
-    margin-top: 5%;
-    margin-bottom: 1rem;
-    text-align: center;
-    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
-}
+        h1 {
+            font-size: 4rem;
+            margin-top: 5%;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #333;
-}
+        h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
 
-.container {
-    margin-top: 3%;
-    background-color: rgb(218, 215, 215);
-    padding: 1.25rem;
-    border: 3px solid rgba(31, 38, 135, 0.37);
-    border-radius: 10px;
-    box-shadow: 0 8px 62px 0 rgba(31, 38, 135, 1.2);
-    width: 100%;
-    overflow-x: auto;
-    text-align: center;
-    margin-bottom: 10%;
-}
+        .container {
+            margin-top: 3%;
+            background-color: rgb(218, 215, 215);
+            padding: 1.25rem;
+            border: 3px solid rgba(31, 38, 135, 0.37);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
+            width: 100%;
+            overflow-x: auto;
+            text-align: center;
+            margin-bottom: 10%;
+        }
 
-.time-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 1.25rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid;
-    position: relative;
-    text-align: center;
-}
+        .time-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 1.25rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid;
+            position: relative;
+            text-align: center;
+        }
 
-.time-card:hover {
-    animation: borderColorChange 2s infinite;
-    box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
-    transform: scale(1.1);
-    margin: 1rem;
-}
+        .time-card:hover {
+            animation: borderColorChange 2s infinite;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+            transform: scale(1.1);
+            margin: 1rem;
+        }
 
-.time-image {
-    width: 80px;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-}
+        .time-image {
+            width: 80px;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
 
-.time-details {
-    margin-bottom: 1.25rem;
-}
+        .time-details {
+            margin-bottom: 1.25rem;
+        }
 
-.time-actions {
-    display: flex;
-    gap: 0.625rem;
-}
+        .time-actions {
+            display: flex;
+            gap: 0.625rem;
+        }
 
-.time-actions a {
-    display: inline-block;
-    padding: 0.625rem 1.25rem;
-    border-radius: 5px;
-    font-size: 0.875rem;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
-}
+        .time-actions a {
+            display: inline-block;
+            padding: 0.625rem 1.25rem;
+            border-radius: 5px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-.time-actions a.delete {
-    background-color: #dc3545;
-}
+        .time-actions a.delete {
+            background-color: #dc3545;
+        }
 
-.time-actions a.delete:hover {
-    background-color: #c82333;
-    color: #fff;
-}
+        .time-actions a.delete:hover {
+            background-color: #c82333;
+            color: #fff;
+        }
 
-.time-actions a.edit {
-    background-color: #007bff;
-}
+        .time-actions a.edit {
+            background-color: #007bff;
+        }
 
-.time-actions a.edit:hover {
-    background-color: #0056b3;
-    color: #fff;
-}
+        .time-actions a.edit:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
 
-.time-actions a:active {
-    transform: scale(0.98);
-}
+        .time-actions a:active {
+            transform: scale(0.98);
+        }
 
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem; /* Espaço entre as colunas */
-}
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem; /* Espaço entre as colunas */
+        }
 
-.col-md-3 {
-    flex: 1 1 calc(25% - 1rem); /* Ajusta o tamanho da coluna para dispositivos maiores */
-    max-width: calc(25% - 1rem); /* Garante que a coluna não ultrapasse 25% da largura total */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1.25rem;
-}
+        .col-md-3 {
+            flex: 1 1 calc(25% - 1rem); /* Ajusta o tamanho da coluna para dispositivos maiores */
+            max-width: calc(25% - 1rem); /* Garante que a coluna não ultrapasse 25% da largura total */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
 
-@media (max-width: 767px) {
-    h1 {
-        font-size: 2.2rem;
-    }
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 2.2rem;
+            }
 
-    h3 {
-        font-size: 1.22rem;
-    }
+            h3 {
+                font-size: 1.22rem;
+            }
 
-    .container {
-        padding: 1rem;
-    }
+            .container {
+                padding: 1rem;
+            }
 
-    .time-card {
-        padding: 0.5rem;
-    }
+            .time-card {
+                padding: 0.5rem;
+            }
 
-    .time-image {
-        width: 60px;
-    }
+            .time-image {
+                width: 60px;
+            }
 
-    .time-actions a {
-        padding: 0.5rem 1rem;
-        font-size: 0.75rem;
-    }
+            .time-actions a {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
 
-    .col-md-3 {
-        flex: 1 1 calc(50% - 1rem); /* Ajusta o tamanho da coluna para dispositivos menores */
-        max-width: calc(50% - 1rem); /* Garante que a coluna não ultrapasse 50% da largura total */
-    }
-}
+            .col-md-3 {
+                flex: 1 1 calc(50% - 1rem); /* Ajusta o tamanho da coluna para dispositivos menores */
+                max-width: calc(50% - 1rem); /* Garante que a coluna não ultrapasse 50% da largura total */
+            }
+        }
 
-/* Consultas de mídia para telas com resolução de 800x1280 */
-@media (max-width: 800px) and (orientation: portrait) {
-    h1 {
-        font-size: 2rem;
-    }
+        /* Consultas de mídia para telas com resolução de 800x1280 */
+        @media (max-width: 800px) and (orientation: portrait) {
+            h1 {
+                font-size: 2rem;
+            }
 
-    h3 {
-        font-size: 1.125rem;
-    }
+            h3 {
+                font-size: 1.125rem;
+            }
 
-    .container {
-        padding: 0.75rem;
-    }
+            .container {
+                padding: 0.75rem;
+            }
 
-    .time-card {
-        padding: 0.75rem;
-    }
+            .time-card {
+                padding: 0.75rem;
+            }
 
-    .time-image {
-        width: 50px;
-    }
+            .time-image {
+                width: 50px;
+            }
 
-    .time-actions a {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.75rem;
-    }
+            .time-actions a {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
 
-    .col-md-3 {
-        flex: 1 1 calc(50% - 0.75rem); /* Ajusta o tamanho da coluna para telas menores */
-        max-width: calc(50% - 0.75rem); /* Garante que a coluna não ultrapasse 50% da largura total */
-    }
-}
-/* Consultas de mídia para telas com resolução de 800x1280 */
-@media (max-width: 810px) and (orientation: portrait) {
-    h1 {
-        font-size: 2rem;
-    }
+            .col-md-3 {
+                flex: 1 1 calc(50% - 0.75rem); /* Ajusta o tamanho da coluna para telas menores */
+                max-width: calc(50% - 0.75rem); /* Garante que a coluna não ultrapasse 50% da largura total */
+            }
+        }
 
-    h3 {
-        font-size: 1.125rem;
-    }
+        /* Estilo do modo escuro */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .dark-mode h3{
+            color: white;
+        }
 
-    .container {
-        padding: 0.75rem;
-    }
+        .dark-mode .container {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
 
-    .time-card {
-        padding: 0.75rem;
-    }
+        .dark-mode .time-card {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border-color: #555;
+        }
 
-    .time-image {
-        width: 50px;
-    }
+        .dark-mode .time-card:hover {
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.6);
+        }
 
-    .time-actions a {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.75rem;
-    }
+        .dark-mode .time-actions a.delete {
+            background-color: #c82333;
+        }
 
-    .col-md-3 {
-        flex: 1 1 calc(50% - 0.75rem); /* Ajusta o tamanho da coluna para telas menores */
-        max-width: calc(50% - 0.75rem); /* Garante que a coluna não ultrapasse 50% da largura total */
-    }
-}
+        .dark-mode .time-actions a.edit {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <?php include '../../../pages/header_classificacao.php'; ?>
@@ -334,13 +335,28 @@ h3 {
             </nav>
             <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
             <script>
+                // Função para alternar o modo escuro
                 function toggleDarkMode() {
-                    var element = document.body;
-                    element.classList.toggle("dark-mode");
+                    var body = document.body;
+                    body.classList.toggle('dark-mode');
+
+                    // Armazenar a preferência no localStorage
+                    if (body.classList.contains('dark-mode')) {
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                    }
                 }
+
+                // Aplicar a preferência do modo escuro ao carregar a página
+                document.addEventListener('DOMContentLoaded', function() {
+                    var theme = localStorage.getItem('theme');
+                    if (theme === 'dark') {
+                        document.body.classList.add('dark-mode');
+                    }
+                });
             </script>
         </div>
-
     </header>
 <body>
 <h1 class="text-center">LISTAR DE TIMES</h1>

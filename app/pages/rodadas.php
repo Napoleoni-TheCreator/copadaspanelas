@@ -78,9 +78,17 @@
             margin-top: 2%;
         }
         .dark-mode .rodada-container {
+            background-color: #1e1e1e;
+            
+        }
+        .dark-mode h1 {
+            color: #ffffff;
+        }
+        .dark-mode .time_teste{
             background-color: #2c2c2c;
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
         }
+
         .rodada-header {
             font-size: 1.2em;
             margin-bottom: 10px;

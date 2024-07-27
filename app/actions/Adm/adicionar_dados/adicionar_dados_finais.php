@@ -218,12 +218,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 h1 {
     font-size: 2em;
     color: #444;
     margin-top: 20px;
+}
+
+body.dark-mode h1 {
+    color: #e0e0e0;
 }
 
 .form-container {
@@ -234,6 +244,12 @@ h1 {
     width: 100%;
     max-width: 900px;
     margin: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .form-container {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
 }
 
 table {
@@ -250,8 +266,17 @@ th, td {
     background-color: #fafafa;
 }
 
+body.dark-mode th, body.dark-mode td {
+    background-color: #333;
+    border-bottom: 1px solid #555;
+}
+
 th {
     background-color: #e0e0e0;
+}
+
+body.dark-mode th {
+    background-color: #444;
 }
 
 td input[type="number"] {
@@ -260,6 +285,12 @@ td input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
+}
+
+body.dark-mode td input[type="number"] {
+    border-color: #555;
+    background-color: #333;
+    color: #e0e0e0;
 }
 
 button {
@@ -281,6 +312,14 @@ button:hover {
     background-color: #0056b3;
 }
 
+body.dark-mode button {
+    background-color: #1e88e5;
+}
+
+body.dark-mode button:hover {
+    background-color: #0056b3;
+}
+
 .error-message, .success-message {
     font-size: 1.1em;
     margin-bottom: 20px;
@@ -293,9 +332,19 @@ button:hover {
     background-color: #fdd;
 }
 
+body.dark-mode .error-message {
+    color: #e74c3c;
+    background-color: #3f3f3f;
+}
+
 .success-message {
     color: #2ecc71;
     background-color: #dff0d8;
+}
+
+body.dark-mode .success-message {
+    color: #2ecc71;
+    background-color: #3f3f3f;
 }
 
 select {
@@ -306,6 +355,12 @@ select {
     background-color: #fff;
     width: 100%;
     max-width: 250px;
+}
+
+body.dark-mode select {
+    border-color: #555;
+    background-color: #333;
+    color: #e0e0e0;
 }
 
 label {
@@ -358,10 +413,25 @@ iframe {
                 function toggleDarkMode() {
                     var element = document.body;
                     element.classList.toggle("dark-mode");
+                    
+                    // Salva a preferência do usuário no localStorage
+                    if (element.classList.contains("dark-mode")) {
+                        localStorage.setItem("darkMode", "enabled");
+                    } else {
+                        localStorage.setItem("darkMode", "disabled");
+                    }
                 }
+
+                // Carrega a preferência do usuário ao iniciar a página
+                window.onload = function() {
+                    if (localStorage.getItem("darkMode") === "enabled") {
+                        document.body.classList.add("dark-mode");
+                    } else {
+                        document.body.classList.remove("dark-mode");
+                    }
+                };
             </script>
         </div>
-
     </header>
     <h1>Atualizar Confrontos para a Fase de <?php echo ucfirst($fase_final); ?></h1>
 

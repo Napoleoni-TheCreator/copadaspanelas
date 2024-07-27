@@ -27,13 +27,15 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             height: 100%;
             margin: 0;
             background-color: #f0f8ff;
+            color: #333;
             transition: background-color 0.3s, color 0.3s;
         }
         
-        /* .dark-mode {
+        .dark-mode {
             background-color: #121212;
-            color: white;
-        } */
+            color: #e0e0e0;
+        }
+
         #rodadas-wrapper {
             margin-top: 1%;
             margin-bottom: 5%;
@@ -43,21 +45,19 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             border: 1px solid black;
             box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
             width: 70%;
-            /* overflow-x: auto; */
             transition: background-color 0.3s, box-shadow 0.3s;
-            height: auto;
         }
         .dark-mode #rodadas-wrapper {
             background-color: #1e1e1e;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            color: white; 
         }
+        
         tr {
             display: flex;
-            /* justify-content: space-between; */
             align-items: center;
             text-align: center;
         }
+        
         .time_teste {
             display: flex;
             justify-content: space-between;
@@ -65,7 +65,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             margin-top: 5px;
             border-radius: 5px;
             padding: 20px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1); /* Aumenta o efeito de sombra */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
         }
         .time_teste img {
             width: 30px;
@@ -76,11 +76,11 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             justify-content: center;
         }
         h1 {
-            font-size: 40px; /* Define o tamanho da fonte */
-            margin-top: 5%; /* Define a margem superior */
-            margin-bottom: 10px; /* Define a margem inferior */
-            text-align: center; /* Alinha o texto ao centro */
-            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra ao texto */
+            font-size: 40px;
+            margin-top: 5%;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
         }
         .table-container {
             display: flex;
@@ -94,28 +94,29 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             padding: 10px;
             border-radius: 5px;
             border: 1px solid black; 
-            /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); */
             margin-right: 10px;
             margin-left: 5%;
             margin-top: 2%;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
-        .rodada-container:hover {
-            background-color: #007bff;
-            box-shadow: 0 0 40px hsl(0, 100%, 50%);
-            /* transform: scale(1.0); Aumenta o tamanho da caixa em 10% */
-            margin-left: 5%;
-        }
         .dark-mode .rodada-container {
             background-color: #2c2c2c;
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+        .rodada-container:hover {
+            background-color: #007bff;
+            box-shadow: 0 0 40px hsl(0, 100%, 50%);
+            margin-left: 5%;
+        }
+        .dark-mode .rodada-container:hover {
+            background-color: #0056b3;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
         table {
             width: 100%;
             border-collapse: collapse;
         }
         th, td {
-            /* border: 1px solid #ddd; */
             padding: 8px;
             text-align: center;
             transition: background-color 0.3s, color 0.3s;
@@ -143,7 +144,6 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         .time-name {
             font-size: 20px;
             margin-left: 8px;
-            /* margin-right: 5px; */
         }
         #input {
             width: 20px;
@@ -193,12 +193,10 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         .dark-mode .btn-toggle-mode:hover {
             background-color: #333;
         }
-        /* Estilo para evitar quebra de linha */
         .no-break {
-            white-space: nowrap; /* Evita quebra de linha no conteúdo */
+            white-space: nowrap;
             font-size: 20px;
         }
-        /* Esconde elementos para usuários não administradores */
         .admin-only {
             display: <?php echo $isAdmin ? 'block' : 'none'; ?>;
         }
@@ -233,15 +231,8 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                     <span>Editar jogadores</span>
                 </div>
             </nav>
-            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
-            <script>
-                function toggleDarkMode() {
-                    var element = document.body;
-                    element.classList.toggle("dark-mode");
-                }
-            </script>
+            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
         </div>
-
     </header>
 <h1>RODADAS DAS FASES DE GRUPO</h1>
 <div id="rodadas-wrapper">
@@ -276,7 +267,7 @@ function exibirRodadas() {
 
             while ($rowGrupo = $resultGrupos->fetch_assoc()) {
                 $grupoId = $rowGrupo['grupo_id'];
-                $grupoNome = substr($rowGrupo['grupo_nome'], -1); // Extrai apenas a última letra do nome do grupo
+                $grupoNome = substr($rowGrupo['grupo_nome'], -1);
 
                 $sqlConfrontos = "SELECT jfg.id, tA.nome AS nome_timeA, tB.nome AS nome_timeB, 
                                          tA.logo AS logo_timeA, tB.logo AS logo_timeB, 
@@ -299,7 +290,6 @@ function exibirRodadas() {
                         $golsA = $rowConfronto['gols_marcados_timeA'];
                         $golsB = $rowConfronto['gols_marcados_timeB'];
 
-                        // Determina o resultado do jogo
                         if ($golsA > $golsB) {
                             $resultadoA = 'V';
                             $resultadoB = 'D';
@@ -353,23 +343,17 @@ function exibirRodadas() {
 }
 ?>
 <script>
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
-        const modeButton = document.querySelector('.btn-toggle-mode');
-        if (document.body.classList.contains('dark-mode')) {
-            modeButton.textContent = 'Modo Claro';
-        } else {
-            modeButton.textContent = 'Modo Escuro';
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
         }
-    }
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function classificarRodadas() {
         $.post('/copadaspanelas/app/actions/funcoes/confrontos_rodadas.php', function(response) {
-            alert(response); // Exibe a resposta do servidor
-            location.reload(); // Recarregar a página para refletir as mudanças
+            alert(response);
+            location.reload();
         }).fail(function() {
             alert('Ocorreu um erro ao classificar as rodadas.');
         });
