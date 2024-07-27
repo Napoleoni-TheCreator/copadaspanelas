@@ -61,20 +61,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link rel="stylesheet" href="../../../../public/css/cssheader.css">
     <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Times</title>
     <style>
         html, body {
-            height: 100vh;
+            height: 100%;
             margin: 0;
         }
 
         body {
             display: flex;
             flex-direction: column;
+            align-items: center;
             font-family: Arial, sans-serif;
             background-color: rgb(218, 215, 215);
             background-size: cover;
@@ -82,15 +82,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #main-content {
             flex: 1; /* Faz com que o conteúdo principal ocupe o espaço restante */
         }
-
+        
         footer {
             background-color: rgb(27, 25, 25);
             width: 100%;
             position: relative;
             bottom: 0;
-            /* Garantia para o footer */
         }
-
+        .titulo-barra{
+            margin-top: 5%;
+        }
         label {
             display: block;
             margin-bottom: 15px;
@@ -123,7 +124,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .formulario {
             display: flex;
             margin-bottom: 5%;
-            margin-top: 5%;
             height: auto;
             justify-content: center;
             align-items: center;
@@ -196,44 +196,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <header class="header">
         <div class="containerr">
             <div class="logo">
-                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="logo"></a>
             </div>
             <nav class="nav-icons">
                 <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
+                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="rodadas"></a>
                     <span>Rodadas</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="classificação"></a>
                     <span>Classificação</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="classificados"></a>
                     <span>editar times</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
+                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="finais"></a>
                     <span>editar finais</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="prancheta"></a>
                     <span>Editar jogadores</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="grupos"></a>
                     <span>Criar grupos</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="adicinar timess"></a>
                     <span>Adicionar times</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/adadm.svg" alt="cadastro novos adm"></a>
+                    <span>Adicionar outro adm</span>
                 </div>
             </nav>
             <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
         </div>
     </header>
-    <!-- <div class="titulo-barra">
+    <div class="titulo-barra">
         <h1>Adicionar Times</h1>
-    </div> -->
+    </div>
     <div class="formulario" id="main-content">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
             <!-- Repetição para dois times -->

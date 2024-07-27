@@ -415,6 +415,10 @@ iframe {
                     <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
                     <span>Adicionar times</span>
                 </div>
+                <div class="nav-item">
+                    <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/adadm.svg" alt="cadastro novos adm"></a>
+                    <span>Adicionar outro adm</span>
+                </div>
             </nav>
             <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
         </div>
