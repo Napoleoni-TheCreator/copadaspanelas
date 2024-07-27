@@ -163,32 +163,8 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        .dark-mode .btn-save {
-            background-color: #66bb6a;
-        }
         .btn-save:hover {
             background-color: #45a049;
-        }
-        .dark-mode .btn-save:hover {
-            background-color: #5eae5e;
-        }
-        .btn-toggle-mode {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .dark-mode .btn-toggle-mode {
-            background-color: #444;
-        }
-        .btn-toggle-mode:hover {
-            background-color: #0056b3;
         }
         .dark-mode .btn-toggle-mode:hover {
             background-color: #333;

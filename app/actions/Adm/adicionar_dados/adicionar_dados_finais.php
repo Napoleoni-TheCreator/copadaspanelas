@@ -219,6 +219,7 @@ body {
     flex-direction: column;
     align-items: center;
     transition: background-color 0.3s, color 0.3s;
+    height: 100%;
 }
 
 body.dark-mode {
@@ -229,7 +230,7 @@ body.dark-mode {
 h1 {
     font-size: 2em;
     color: #444;
-    margin-top: 20px;
+    margin-top: 5%;
 }
 
 body.dark-mode h1 {
@@ -293,7 +294,7 @@ body.dark-mode td input[type="number"] {
     color: #e0e0e0;
 }
 
-button {
+#butao {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -308,17 +309,6 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
-
-body.dark-mode button {
-    background-color: #1e88e5;
-}
-
-body.dark-mode button:hover {
-    background-color: #0056b3;
-}
 
 .error-message, .success-message {
     font-size: 1.1em;
@@ -392,7 +382,7 @@ iframe {
                     <span>Rodadas</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
                     <span>Classificação</span>
                 </div>
                 <div class="nav-item">
@@ -478,7 +468,7 @@ iframe {
                             <td><?php echo htmlspecialchars($nome_timeB); ?></td>
                             <td>
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($row_confrontos['id']); ?>">
-                                <button type="submit" name="atualizar_individual">Atualizar</button>
+                                <button id="butao" type="submit" name="atualizar_individual">Atualizar</button>
                             </td>
                         </form>
                     </tr>
@@ -504,7 +494,7 @@ iframe {
             <input type="radio" name="opcao" value="nao" required>
             Não, aperte o botão Classificar;
         </label>
-        <button type="submit" name="classificar">Classificar</button>
+        <button id="butao" type="submit" name="classificar">Classificar</button>
     </form>
     <!-- Frame para redirecionamento após classificação -->
     <iframe name="result_frame" style="display:none;"></iframe>

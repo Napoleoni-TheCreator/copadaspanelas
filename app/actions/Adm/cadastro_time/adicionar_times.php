@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <span>Rodadas</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="classificação"></a>
+                    <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="classificação"></a>
                     <span>Classificação</span>
                 </div>
                 <div class="nav-item">
