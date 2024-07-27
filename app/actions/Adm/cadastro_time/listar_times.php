@@ -303,6 +303,62 @@ $_SESSION['csrf_token'] = $csrf_token;
         .dark-mode .time-actions a.edit {
             background-color: #0056b3;
         }
+    .dark-mode .modal-content {
+        background-color: #333; /* Cor de fundo do modal */
+        color: #e0e0e0; /* Cor do texto */
+    }
+
+    .dark-mode  .modal-header {
+        border-bottom: 1px solid #444; /* Linha de separação no cabeçalho */
+    }
+
+    .dark-mode  .modal-title {
+        color: #e0e0e0; /* Cor do título */
+    }
+
+    .dark-mode .modal-body {
+        color: #e0e0e0; /* Cor do texto do corpo */
+    }
+
+    .dark-mode .modal-footer {
+        border-top: 1px solid #444; /* Linha de separação no rodapé */
+    }
+
+    .dark-mode .btn-secondary {
+        background-color: #555; /* Cor de fundo do botão secundário */
+        color: #e0e0e0; /* Cor do texto do botão secundário */
+        border: 1px solid #666; /* Borda do botão secundário */
+    }
+
+    .dark-mode .btn-secondary:hover {
+        background-color: #666; /* Cor de fundo ao passar o mouse sobre o botão secundário */
+    }
+
+    .dark-mode .btn-danger {
+        background-color: #e74c3c; /* Cor de fundo do botão de excluir */
+        color: #fff; /* Cor do texto do botão de excluir */
+        border: 1px solid #c0392b; /* Borda do botão de excluir */
+    }
+
+    .dark-mode .btn-danger:hover {
+        background-color: #c0392b; /* Cor de fundo ao passar o mouse sobre o botão de excluir */
+    }
+
+    .dark-mode .close {
+        color: #e0e0e0; /* Cor do ícone de fechar */
+    }
+
+    .dark-mode .close:hover {
+        color: #fff; /* Cor do ícone de fechar ao passar o mouse */
+    }
+
+    /* Transições suaves para o modo escuro */
+    .dark-mode  .modal-content,
+    .btn-secondary,
+    .btn-danger,
+    .close {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
     </style>
 </head>
 <?php include '../../../pages/header_classificacao.php'; ?>

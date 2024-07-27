@@ -674,3 +674,17 @@ CREATE TABLE quartas_de_final_confrontos (
 
 select*from quartas_de_final;
 select*from quartas_de_final_confrontos;
+
+
+
+
+
+-- Desativar a verificação de chave estrangeira
+SET foreign_key_checks = 0;
+
+-- Excluir a tabela
+DROP TABLE times;
+
+-- Reativar a verificação de chave estrangeira
+SET foreign_key_checks = 1;
+-- Cria a tabela de times

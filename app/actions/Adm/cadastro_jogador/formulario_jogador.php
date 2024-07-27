@@ -46,7 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssisss", $nome, $posicao, $numero, $time_id, $imgData, $token);
 
     if ($stmt->execute()) {
-        echo "Jogador adicionado com sucesso!";
+        header('Location: crud_jogador.php');
+        exit;
+        // echo "Jogador adicionado com sucesso!";
     } else {
         echo "Erro ao adicionar jogador: " . $conn->error;
     }
@@ -59,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link rel="stylesheet" href="../../../../public/css/cssheader.css">
     <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 80px;
             border-radius: 30px;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
         }
         label {
             display: block;
@@ -153,49 +154,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <?php include '../../../pages/header_classificacao.php'; ?>
 <header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-            </div>
-            <nav class="nav-icons">
-                <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
-                    <span>Rodadas</span>
-                </div>
-                <div class="nav-item">
-                    <a href=="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
-                    <span>Classificação</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                    <span>editar times</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                    <span>editar finais</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
-                    <span>Editar jogadores</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
-                    <span>Criar grupos</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
-                    <span>Adicionar times</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/adadm.svg" alt="cadastro novos adm"></a>
-                    <span>Adicionar outro adm</span>
-                </div>
-            </nav>
-            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+    <div class="containerr">
+        <div class="logo">
+            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
         </div>
-    </header>
+        <nav class="nav-icons">
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
+                <span>Rodadas</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                <span>Classificação</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                <span>editar times</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
+                <span>editar finais</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
+                <span>Editar jogadores</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                <span>Criar grupos</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                <span>Adicionar times</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/adadm.svg" alt="cadastro novos adm"></a>
+                <span>Adicionar outro adm</span>
+            </div>
+        </nav>
+        <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+    </div>
+</header>
 <div class="fundo-tela">
-    <?php include '../../../pages/header.php' ?>
     <div class="formulario" id="main-content">
         <form id="form-jogador" action="" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario()">
             <label for="nome">Nome do Jogador:</label>

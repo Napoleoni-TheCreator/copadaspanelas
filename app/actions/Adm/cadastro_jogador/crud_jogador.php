@@ -107,6 +107,29 @@ $conn->close();
             max-width: 900px;
             margin: auto;
         }
+        .form-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .form-group .btn-add {
+            margin-right: 10px;
+            font-size: 20px;
+            line-height: 1;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-group .btn-add:hover {
+            background-color: #0056b3;
+        }
+        .form-group select {
+            width: 300px;
+        }
         .player-card {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
@@ -158,57 +181,62 @@ $conn->close();
         function toggleDarkMode() {
             document.body.classList.toggle("dark-mode");
         }
+
+        function redirectToAddPlayer() {
+            window.location.href = 'formulario_jogador.php';
+        }
     </script>
 </head>
 <body>
 <?php include '../../../pages/header_classificacao.php'; ?>
 <header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-            </div>
-            <nav class="nav-icons">
-                <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
-                    <span>Rodadas</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
-                    <span>Classificação</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                    <span>editar times</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                    <span>editar finais</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
-                    <span>Editar jogadores</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
-                    <span>Criar grupos</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
-                    <span>Adicionar times</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/adadm.svg" alt="cadastro novos adm"></a>
-                    <span>Adicionar outro adm</span>
-                </div>
-            </nav>
-            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+    <div class="containerr">
+        <div class="logo">
+            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
         </div>
-    </header>
+        <nav class="nav-icons">
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
+                <span>Rodadas</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                <span>Classificação</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                <span>editar times</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
+                <span>editar finais</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
+                <span>Editar jogadores</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                <span>Criar grupos</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                <span>Adicionar times</span>
+            </div>
+            <div class="nav-item">
+                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/adadm.svg" alt="cadastro novos adm"></a>
+                <span>Adicionar outro adm</span>
+            </div>
+        </nav>
+        <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+    </div>
+</header>
 <h1>EDITAR JOGADORES</h1>
 <div class="container">
-    <form id="playersForm" method="POST">
-        <div class="form-group">
-            <label for="timeSelect">Selecione um Time:</label>
+    <div class="form-group">
+        <button class="btn-add" onclick="redirectToAddPlayer()">+</button>
+        <form id="playersForm" method="POST">
+            <label for="timeSelect" class="mr-2">Selecione um Time:</label>
             <select class="form-control" id="timeSelect" name="time_id" onchange="populatePlayersList(this.value)">
                 <option value="">Escolha um time</option>
                 <?php foreach ($times as $time): ?>
@@ -217,9 +245,9 @@ $conn->close();
                     </option>
                 <?php endforeach; ?>
             </select>
-        </div>
-        <input type="hidden" id="selectedTimeId" name="selected_time_id" value="<?php echo htmlspecialchars($selectedTimeId); ?>">
-    </form>
+        </form>
+    </div>
+    <input type="hidden" id="selectedTimeId" name="selected_time_id" value="<?php echo htmlspecialchars($selectedTimeId); ?>">
     <?php if ($selectedTimeId): ?>
         <?php if (count($players) > 0): ?>
             <?php foreach ($players as $player): ?>
