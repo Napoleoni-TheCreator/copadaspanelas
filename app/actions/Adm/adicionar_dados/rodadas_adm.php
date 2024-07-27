@@ -38,12 +38,12 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
 
         #rodadas-wrapper {
             margin-top: 1%;
-            margin-bottom: 5%;
+            margin-bottom: 1%;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             border: 1px solid black;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
             width: 70%;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
@@ -65,7 +65,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             margin-top: 5px;
             border-radius: 5px;
             padding: 20px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .time_teste img {
             width: 30px;
@@ -105,7 +105,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         }
         .rodada-container:hover {
             background-color: #007bff;
-            box-shadow: 0 0 40px hsl(0, 100%, 50%);
+            box-shadow: 0 0 10px hsl(0, 100%, 50%);
             margin-left: 5%;
         }
         .dark-mode .rodada-container:hover {
@@ -176,7 +176,132 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         .admin-only {
             display: <?php echo $isAdmin ? 'block' : 'none'; ?>;
         }
-        
+        /* Estilo para o botão */
+        .btn-redirect {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        /* Estilo do modal */
+        .modal {
+            display: none; 
+            position: fixed; /* Fixa o modal na tela */
+            z-index: 1; /* Fica acima de outros elementos */
+            left: 0;
+            top: 0;
+            width: 100%; /* Ocupa toda a largura da tela */
+            height: 100%; /* Ocupa toda a altura da tela */
+            overflow: auto; /* Permite rolagem se necessário */
+            background-color: rgba(0, 0, 0, 0.4); /* Fundo semi-transparente */
+        }
+
+        /* Estilo do conteúdo do modal */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* Margem para centralizar verticalmente */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Largura do modal */
+            max-width: 600px; /* Largura máxima para evitar que o modal fique muito largo em telas grandes */
+            border-radius: 5px; /* Bordas arredondadas */
+        }
+
+        /* Estilo do botão de fechar */
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        /* Estilo do botão de fechar quando o mouse está sobre ele */
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilo dos botões dentro do modal */
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Estilo do botão de confirmação */
+        button#confirm-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Estilo do botão de cancelamento */
+        button#cancel-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        /* Ajustes responsivos */
+@media (max-width: 768px) { /* Para iPad */
+    .modal-content {
+        width: 90%; /* Largura do modal maior em telas menores */
+        max-width: 400px; /* Ajusta a largura máxima do modal */
+    }
+    
+    .btn-redirect {
+        padding: 8px 16px;
+        font-size: 0.9rem; /* Tamanho do texto menor em telas menores */
+    }
+
+    .rodada-container {
+        width: 80%;
+        /* margin: 1% auto; */
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) { /* Para iPhone 12 e telas menores */
+    body {
+        font-size: 8px; /* Ajusta o tamanho da fonte */
+    }
+    .no-break{
+        font-size: 12px;
+    }
+    .modal-content {
+        width: 95%;
+        margin-top: 100%;
+        max-width: 200px; /* Ajusta a largura máxima do modal */
+    }
+    .time-name{
+        font-size: 10px;
+    }
+    .time_teste{
+        padding: 0px;
+    }
+    td{
+        padding: 4px;
+    }
+
+    .btn-redirect {
+        padding: 6px 12px;
+        font-size: 0.8rem; /* Tamanho do texto menor */
+    }
+
+    .rodada-container {
+        width: 90%;
+        /* margin: 2% auto; */
+        margin-left: 10px;
+        padding: 8px;
+    }
+    h1{
+        font-size: 12px;
+        margin-top: 20%;
+    }
+}
     </style>
 </head>
 <body>
@@ -225,9 +350,11 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
     </header>
 <h1>RODADAS DAS FASES DE GRUPO</h1>
 <div id="rodadas-wrapper">
+    <div class="nav-arrow left" onclick="scrollLeft()">&lt;</div>
     <div class="table-container">
         <?php exibirRodadas(); ?>
     </div>
+    <div class="nav-arrow right" onclick="scrollRight()">&gt;</div>
 </div>
 
 <!-- Exibe o botão "Classificar Rodadas" apenas para administradores -->
@@ -331,7 +458,44 @@ function exibirRodadas() {
     $conn->close();
 }
 ?>
+<!-- Link que aciona o modal -->
+<a href="/copadaspanelas/app/actions/funcoes/confrontos_rodadas.php" class="btn-redirect" id="confirm-link">Classificar Confrontos Rodadas</a>
+
+<!-- Modal de Confirmação -->
+<div id="confirm-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="close-btn">&times;</span>
+        <p>Tem certeza que deseja classificar os confrontos das rodadas?</p>
+        <button id="confirm-btn">Sim</button>
+        <button id="cancel-btn">Não</button>
+    </div>
+</div>
 <script>
+function scrollLeft() {
+    const container = document.querySelector('.table-container');
+    if (container) {
+        if (container.scrollLeft > 0) {
+            container.scrollBy({
+                left: -200,
+                behavior: 'smooth'
+            });
+        }
+    }
+}
+
+function scrollRight() {
+    const container = document.querySelector('.table-container');
+    if (container) {
+        const maxScrollLeft = container.scrollWidth - container.clientWidth;
+        if (container.scrollLeft < maxScrollLeft) {
+            container.scrollBy({
+                left: 200,
+                behavior: 'smooth'
+            });
+        }
+    }
+}
+
         function toggleDarkMode() {
             document.body.classList.toggle("dark-mode");
         }
@@ -339,6 +503,41 @@ function exibirRodadas() {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    // script.js
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('confirm-modal');
+    var confirmLink = document.getElementById('confirm-link');
+    var closeBtn = document.getElementById('close-btn');
+    var confirmBtn = document.getElementById('confirm-btn');
+    var cancelBtn = document.getElementById('cancel-btn');
+
+    // Mostrar o modal quando o link for clicado
+    confirmLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Previne o comportamento padrão do link
+        modal.style.display = 'block';
+    });
+
+    // Fechar o modal
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    confirmBtn.addEventListener('click', function() {
+        window.location.href = confirmLink.href; // Redirecionar para o URL do link
+    });
+
+    // Fechar o modal se o usuário clicar fora dele
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+
     function classificarRodadas() {
         $.post('/copadaspanelas/app/actions/funcoes/confrontos_rodadas.php', function(response) {
             alert(response);
