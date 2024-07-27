@@ -284,19 +284,20 @@ $conn->close();
                     <span>editar finais</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
                     <span>Editar jogadores</span>
                 </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                    <span>Criar grupos</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                    <span>Adicionar times</span>
+                </div>
             </nav>
-            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
-            <script>
-                function toggleDarkMode() {
-                    var element = document.body;
-                    element.classList.toggle("dark-mode");
-                }
-            </script>
+            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
         </div>
-
     </header>
 <body>
     <div class="container">

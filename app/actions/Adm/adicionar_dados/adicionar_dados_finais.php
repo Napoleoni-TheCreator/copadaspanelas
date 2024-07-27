@@ -392,7 +392,7 @@ iframe {
                     <span>Rodadas</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
                     <span>Classificação</span>
                 </div>
                 <div class="nav-item">
@@ -404,33 +404,19 @@ iframe {
                     <span>editar finais</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
                     <span>Editar jogadores</span>
                 </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                    <span>Criar grupos</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                    <span>Adicionar times</span>
+                </div>
             </nav>
-            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
-            <script>
-                function toggleDarkMode() {
-                    var element = document.body;
-                    element.classList.toggle("dark-mode");
-                    
-                    // Salva a preferência do usuário no localStorage
-                    if (element.classList.contains("dark-mode")) {
-                        localStorage.setItem("darkMode", "enabled");
-                    } else {
-                        localStorage.setItem("darkMode", "disabled");
-                    }
-                }
-
-                // Carrega a preferência do usuário ao iniciar a página
-                window.onload = function() {
-                    if (localStorage.getItem("darkMode") === "enabled") {
-                        document.body.classList.add("dark-mode");
-                    } else {
-                        document.body.classList.remove("dark-mode");
-                    }
-                };
-            </script>
+            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
         </div>
     </header>
     <h1>Atualizar Confrontos para a Fase de <?php echo ucfirst($fase_final); ?></h1>

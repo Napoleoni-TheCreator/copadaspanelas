@@ -125,7 +125,7 @@
                     <span>Finais</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../pages/estatistica.php"><img src="../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <a href="../pages/estatistica.php"><img src="../../public/img/prancheta.svg" alt="Trophy Icon"></a>
                     <span>Estatistica</span>
                 </div>
             </nav>

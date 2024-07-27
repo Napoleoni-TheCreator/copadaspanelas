@@ -317,7 +317,7 @@ $_SESSION['csrf_token'] = $csrf_token;
                     <span>Rodadas</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
                     <span>Classificação</span>
                 </div>
                 <div class="nav-item">
@@ -329,33 +329,19 @@ $_SESSION['csrf_token'] = $csrf_token;
                     <span>editar finais</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/estatistica.png" alt="Trophy Icon"></a>
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
                     <span>Editar jogadores</span>
                 </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                    <span>Criar grupos</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                    <span>Adicionar times</span>
+                </div>
             </nav>
-            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
-            <script>
-                // Função para alternar o modo escuro
-                function toggleDarkMode() {
-                    var body = document.body;
-                    body.classList.toggle('dark-mode');
-
-                    // Armazenar a preferência no localStorage
-                    if (body.classList.contains('dark-mode')) {
-                        localStorage.setItem('theme', 'dark');
-                    } else {
-                        localStorage.setItem('theme', 'light');
-                    }
-                }
-
-                // Aplicar a preferência do modo escuro ao carregar a página
-                document.addEventListener('DOMContentLoaded', function() {
-                    var theme = localStorage.getItem('theme');
-                    if (theme === 'dark') {
-                        document.body.classList.add('dark-mode');
-                    }
-                });
-            </script>
+            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
         </div>
     </header>
 <body>

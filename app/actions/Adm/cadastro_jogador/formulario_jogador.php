@@ -151,6 +151,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
+<?php include '../../../pages/header_classificacao.php'; ?>
+<header class="header">
+        <div class="containerr">
+            <div class="logo">
+                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+            </div>
+            <nav class="nav-icons">
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
+                    <span>Rodadas</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../../actions/cadastro_adm/login.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <span>Classificação</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                    <span>editar times</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
+                    <span>editar finais</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
+                    <span>Editar jogadores</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                    <span>Criar grupos</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                    <span>Adicionar times</span>
+                </div>
+            </nav>
+            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+        </div>
+    </header>
 <div class="fundo-tela">
     <?php include '../../../pages/header.php' ?>
     <div class="formulario" id="main-content">
