@@ -104,9 +104,9 @@ $conn->close();
         .section h1 {
             font-size: 30px;
             font-family: Arial, sans-serif;
-            color: red;
+            /* color: red; */
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px #000000;
+            /* text-shadow: 2px 2px 4px #000000; */
             text-align: center; /* Centraliza apenas o título h1 */
         }
 
