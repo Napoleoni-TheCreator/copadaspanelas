@@ -154,6 +154,12 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             -moz-appearance: textfield !important;
             appearance: none;
         }
+        /* Remove as setas em navegadores baseados em WebKit (Chrome, Safari) */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
         .btn-save {
             padding: 5px 10px;
             background-color: #4CAF50;
