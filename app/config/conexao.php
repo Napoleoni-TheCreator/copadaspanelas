@@ -14,14 +14,14 @@ if ($conn->connect_error) {
 }else{
     // echo"conexao";
 }
-// Configuração segura do cookie de sessão
-session_set_cookie_params([
-    'lifetime' => 0, // Sessão padrão
-    'path' => '/',
-    'domain' => '', // Coloque o domínio se necessário
-    'secure' => true, // Só transmita cookies via HTTPS
-    'httponly' => true, // Não acessível via JavaScript
-    'samesite' => 'Strict' // Protege contra CSRF
-]);
-session_start();
+// // Configuração segura do cookie de sessão
+// session_set_cookie_params([
+//     'lifetime' => 0, // Sessão padrão
+//     'path' => '/',
+//     'domain' => '', // Coloque o domínio se necessário
+//     'secure' => true, // Só transmita cookies via HTTPS
+//     'httponly' => true, // Não acessível via JavaScript
+//     'samesite' => 'Strict' // Protege contra CSRF
+// ]);
+// session_start();
 ?>

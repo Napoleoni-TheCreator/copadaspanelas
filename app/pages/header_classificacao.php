@@ -7,13 +7,12 @@
     <style>
         body {
             margin: 0;
-            /* font-family: Arial, sans-serif; */
             padding-top: 80px; /* Espaçamento para o cabeçalho fixo */
             transition: background-color 0.3s, color 0.3s; /* Transição suave */
         }
 
         .header {
-            background-color: red;
+            background-color: rgb(180, 0, 0);
             padding: 10px 0;
             width: 100%;
             position: fixed; /* Fixado no topo da página */
@@ -99,6 +98,14 @@
         .dark-mode .clube {
             color: #00ff00; /* Verde */
         }
+
+        .theme-toggle {
+            cursor: pointer;
+        }
+
+        .theme-toggle img {
+            height: 30px; /* Ajuste o tamanho conforme necessário */
+        }
     </style>
 </head>
 <body>
@@ -129,7 +136,9 @@
                     <span>Estatistica</span>
                 </div>
             </nav>
-            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+            <div class="theme-toggle">
+                <img id="theme-icon" src="../../public/img/modoclaro.png" alt="Toggle Theme">
+            </div>
         </div>
     </header>
 
@@ -137,23 +146,33 @@
         // Função para alternar o modo escuro
         function toggleDarkMode() {
             var element = document.body;
+            var icon = document.getElementById('theme-icon');
             element.classList.toggle("dark-mode");
 
-            // Salvar a preferência no localStorage
+            // Atualizar o ícone conforme o tema
             if (element.classList.contains("dark-mode")) {
                 localStorage.setItem("theme", "dark");
+                icon.src = '../../public/img/modoescuro.png';
             } else {
                 localStorage.setItem("theme", "light");
+                icon.src = '../../public/img/modoclaro.png';
             }
         }
 
         // Aplicar o tema salvo ao carregar a página
         document.addEventListener("DOMContentLoaded", function() {
             var theme = localStorage.getItem("theme");
+            var icon = document.getElementById('theme-icon');
             if (theme === "dark") {
                 document.body.classList.add("dark-mode");
+                icon.src = '../../public/img/modoescuro.png';
+            } else {
+                icon.src = '../../public/img/modoclaro.png';
             }
         });
+
+        // Adiciona o evento de clique para alternar o tema
+        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
     </script>
 </body>
 </html>

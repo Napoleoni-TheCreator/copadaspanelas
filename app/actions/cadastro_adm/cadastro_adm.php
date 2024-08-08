@@ -67,7 +67,7 @@ $codigo_adm = gerarCodigoAdm($conn);
     <title>Cadastro de Administrador</title>
     <style>
         body {
-            height: 100vh;
+            height: 75vh;
             background-size: cover;
             margin: 0;
             padding: 0;
