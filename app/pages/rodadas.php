@@ -44,10 +44,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             margin-top: 5px;
             border-radius: 5px;
             padding: 20px;
+            background-color: rgb(10,10,9, 0.1);
         }
         .time_teste img {
             width: 80px;
@@ -120,8 +121,7 @@
         .arrow {
             cursor: pointer;
             padding: 10px;
-            font-size: 10px;
-            
+            font-size: 30px;
             user-select: none;
         }
         .arrow.left {
