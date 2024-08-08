@@ -236,7 +236,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             background-color: #28a745;
             color: white;
         }
-        #btn-toggle-mode{
+        .theme-toggle{
             width: 50px;
             height: 50px;
             background-size: cover;
@@ -245,7 +245,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             outline: none;
             background-image: url(../../../../public/img/modoescuro.svg);
         }
-        .dark-mode #btn-toggle-mode{
+        .dark-mode .theme-toggle{
             background-image: url(../../../../public/img/modoclaro.svg);
         }
         /* Estilo do botão de cancelamento */
@@ -353,8 +353,9 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                     <span>Adicionar outro adm</span>
                 </div>
             </nav>
-            <button class="btn-toggle-mode" onclick="toggleDarkMode()"></button>
-        </div>
+            <div class=".theme-toggle">
+                <img id="theme-icon" src="../../public/img/modoescuro.svg" alt="Toggle Theme">
+            </div>        </div>
     </header>
 <h1>RODADAS DAS FASES DE GRUPO</h1>
 <div id="rodadas-wrapper">
