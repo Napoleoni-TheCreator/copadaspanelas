@@ -231,21 +231,23 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             cursor: pointer;
         }
 
-        /* Estilo dos botões dentro do modal */
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
         /* Estilo do botão de confirmação */
         button#confirm-btn {
             background-color: #28a745;
             color: white;
         }
-
+        #btn-toggle-mode{
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            background-image: url(../../../../public/img/modoescuro.svg);
+        }
+        .dark-mode #btn-toggle-mode{
+            background-image: url(../../../../public/img/modoclaro.svg);
+        }
         /* Estilo do botão de cancelamento */
         button#cancel-btn {
             background-color: #dc3545;
@@ -351,7 +353,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                     <span>Adicionar outro adm</span>
                 </div>
             </nav>
-            <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
+            <button class="btn-toggle-mode" onclick="toggleDarkMode()"></button>
         </div>
     </header>
 <h1>RODADAS DAS FASES DE GRUPO</h1>

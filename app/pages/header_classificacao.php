@@ -99,6 +99,18 @@
         .dark-mode .clube {
             color: #00ff00; /* Verde */
         }
+        #btn-toggle-mode{
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            background-image: url(../../public/img/modoescuro.svg);
+        }
+        .dark-mode #btn-toggle-mode{
+            background-image: url(../../../../public/img/modoclaro.svg);
+        }
     </style>
 </head>
 <body>
@@ -129,7 +141,7 @@
                     <span>Estatistica</span>
                 </div>
             </nav>
-            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+            <button onclick="toggleDarkMode()" class="btn-toggle-mode"></button>
         </div>
     </header>
 

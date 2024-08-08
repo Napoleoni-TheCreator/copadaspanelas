@@ -115,7 +115,7 @@
                     <span>Estatistica</span>
                 </div>
             </nav>
-            <button onclick="toggleDarkMode()">Modo Escuro/Claro</button>
+            <button onclick="toggleDarkMode()"><img src="../../../public/img/dark_mode_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="modo escuro/claro"></button>
             <script>
                 function toggleDarkMode() {
                     var element = document.body;
