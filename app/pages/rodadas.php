@@ -2,208 +2,21 @@
 <html>
 <head>
     <title>Rodadas das Fases de Grupo</title>
-    <style>
-        * {
-            /* margin: 0; */
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            margin: 0;
-            background-color: #f0f8ff;
-            transition: background-color 0.3s, color 0.3s;
-            font-family: "Times New Roman", serif;
-        }
-
-        #rodadas-wrapper {
-            display: flex;
-            align-items: center;
-            margin-top: 1%;
-            margin-bottom: 5%;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid black;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
-            width: 60%;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            height: auto;
-        }
-        .dark-mode #rodadas-wrapper {
-            background-color: #1e1e1e;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            color: white; 
-        }
-        .time_teste {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            /* border: 1px solid black; */
-            margin-top: 5px;
-            border-radius: 5px;
-            padding: 20px;
-            background-color: rgb(10,10,9, 0.1);
-        }
-        .time_teste img {
-            width: 80px;
-            height: auto;
-        }
-        .tr_teste {
-            display: flex;
-            justify-content: center;
-        }
-        h1 {
-            font-size: 30px;
-            margin-top: 5%;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .table-container {
-            display: flex;
-            justify-content: space-between;
-            overflow-x: auto;
-            width: 100%;
-        }
-        .rodada-container {
-            width: 100%;
-            background-color: #ffffff;
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 2%;
-        }
-        .dark-mode .rodada-container {
-            background-color: #1e1e1e;
-            
-        }
-        .dark-mode h1 {
-            color: #ffffff;
-        }
-        .dark-mode .time_teste{
-            background-color: #2c2c2c;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-        }
-
-        .rodada-header {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .logo-time {
-            width: 20px;
-            height: 20px;
-            vertical-align: middle;
-        }
-        .time-row {
-            display: flex;
-            align-items: center;
-        }
-        .time-name {
-            font-size: 20px;
-            margin-left: 8px;
-            margin-right: 8px;
-        }
-        .no-break {
-            white-space: nowrap;
-            font-size: 20px;
-            text-align: center; /* Alinha o texto horizontalmente */
-            flex: 1; /* Permite que o elemento ocupe a largura disponível */
-        }
-        .btn-save, .btn-toggle-mode {
-            display: none; /* Remove os botões */
-        }
-        .arrow {
-            cursor: pointer;
-            padding: 10px;
-            font-size: 30px;
-            user-select: none;
-        }
-        .arrow.left {
-            margin-right: 10px;
-        }
-        .arrow.right {
-            margin-left: 10px;
-        }
-        /* Media queries para diferentes tamanhos de tela */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 12px;
-    }
-    .rodada-container{
-        width: 100%;
-    }
-    .rodada-header{
-        font-size: 12px;
-    }
-    .arrow.right{
-        margin-left: 0px;
-        width: 10px;
-    }
-    .arrow.left{
-        margin-right: 0px;
-        width: 10px;
-    }
-    .arrow{
-        padding: 0px;
-    }
-    .time_teste img {
-            width: 10px;
-            height: auto;
-        }
-
-    .time-name {
-        font-size: 0.5em;
-    }
-
-    .no-break {
-        font-size: 0.9em;
-    }
-}
-
-@media (max-width: 480px) {
-    h1, h2{
-        margin-top: 10%;
-        font-size: 12px;
-    }
-
-    .time_teste {
-        flex-direction: center;
-        padding: 5px;
-    }
-    #rodadas-wrapper{
-        width: auto;
-    }
-/* 
-    .logo-time {
-        width: 10px;
-    } */
-
-    .time-name {
-        font-size: 12px
-    }
-
-    .no-break {
-        font-size: 12px;
-    }
-}
-    </style>
+    <link rel="stylesheet" href="../../public/css/adm/rodadas_adm.css">
+    <link rel="stylesheet" href="../../public/css/adm/header_cl.css"> <!-- Incluindo o CSS do cabeçalho -->
 </head>
 <body>
 <?php include 'header_classificacao.php'; ?>
-<h1>RODADAS DAS FASES DE GRUPO</h1>
+<h1 id="dynamic-text">FASES DE GRUPO</h1>
+
 <div id="rodadas-wrapper">
-    <div class="arrow left" onclick="previousRodada()">&#9664;</div>
+    <div class="nav-arrow left" onclick="previousRodada()"><img src="../../public/img/esquerda.svg" alt=""></div>
     <div class="table-container">
         <?php exibirRodadas(); ?>
     </div>
-    <div class="arrow right" onclick="nextRodada()">&#9654;</div>
+    <div class="nav-arrow right" onclick="nextRodada()"><img src="../../public/img/direita.svg" alt=""></div>
 </div>
+
 <?php
 function exibirRodadas() {
     include '../config/conexao.php';
@@ -286,6 +99,7 @@ function exibirRodadas() {
     $conn->close();
 }
 ?>
+
 <script>
     var currentRodadaIndex = 0;
     var rodadaContainers = document.getElementsByClassName('rodada-container');
@@ -317,7 +131,22 @@ function exibirRodadas() {
     function toggleMode() {
         isDarkMode = !isDarkMode;
         document.body.classList.toggle('dark-mode', isDarkMode);
+        var themeIcon = document.getElementById('theme-icon');
+        themeIcon.src = isDarkMode ? '../../public/img/header/modoclaro.svg' : '../../public/img/header/modoescuro.svg';
+    }
+
+    var themeIcon = document.getElementById('theme-icon');
+    themeIcon.addEventListener('click', toggleMode);
+
+    // Aplicar o tema salvo ao carregar a página
+    var theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeIcon.src = '../../public/img/header/modoclaro.svg';
+    } else {
+        themeIcon.src = '../../public/img/header/modoescuro.svg';
     }
 </script>
+
 </body>
 </html>
