@@ -84,94 +84,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Jogadores</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: rgb(218, 215, 215);
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        body.dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-        h1 {
-            font-size: 60px;
-            text-align: center;
-            margin-top: 5%;
-            color: inherit;
-        }
-        .container {
-            max-width: 900px;
-            margin: auto;
-        }
-        .form-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .form-group .btn-add {
-            margin-right: 10px;
-            font-size: 20px;
-            line-height: 1;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .form-group .btn-add:hover {
-            background-color: #0056b3;
-        }
-        .form-group select {
-            width: 300px;
-        }
-        .player-card {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            transition: background-color 0.3s;
-        }
-        body.dark-mode .player-card {
-            background-color: rgba(33, 33, 33, 0.8);
-        }
-        .player-image {
-            width: 100px;
-            height: auto;
-            border-radius: 5px;
-            margin-right: 20px;
-        }
-        .player-details {
-            flex: 1;
-            margin-right: 20px;
-            text-align: left;
-            color: inherit;
-        }
-        .player-actions {
-            margin-top: 10px;
-        }
-        .player-actions button {
-            margin-right: 10px;
-        }
-        .modal-content {
-            border-radius: 10px;
-            background-color: #fefefe;
-            color: #000;
-        }
-        body.dark-mode .modal-content {
-            background-color: #333;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/crud_jogador.css">
     <script>
         function populatePlayersList(timeId) {
             document.getElementById('selectedTimeId').value = timeId;
@@ -192,7 +105,7 @@ $conn->close();
 <header class="header">
     <div class="containerr">
         <div class="logo">
-            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Logo"></a>
         </div>
         <nav class="nav-icons">
             <div class="nav-item">
