@@ -66,6 +66,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             border-radius: 5px;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            scale: 0.8;
         }
         .time_teste img {
             width: 30px;
@@ -77,7 +78,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         }
         h1 {
             font-size: 40px;
-            margin-top: 5%;
+            margin-top: 3%;
             margin-bottom: 10px;
             text-align: center;
             text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
@@ -97,14 +98,14 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             margin-right: 10px;
             margin-left: 5%;
             margin-top: 2%;
-            transition: background-color 0.3s, box-shadow 0.3s;
+            transition: 0.5s ease;
         }
         .dark-mode .rodada-container {
             background-color: #2c2c2c;
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
         }
         .rodada-container:hover {
-            background-color: #007bff;
+            transform: scale(1.02);
             box-shadow: 0 0 10px hsl(0, 100%, 50%);
             margin-left: 5%;
         }
@@ -147,7 +148,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         }
         #input {
             width: 20px;
-            background-color: #66bb6a;
+            background-color: #BABBBF;
         }
         input[type=number] {
             -webkit-appearance: none;
@@ -289,6 +290,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
     }
     .time_teste{
         padding: 0px;
+        margin: none;
     }
     td{
         padding: 4px;
