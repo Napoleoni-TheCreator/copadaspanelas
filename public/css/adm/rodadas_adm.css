@@ -98,12 +98,13 @@ tr {
     display: flex;
     justify-content: space-between;
     overflow-x: auto;
+    min-width: 100%;
 }
 .rodada-container {
     width: 100%;
     background-color: #ffffff;
     margin-bottom: 20px;
-    padding: 10px;
+    /* padding: 10px; */
     border-radius: 5px;
     border: 1px solid black; 
     margin-top: 2%;
@@ -139,10 +140,19 @@ th {
     background-color: #333;
 }
 .rodada-header {
+    display: flex;
     font-size: 1.2em;
     margin-bottom: 10px;
     text-align: center;
-    border: #121212 2px solid;
+    margin: none;
+    padding: none;
+    justify-content: center;
+}
+.rodada-header_h1{
+    border: #007bff 1px solid;
+    width: 200px;
+    padding: none;
+    margin: none;
 }
 .logo-time {
     width: 20px;
@@ -194,9 +204,10 @@ input[type=number]::-webkit-outer-spin-button {
 .btn-redirect {
     text-decoration: none;
     color: white;
-    background-color: #007bff;
+    background-color: #b82020;
     padding: 10px 20px;
     border-radius: 5px;
+    margin-bottom: 5%;
 }
 
 /* Estilo do modal */
@@ -269,6 +280,7 @@ max-width: 400px;
 .btn-redirect {
 padding: 8px 16px;
 font-size: 0.9rem; 
+margin-bottom: 5%;
 }
 
 .rodada-container {
@@ -304,6 +316,7 @@ padding: 4px;
 .btn-redirect {
 padding: 6px 12px;
 font-size: 0.8rem; 
+margin-bottom: 5%;
 }
 
 .rodada-container {
@@ -328,9 +341,12 @@ margin-top: 20%;
     z-index: 10; /* Garante que as setas estejam sobre outros conteúdos */
 }
 .nav-arrow.left {
-    left: -40px; /* Ajuste a posição da seta esquerda */
+    left: -60px; /* Ajuste a posição da seta esquerda */
 }
 
 .nav-arrow.right {
-    right: -40px; /* Ajuste a posição da seta direita */
+    right: -60px; /* Ajuste a posição da seta direita */
+}
+.nav-arrow img {
+    width: 40px;
 }

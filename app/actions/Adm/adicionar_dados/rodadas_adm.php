@@ -89,11 +89,11 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
     });
 </script>
 <div id="rodadas-wrapper">
-    <div class="nav-arrow left" onclick="previousRodada()">&#9664;</div>
+    <div class="nav-arrow left" onclick="previousRodada()"><img src="../../../../public/img/esquerda.svg" alt=""></div>
     <div class="table-container">
         <?php exibirRodadas(); ?>
     </div>
-    <div class="nav-arrow right" onclick="nextRodada()">&#9654;</div>
+    <div class="nav-arrow right" onclick="nextRodada()"><img src="../../../../public/img/direita.svg" alt=""></div>
 </div>
 <?php
 function exibirRodadas() {
@@ -113,7 +113,7 @@ function exibirRodadas() {
     foreach ($rodadas as $rodada) {
         echo '<div class="rodada-container">';
         echo '<div class="rodada-header">';
-        echo '<h2 class="rodada-header">' . $rodada . 'ª RODADA</h2>';
+        echo '<h2 class="rodada-header_h1">' . $rodada . 'ª RODADA</h2>';
         echo '</div>';
         echo '<table>';
 
@@ -178,7 +178,7 @@ function exibirRodadas() {
                     echo '<input type="hidden" name="resultadoB_' . $jogoId . '" value="' . $resultadoB . '">';
                     echo '</tr>';
                 }
-                echo '<tr class="tr_teste"><td colspan="7" style="text-align: center;"><input type="submit" class="btn-save" value="Salvar Todos"></td></tr>';
+                echo '<tr class="tr_teste"><td colspan="7" style="text-align: center;"><input type="submit" class="btn-save" value="Salvar resultados"></td></tr>';
                 echo '</form>';
             } else {
                 echo '<tr>';
