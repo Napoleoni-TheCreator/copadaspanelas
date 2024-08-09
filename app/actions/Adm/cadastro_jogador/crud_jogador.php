@@ -85,29 +85,24 @@ $conn->close();
     <title>CRUD Jogadores</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/crud_jogador.css">
+    <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
     <script>
         function populatePlayersList(timeId) {
             document.getElementById('selectedTimeId').value = timeId;
             document.getElementById('playersForm').submit();
         }
-
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-        }
-
         function redirectToAddPlayer() {
             window.location.href = 'formulario_jogador.php';
         }
     </script>
 </head>
 <body>
-<?php include '../../../pages/header_classificacao.php'; ?>
 <header class="header">
-    <div class="containerr">
-        <div class="logo">
-            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Logo"></a>
-        </div>
-        <nav class="nav-icons">
+        <div class="containerr">
+            <div class="logo">
+                <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+            </div>
+            <nav class="nav-icons">
             <div class="nav-item">
                 <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
                 <span>Rodadas</span>
@@ -125,25 +120,60 @@ $conn->close();
                 <span>editar finais</span>
             </div>
             <div class="nav-item">
-                <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/prancheta.svg" alt="Trophy Icon"></a>
+                <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
                 <span>Editar jogadores</span>
             </div>
             <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/grupo.svg" alt="Trophy Icon"></a>
+                <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/header/grupo.svg" alt="Trophy Icon"></a>
                 <span>Criar grupos</span>
             </div>
             <div class="nav-item">
-                <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/adtime.svg" alt="Trophy Icon"></a>
+                <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/header/adtime.svg" alt="Trophy Icon"></a>
                 <span>Adicionar times</span>
             </div>
             <div class="nav-item">
-                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/adadm.svg" alt="cadastro novos adm"></a>
+                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
                 <span>Adicionar outro adm</span>
             </div>
         </nav>
-        <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
-    </div>
-</header>
+
+            <div class="theme-toggle">
+                <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
+            </div>
+        </div>
+    </header>
+    <script>
+        // Função para alternar o modo escuro
+        function toggleDarkMode() {
+            var element = document.body;
+            var icon = document.getElementById('theme-icon');
+            element.classList.toggle("dark-mode");
+
+            // Atualizar o ícone conforme o tema
+            if (element.classList.contains("dark-mode")) {
+                localStorage.setItem("theme", "dark");
+                icon.src = '../../../../public/img/header/modoclaro.svg';
+            } else {
+                localStorage.setItem("theme", "light");
+                icon.src = '../../../../public/img/header/modoescuro.svg';
+            }
+        }
+
+        // Aplicar o tema salvo ao carregar a página
+        document.addEventListener("DOMContentLoaded", function() {
+            var theme = localStorage.getItem("theme");
+            var icon = document.getElementById('theme-icon');
+            if (theme === "dark") {
+                document.body.classList.add("dark-mode");
+                icon.src = '../../../../public/img/header/modoclaro.svg';
+            } else {
+                icon.src = '../../../../public/img/header/modoescuro.svg';
+            }
+        });
+
+        // Adiciona o evento de clique para alternar o tema
+        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
+    </script>
 <h1>EDITAR JOGADORES</h1>
 <div class="container">
     <div class="form-group">
