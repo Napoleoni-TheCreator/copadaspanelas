@@ -11,7 +11,6 @@ function atualizarFaseExecutada($fase) {
     $stmt->execute();
     $stmt->close();
 }
-
 // Verifica se a fase já foi executada
 function faseJaExecutada($fase) {
     global $conn;
@@ -25,7 +24,6 @@ function faseJaExecutada($fase) {
     $stmt->close();
     return $executado;
 }
-
 // Inicializa as fases fixas na tabela, mas evita duplicatas
 function inicializarFaseExecucao() {
     global $conn;
