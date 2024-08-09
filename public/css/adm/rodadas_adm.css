@@ -1,4 +1,4 @@
-
+/* CSS - styles.css */
 body {
     display: flex;
     flex-direction: column;
@@ -16,7 +16,40 @@ body {
     color: #e0e0e0;
 }
 
+h1 {
+    font-size: 40px;
+    margin-top: 6%;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap; /* Evita que o texto quebre em várias linhas */
+    overflow: hidden; /* Esconde o texto que não cabe na área visível */
+    animation: blink-caret .75s step-end infinite; /* Opcional: animação de cursor */
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: orange; }
+}
+
+        /* Adicione o estilo necessário aqui */
+.hidden {
+    opacity: 0;
+    transition: opacity 0.05s ease-out; /* Reduzido para acelerar */
+}
+
+.reveal {
+    opacity: 1;
+}
+
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
 #rodadas-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 1%;
     margin-bottom: 1%;
     background-color: #ffffff;
@@ -24,9 +57,13 @@ body {
     border-radius: 10px;
     border: 1px solid black;
     box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
-    width: 70%;
+    min-width: 50%;
+    max-width: 90%;
     transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative; /* Necessário para o posicionamento das setas */
 }
+
+
 .dark-mode #rodadas-wrapper {
     background-color: #1e1e1e;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
@@ -56,28 +93,22 @@ tr {
     display: flex;
     justify-content: center;
 }
-h1 {
-    font-size: 40px;
-    margin-top: 3%;
-    margin-bottom: 10px;
-    text-align: center;
-    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
-}
+
 .table-container {
     display: flex;
     justify-content: space-between;
     overflow-x: auto;
 }
 .rodada-container {
-    width: 60%;
+    width: 100%;
     background-color: #ffffff;
     margin-bottom: 20px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid black; 
-    margin-right: 10px;
-    margin-left: 5%;
     margin-top: 2%;
+    margin-left: 10px;
+    margin-right: 10px;
     transition: 0.5s ease;
 }
 .dark-mode .rodada-container {
@@ -86,11 +117,10 @@ h1 {
 }
 .rodada-container:hover {
     transform: scale(1.02);
-    box-shadow: 0 0 10px hsl(0, 100%, 50%);
-    margin-left: 5%;
+    /* box-shadow: 0 0 10px hsl(0, 100%, 50%); */
 }
 .dark-mode .rodada-container:hover {
-    background-color: #0056b3;
+
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 table {
@@ -284,4 +314,22 @@ h1{
 font-size: 12px;
 margin-top: 20%;
 }
+}
+/* Setas de navegação */
+.nav-arrow {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; /* Garante que as setas estejam sobre outros conteúdos */
+}
+.nav-arrow.left {
+    left: -40px; /* Ajuste a posição da seta esquerda */
+}
+
+.nav-arrow.right {
+    right: -40px; /* Ajuste a posição da seta direita */
 }
