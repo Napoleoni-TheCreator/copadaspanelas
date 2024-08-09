@@ -7,8 +7,12 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
+$mensagem_erro = '';
+
 // Função para processar o login
 function processarLogin($conn, $cod_adm, $senha) {
+    global $mensagem_erro;
+    
     $stmt = $conn->prepare("SELECT * FROM admin WHERE cod_adm = ?");
     
     if ($stmt) {
@@ -29,15 +33,15 @@ function processarLogin($conn, $cod_adm, $senha) {
                 header("Location: $redirect_url");
                 exit();
             } else {
-                echo "<p style='color: red;'>Senha incorreta.</p>";
+                $mensagem_erro = "Senha incorreta.";
             }
         } else {
-            echo "<p style='color: red;'>Administrador não encontrado.</p>";
+            $mensagem_erro = "Administrador não encontrado.";
         }
 
         $stmt->close();
     } else {
-        echo "<p style='color: red;'>Erro na preparação da declaração: " . $conn->error . "</p>";
+        $mensagem_erro = "Erro na preparação da declaração: " . $conn->error;
     }
 }
 
@@ -55,66 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link rel="stylesheet" href="../../../../public/css/cssheader.css">
-    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        body {
-            height: 100vh;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: rgb(218, 215, 215);
-        }
-        .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-        form {
-            max-width: 400px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            box-sizing: border-box;
-        }
-        label {
-            display: block;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #c60909;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #a50707;
-        }
-    </style>
+    <link rel="stylesheet" href="../../../public/css/cadastro_adm/login.css">
 </head>
 <body>
     <div class="form-container">
@@ -125,6 +77,9 @@ $conn->close();
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" required>
             <button type="submit">Login</button>
+            <?php if (!empty($mensagem_erro)): ?>
+                <p class="senha_incorreta"><?php echo htmlspecialchars($mensagem_erro); ?></p>
+            <?php endif; ?>
         </form>
     </div>
 </body>

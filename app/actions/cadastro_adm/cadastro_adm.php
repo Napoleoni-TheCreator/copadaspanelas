@@ -65,67 +65,7 @@ $codigo_adm = gerarCodigoAdm($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Administrador</title>
-    <style>
-        body {
-            height: 75vh;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: rgb(218, 215, 215);
-        }
-        .form-container {
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        form {
-            max-width: 400px;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 40px;
-            border: 1px solid black;
-            border-radius: 10px;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 1.8);
-            margin-top: 5%;
-            width: 100%;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 2px solid black;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #c60909;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .message {
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-        .message.error {
-            color: red;
-        }
-        .message.success {
-            color: green;
-        }
-    </style>
+    <link rel="stylesheet" href="../../../public/css/cadastro_adm/cadastro_adm.css">
 </head>
 <body>
 <?php include '../../pages/header_classificacao.php'; ?>
