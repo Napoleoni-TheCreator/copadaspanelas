@@ -378,14 +378,22 @@ function obterNomeTime($id_time) {
 
 <script>
     document.getElementById('classificacao-form').addEventListener('submit', function(event) {
-        // Obtém o valor selecionado
         var selecionado = document.querySelector('input[name="opcao"]:checked');
         
-        // Verifica se a opção "Não" foi selecionada
-        if (selecionado && selecionado.value === 'nao') {
-            // Previne o envio do formulário
-            event.preventDefault();
-            // alert('Você selecionou "Não". O botão Classificar não será executado.');
+        if (selecionado && selecionado.value === 'sim') {
+            // Redireciona para a mesma página após a classificação
+            event.preventDefault(); // Previne o envio padrão
+            var form = this;
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form)
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = window.location.href; 
+                }
+            }).catch(error => {
+                console.error('Erro ao classificar:', error);
+            });
         }
     });
 </script>
