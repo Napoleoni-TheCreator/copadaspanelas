@@ -16,7 +16,6 @@ body {
 }
 form {
     max-width: 400px;
-    background-color: rgba(255, 255, 255, 0.8);
     padding: 40px;
     border: 1px solid black;
     border-radius: 10px;
@@ -41,6 +40,7 @@ input[type="password"] {
 }
 button {
     background-color: #c60909;
+    color: #fff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
