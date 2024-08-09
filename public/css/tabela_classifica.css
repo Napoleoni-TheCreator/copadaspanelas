@@ -55,8 +55,11 @@ h1 {
     /* border: 1px solid #ddd; */
     border-bottom: 1px solid #dddddd59 ;
 }
+.tabela-flex-row:hover{
+    background-color: #dddddd54;
+}
 .tabela-flex-header{
-     background-color: #f2f2f2;
+     background-color: #f2f2f283;
 }
 
 .tabela-flex-header > div, .tabela-flex-row > div {
