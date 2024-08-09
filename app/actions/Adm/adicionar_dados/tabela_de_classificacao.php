@@ -7,88 +7,57 @@
 </head>
 <body>
 <header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-            </div>
-            <nav class="nav-icons">
-            <div class="nav-item">
+    <div class="containerr fade-in">
+        <div class="logo">
+            <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+        </div>
+        <nav class="nav-icons">
+            <div class="nav-item fade-in">
                 <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
                 <span>Rodadas</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item fade-in">
                 <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
                 <span>Classificação</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item fade-in">
                 <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
                 <span>editar times</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item fade-in">
                 <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
                 <span>editar finais</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item fade-in">
                 <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
                 <span>Editar jogadores</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item fade-in">
                 <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/header/grupo.svg" alt="Trophy Icon"></a>
                 <span>Criar grupos</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item fade-in">
                 <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/header/adtime.svg" alt="Trophy Icon"></a>
                 <span>Adicionar times</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item fade-in">
                 <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
                 <span>Adicionar outro adm</span>
             </div>
         </nav>
-
-            <div class="theme-toggle">
-                <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
-            </div>
+        <div class="theme-toggle fade-in">
+            <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
         </div>
-    </header>
-    <script>
-        // Função para alternar o modo escuro
-        function toggleDarkMode() {
-            var element = document.body;
-            var icon = document.getElementById('theme-icon');
-            element.classList.toggle("dark-mode");
+    </div>
+</header>
 
-            // Atualizar o ícone conforme o tema
-            if (element.classList.contains("dark-mode")) {
-                localStorage.setItem("theme", "dark");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
-            } else {
-                localStorage.setItem("theme", "light");
-                icon.src = '../../../../public/img/header/modoescuro.svg';
-            }
-        }
-
-        // Aplicar o tema salvo ao carregar a página
-        document.addEventListener("DOMContentLoaded", function() {
-            var theme = localStorage.getItem("theme");
-            var icon = document.getElementById('theme-icon');
-            if (theme === "dark") {
-                document.body.classList.add("dark-mode");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
-            } else {
-                icon.src = '../../../../public/img/header/modoescuro.svg';
-            }
-        });
-
-        // Adiciona o evento de clique para alternar o tema
-        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
-    </script>
-<h1>FASE DE GRUPOS</h1>
-<div id="tabela-wrapper">
+<h1 class="fade-in">FASE DE GRUPOS</h1>
+<div id="carregamento" class="fade-in">Carregando...</div>
+<div id="tabela-wrapper" class="fade-in">
     <h4>Tabela de Classificação</h4>
     <?php mostrarGrupos(); ?>
 
-    <div id="legenda-simbolos">
+    <div id="legenda-simbolos" class="fade-in">
         <div>
             <div class="simbolo" style="background-color: green;"></div>
             <span class="descricao">Vitória</span>
@@ -120,7 +89,7 @@ function mostrarGrupos() {
             $grupoId = $rowGrupos['id'];
             $grupoNome = $rowGrupos['nome'];
 
-            echo '<div class="grupo-container">';
+            echo '<div class="grupo-container fade-in">';
             echo '<div class="grupo-header">' . $grupoNome . '</div>';
             echo '<div class="tabela-flex">';
             echo '<div class="tabela-flex-header">';
@@ -156,7 +125,7 @@ function mostrarGrupos() {
             if ($resultTimes->num_rows > 0) {
                 $posicao = 1;
                 while ($rowTimes = $resultTimes->fetch_assoc()) {
-                    echo '<div class="tabela-flex-row">';
+                    echo '<div class="tabela-flex-row fade-in">';
                     echo '<div class="time-info">';
                     echo '<span class="posicao_num">' . $posicao . '</span>';
                     if (!empty($rowTimes['logo'])) {
@@ -182,7 +151,7 @@ function mostrarGrupos() {
                     $posicao++;
                 }
             } else {
-                echo '<div class="tabela-flex-row"><div colspan="11">Nenhum time encontrado para este grupo.</div></div>';
+                echo '<div class="tabela-flex-row fade-in"><div colspan="11">Nenhum time encontrado para este grupo.</div></div>';
             }
 
             echo '</div>';
@@ -239,11 +208,11 @@ function gerarUltimosJogos($timeId) {
         if ($resultado == 'V') {
             $output .= '<div class="inf"></div>';
         } elseif ($resultado == 'D') {
-            $output .= '<div class="inf2" ></div>';
+            $output .= '<div class="inf2"></div>';
         } elseif ($resultado == 'E') {
-            $output .= '<div class="inf3" ></div>';
+            $output .= '<div class="inf3"></div>';
         } else {
-            $output .= '<div class="inf4" ></div>';
+            $output .= '<div class="inf4"></div>';
         }   
     }
 
@@ -253,7 +222,40 @@ function gerarUltimosJogos($timeId) {
 <script>
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
+        var icon = document.getElementById('theme-icon');
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            icon.src = '../../../../public/img/header/modoclaro.svg';
+        } else {
+            localStorage.setItem('theme', 'light');
+            icon.src = '../../../../public/img/header/modoescuro.svg';
+        }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var theme = localStorage.getItem('theme');
+        var icon = document.getElementById('theme-icon');
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+            icon.src = '../../../../public/img/header/modoclaro.svg';
+        } else {
+            icon.src = '../../../../public/img/header/modoescuro.svg';
+        }
+
+        // Aplica o efeito de desvanecimento nas divs uma a uma
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        fadeInElements.forEach((element, index) => {
+            setTimeout(() => {
+                element.classList.add('visible');
+            }, index * 50); // Tempo de delay entre os elementos
+        });
+
+        setTimeout(() => {
+            document.getElementById('carregamento').style.display = 'none';
+        }, fadeInElements.length * 20); // Tempo total para ocultar a mensagem de carregamento
+    });
+
+    document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
 </script>
 </body>
 </html>
