@@ -66,15 +66,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Jogadores</title>
     <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/formulario_jogador.css">
+    <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
 </head>
 <body>
-<?php include '../../../pages/header_classificacao.php'; ?>
 <header class="header">
-    <div class="containerr">
-        <div class="logo">
-            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-        </div>
-        <nav class="nav-icons">
+        <div class="containerr">
+            <div class="logo">
+                <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+            </div>
+            <nav class="nav-icons">
             <div class="nav-item">
                 <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
                 <span>Rodadas</span>
@@ -108,9 +108,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span>Adicionar outro adm</span>
             </div>
         </nav>
-        <button class="btn-toggle-mode" onclick="toggleDarkMode()">Modo Escuro</button>
-    </div>
-</header>
+
+            <div class="theme-toggle">
+                <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
+            </div>
+        </div>
+    </header>
+    <script>
+        // Função para alternar o modo escuro
+        function toggleDarkMode() {
+            var element = document.body;
+            var icon = document.getElementById('theme-icon');
+            element.classList.toggle("dark-mode");
+
+            // Atualizar o ícone conforme o tema
+            if (element.classList.contains("dark-mode")) {
+                localStorage.setItem("theme", "dark");
+                icon.src = '../../../../public/img/header/modoclaro.svg';
+            } else {
+                localStorage.setItem("theme", "light");
+                icon.src = '../../../../public/img/header/modoescuro.svg';
+            }
+        }
+
+        // Aplicar o tema salvo ao carregar a página
+        document.addEventListener("DOMContentLoaded", function() {
+            var theme = localStorage.getItem("theme");
+            var icon = document.getElementById('theme-icon');
+            if (theme === "dark") {
+                document.body.classList.add("dark-mode");
+                icon.src = '../../../../public/img/header/modoclaro.svg';
+            } else {
+                icon.src = '../../../../public/img/header/modoescuro.svg';
+            }
+        });
+
+        // Adiciona o evento de clique para alternar o tema
+        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
+    </script>
 <div class="fundo-tela">
     <div class="formulario" id="main-content">
         <form id="form-jogador" action="" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario()">
