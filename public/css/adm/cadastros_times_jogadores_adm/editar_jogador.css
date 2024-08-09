@@ -1,7 +1,5 @@
-
 body {
-    font-family: 'Arial', sans-serif;
-
+    /* background-color:red; */
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,63 +7,104 @@ body {
     align-items: center;
     height: 100%;
     /* color: #fff; */
+    /* font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal; */
+    /* background-color: rgb(241, 110, 110); */
+    background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
+
 }
 .container {
-    padding: 20px;
-    width: 100%;
-    max-width: 80%;
+    width: 50%;
+    max-width: 50%;
+    background-color: rgba(240, 248, 255, 0.301);
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
 }
+
 .form-container {
-    background-color: rgb(218, 215, 215);
-    border-radius: 15px;
-    box-shadow: 0 8px 62px 0 rgba(31, 38, 135, 1.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 3px solid rgba(31, 38, 135, 0.37);
-    padding: 40px;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    padding: 20px;
+    width: 80%;
+    display: inline-block;
 }
 .form-container h2 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 50px;
+    margin: none;
+    font-size: 40px;
+    font-family: 'Roboto', Courier, monospace;
+    white-space: nowrap; /* Prevent line breaks */
+    overflow: hidden;    
+    position: relative;  
+    width: 0; 
+    animation: typing 4s steps(40, end) 1s forwards;
 }
+
+.form-container h2::after {
+    content: '|'; 
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: red;
+    animation: blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { color: transparent; }
+    50% { color: red; }
+}
+
+
 form {
     display: flex;
     flex-direction: column;
 }
 label {
-    font-size: 45px;
+    font-size: 20px;
     margin-bottom: 5px;
+    margin-left: 14px;
+    font-weight: bold;
 }
 input[type="text"], input[type="number"], select {
-    padding: 10px;
-    border: 3px solid rgba(31, 38, 135, 0.37);
-    border-radius: 5px;
+    padding: 20px;
+    border-radius: 40px;
     margin-bottom: 15px;
-    font-size: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    /* color: #fff; */
+    font-size: 18px;
+    border: none;
+    color: rgba(15, 10, 2, 0.466);
+    background-color:rgba(255, 255, 255, 0.459);
 }
 input[type="file"] {
     padding: 10px;
     margin-bottom: 15px;
-    background: rgba(255, 255, 255, 0.2);
-    /* color: #fff; */
     border: none;
     border-radius: 5px;
 }
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Ajuste a margem superior se necessário */
+}
+.button-container input[type="submit"],
+.button-container .btn-cancel {
+    margin: 0 10px; /* Espaçamento entre os botões */
+}
 input[type="submit"] {
     padding: 15px;
-    border: 3px solid rgba(31, 38, 135, 0.37);
     background-color: #28a745;
-    /* color: white; */
+    color: white;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
-    margin-top: 50px;
-    font-size: 30px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
 }
 input[type="submit"]:hover {
@@ -75,13 +114,11 @@ input[type="submit"]:hover {
     padding: 15px;
     background-color: #dc3545;
     color: white;
-    border: 3px solid rgba(31, 38, 135, 0.37);
     text-align: center;
     text-decoration: none;
     font-weight: bold;
     border-radius: 5px;
-    font-size: 30px;
-    margin-top: 10px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
 }
 .btn-cancel:hover {
@@ -93,4 +130,16 @@ input[type="submit"]:hover {
     display: block;
     margin-top: 10px;
     border-radius: 5px;
+}
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, e Opera */
+    margin: 0;
+}
+.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out; /* Duração mais curta */
 }

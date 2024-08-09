@@ -132,12 +132,12 @@
                     <span>Finais</span>
                 </div>
                 <div class="nav-item">
-                    <a href="../pages/estatistica.php"><img src="../../public/img/prancheta.svg" alt="Trophy Icon"></a>
+                    <a href="../pages/estatistica.php"><img src="../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
                     <span>Estatistica</span>
                 </div>
             </nav>
             <div class="theme-toggle">
-                <img id="theme-icon" src="../../public/img/modoescuro.svg" alt="Toggle Theme">
+                <img id="theme-icon" src="../../public/img/header/modoescuro.svg" alt="Toggle Theme">
             </div>
         </div>
     </header>
@@ -152,10 +152,10 @@
             // Atualizar o ícone conforme o tema
             if (element.classList.contains("dark-mode")) {
                 localStorage.setItem("theme", "dark");
-                icon.src = '../../public/img/modoclaro.svg';
+                icon.src = '../../public/img/header/modoclaro.svg';
             } else {
                 localStorage.setItem("theme", "light");
-                icon.src = '../../public/img/modoescuro.svg';
+                icon.src = '../../public/img/header/modoescuro.svg';
             }
         }
 
@@ -165,9 +165,9 @@
             var icon = document.getElementById('theme-icon');
             if (theme === "dark") {
                 document.body.classList.add("dark-mode");
-                icon.src = '../../public/img/modoclaro.svg';
+                icon.src = '../../public/img/header/modoclaro.svg';
             } else {
-                icon.src = '../../public/img/modoescuro.svg';
+                icon.src = '../../public/img/header/modoescuro.svg';
             }
         });
 
