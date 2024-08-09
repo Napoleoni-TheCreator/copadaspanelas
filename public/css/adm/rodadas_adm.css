@@ -142,6 +142,7 @@ th {
     font-size: 1.2em;
     margin-bottom: 10px;
     text-align: center;
+    border: #121212 2px solid;
 }
 .logo-time {
     width: 20px;

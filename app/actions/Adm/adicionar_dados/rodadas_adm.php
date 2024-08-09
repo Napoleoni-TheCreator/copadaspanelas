@@ -112,7 +112,9 @@ function exibirRodadas() {
 
     foreach ($rodadas as $rodada) {
         echo '<div class="rodada-container">';
+        echo '<div class="rodada-header">';
         echo '<h2 class="rodada-header">' . $rodada . 'ª RODADA</h2>';
+        echo '</div>';
         echo '<table>';
 
         $sqlGrupos = "SELECT DISTINCT grupo_id, nome AS grupo_nome FROM jogos_fase_grupos 
