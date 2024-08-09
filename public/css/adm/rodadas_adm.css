@@ -6,7 +6,7 @@ body {
     align-items: center;
     height: 100%;
     margin: 0;
-    background-color: #f0f8ff;
+    background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
     color: #333;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -52,7 +52,7 @@ h1 {
     justify-content: center;
     margin-top: 1%;
     margin-bottom: 1%;
-    background-color: #ffffff;
+    background-color: #ffffff8e;
     padding: 20px;
     border-radius: 10px;
     border: 1px solid black;
@@ -102,7 +102,7 @@ tr {
 }
 .rodada-container {
     width: 100%;
-    background-color: #ffffff;
+    background-color: #ffffff25;
     margin-bottom: 20px;
     /* padding: 10px; */
     border-radius: 5px;

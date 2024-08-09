@@ -14,7 +14,8 @@
             align-items: center;
             flex-direction: column;
             height: 100%;
-            background-color: #f0f8ff;
+            /* background-color: #f0f8ff; */
+            background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
         }
 
         #tabela-wrapper {
