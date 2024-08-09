@@ -11,6 +11,17 @@ body {
     transition: background-color 0.3s, color 0.3s;
     height: 100%;
 }
+/* Remove setinhas dos inputs de tipo number no Chrome, Safari e Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove setinhas dos inputs de tipo number no Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 
 body.dark-mode {
     background-color: #121212;
