@@ -260,6 +260,6 @@ $conn->close();
         modal.find('#deleteForm').attr('action', '?delete_token=' + encodeURIComponent(token));
     });
 </script>
-<?php include '../../../pages/footer.php' ?>
+    <?php include '../../../pages/footer.php' ?>
 </body>
 </html>
