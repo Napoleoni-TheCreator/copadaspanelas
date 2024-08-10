@@ -7,6 +7,9 @@ body {
     background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
     user-select: none;
 }
+h2{
+    margin-left: 20px;
+}
 .formulario {
     margin-bottom: 5%;
     display: flex;
@@ -33,9 +36,6 @@ form {
     background-color: rgba(240, 248, 255, 0.301);
     padding: 60px;
     border-radius: 10px;
-}
-.form h2{
-    font-size: 40px;
 }
 label {
     font-size: 20px;
