@@ -1,6 +1,18 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+footer {
+    background-color: #f1f1f1; /* ou a cor que você preferir */
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+}
 
 body {
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -25,7 +37,7 @@ body {
 form {
     max-width: 400px;
     margin-top: 5%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.336);
     padding: 80px;
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);

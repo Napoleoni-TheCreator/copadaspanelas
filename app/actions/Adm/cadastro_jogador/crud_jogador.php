@@ -84,6 +84,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Jogadores</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
     <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/crud_jogador.css">
     <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
     <script>
@@ -259,5 +260,6 @@ $conn->close();
         modal.find('#deleteForm').attr('action', '?delete_token=' + encodeURIComponent(token));
     });
 </script>
+<?php include '../../../pages/footer.php' ?>
 </body>
 </html>
