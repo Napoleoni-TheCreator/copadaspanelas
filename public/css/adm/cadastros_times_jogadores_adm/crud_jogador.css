@@ -47,7 +47,7 @@ h1 {
     width: 300px;
 }
 .player-card {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.322);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -58,7 +58,7 @@ h1 {
     transition: background-color 0.3s;
 }
 body.dark-mode .player-card {
-    background-color: rgba(33, 33, 33, 0.8);
+    background-color: rgba(255, 255, 255, 0.322);
 }
 .player-image {
     width: 100px;
