@@ -1,7 +1,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f9;
+    background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
     color: #333;
     margin: 0;
     padding: 0;
@@ -29,13 +29,9 @@ body.dark-mode {
 }
 
 h1 {
-    font-size: 40px;
-    margin-top: 6%;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: blink-caret .75s step-end infinite;
+    font-size: 2em;
+    color: #444;
+    margin-top: 5%;
 }
 
 body.dark-mode h1 {
