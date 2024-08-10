@@ -209,9 +209,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="fundo-tela">
     <div class="formulario" id="main-content">
         <form id="form-jogador" action="" method="post" enctype="multipart/form-data">
-            <label for="nome">Nome do Jogador:</label>
+            <h2 id="editable">Editar Jogador</h2>
+
+            <label for="nome">Nome do Jogador</label>
             <input type="text" id="nome" name="nome" required maxlength="90">
-            <label for="posicao">Posição:</label>
+            <label for="posicao">Posição</label>
             <select id="posicao" name="posicao" required>
                 <option value="">Selecione a posição</option>
                 <option value="Fixo">Fixo</option>
@@ -219,9 +221,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="Ala Esquerda">Ala Esquerda</option>
                 <option value="Pivô">Pivô</option>
             </select>
-            <label for="numero">Número:</label>
+            <label for="numero">Número</label>
             <input type="text" id="numero" name="numero" required maxlength="3">
-            <label for="time">Time:</label>
+            <label for="time">Time</label>
             <select id="time" name="time" required>
                 <option value="">Selecione o time</option>
                 <?php
@@ -234,7 +236,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $conn->close();
                 ?>
             </select>
-            <label for="imagem">Imagem do Jogador:</label>
+            <label for="imagem">Imagem do Jogador</label>
             <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()" required>
             <img id="imagem-preview" src="#" alt="Imagem do Jogador">
             <div id="message-container">
