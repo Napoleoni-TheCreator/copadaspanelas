@@ -36,12 +36,12 @@ h3 {
 /* Container principal */
 .container {
     margin-top: 3%;
-    background-color: rgb(218, 215, 215);
+    background-color: rgba(218, 215, 215, 0.185);
     padding: 1.25rem;
     border: 3px solid rgba(31, 38, 135, 0.37);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
-    width: 100%;
+    width: auto;
     overflow-x: auto;
     text-align: center;
     margin-bottom: 10%;
