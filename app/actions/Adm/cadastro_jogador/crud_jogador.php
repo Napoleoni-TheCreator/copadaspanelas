@@ -1,6 +1,17 @@
 <?php
 include '../../../config/conexao.php';
 session_start();
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: ./../../cadastro_adm/login.php");
+    exit();
+}
+
+include("../../cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 
 // Função para gerar token CSRF
 function gerarTokenCSRF() {
