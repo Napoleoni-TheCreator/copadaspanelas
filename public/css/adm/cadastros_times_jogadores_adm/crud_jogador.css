@@ -4,6 +4,7 @@ body {
     background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
     text-align: center;
     margin: 0;
+    height: 100%;
     padding: 0;
     transition: background-color 0.3s, color 0.3s;
     user-select: none;

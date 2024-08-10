@@ -7,7 +7,7 @@ body {
 }
 
 .header {
-    background-color: rgb(180, 0, 0);
+    /* background-color: rgb(180, 0, 0); */
     padding: 10px 0;
     width: 100%;
     position: fixed; /* Fixado no topo da página */
