@@ -26,12 +26,6 @@ h1 {
     font-weight: none !important;
     line-height: none !important;
 }
-/* Estilos padrão do Bootstrap, apenas se necessário para sobrescrever */
-.h1, .h2, .h3, .h4, .h5, .h6 {
-    margin-bottom: none !important;
-    font-weight: none !important;
-    line-height: none !important;
-  }
 /* Títulos secundários */
 h3 {
     font-size: 1.5rem;
