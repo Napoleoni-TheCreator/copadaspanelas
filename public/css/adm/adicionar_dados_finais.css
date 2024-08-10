@@ -10,6 +10,7 @@ body {
     align-items: center;
     transition: background-color 0.3s, color 0.3s;
     height: 100%;
+    user-select: none;
 }
 /* Remove setinhas dos inputs de tipo number no Chrome, Safari e Opera */
 input[type="number"]::-webkit-inner-spin-button,
@@ -69,7 +70,7 @@ th, td {
     background-color: rgba(240, 248, 255, 0.301);
 }
 tr :hover{
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.13);
 }
 body.dark-mode th, body.dark-mode td {
     background-color: #333;

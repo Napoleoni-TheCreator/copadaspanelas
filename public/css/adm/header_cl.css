@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding-top: 80px; /* Espaçamento para o cabeçalho fixo */
     transition: background-color 0.3s, color 0.3s; /* Transição suave */
+    user-select: none;
 }
 
 .header {

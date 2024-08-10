@@ -8,6 +8,7 @@ body {
     align-items: center;
     min-height: 100vh; /* Garante que o corpo ocupe toda a altura da viewport */
     overflow-y: auto; /* Habilita o scroll vertical quando necessário */
+    user-select: none;
 }
 
 

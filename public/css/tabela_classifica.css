@@ -12,6 +12,7 @@ body {
     height: 100%;
     /* background-color: #f0f8ff; */
     background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
+    user-select: none;
 }
 
 #tabela-wrapper {

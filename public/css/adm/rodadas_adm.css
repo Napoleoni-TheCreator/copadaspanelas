@@ -9,6 +9,7 @@ body {
     background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
     color: #333;
     transition: background-color 0.3s, color 0.3s;
+    user-select: none;
 }
 
 .dark-mode {
