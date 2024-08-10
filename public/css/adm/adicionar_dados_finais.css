@@ -68,7 +68,9 @@ th, td {
     border-bottom: 1px solid #ddd;
     background-color: rgba(240, 248, 255, 0.301);
 }
-
+tr :hover{
+    background-color: grey;
+}
 body.dark-mode th, body.dark-mode td {
     background-color: #333;
     border-bottom: 1px solid #555;
