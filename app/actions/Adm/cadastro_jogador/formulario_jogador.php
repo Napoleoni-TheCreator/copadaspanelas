@@ -99,6 +99,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Cadastro de Jogadores</title>
     <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/formulario_jogador.css">
     <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
+    <style>
+        .error-message {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .error-message.visible {
+            display: block;
+        }
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .success-message.visible {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <header class="header">
@@ -182,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="formulario" id="main-content">
         <form id="form-jogador" action="" method="post" enctype="multipart/form-data">
             <label for="nome">Nome do Jogador:</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome" name="nome" required maxlength="90">
             <label for="posicao">Posição:</label>
             <select id="posicao" name="posicao" required>
                 <option value="">Selecione a posição</option>
@@ -192,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="Pivô">Pivô</option>
             </select>
             <label for="numero">Número:</label>
-            <input type="text" id="numero" name="numero" required>
+            <input type="text" id="numero" name="numero" required maxlength="3">
             <label for="time">Time:</label>
             <select id="time" name="time" required>
                 <option value="">Selecione o time</option>
