@@ -165,8 +165,22 @@ th {
 }
 .time-name {
     font-size: 20px;
+    display: flex;
+    text-align: left; 
     margin-left: 8px;
+    min-width: 200px;
+    max-width: 200px;
 }
+.time-name_b {
+    font-size: 20px;
+    display: flex;
+    direction: rtl; 
+    text-align: right; 
+    margin-right: 8px;
+    min-width: 200px;
+    max-width: 200px;
+}
+
 #input {
     width: 20px;
     background-color: #BABBBF;
@@ -198,8 +212,11 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #333;
 }
 .no-break {
+    display: flex;
     white-space: nowrap;
     font-size: 20px;
+    justify-content: center;
+    align-items: center;
 }
 .btn-redirect {
     text-decoration: none;

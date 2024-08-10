@@ -58,17 +58,6 @@ function exibirRodadas() {
                         $golsA = $rowConfronto['gols_marcados_timeA'];
                         $golsB = $rowConfronto['gols_marcados_timeB'];
 
-                        // Determina o resultado do jogo
-                        if ($golsA > $golsB) {
-                            $resultadoA = 'V';
-                            $resultadoB = 'D';
-                        } elseif ($golsA < $golsB) {
-                            $resultadoA = 'D';
-                            $resultadoB = 'V';
-                        } else {
-                            $resultadoA = 'E';
-                            $resultadoB = 'E';
-                        }
                         echo '<div class="time_teste">';
                         echo '<div class="time-row">';
                         if ($logoA) {
@@ -78,7 +67,7 @@ function exibirRodadas() {
                         echo '</div>';
                         echo '<div class="no-break">' . $golsA . ' X ' . $golsB . '</div>';
                         echo '<div class="time-row">';
-                        echo '<span class="time-name">' . $timeB_nome . '</span>';
+                        echo '<span class="time-name_b">' . $timeB_nome . '</span>';
                         if ($logoB) {
                             echo '<img src="' . $logoB . '" class="logo-time">';
                         }
