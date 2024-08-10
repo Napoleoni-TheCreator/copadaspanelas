@@ -6,14 +6,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    /* color: #fff; */
-    /* font-family: "Roboto", sans-serif;
-    font-weight: 300;
-    font-style: normal; */
-    /* background-color: rgb(241, 110, 110); */
     background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
     user-select: none;
-
 }
 .container {
     width: 50%;
