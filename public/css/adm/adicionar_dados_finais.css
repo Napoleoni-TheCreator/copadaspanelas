@@ -32,6 +32,7 @@ h1 {
     font-size: 2em;
     color: #444;
     margin-top: 5%;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 body.dark-mode h1 {
@@ -39,7 +40,7 @@ body.dark-mode h1 {
 }
 
 .form-container {
-    background-color: #fff;
+    background-color: rgba(240, 248, 255, 0.301);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -65,7 +66,7 @@ th, td {
     padding: 12px 15px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-    background-color: #fafafa;
+    background-color: rgba(240, 248, 255, 0.301);
 }
 
 body.dark-mode th, body.dark-mode td {

@@ -289,7 +289,29 @@ function obterNomeTime($id_time) {
         // Adiciona o evento de clique para alternar o tema
         document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
     </script>
-    <h1>Atualizar Confrontos para a Fase de <?php echo ucfirst($fase_final); ?></h1>
+ <h1 id="dynamic-text">Atualizar Confrontos para a Fase de <?php echo ucfirst($fase_final); ?></h1>
+<script>
+    // JavaScript - script.js
+    document.addEventListener('DOMContentLoaded', () => {
+        // Efeito de digitação para o título
+        const textElement = document.getElementById('dynamic-text');
+        const text = textElement.textContent;
+        textElement.textContent = '';
+
+        let index = 0;
+        const typingSpeed = 20; // Aumente ou diminua a velocidade da digitação
+
+        function typeLetter() {
+            if (index < text.length) {
+                textElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeLetter, typingSpeed);
+            }
+        }
+
+        typeLetter();
+    });
+</script>
 
     <div class="form-container">
         <!-- Exibe a mensagem de erro ou sucesso -->
