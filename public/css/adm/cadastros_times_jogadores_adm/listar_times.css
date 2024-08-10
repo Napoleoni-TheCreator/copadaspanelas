@@ -15,13 +15,13 @@ body {
 
 /* Títulos principais */
 h1 {
-    font-size: 40px;
-    margin-top: 6%;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+    font-size: 40px!important;
+    margin-top: 6% !important;
+    text-align: center!important;
+    font-family: 'Courier New', Courier, monospace !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite !important;
 }
 
 /* Títulos secundários */
@@ -70,6 +70,7 @@ h3 {
     box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
     transform: scale(1.1);
     margin: 1rem;
+    margin-bottom: 2rem;
 }
 
 /* Imagem do time */
