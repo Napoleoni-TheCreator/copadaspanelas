@@ -78,31 +78,13 @@ $_SESSION['csrf_token'] = $csrf_token;
     <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/listar_times.css">
     <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
     <style>
+        /* Efeito de fade-in */
         .fade-in {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            opacity: 0 !important;
+            transition: opacity 1s ease-in-out !important;
         }
         .fade-in.show {
-            opacity: 1;
-        }
-        /* CSS - styles.css */
-
-        /* Estilos para o efeito de digitação */
-        #text-center {
-            font-family: 'Courier New', Courier, monospace; /* Para um efeito mais realista */
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 2s steps(30, end), blink-caret .75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from { width: 90%; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: orange; }
+            opacity: 1 !important;
         }
     </style>
 </head>

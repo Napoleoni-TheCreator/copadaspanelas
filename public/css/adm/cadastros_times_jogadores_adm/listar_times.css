@@ -1,26 +1,30 @@
-
+/* Reset e box-sizing */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Estilos gerais do corpo */
 body {
-    background-color: rgb(218, 215, 215);
+    background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
     margin: 0;
     padding: 0;
     transition: background-color 0.3s, color 0.3s; /* Transição suave */
 }
 
+/* Títulos principais */
 h1 {
-    font-size: 4rem;
-    margin-top: 5%;
-    margin-bottom: 1rem;
+    font-size: 40px;
+    margin-top: 6%;
     text-align: center;
-    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
     font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
 }
 
+/* Títulos secundários */
 h3 {
     font-size: 1.5rem;
     font-weight: bold;
@@ -29,6 +33,7 @@ h3 {
     font-family: 'Courier New', Courier, monospace;
 }
 
+/* Container principal */
 .container {
     margin-top: 3%;
     background-color: rgb(218, 215, 215);
@@ -42,6 +47,7 @@ h3 {
     margin-bottom: 10%;
 }
 
+/* Cartão de time */
 .time-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color: rgba(255, 255, 255, 0.8);
@@ -58,6 +64,7 @@ h3 {
     text-align: center;
 }
 
+/* Efeito hover no cartão de time */
 .time-card:hover {
     animation: borderColorChange 2s infinite;
     box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
@@ -65,6 +72,7 @@ h3 {
     margin: 1rem;
 }
 
+/* Imagem do time */
 .time-image {
     width: 80px;
     height: auto;
@@ -72,10 +80,12 @@ h3 {
     margin-bottom: 1rem;
 }
 
+/* Detalhes do time */
 .time-details {
     margin-bottom: 1.25rem;
 }
 
+/* Ações do time */
 .time-actions {
     display: flex;
     gap: 0.625rem;
@@ -92,6 +102,7 @@ h3 {
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* Botão de excluir */
 .time-actions a.delete {
     background-color: #dc3545;
 }
@@ -101,6 +112,7 @@ h3 {
     color: #fff;
 }
 
+/* Botão de editar */
 .time-actions a.edit {
     background-color: #007bff;
 }
@@ -110,10 +122,12 @@ h3 {
     color: #fff;
 }
 
+/* Efeito ao clicar no link */
 .time-actions a:active {
     transform: scale(0.98);
 }
 
+/* Grid de colunas */
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -130,6 +144,7 @@ h3 {
     margin-bottom: 1.25rem;
 }
 
+/* Estilos para dispositivos móveis */
 @media (max-width: 767px) {
     h1 {
         font-size: 2.2rem;
@@ -162,7 +177,7 @@ h3 {
     }
 }
 
-/* Consultas de mídia para telas com resolução de 800x1280 */
+/* Estilos para telas menores com resolução de 800x1280 */
 @media (max-width: 800px) and (orientation: portrait) {
     h1 {
         font-size: 2rem;
@@ -200,8 +215,9 @@ h3 {
     background-color: #121212;
     color: #e0e0e0;
 }
-.dark-mode h3{
-    color: white;
+
+.dark-mode h3 {
+    color: #fff;
 }
 
 .dark-mode .container {
@@ -226,59 +242,77 @@ h3 {
 .dark-mode .time-actions a.edit {
     background-color: #0056b3;
 }
+
 .dark-mode .modal-content {
-background-color: #333; /* Cor de fundo do modal */
-color: #e0e0e0; /* Cor do texto */
+    background-color: #333; /* Cor de fundo do modal */
+    color: #e0e0e0; /* Cor do texto */
 }
 
-.dark-mode  .modal-header {
-border-bottom: 1px solid #444; /* Linha de separação no cabeçalho */
+.dark-mode .modal-header {
+    border-bottom: 1px solid #444; /* Linha de separação no cabeçalho */
 }
 
-.dark-mode  .modal-title {
-color: #e0e0e0; /* Cor do título */
+.dark-mode .modal-title {
+    color: #e0e0e0; /* Cor do título */
 }
 
 .dark-mode .modal-body {
-color: #e0e0e0; /* Cor do texto do corpo */
+    color: #e0e0e0; /* Cor do texto do corpo */
 }
 
 .dark-mode .modal-footer {
-border-top: 1px solid #444; /* Linha de separação no rodapé */
+    border-top: 1px solid #444; /* Linha de separação no rodapé */
 }
 
 .dark-mode .btn-secondary {
-background-color: #555; /* Cor de fundo do botão secundário */
-color: #e0e0e0; /* Cor do texto do botão secundário */
-border: 1px solid #666; /* Borda do botão secundário */
+    background-color: #555; /* Cor de fundo do botão secundário */
+    color: #e0e0e0; /* Cor do texto do botão secundário */
+    border: 1px solid #666; /* Borda do botão secundário */
 }
 
 .dark-mode .btn-secondary:hover {
-background-color: #666; /* Cor de fundo ao passar o mouse sobre o botão secundário */
+    background-color: #666; /* Cor de fundo ao passar o mouse sobre o botão secundário */
 }
 
 .dark-mode .btn-danger {
-background-color: #e74c3c; /* Cor de fundo do botão de excluir */
-color: #fff; /* Cor do texto do botão de excluir */
-border: 1px solid #c0392b; /* Borda do botão de excluir */
+    background-color: #e74c3c; /* Cor de fundo do botão de excluir */
+    color: #fff; /* Cor do texto do botão de excluir */
+    border: 1px solid #c0392b; /* Borda do botão de excluir */
 }
 
 .dark-mode .btn-danger:hover {
-background-color: #c0392b; /* Cor de fundo ao passar o mouse sobre o botão de excluir */
+    background-color: #c0392b; /* Cor de fundo ao passar o mouse sobre o botão de excluir */
 }
 
 .dark-mode .close {
-color: #e0e0e0; /* Cor do ícone de fechar */
+    color: #e0e0e0; /* Cor do ícone de fechar */
 }
 
 .dark-mode .close:hover {
-color: #fff; /* Cor do ícone de fechar ao passar o mouse */
+    color: #fff; /* Cor do ícone de fechar ao passar o mouse */
 }
 
 /* Transições suaves para o modo escuro */
-.dark-mode  .modal-content,
-.btn-secondary,
-.btn-danger,
-.close {
-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+.dark-mode .modal-content,
+.dark-mode .btn-secondary,
+.dark-mode .btn-danger,
+.dark-mode .close {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Animações */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: black; }
+}
+
+@keyframes borderColorChange {
+    0% { border-color: rgba(255, 0, 0, 0.8); }
+    50% { border-color: rgba(255, 0, 0, 0.5); }
+    100% { border-color: rgba(255, 0, 0, 0.8); }
 }
