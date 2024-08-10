@@ -6,6 +6,14 @@ function generateToken($length = 32) {
     return bin2hex(random_bytes($length));
 }
 
+// Inicia a sessão para usar flash messages
+session_start();
+
+$response = [
+    'success' => true,
+    'message' => ''
+];
+
 // Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepara os dados do formulário para inserção no banco de dados
@@ -13,22 +21,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $posicao = trim($_POST['posicao']);
     $numero = trim($_POST['numero']);
     $time_id = trim($_POST['time']);
-    
+
     // Valida o nome (deve ser uma string sem números)
     if (!preg_match("/^[a-zA-Z\s]+$/", $nome)) {
-        echo "Nome do jogador deve ser uma string sem números.";
+        $response['success'] = false;
+        $response['message'] = "Nome do jogador deve ser uma string sem números.";
+        echo json_encode($response);
         exit;
     }
 
     // Valida se todos os campos estão preenchidos
     if (empty($nome) || empty($posicao) || empty($numero) || empty($time_id)) {
-        echo "Todos os campos são obrigatórios.";
+        $response['success'] = false;
+        $response['message'] = "Todos os campos são obrigatórios.";
+        echo json_encode($response);
         exit;
     }
 
     // Valida o número (deve ser um número entre 0 e 99, com no máximo 2 dígitos)
     if (!is_numeric($numero) || $numero < 0 || $numero > 99 || strlen($numero) > 2) {
-        echo "Número deve ser um valor entre 0 e 99, com no máximo 2 dígitos.";
+        $response['success'] = false;
+        $response['message'] = "Número deve ser um valor entre 0 e 99, com no máximo 2 dígitos.";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Verifica se o número do jogador já está em uso para o time especificado
+    $sql = "SELECT COUNT(*) FROM jogadores WHERE numero = ? AND time_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $numero, $time_id);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($count > 0) {
+        $response['success'] = false;
+        $response['message'] = "Número já está em uso para este time.";
+        echo json_encode($response);
         exit;
     }
 
@@ -46,16 +76,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssisss", $nome, $posicao, $numero, $time_id, $imgData, $token);
 
     if ($stmt->execute()) {
-        header('Location: crud_jogador.php');
-        exit;
-        // echo "Jogador adicionado com sucesso!";
+        $response['message'] = "Jogador adicionado com sucesso!";
+        echo json_encode($response);
     } else {
-        echo "Erro ao adicionar jogador: " . $conn->error;
+        $response['success'] = false;
+        $response['message'] = "Erro ao adicionar jogador: " . $conn->error;
+        echo json_encode($response);
     }
 
     // Fecha a conexão com o banco de dados
     $stmt->close();
     $conn->close();
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -70,11 +102,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-            </div>
-            <nav class="nav-icons">
+    <div class="containerr">
+        <div class="logo">
+            <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+        </div>
+        <nav class="nav-icons">
             <div class="nav-item">
                 <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
                 <span>Rodadas</span>
@@ -85,11 +117,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="nav-item">
                 <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                <span>editar times</span>
+                <span>Editar times</span>
             </div>
             <div class="nav-item">
                 <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                <span>editar finais</span>
+                <span>Editar finais</span>
             </div>
             <div class="nav-item">
                 <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
@@ -104,51 +136,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span>Adicionar times</span>
             </div>
             <div class="nav-item">
-                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
+                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="Cadastro novos adm"></a>
                 <span>Adicionar outro adm</span>
             </div>
         </nav>
 
-            <div class="theme-toggle">
-                <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
-            </div>
+        <div class="theme-toggle">
+            <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
         </div>
-    </header>
-    <script>
-        // Função para alternar o modo escuro
-        function toggleDarkMode() {
-            var element = document.body;
-            var icon = document.getElementById('theme-icon');
-            element.classList.toggle("dark-mode");
+    </div>
+</header>
+<script>
+    // Função para alternar o modo escuro
+    function toggleDarkMode() {
+        var element = document.body;
+        var icon = document.getElementById('theme-icon');
+        element.classList.toggle("dark-mode");
 
-            // Atualizar o ícone conforme o tema
-            if (element.classList.contains("dark-mode")) {
-                localStorage.setItem("theme", "dark");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
-            } else {
-                localStorage.setItem("theme", "light");
-                icon.src = '../../../../public/img/header/modoescuro.svg';
-            }
+        // Atualizar o ícone conforme o tema
+        if (element.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+            icon.src = '../../../../public/img/header/modoclaro.svg';
+        } else {
+            localStorage.setItem("theme", "light");
+            icon.src = '../../../../public/img/header/modoescuro.svg';
         }
+    }
 
-        // Aplicar o tema salvo ao carregar a página
-        document.addEventListener("DOMContentLoaded", function() {
-            var theme = localStorage.getItem("theme");
-            var icon = document.getElementById('theme-icon');
-            if (theme === "dark") {
-                document.body.classList.add("dark-mode");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
-            } else {
-                icon.src = '../../../../public/img/header/modoescuro.svg';
-            }
-        });
+    // Aplicar o tema salvo ao carregar a página
+    document.addEventListener("DOMContentLoaded", function() {
+        var theme = localStorage.getItem("theme");
+        var icon = document.getElementById('theme-icon');
+        if (theme === "dark") {
+            document.body.classList.add("dark-mode");
+            icon.src = '../../../../public/img/header/modoclaro.svg';
+        } else {
+            icon.src = '../../../../public/img/header/modoescuro.svg';
+        }
+    });
 
-        // Adiciona o evento de clique para alternar o tema
-        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
-    </script>
+    // Adiciona o evento de clique para alternar o tema
+    document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
+</script>
 <div class="fundo-tela">
     <div class="formulario" id="main-content">
-        <form id="form-jogador" action="" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+        <form id="form-jogador" action="" method="post" enctype="multipart/form-data">
             <label for="nome">Nome do Jogador:</label>
             <input type="text" id="nome" name="nome" required>
             <label for="posicao">Posição:</label>
@@ -177,6 +209,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="imagem">Imagem do Jogador:</label>
             <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()" required>
             <img id="imagem-preview" src="#" alt="Imagem do Jogador">
+            <div id="message-container">
+                <div id="error-message" class="error-message"></div>
+                <div id="success-message" class="success-message"></div>
+            </div>
             <input type="submit" value="Cadastrar">
         </form>
     </div>
@@ -197,27 +233,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    function validarFormulario() {
-        const nome = document.getElementById('nome').value;
-        const numero = document.getElementById('numero').value;
-        const nomeRegex = /^[a-zA-Z\s]+$/;
-        const numeroRegex = /^[0-9]{1,2}$/;
+    document.getElementById('form-jogador').addEventListener('submit', function (event) {
+        event.preventDefault(); // Impede o envio do formulário padrão
 
-        if (!nomeRegex.test(nome)) {
-            alert('Nome do jogador deve ser uma string sem números.');
-            return false;
-        }
+        const formData = new FormData(this);
+        fetch('', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
 
-        if (!numeroRegex.test(numero) || parseInt(numero) > 99) {
-            alert('Número deve ser entre 0 e 99, com no máximo 2 dígitos.\n Não pode ser letras.\n Por favor tente novamente.');
-            return false;
-        }
-        return true;
-    }
+            if (!data.success) {
+                errorMessage.textContent = data.message;
+                errorMessage.classList.add('visible');
+                successMessage.classList.remove('visible');
+            } else {
+                successMessage.textContent = data.message;
+                successMessage.classList.add('visible');
+                errorMessage.classList.remove('visible');
+                document.getElementById('form-jogador').reset(); // Limpa o formulário
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+    });
 </script>
 </body>
 </html>
-
-
-
-
