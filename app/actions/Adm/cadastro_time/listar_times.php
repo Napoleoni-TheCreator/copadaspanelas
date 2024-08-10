@@ -77,52 +77,150 @@ $_SESSION['csrf_token'] = $csrf_token;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/listar_times.css">
     <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
+    <style>
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .fade-in.show {
+            opacity: 1;
+        }
+        /* CSS - styles.css */
+
+        /* Estilos para o efeito de digitação */
+        #text-center {
+            font-family: 'Courier New', Courier, monospace; /* Para um efeito mais realista */
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 2s steps(30, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 90%; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: orange; }
+        }
+    </style>
 </head>
-<header class="header">
+<body>
+    <header class="header" id="header">
         <div class="containerr">
             <div class="logo">
                 <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
             </div>
-            <nav class="nav-icons">
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
-                <span>Rodadas</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
-                <span>Classificação</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                <span>editar times</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                <span>editar finais</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
-                <span>Editar jogadores</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/header/grupo.svg" alt="Trophy Icon"></a>
-                <span>Criar grupos</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/header/adtime.svg" alt="Trophy Icon"></a>
-                <span>Adicionar times</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
-                <span>Adicionar outro adm</span>
-            </div>
-        </nav>
+            <nav class="nav-icons" id="nav-icons">
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
+                    <span>Rodadas</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
+                    <span>Classificação</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
+                    <span>editar times</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
+                    <span>editar finais</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
+                    <span>Editar jogadores</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/header/grupo.svg" alt="Trophy Icon"></a>
+                    <span>Criar grupos</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/header/adtime.svg" alt="Trophy Icon"></a>
+                    <span>Adicionar times</span>
+                </div>
+                <div class="nav-item">
+                    <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
+                    <span>Adicionar outro adm</span>
+                </div>
+            </nav>
 
-            <div class="theme-toggle">
+            <div class="theme-toggle" id="theme-toggle">
                 <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
             </div>
         </div>
     </header>
+
+    <h1 class="text-center" id="text-center">LISTAR DE TIMES</h1>
+
+    <div class="container fade-in" id="container">
+        <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
+            <div class="alert alert-success text-center">Time excluído com sucesso!</div>
+        <?php endif; ?>
+
+        <div class="row">
+        <?php
+            $borderColors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A0', '#33F0FF', '#FFBF00', '#8CFF33'];
+            $colorIndex = 0;
+        ?>
+        <?php foreach ($times as $grupo_nome => $timesGrupo): ?>
+            <div class="col-md-3 fade-in">
+                <h3><?php echo htmlspecialchars($grupo_nome); ?></h3>
+                <?php foreach ($timesGrupo as $time): ?>
+                    <div class="time-card fade-in" style="border-color: <?php echo $borderColors[$colorIndex]; ?>;">
+                        <?php if ($time['logo']): ?>
+                            <img src="data:image/jpeg;base64,<?php echo base64_encode($time['logo']); ?>" class="time-image fade-in" alt="Logo do Time">
+                        <?php else: ?>
+                            <img src="../../../../public/images/default-team.png" class="time-image fade-in" alt="Logo do Time">
+                        <?php endif; ?>
+                        <div class="time-details fade-in">
+                            <strong>Nome:</strong> <?php echo htmlspecialchars($time['nome']); ?><br>
+                            <strong>TECNICO:</strong> <?php echo htmlspecialchars($time['grupo_nome']); ?><br>
+                        </div>
+                        <div class="time-actions fade-in">
+                            <a href="#" class="delete fade-in" data-toggle="modal" data-target="#confirmDeleteModal" data-token="<?php echo htmlspecialchars($time['token']); ?>">Excluir</a>
+                            <a href="editar_time.php?token=<?php echo $time['token']; ?>" class="edit fade-in">Editar</a>
+                        </div>
+                    </div>
+                    <?php
+                        $colorIndex = ($colorIndex + 1) % count($borderColors);
+                    ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja excluir este time?
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteForm" method="post" action="">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+                        <input type="hidden" name="delete_token" id="delete_token" value="">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         // Função para alternar o modo escuro
         function toggleDarkMode() {
@@ -154,84 +252,50 @@ $_SESSION['csrf_token'] = $csrf_token;
 
         // Adiciona o evento de clique para alternar o tema
         document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
+
+        // Função para adicionar a classe 'show' para fade-in efeito
+        function fadeInElements() {
+            const elements = document.querySelectorAll('.fade-in');
+            let delay = 0;
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('show');
+                }, delay);
+                delay += 60; // 1 segundo entre cada elemento
+            });
+        }
+
+        // Inicia o efeito de fade-in quando a página carrega
+        document.addEventListener('DOMContentLoaded', fadeInElements);
+
+        // Adiciona o token ao campo oculto do formulário de exclusão
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var token = button.data('token');
+            var modal = $(this);
+            modal.find('#delete_token').val(token);
+        });
+            //EFEITO DIGITANDO
+        document.addEventListener('DOMContentLoaded', () => {
+            // Efeito de digitação para o título
+            const textElement = document.getElementById('text-center');
+            const text = textElement.textContent;
+            textElement.textContent = '';
+
+            let index = 0;
+            const typingSpeed = 30; // Ajuste a velocidade da digitação aqui
+
+            function typeLetter() {
+                if (index < text.length) {
+                    textElement.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(typeLetter, typingSpeed);
+                }
+            }
+
+            typeLetter();
+        });
+
     </script>
-<body>
-<h1 class="text-center">LISTAR DE TIMES</h1>
-<div class="container">
-
-    <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
-        <div class="alert alert-success text-center">Time excluído com sucesso!</div>
-    <?php endif; ?>
-
-    <div class="row">
-    <?php
-        $borderColors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A0', '#33F0FF', '#FFBF00', '#8CFF33'];
-        $colorIndex = 0;
-    ?>
-    <?php foreach ($times as $grupo_nome => $timesGrupo): ?>
-        <div class="col-md-3">
-            <h3><?php echo htmlspecialchars($grupo_nome); ?></h3>
-            <?php foreach ($timesGrupo as $time): ?>
-                <div class="time-card" style="border-color: <?php echo $borderColors[$colorIndex]; ?>;">
-                    <?php if ($time['logo']): ?>
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($time['logo']); ?>" class="time-image" alt="Logo do Time">
-                    <?php else: ?>
-                        <img src="../../../../public/images/default-team.png" class="time-image" alt="Logo do Time">
-                    <?php endif; ?>
-                    <div class="time-details">
-                        <strong>Nome:</strong> <?php echo htmlspecialchars($time['nome']); ?><br>
-                        <strong>TECNICO:</strong> <?php echo htmlspecialchars($time['grupo_nome']); ?><br>
-                    </div>
-                    <div class="time-actions">
-                        <a href="#" class="delete" data-toggle="modal" data-target="#confirmDeleteModal" data-token="<?php echo htmlspecialchars($time['token']); ?>">Excluir</a>
-                        <a href="editar_time.php?token=<?php echo $time['token']; ?>" class="edit">Editar</a>
-                    </div>
-                </div>
-                <?php
-                    $colorIndex = ($colorIndex + 1) % count($borderColors);
-                ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endforeach; ?>
-    </div>
-</div>
-
-<!-- Modal de Confirmação -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Tem certeza que deseja excluir este time?
-            </div>
-            <div class="modal-footer">
-                <form id="deleteForm" method="post" action="">
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
-                    <input type="hidden" name="delete_token" id="delete_token" value="">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Excluir</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    // Adiciona o token ao campo oculto do formulário de exclusão
-    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var token = button.data('token');
-        var modal = $(this);
-        modal.find('#delete_token').val(token);
-    });
-</script>
 </body>
 </html>
