@@ -14,10 +14,13 @@ footer{
     margin-top: 20%;
 }
 h1 {
-    font-size: 60px;
+    font-size: 40px;
+    margin-top: 6%;
     text-align: center;
-    margin-top: 5%;
-    color: inherit;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blink-caret .75s step-end infinite;
 }
 .container {
     max-width: 900px;
