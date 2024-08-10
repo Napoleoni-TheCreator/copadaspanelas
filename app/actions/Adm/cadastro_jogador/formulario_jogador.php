@@ -249,47 +249,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include '../../../pages/footer.php' ?>
 </div>
 <script>
-    function previewImage() {
-        const fileInput = document.getElementById('imagem');
-        const imagePreview = document.getElementById('imagem-preview');
-        const file = fileInput.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    document.getElementById('form-jogador').addEventListener('submit', function (event) {
-        event.preventDefault(); // Impede o envio do formulário padrão
-
-        const formData = new FormData(this);
-        fetch('', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            const errorMessage = document.getElementById('error-message');
-            const successMessage = document.getElementById('success-message');
-
-            if (!data.success) {
-                errorMessage.textContent = data.message;
-                errorMessage.classList.add('visible');
-                successMessage.classList.remove('visible');
-            } else {
-                successMessage.textContent = data.message;
-                successMessage.classList.add('visible');
-                errorMessage.classList.remove('visible');
-                document.getElementById('form-jogador').reset(); // Limpa o formulário
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
+    document.addEventListener('DOMContentLoaded', () => {
+        // Revela os elementos do formulário com um atraso
+        const elements = document.querySelectorAll('.form-container *');
+        elements.forEach(element => {
+            element.classList.add('hidden');
         });
+
+        function revealElement(element, delay) {
+            setTimeout(() => {
+                element.classList.remove('hidden');
+                element.classList.add('visible');
+            }, delay);
+        }
+
+        elements.forEach((element, index) => {
+            revealElement(element, index * 150); // Ajuste o valor para controlar a velocidade
+        });
+
+        // Efeito de digitação para o título
+        const textElement = document.getElementById('editable');
+        const text = textElement.textContent;
+        textElement.textContent = '';
+
+        let index = 0;
+        const typingSpeed = 50; // Ajuste a velocidade do efeito de digitação
+
+        function typeLetter() {
+            if (index < text.length) {
+                textElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeLetter, typingSpeed);
+            }
+        }
+
+        typeLetter();
+
+        // Alternância de tema
+        function toggleDarkMode() {
+            var element = document.body;
+            var icon = document.getElementById('theme-icon');
+            element.classList.toggle("dark-mode");
+
+            if (element.classList.contains("dark-mode")) {
+                localStorage.setItem("theme", "dark");
+                icon.src = '../../../../public/img/header/modoclaro.svg';
+            } else {
+                localStorage.setItem("theme", "light");
+                icon.src = '../../../../public/img/header/modoescuro.svg';
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var theme = localStorage.getItem("theme");
+            var icon = document.getElementById('theme-icon');
+            if (theme === "dark") {
+                document.body.classList.add("dark-mode");
+                icon.src = '../../../../public/img/header/modoclaro.svg';
+            } else {
+                icon.src = '../../../../public/img/header/modoescuro.svg';
+            }
+        });
+
+        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
     });
 </script>
 </body>
