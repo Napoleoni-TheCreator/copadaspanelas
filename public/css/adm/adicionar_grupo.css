@@ -19,11 +19,11 @@ h1 {
 }
 
 .form-container {
-    background-color: #ffffff46;
+    background-color: #ffffff79;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
+    min-width: 30%;
     margin-top: 5%;
 }
 
@@ -50,6 +50,9 @@ input[type="number"], select {
     border: 1px solid #ddd;
     background-color: #fff;
     width: 90%;
+    -webkit-appearance: none;
+    -moz-appearance: textfield !important;
+    appearance: none;
 }
 #faseFinal{
     width: 97%;

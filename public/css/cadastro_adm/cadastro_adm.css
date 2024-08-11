@@ -1,11 +1,11 @@
 
 body {
-    height: 75vh;
+    height: 100%;
     background-size: cover;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: rgb(218, 215, 215);
+    background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
     user-select: none;
 }
 .form-container {
