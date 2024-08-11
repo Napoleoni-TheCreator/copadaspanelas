@@ -41,7 +41,7 @@
         }
 
         .logo img {
-            height: 80px;
+            height: 60px; /* Ajustado para dispositivos menores */
             margin-right: 10px;
         }
 
@@ -49,7 +49,7 @@
             display: flex;
             flex: 1;
             justify-content: center;
-            gap: 30px; /* Espaçamento entre os itens */
+            gap: 20px; /* Espaçamento reduzido */
         }
 
         .nav-item {
@@ -57,15 +57,15 @@
         }
 
         .nav-item img {
-            height: 40px;
-            width: 40px;
+            height: 30px; /* Ajustado para dispositivos menores */
+            width: 30px;
         }
 
         .nav-item span {
             display: block;
             margin-top: 5px;
             color: white;
-            font-size: 14px;
+            font-size: 12px; /* Ajustado para dispositivos menores */
         }
 
         /* Estilos para o modo escuro */
@@ -104,7 +104,54 @@
         }
 
         .theme-toggle img {
-            height: 50px; /* Ajuste o tamanho conforme necessário */
+            height: 40px; /* Ajuste o tamanho conforme necessário */
+        }
+
+        /* Media queries para dispositivos menores */
+        @media (max-width: 767px) {
+            .logo img {
+                height: 50px;
+            }
+
+            .nav-icons {
+                gap: 15px;
+            }
+
+            .nav-item img {
+                height: 25px;
+                width: 25px;
+            }
+
+            .nav-item span {
+                font-size: 10px;
+            }
+
+            .theme-toggle img {
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 40px;
+            }
+
+            .nav-icons {
+                gap: 10px;
+            }
+
+            .nav-item img {
+                height: 20px;
+                width: 20px;
+            }
+
+            .nav-item span {
+                font-size: 8px;
+            }
+
+            .theme-toggle img {
+                height: 30px;
+            }
         }
     </style>
 </head>
@@ -176,4 +223,3 @@
     </script>
 </body>
 </html>
-

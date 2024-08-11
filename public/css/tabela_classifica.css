@@ -326,7 +326,7 @@ margin: 0px;
 display: flex;
     align-items: center;
     justify-content: flex-start;
-    min-width: 100px; /* Largura mínima */
+    min-width: 800px; /* Largura mínima */
     min-height: 8px;
     max-width: 100px;
     max-height: 20px;
