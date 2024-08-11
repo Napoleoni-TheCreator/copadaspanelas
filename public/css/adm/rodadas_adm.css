@@ -6,77 +6,69 @@ body {
     align-items: center;
     height: 100%;
     margin: 0;
-    background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
+    background: linear-gradient(to top, #f879118c, rgba(255, 0, 0, 0.603));
     color: #333;
     transition: background-color 0.3s, color 0.3s;
     user-select: none;
-}
-
-.dark-mode {
+ }
+ 
+ .dark-mode {
     background-color: #121212;
     color: #e0e0e0;
-}
-
-h1 {
-    font-size: 40px;
+ }
+ 
+ h1 {
+    font-size: 2.5rem; /* Ajustado para tamanhos menores */
     margin-top: 6%;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-    white-space: nowrap; /* Evita que o texto quebre em várias linhas */
-    overflow: hidden; /* Esconde o texto que não cabe na área visível */
-    animation: blink-caret .75s step-end infinite; /* Opcional: animação de cursor */
-}
-
-@keyframes blink-caret {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blink-caret .75s step-end infinite;
+ }
+ 
+ @keyframes blink-caret {
     from, to { border-color: transparent; }
     50% { border-color: orange; }
-}
-
-        /* Adicione o estilo necessário aqui */
-.hidden {
+ }
+ 
+ .hidden {
     opacity: 0;
-    transition: opacity 0.05s ease-out; /* Reduzido para acelerar */
-}
-
-.reveal {
+    transition: opacity 0.05s ease-out;
+ }
+ 
+ .reveal {
     opacity: 1;
-}
-
-.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-#rodadas-wrapper {
+ }
+ 
+ #rodadas-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin: 1% 0;
     background-color: #ffffff8e;
     padding: 20px;
     border-radius: 10px;
     border: 1px solid black;
     box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
-    min-width: 50%;
-    max-width: 90%;
+    width: 100%;
+    max-width: 1200px; /* Limite máximo para telas grandes */
     transition: background-color 0.3s, box-shadow 0.3s;
-    position: relative; /* Necessário para o posicionamento das setas */
-}
-
-
-.dark-mode #rodadas-wrapper {
+    position: relative;
+ }
+ 
+ .dark-mode #rodadas-wrapper {
     background-color: #1e1e1e;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
-tr {
+ }
+ 
+ tr {
     display: flex;
     align-items: center;
     text-align: center;
-}
-
-.time_teste {
+ }
+ 
+ .time_teste {
     display: flex;
     justify-content: space-between;
     border: 1px solid black;
@@ -84,120 +76,129 @@ tr {
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    scale: 0.8;
-}
-.time_teste img {
+    transform: scale(0.8);
+ }
+ .time_teste img {
     width: 60px;
     height: 60px;
-}
-.tr_teste {
+ }
+ .tr_teste {
     display: flex;
     justify-content: center;
-}
-
-.table-container {
+ }
+ 
+ .table-container {
     display: flex;
     justify-content: space-between;
     overflow-x: auto;
-    min-width: 100%;
-}
-.rodada-container {
+    width: 100%;
+ }
+ 
+ .rodada-container {
     width: 100%;
     background-color: #ffffff25;
-    margin-bottom: 20px;
-    /* padding: 10px; */
+    margin: 2% 10px;
     border-radius: 5px;
-    border: 1px solid black; 
-    margin-top: 2%;
-    margin-left: 10px;
-    margin-right: 10px;
+    border: 1px solid black;
     transition: 0.5s ease;
-}
-.dark-mode .rodada-container {
+ }
+ 
+ .dark-mode .rodada-container {
     background-color: #2c2c2c;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-}
-.rodada-container:hover {
+ }
+ 
+ .rodada-container:hover {
     transform: scale(1.02);
-    /* box-shadow: 0 0 10px hsl(0, 100%, 50%); */
-}
-.dark-mode .rodada-container:hover {
-
+ }
+ 
+ .dark-mode .rodada-container:hover {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
-table {
+ }
+ 
+ table {
     width: 100%;
     border-collapse: collapse;
-}
-th, td {
+ }
+ 
+ th, td {
     padding: 8px;
     text-align: center;
     transition: background-color 0.3s, color 0.3s;
-}
-th {
+ }
+ 
+ th {
     background-color: #f2f2f2;
-}
-.dark-mode th {
+ }
+ 
+ .dark-mode th {
     background-color: #333;
-}
-.rodada-header {
+ }
+ 
+ .rodada-header {
     display: flex;
     font-size: 1.2em;
     margin-bottom: 10px;
     text-align: center;
-    margin: none;
-    padding: none;
+    padding: 0;
     justify-content: center;
-}
-.rodada-header_h1{
+ }
+ 
+ .rodada-header_h1 {
     border: #007bff 1px solid;
     width: 200px;
-    padding: none;
-    margin: none;
-}
-.logo-time {
+    padding: 0;
+    margin: 0;
+ }
+ 
+ .logo-time {
     width: 20px;
     height: 20px;
     vertical-align: middle;
-}
-.time-row {
+ }
+ 
+ .time-row {
     display: flex;
     align-items: center;
-}
-.time-name {
-    font-size: 20px;
+ }
+ 
+ .time-name {
+    font-size: 1.2em; /* Ajustado para tamanhos menores */
     display: flex;
-    text-align: left; 
+    text-align: left;
     margin-left: 8px;
     min-width: 200px;
     max-width: 200px;
-}
-.time-name_b {
-    font-size: 20px;
+ }
+ 
+ .time-name_b {
+    font-size: 1.2em; /* Ajustado para tamanhos menores */
     display: flex;
-    direction: rtl; 
-    text-align: right; 
+    direction: rtl;
+    text-align: right;
     margin-right: 8px;
     min-width: 200px;
     max-width: 200px;
-}
-
-#input {
+ }
+ 
+ #input {
     width: 20px;
     background-color: #BABBBF;
-}
-input[type=number] {
+ }
+ 
+ input[type=number] {
     -webkit-appearance: none;
     -moz-appearance: textfield !important;
     appearance: none;
-}
-/* Remove as setas em navegadores baseados em WebKit (Chrome, Safari) */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+ }
+ 
+ input[type=number]::-webkit-inner-spin-button,
+ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-.btn-save {
+ }
+ 
+ .btn-save {
     padding: 5px 10px;
     background-color: #4CAF50;
     color: white;
@@ -205,73 +206,78 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-.btn-save:hover {
+ }
+ 
+ .btn-save:hover {
     background-color: #45a049;
-}
-.dark-mode .btn-toggle-mode:hover {
+ }
+ 
+ .dark-mode .btn-toggle-mode:hover {
     background-color: #333;
-}
-.no-break {
+ }
+ 
+ .no-break {
     display: flex;
     white-space: nowrap;
-    font-size: 20px;
+    font-size: 1.2em; /* Ajustado para tamanhos menores */
     justify-content: center;
     align-items: center;
-}
-.btn-redirect {
+ }
+ 
+ .btn-redirect {
     text-decoration: none;
     color: white;
     background-color: #b82020;
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 5%;
-}
-
-/* Estilo do modal */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
+ }
+ 
+ /* Estilo do modal */
+ .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.4); 
-}
-
-/* Estilo do conteúdo do modal */
-.modal-content {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+ }
+ 
+ /* Estilo do conteúdo do modal */
+ .modal-content {
     background-color: #fefefe;
-    margin: 10% auto; 
+    margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
-    max-width: 600px; 
-    border-radius: 5px; 
-}
-
-/* Estilo do botão de fechar */
-.close-btn {
+    max-width: 600px;
+    border-radius: 5px;
+ }
+ 
+ /* Estilo do botão de fechar */
+ .close-btn {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-}
-
-.close-btn:hover,
-.close-btn:focus {
+ }
+ 
+ .close-btn:hover,
+ .close-btn:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-button#confirm-btn {
+ }
+ 
+ button#confirm-btn {
     background-color: #28a745;
     color: white;
-}
-.theme-toggle{
+ }
+ 
+ .theme-toggle {
     width: 50px;
     height: 50px;
     background-size: cover;
@@ -279,76 +285,19 @@ button#confirm-btn {
     cursor: pointer;
     outline: none;
     background-image: url(../../../../public/img/modoescuro.svg);
-}
-.dark-mode .theme-toggle{
+ }
+ 
+ .dark-mode .theme-toggle {
     background-image: url(../../../../public/img/modoclaro.svg);
-}
-
-button#cancel-btn {
+ }
+ 
+ button#cancel-btn {
     background-color: #dc3545;
     color: white;
-}
-/* Ajustes responsivos */
-@media (max-width: 768px) { 
-.modal-content {
-width: 90%; 
-max-width: 400px; 
-}
-
-.btn-redirect {
-padding: 8px 16px;
-font-size: 0.9rem; 
-margin-bottom: 5%;
-}
-
-.rodada-container {
-width: 80%;
-/* margin: 1% auto; */
-padding: 10px;
-}
-}
-
-@media (max-width: 576px) { 
-body {
-font-size: 8px; 
-}
-.no-break{
-font-size: 12px;
-}
-.modal-content {
-width: 95%;
-margin-top: 100%;
-max-width: 200px; 
-}
-.time-name{
-font-size: 10px;
-}
-.time_teste{
-padding: 0px;
-margin: none;
-}
-td{
-padding: 4px;
-}
-
-.btn-redirect {
-padding: 6px 12px;
-font-size: 0.8rem; 
-margin-bottom: 5%;
-}
-
-.rodada-container {
-width: 90%;
-margin-left: 10px;
-padding: 8px;
-}
-h1{
-font-size: 12px;
-margin-top: 20%;
-}
-}
-/* Setas de navegação */
-.nav-arrow {
+ }
+ 
+ /* Setas de navegação */
+ .nav-arrow {
     font-size: 24px;
     cursor: pointer;
     padding: 10px;
@@ -356,16 +305,111 @@ margin-top: 20%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10; /* Garante que as setas estejam sobre outros conteúdos */
-}
-.nav-arrow.left {
-    left: -60px; /* Ajuste a posição da seta esquerda */
-}
-
-.nav-arrow.right {
-    right: -60px; /* Ajuste a posição da seta direita */
-}
-.nav-arrow img {
+    z-index: 10;
+ }
+ 
+ .nav-arrow.left {
+    left: -60px;
+ }
+ 
+ .nav-arrow.right {
+    right: -60px;
+ }
+ 
+ .nav-arrow img {
     width: 40px;
-}
-
+ }
+ 
+ /* Media Queries */
+ @media (max-width: 480px) {
+    h1 {
+       font-size: 1.5rem;
+    }
+    
+    .time_teste {
+       padding: 10px;
+       scale: 0.6;
+    }
+ 
+    .btn-save {
+       padding: 5px;
+    }
+    
+    .no-break {
+       font-size: 1rem;
+    }
+    
+    .rodada-header {
+       font-size: 1rem;
+    }
+ }
+ 
+ @media (min-width: 481px) and (max-width: 767px) {
+    h1 {
+       font-size: 1.8rem;
+    }
+    
+    .time_teste {
+       padding: 15px;
+       scale: 0.7;
+    }
+ 
+    .btn-save {
+       padding: 6px 12px;
+    }
+    
+    .no-break {
+       font-size: 1.1rem;
+    }
+    
+    .rodada-header {
+       font-size: 1.1rem;
+    }
+ }
+ 
+ @media (min-width: 768px) and (max-width: 1024px) {
+    h1 {
+       font-size: 2rem;
+    }
+    
+    .time_teste {
+       padding: 15px;
+       scale: 0.8;
+    }
+ 
+    .btn-save {
+       padding: 8px 16px;
+    }
+    
+    .no-break {
+       font-size: 1.2rem;
+    }
+    
+    .rodada-header {
+       font-size: 1.2rem;
+    }
+ }
+ 
+ @media (min-width: 1025px) {
+    h1 {
+       font-size: 2.5rem;
+    }
+    
+    .time_teste {
+       padding: 20px;
+       scale: 0.8;
+    }
+ 
+    .btn-save {
+       padding: 10px 20px;
+    }
+    
+    .no-break {
+       font-size: 1.2rem;
+    }
+    
+    .rodada-header {
+       font-size: 1.3rem;
+    }
+ }
+ 
