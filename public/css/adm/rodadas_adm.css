@@ -288,7 +288,64 @@ button#cancel-btn {
     background-color: #dc3545;
     color: white;
 }
+/* Ajustes responsivos */
+@media (max-width: 768px) { 
+.modal-content {
+width: 90%; 
+max-width: 400px; 
+}
 
+.btn-redirect {
+padding: 8px 16px;
+font-size: 0.9rem; 
+margin-bottom: 5%;
+}
+
+.rodada-container {
+width: 80%;
+/* margin: 1% auto; */
+padding: 10px;
+}
+}
+
+@media (max-width: 576px) { 
+body {
+font-size: 8px; 
+}
+.no-break{
+font-size: 12px;
+}
+.modal-content {
+width: 95%;
+margin-top: 100%;
+max-width: 200px; 
+}
+.time-name{
+font-size: 10px;
+}
+.time_teste{
+padding: 0px;
+margin: none;
+}
+td{
+padding: 4px;
+}
+.btn-redirect {
+padding: 6px 12px;
+font-size: 0.8rem; 
+margin-bottom: 5%;
+}
+
+.rodada-container {
+width: 90%;
+margin-left: 10px;
+padding: 8px;
+}
+h1{
+font-size: 12px;
+margin-top: 20%;
+}
+}
 /* Setas de navegação */
 .nav-arrow {
     font-size: 24px;
@@ -311,175 +368,3 @@ button#cancel-btn {
     width: 40px;
 }
 
-
-
-/* Media Queries */
-
-/* Dispositivos móveis pequenos e smartphones */
-@media (max-width: 360px) {
-    h1 {
-       font-size: 1.4rem;
-    }
-    
-    .time_teste {
-       padding: 8px;
-       scale: 0.5;
-    }
- 
-    .btn-save {
-       padding: 4px;
-    }
-    
-    .no-break {
-       font-size: 0.9rem;
-    }
-    
-    .rodada-header {
-       font-size: 0.9rem;
-    }
- }
- 
- /* Smartphones médios e grandes */
- @media (min-width: 361px) and (max-width: 430px) {
-    h1 {
-       font-size: 1.6rem;
-    }
-    
-    .time_teste {
-       padding: 10px;
-       scale: 0.6;
-    }
- 
-    .btn-save {
-       padding: 5px;
-    }
-    
-    .no-break {
-       font-size: 1rem;
-    }
-    
-    .rodada-header {
-       font-size: 1rem;
-    }
- }
- 
- /* Tablets e dispositivos em modo paisagem */
- @media (min-width: 431px) and (max-width: 800px) {
-    h1 {
-       font-size: 1.8rem;
-    }
-    
-    .time_teste {
-       padding: 12px;
-       scale: 0.7;
-    }
- 
-    .btn-save {
-       padding: 6px 12px;
-    }
-    
-    .no-break {
-       font-size: 1.1rem;
-    }
-    
-    .rodada-header {
-       font-size: 1.1rem;
-    }
- }
- 
- /* Tablets grandes e dispositivos com resolução intermediária */
- @media (min-width: 801px) and (max-width: 1080px) {
-    h1 {
-       font-size: 2rem;
-    }
-    
-    .time_teste {
-       padding: 15px;
-       scale: 0.8;
-    }
- 
-    .btn-save {
-       padding: 8px 16px;
-    }
-    
-    .no-break {
-       font-size: 1.2rem;
-    }
-    
-    .rodada-header {
-       font-size: 1.2rem;
-    }
- }
- 
- /* Desktops e monitores grandes */
- @media (min-width: 1081px) and (max-width: 1366px) {
-    h1 {
-       font-size: 2.2rem;
-    }
-    
-    .time_teste {
-       padding: 18px;
-       scale: 0.8;
-    }
- 
-    .btn-save {
-       padding: 10px 20px;
-    }
-    
-    .no-break {
-       font-size: 1.3rem;
-    }
-    
-    .rodada-header {
-       font-size: 1.3rem;
-    }
- }
- 
- /* Monitores grandes e ultra-wide */
- @media (min-width: 1367px) and (max-width: 2560px) {
-    h1 {
-       font-size: 2.5rem;
-    }
-    
-    .time_teste {
-       padding: 20px;
-       scale: 0.8;
-    }
- 
-    .btn-save {
-       padding: 12px 24px;
-    }
-    
-    .no-break {
-       font-size: 1.4rem;
-    }
-    
-    .rodada-header {
-       font-size: 1.4rem;
-    }
- }
- 
- /* Monitores 4K e ultra-alta definição */
- @media (min-width: 2561px) {
-    h1 {
-       font-size: 2.8rem;
-    }
-    
-    .time_teste {
-       padding: 25px;
-       scale: 0.9;
-    }
- 
-    .btn-save {
-       padding: 14px 28px;
-    }
-    
-    .no-break {
-       font-size: 1.5rem;
-    }
-    
-    .rodada-header {
-       font-size: 1.5rem;
-    }
- }
- 
