@@ -18,6 +18,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
 <html>
 <head>
     <title>Rodadas das Fases de Grupo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../../../public/css/adm/rodadas_adm.css">
     <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
 </head>
