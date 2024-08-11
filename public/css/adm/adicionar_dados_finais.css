@@ -172,8 +172,78 @@ iframe {
     display: none;
 }
 
-@media screen and (max-width: 768px) {
-    .form-container{
-        display: block;
+/* Responsive Design */
+@media only screen and (max-width: 1200px) {
+    h1 {
+        font-size: 1.6em; /* Reduced font size */
+    }
+
+    .form-container {
+        padding: 15px; /* Reduced padding */
+    }
+
+    td input[type="number"] {
+        width: 50px; /* Reduced width */
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    h1 {
+        font-size: 1.4em; /* Reduced font size */
+    }
+
+    .form-container {
+        padding: 12px; /* Reduced padding */
+    }
+
+    td input[type="number"] {
+        width: 45px; /* Reduced width */
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.2em; /* Reduced font size */
+        margin-top: 5%; /* Reduced margin */
+    }
+
+    .form-container {
+        padding: 8px; /* Reduced padding */
+    }
+
+    td input[type="number"] {
+        width: 40px; /* Reduced width */
+    }
+
+    #butao {
+        padding: 6px 10px; /* Reduced padding */
+        font-size: 12px; /* Reduced font size */
+    }
+
+    select {
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    h1 {
+        font-size: 1em; /* Further reduced font size */
+    }
+
+    .form-container {
+        padding: 5px; /* Reduced padding */
+    }
+
+    td input[type="number"] {
+        width: 35px; /* Further reduced width */
+    }
+
+    #butao {
+        padding: 4px 8px; /* Further reduced padding */
+        font-size: 10px; /* Further reduced font size */
+    }
+
+    select {
+        max-width: 100%;
     }
 }
