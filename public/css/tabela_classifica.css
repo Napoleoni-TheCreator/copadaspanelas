@@ -1,20 +1,21 @@
-
+/* Reset de padding e box-sizing */
 * {
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Estilo do body */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100%;
-    /* background-color: #f0f8ff; */
-    background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
+    background: linear-gradient(to top, #ff73008c, rgba(255, 4, 4, 0.726));
     user-select: none;
 }
 
+/* Estilo do wrapper da tabela */
 #tabela-wrapper {
     background-color: rgba(255, 255, 255, 0);
     padding: 20px;
@@ -27,16 +28,13 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
-h1 {
-    margin-top: 5%;
-}
-
+/* Estilo do container de grupos */
 .grupo-container {
     width: 100%;
     margin-bottom: 20px;
 }
 
+/* Estilo do cabeçalho do grupo */
 .grupo-header {
     font-size: 1.2em;
     margin-bottom: 10px;
@@ -44,6 +42,7 @@ h1 {
     text-align: left;
 }
 
+/* Estilo da tabela flexível */
 .tabela-flex {
     display: flex;
     flex-direction: column;
@@ -53,28 +52,28 @@ h1 {
 .tabela-flex-header, .tabela-flex-row {
     display: flex;
     width: 100%;
-    /* background-color: #f2f2f2; */
-    /* border: 1px solid #ddd; */
-    border-bottom: 1px solid #dddddd59 ;
+    border-bottom: 1px solid #dddddd59;
 }
-.tabela-flex-row:hover{
+
+.tabela-flex-row:hover {
     background-color: #dddddd54;
 }
-.tabela-flex-header{
-     background-color: #f2f2f283;
+
+.tabela-flex-header {
+    background-color: #f2f2f283;
 }
 
 .tabela-flex-header > div, .tabela-flex-row > div {
     flex: 1;
     padding: 10px;
     text-align: center;
-    /* border-right: 1px solid #ddd; */
 }
 
 .tabela-flex-header > div:last-child, .tabela-flex-row > div:last-child {
     border-right: none;
 }
 
+/* Estilo do logo do time */
 .logo-time {
     max-width: 50px;
     max-height: 50px;
@@ -84,12 +83,13 @@ h1 {
     margin-left: 10px;
 }
 
+/* Estilo das colunas pequenas e grandes */
 .small-col {
     min-width: 70px;
     text-align: center;
     align-items: center;
     display: flex;
-    justify-content:center;
+    justify-content: center;
 }
 
 .larger-col {
@@ -97,9 +97,10 @@ h1 {
     text-align: center;
     align-items: center;
     display: flex;
-    justify-content:center;
+    justify-content: center;
 }
 
+/* Estilo dos resultados */
 .resultado-vitoria {
     display: inline-block;
     width: 10px;
@@ -136,6 +137,7 @@ h1 {
     margin-right: 2px;
 }
 
+/* Estilo da legenda de símbolos */
 #legenda-simbolos {
     margin-top: 20px;
     padding: 10px;
@@ -163,6 +165,7 @@ h1 {
     margin-left: 5px;
 }
 
+/* Estilos do modo escuro */
 body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
@@ -187,6 +190,7 @@ body.dark-mode #legenda-simbolos {
     border: 1px solid #444;
 }
 
+/* Estilo do botão de modo escuro */
 .dark-mode-button {
     position: fixed;
     top: 20px;
@@ -204,6 +208,7 @@ body.dark-mode #legenda-simbolos {
     background-color: #0056b3;
 }
 
+/* Estilo das informações do time */
 .time-info {
     display: flex;
     align-items: center;
@@ -214,7 +219,8 @@ body.dark-mode #legenda-simbolos {
     max-height: 80px;
     overflow: hidden;
 }
-.clube{
+
+.clube {
     min-width: 270px;
     display: flex;
     justify-content: center;
@@ -222,7 +228,6 @@ body.dark-mode #legenda-simbolos {
 }
 
 .posicao_num {
-    font-weight: bold;
     margin-right: 10px;
     font-size: 1.2em;
 }
@@ -235,7 +240,9 @@ body.dark-mode #legenda-simbolos {
     text-overflow: ellipsis; /* Adiciona '...' ao final do texto que excede o limite */
     white-space: nowrap; /* Evita que o texto quebre em várias linhas */
 }
-.inf{
+
+/* Estilo das informações */
+.inf {
     display: inline-block; 
     width: 10px; 
     height: 10px; 
@@ -243,9 +250,9 @@ body.dark-mode #legenda-simbolos {
     border-radius: 50%; 
     margin-right: 2px;
 }
+
 /* 2 = red , 3 = gray, 4 = lightgray */
-/* Media Queries */
-.inf2{
+.inf2 {
     display: inline-block; 
     width: 10px; 
     height: 10px; 
@@ -253,7 +260,8 @@ body.dark-mode #legenda-simbolos {
     border-radius: 50%; 
     margin-right: 2px;
 }
-.inf3{
+
+.inf3 {
     display: inline-block; 
     width: 10px; 
     height: 10px; 
@@ -261,7 +269,8 @@ body.dark-mode #legenda-simbolos {
     border-radius: 50%; 
     margin-right: 2px;
 }
-.inf4{
+
+.inf4 {
     display: inline-block; 
     width: 10px; 
     height: 10px; 
@@ -269,141 +278,128 @@ body.dark-mode #legenda-simbolos {
     border-radius: 50%; 
     margin-right: 2px;
 }
-@media (max-width: 1200px) {
-.larger-col {
-min-width: 60px;
-}
+
+/* Estilo de efeito de desvanecimento */
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
-@media (max-width: 768px) {
-h1,h2 {
-font-size: 10px;
-}
-h1{
-margin-top: 10%;
-}
-/* .tabela-flex-header, .tabela-flex-row {
-flex-direction: column;
-align-items: stretch;
-} */
-
-.small-col{
-min-width: 0%;
-max-width: 20px;
-text-align: center;
-}
-.larger-col{
-min-width: 50px;
-max-width: 50px;
-}
-.inf{
-width: 5px;
-height: 5px;
-}
-.inf2{
-width: 5px;
-height: 5px;
-}
-.inf3{
-width: 5px;
-height: 5px;
-}
-.inf4{
-width: 5px;
-height: 5px;
-}
-.grupo-header{
-font-size: 10px;
-}
-#tabela-wrapper{
-width: 100%;
-}
-.tabela-flex-header > div, .tabela-flex-row > div{
-padding: 0px;
-margin: 0px;
-}
-.time-info{
-display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-width: 80px; /* Largura mínima */
-    min-height: 8px;
-    max-width: 100px;
-    max-height: 20px;
-    overflow: hidden;
-}
-.tabela-flex-header {
-font-size: 10px;
+.fade-in.visible {
+    opacity: 1;
 }
 
-.logo-time {
-max-width: 10px;
-max-height: 10px;
-margin-left: 1px;
-margin-right: 1px;
+/* Estilo do carregamento */
+#carregamento {
+    display: block;
+    text-align: center;
+    padding: 20px;
+}
+/* Media Queries */
+@media (min-width: 350px) and (max-width: 1000px) {
+    h1{
+        font-size: 16px;
+        margin: none;
+    }
+    .larger-col {
+        min-width: 50px;
+        max-width: 50px;
+        font-size: 8px;
+    }
+
+    .inf, .inf2, .inf3, .inf4 {
+        width: 5px;
+        height: 5px;
+    }
+
+    .grupo-header {
+        font-size: 10px;
+    }
+
+    #tabela-wrapper {
+        width: 100%;
+        background-color: none;
+        border: none;
+        box-shadow: none;
+        padding: none;
+    }
+
+    #legenda-simbolos {
+        width: 70%;
+        max-height: 30%;
+        background-color: rgba(245, 222, 179, 0.116);
+    }
+
+    .descricao {
+        font-size: 9px;
+        margin: none;
+    }
+
+    .simbolo {
+        width: 9px;
+        height: 9px;
+        margin: none;
+    }
+
+    .tabela-flex-header > div, .tabela-flex-row > div {
+        padding: 0px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .time-info {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-width: 80px; /* Largura mínima */
+        min-height: 8px;
+        max-width: 200px;
+        max-height: 20px;
+        overflow: hidden;
+    }
+
+    .tabela-flex-header {
+        font-size: 10px;
+    }
+
+    .logo-time {
+        margin-left: 2px;
+        margin-right: 4px;
+        min-width: 20px;
+        max-width: 20px;
+        max-height: 20px;
+        min-height: 20px;
+    }
+
+    .posicao_num {
+        font-size: 10px;
+        margin-left: 4px;
+        margin-right: 0px;
+    }
+
+    .time-name {
+        font-size: 7px;
+        min-width: 100px;
+        height: 70px;
+        max-width: 100px;
+    }
+
+    h4 {
+        font-size: 7px;
+    }
 }
 
-.posicao_num {
-font-size: 1em;
-margin-left: 0px;
-margin-right: 0px;
-}
+/* teste */
+@media (min-width: 350px) and (max-width: 1000px){
+    .small-col {
+        min-width: 0%;
+        max-width: 100px;
+        text-align: center;
+        font-size: 8px;
+    }
+    .clube {
+        min-width: 80px; /* Largura mínima */
+        max-width: auto;
+    }
 
-.time-name {
-font-size: 7px;
-min-width: 10px;
-max-width: 30px;
 }
-.clube{
-    min-width: 70px; /* Largura mínima */
-    max-width: 100px;
-}
-}
-
-@media (max-width: 480px) {
-h1 {
-font-size: 10px;
-}
-
-.tabela-flex-header, .tabela-flex-row {
-flex-direction: center;
-align-items: stretch;
-}
-
-.small-col, .larger-col {
-min-width:23px;
-text-align: center;
-font-size: 7px;
-}
-
-.logo-time {
-max-width: 10px;
-max-height: 10px;
-}
-
-.posicao_num {
-font-size: 10px;
-}
-
-.time-name {
-font-size: 10px;
-}
-}
-
-        /* Adicione o CSS para o efeito de desvanecimento */
-        .fade-in {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-        }
-        .grupo-container {
-            margin-bottom: 20px;
-        }
-        #carregamento {
-            display: block;
-            text-align: center;
-            padding: 20px;
-        }

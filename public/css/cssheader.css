@@ -53,31 +53,3 @@ header{
     transition: 0.3s;
 }
 
-@media only screen and (max-width: 768px) {
-    header {
-        height: auto; /* Altura automática para ajustar ao conteúdo */
-        padding: 10px; /* Espaçamento interno menor */
-        flex-direction: column; /* Ajusta para uma coluna */
-        align-items: center; /* Centraliza os itens */
-    }
-
-    #Icon {
-        width: 80px; /* Reduz o tamanho do ícone */
-        height: 80px; /* Reduz o tamanho do ícone */
-        margin-bottom: 10px; /* Espaçamento inferior para separar do título */
-    }
-
-    #titulo {
-        font-size: 1.5em; /* Tamanho de fonte maior para o título */
-        margin-bottom: 10px; /* Espaçamento inferior para separar do link de cadastro */
-    }
-
-    .cadastro {
-        margin-right: 0; /* Remove a margem direita */
-    }
-
-    .cadastro a {
-        padding: 10px 15px; /* Reduz o padding do link de cadastro */
-        font-size: 0.9em; /* Reduz o tamanho da fonte do link de cadastro */
-    }
-}

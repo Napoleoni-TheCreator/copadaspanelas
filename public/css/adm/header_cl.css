@@ -101,7 +101,7 @@ body {
 .theme-toggle img {
     height: 50px; /* Ajuste o tamanho conforme necessário */
 }
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .containerr {
         flex-direction: column;
         align-items: flex-start;
@@ -148,4 +148,4 @@ body {
     .theme-toggle img {
         height: 40px;
     }
-}
+} */
