@@ -171,3 +171,9 @@ h3 {
 iframe {
     display: none;
 }
+
+@media screen and (max-width: 768px) {
+    .form-container{
+        display: block;
+    }
+}
