@@ -1,15 +1,16 @@
 
 html, body {
-    height: 100%;
+    height: none;
     margin: 0;
 }
 
 body {
     display: flex;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     font-family: Arial, sans-serif;
-    background-color: rgb(218, 215, 215);
+    background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
     background-size: cover;
     user-select: none;
 }
@@ -42,6 +43,9 @@ select {
     font-family: Arial, sans-serif;
     font-size: 16px;
 }
+select {
+    width: 103%;
+}
 input[type="submit"] {
     background-color: #c60909;
     color: #fff;
@@ -57,6 +61,7 @@ input[type="submit"]:hover {
 /* Estilos padrão para o formulário */
 .formulario {
     display: flex;
+    min-width: 60%;
     margin-bottom: 5%;
     height: auto;
     justify-content: center;
