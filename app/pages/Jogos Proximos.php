@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -23,7 +27,7 @@
     function exibirProximosJogosFaseGrupos($numeroDeJogos = 3)
     {
         include '../config/conexao.php';
-    
+
         // Consulta SQL para obter os próximos jogos da fase de grupos
         $sqlJogos = "
             SELECT j.nome_timeA AS timeA, j.nome_timeB AS timeB, t1.logo AS logoA, t2.logo AS logoB, j.data_jogo
@@ -33,29 +37,29 @@
             ORDER BY j.data_jogo ASC
             LIMIT ?
         ";
-    
+
         $stmt = $conn->prepare($sqlJogos);
         if ($stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($conn->error));
         }
-    
+
         $stmt->bind_param("i", $numeroDeJogos);
         $stmt->execute();
         $result = $stmt->get_result();
-    
+
         $jogos = [];
         while ($row = $result->fetch_assoc()) {
             $jogos[] = $row;
         }
-    
+
         $stmt->close();
         $conn->close();
-    
+
         return $jogos;
     }
-    
+
     $proximosJogos = exibirProximosJogosFaseGrupos();
-    
+
     ?>
 
 
@@ -64,13 +68,10 @@
         <section class="transmit">
             <div id="player"></div>
             <?php
-            // Verifica se o usuário é um administrador 
-            $usuario_eh_admin = true; // Você deve substituir isso pela lógica real de verificação
-            
-            if ($usuario_eh_admin) {
-                // Se o usuário for um administrador, exiba o botão "Adicionar link"
+            if (isset($_SESSION['admin_id'])) {
                 echo '<button class="adc_live">Adicionar live</button>';
-            } ?>
+            }
+            ?>
         </section>
         <h1 style="padding-left: 20px;">Jogos Proximos</h1>
         <section class="nxtGames">
@@ -80,27 +81,27 @@
             //include 'obter_proximos_confrontos.php';
             
             $proximosJogos = exibirProximosJogosFaseGrupos();
-foreach ($proximosJogos as $jogo):
-    ?>
-    <div class="jogos">
-        <div class="jogos-team1">
-            <div class="spc-logo">
-                <img src="data:image/jpeg;base64,<?= base64_encode($jogo['logoA']) ?>" alt="Logo do time A">
-            </div>
-            <p><?= htmlspecialchars($jogo['timeA']) ?></p>
-        </div>
-        <p id="versus">X</p>
-        <div class="jogos-team2">
-            <div class="spc-logo">
-                <img src="data:image/jpeg;base64,<?= base64_encode($jogo['logoB']) ?>" alt="Logo do time B">
-            </div>
-            <p><?= htmlspecialchars($jogo['timeB']) ?></p>
-        </div>
-        <div class="situation">
-            <h1>Jogo começa em: <?= date('d/m/Y H:i', strtotime($jogo['data_jogo'])) ?></h1>
-        </div>
-    </div>
-<?php endforeach; ?>
+            foreach ($proximosJogos as $jogo):
+                ?>
+                <div class="jogos">
+                    <div class="jogos-team1">
+                        <div class="spc-logo">
+                            <img src="data:image/jpeg;base64,<?= base64_encode($jogo['logoA']) ?>" alt="Logo do time A">
+                        </div>
+                        <p><?= htmlspecialchars($jogo['timeA']) ?></p>
+                    </div>
+                    <p id="versus">X</p>
+                    <div class="jogos-team2">
+                        <div class="spc-logo">
+                            <img src="data:image/jpeg;base64,<?= base64_encode($jogo['logoB']) ?>" alt="Logo do time B">
+                        </div>
+                        <p><?= htmlspecialchars($jogo['timeB']) ?></p>
+                    </div>
+                    <div class="situation">
+                        <h1>Jogo começa em: <?= date('d/m/Y H:i', strtotime($jogo['data_jogo'])) ?></h1>
+                    </div>
+                </div>
+            <?php endforeach; ?>
 
         </section>
         <h2 id="desgracinha">Ultimos 3 Jogos</h1>
@@ -108,11 +109,15 @@ foreach ($proximosJogos as $jogo):
             <section class="old-games">
 
                 <div class="last4games" id="game1">
-                    <form action="../actions/lives/insta_save_link.php" method="post">
+                    <?php
+
+                    if (isset($_SESSION['admin_id'])) {
+                        echo '<form action="../actions/lives/insta_save_link.php" method="post">
                         <input name="instagram_link_1" id="1" placeholder="Digite o Link do Instagram" type="text">
                         <button type="submit">Enviar Formulário 1</button>
-                    </form>
-                    
+                    </form>';
+                    }
+                    ?>
                     <blockquote class="instagram-media" data-instgrm-captioned
                         data-instgrm-permalink="https://www.instagram.com/reel/<?php echo htmlspecialchars($code1); ?>/?utm_source=ig_embed&amp;utm_campaign=loading"
                         data-instgrm-version="14"
@@ -210,10 +215,15 @@ foreach ($proximosJogos as $jogo):
                     <script async src="//www.instagram.com/embed.js"></script>
                 </div>
                 <div class="last4games" id="game2">
-                    <form action="../actions/lives/insta_save_link.php" method="post">
+                    <?php
+
+                    if (isset($_SESSION['admin_id'])) {
+                        echo ' <form action="../actions/lives/insta_save_link.php" method="post">
                         <input name="instagram_link_2" id="2" placeholder="Digite o Link do Instagram" type="text">
                         <button type="submit">Enviar Formulário 1</button>
-                    </form>
+                    </form>';
+                    }
+                    ?>
                     <blockquote class="instagram-media" data-instgrm-captioned
                         data-instgrm-permalink="https://www.instagram.com/reel/<?php echo htmlspecialchars($code2); ?>/?utm_source=ig_embed&amp;utm_campaign=loading"
                         data-instgrm-version="14"
@@ -311,11 +321,17 @@ foreach ($proximosJogos as $jogo):
                     <script async src="//www.instagram.com/embed.js"></script>
                 </div>
                 <div class="last4games" id="game3">
+                    <?php
+
+                    if (isset($_SESSION['admin_id'])) {
+                        echo '
                     <form action="../actions/lives/insta_save_link.php" method="post">
-                        <input name="instagram_link_3" id="3"  placeholder="Digite o Link do Instagram" type="text">
+                        <input name="instagram_link_3" id="3" placeholder="Digite o Link do Instagram" type="text">
                         <button type="submit">Enviar Formulário 1</button>
                     </form>
-
+';
+                    }
+                    ?>
 
 
                     <blockquote class="instagram-media" data-instgrm-captioned
