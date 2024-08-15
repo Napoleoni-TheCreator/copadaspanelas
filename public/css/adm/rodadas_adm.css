@@ -289,7 +289,12 @@ button#cancel-btn {
     color: white;
 }
 /* Ajustes responsivos */
-@media (max-width: 768px) { 
+@media (max-width: 770px) { 
+.time_teste{
+    width: auto;
+    padding: none;
+}
+
 .modal-content {
 width: 90%; 
 max-width: 400px; 

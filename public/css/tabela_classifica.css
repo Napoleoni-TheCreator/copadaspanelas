@@ -295,6 +295,9 @@ body.dark-mode #legenda-simbolos {
     text-align: center;
     padding: 20px;
 }
+h1{
+    margin-top: 80px;
+}
 /* Media Queries */
 @media (min-width: 350px) and (max-width: 1000px) {
     h1{
@@ -306,7 +309,6 @@ body.dark-mode #legenda-simbolos {
         max-width: 50px;
         font-size: 8px;
     }
-
     .inf, .inf2, .inf3, .inf4 {
         width: 5px;
         height: 5px;
