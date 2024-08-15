@@ -21,6 +21,7 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
     <title>Tabela de Classificação</title>
     <link rel="stylesheet" href="../../../../public/css/tabela_classifica.css">
     <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
 </head>
 <body>
 <header class="header">
@@ -274,5 +275,8 @@ function gerarUltimosJogos($timeId) {
 
     document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
 </script>
+<?php 
+// include "../../app/pages/footer.php";
+?>
 </body>
 </html>
