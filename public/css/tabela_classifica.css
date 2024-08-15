@@ -3,8 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-/* Estilo do body */
 body {
     display: flex;
     justify-content: center;
@@ -15,7 +13,6 @@ body {
     user-select: none;
 }
 
-/* Estilo do wrapper da tabela */
 #tabela-wrapper {
     background-color: rgba(255, 255, 255, 0);
     padding: 20px;

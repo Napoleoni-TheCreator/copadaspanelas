@@ -128,7 +128,7 @@ $numTimesToAdd = isset($_POST['num_times']) ? (int)$_POST['num_times'] : 1;
 <header class="header">
         <div class="containerr">
             <div class="logo">
-                <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
             </div>
             <nav class="nav-icons">
             <div class="nav-item">

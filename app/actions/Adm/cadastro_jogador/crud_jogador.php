@@ -112,7 +112,7 @@ $conn->close();
 <header class="header">
         <div class="containerr">
             <div class="logo">
-                <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
             </div>
             <nav class="nav-icons">
             <div class="nav-item">

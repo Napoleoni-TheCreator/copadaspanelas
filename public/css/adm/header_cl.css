@@ -15,7 +15,7 @@ body {
     z-index: 1000; /* Garantir que o header esteja acima de outros elementos */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra ao cabeçalho */
     user-select: none;
-}
+    background: linear-gradient(90deg, rgb(214, 0, 0),rgb(156, 0, 0));}
 
 .containerr {
     display: flex;
