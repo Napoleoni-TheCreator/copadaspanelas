@@ -32,7 +32,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Executa a consulta
                     if ($stmt->execute()) {
-                        echo "Código do Instagram no Formulário $i atualizado com sucesso!<br>";
+                        if ($stmt->affected_rows === 0) {
+                            // Se nenhuma linha foi atualizada, insere um novo registro
+                            $stmt->close();
+                            $stmt = $conn->prepare("INSERT INTO linkinstagram (linklive, codinsta) VALUES (?, ?)");
+                            if ($stmt) {
+                                $stmt->bind_param("si", $code, $codinsta);
+                                if ($stmt->execute()) {
+                                    echo "Código do Instagram no Formulário $i inserido com sucesso!<br>";
+                                } else {
+                                    echo "Erro ao inserir o código do Instagram no Formulário $i: " . $stmt->error . "<br>";
+                                }
+                            } else {
+                                echo "Erro na preparação da consulta de inserção: " . $conn->error . "<br>";
+                            }
+                        } else {
+                            echo "Código do Instagram no Formulário $i atualizado com sucesso!<br>";
+                        }
                     } else {
                         echo "Erro ao atualizar o código do Instagram no Formulário $i: " . $stmt->error . "<br>";
                     }
