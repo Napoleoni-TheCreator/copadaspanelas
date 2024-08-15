@@ -8,6 +8,17 @@ function generateToken($length = 32) {
 
 // Inicia a sessão para usar flash messages
 session_start();
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: ./../../cadastro_adm/login.php");
+    exit();
+}
+
+include("../../cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 
 $response = [
     'success' => true,
@@ -132,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <header class="header">
     <div class="containerr">
         <div class="logo">
-            <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
         </div>
         <nav class="nav-icons">
             <div class="nav-item">

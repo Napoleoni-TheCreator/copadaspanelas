@@ -59,14 +59,8 @@ nav ul li ul.dropdown{
     left: 0;
     background-color: rgb(109, 0, 0);
     display: none;
-    width: 200px; /* Adjust width as needed */
+    width: 200px; 
     z-index: 999;
-    /*
-    width: 100%;
-    background-color: rgb(109, 0, 0);
-    position: absolute;
-    z-index: 999;
-    display: none;*/
 }
 
 nav ul li a:hover{
@@ -78,9 +72,6 @@ nav ul li:hover ul.dropdown{
     transition: 0.5s;
     display: block;
 }
-
-/* MAIN */
-
 
 main{
     height: auto;
@@ -101,7 +92,6 @@ main{
 .slideshow-container {
     position: relative;
     height: 100%;
-    /*max-width: 1000px;*/
     width: 100%;
     margin: auto;
     overflow: hidden;

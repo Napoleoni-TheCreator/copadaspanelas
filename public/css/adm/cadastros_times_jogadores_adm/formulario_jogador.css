@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
+    /* background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726)); */
     user-select: none;
 }
 h2{

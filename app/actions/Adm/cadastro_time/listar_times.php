@@ -92,7 +92,7 @@ $_SESSION['csrf_token'] = $csrf_token;
     <header class="header" id="header">
         <div class="containerr">
             <div class="logo">
-                <a href="../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
             </div>
             <nav class="nav-icons" id="nav-icons">
                 <div class="nav-item">

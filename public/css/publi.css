@@ -6,8 +6,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh; /* Garante que o corpo ocupe toda a altura da viewport */
-    overflow-y: auto; /* Habilita o scroll vertical quando necessário */
+    min-height: 100vh; 
+    overflow-y: auto; 
     user-select: none;
 }
 
