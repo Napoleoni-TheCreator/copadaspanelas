@@ -9,12 +9,14 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100%;
-    background: linear-gradient(to top, #ff73008c, rgba(255, 4, 4, 0.726));
+    /* background: linear-gradient(to top, #ff73008c, rgba(255, 4, 4, 0.726)); */
+    background-color: #f0f8ff;
     user-select: none;
 }
 
 #tabela-wrapper {
-    background-color: rgba(255, 255, 255, 0);
+    /* background-color: rgba(255, 255, 255, 0); */
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);

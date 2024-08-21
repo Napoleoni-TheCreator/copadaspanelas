@@ -13,6 +13,12 @@ body {
     font-family: Arial, sans-serif;
 }
 
+h1{
+  font-size: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
 /* Estilos do Contêiner Principal */
 .container {
     display: flex;

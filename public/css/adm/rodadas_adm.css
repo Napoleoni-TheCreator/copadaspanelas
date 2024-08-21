@@ -6,7 +6,8 @@ body {
     align-items: center;
     height: 100%;
     margin: 0;
-    background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
+    /* background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603)); */
+    background-color: #f0f8ff;
     color: #333;
     transition: background-color 0.3s, color 0.3s;
     user-select: none;
@@ -18,13 +19,10 @@ body {
 }
 
 h1 {
-    font-size: 40px;
-    margin-top: 6%;
+    font-size: 30px;
+    margin-top: 5%;
+    margin-bottom: 10px;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    white-space: nowrap; /* Evita que o texto quebre em várias linhas */
-    overflow: hidden; /* Esconde o texto que não cabe na área visível */
-    animation: blink-caret .75s step-end infinite; /* Opcional: animação de cursor */
 }
 
 @keyframes blink-caret {
@@ -53,7 +51,7 @@ h1 {
     justify-content: center;
     margin-top: 1%;
     margin-bottom: 1%;
-    /* background-color: #ffffff8e; */
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     border: 1px solid black;
@@ -103,7 +101,7 @@ tr {
 }
 .rodada-container {
     width: 100%;
-    background-color: #ffffff25;
+    /* background-color: white; */
     margin-bottom: 20px;
     /* padding: 10px; */
     /* border-radius: 5px;
@@ -116,10 +114,6 @@ tr {
 .dark-mode .rodada-container {
     background-color: #2c2c2c;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-}
-.rodada-container:hover {
-    transform: scale(1.02);
-    /* box-shadow: 0 0 10px hsl(0, 100%, 50%); */
 }
 .dark-mode .rodada-container:hover {
 
@@ -325,6 +319,7 @@ width: 95%;
 margin-top: 100%;
 max-width: 200px; 
 }
+
 .time-name{
 font-size: 10px;
 }
@@ -340,15 +335,28 @@ padding: 6px 12px;
 font-size: 0.8rem; 
 margin-bottom: 5%;
 }
-
+#rodadas-wrapper{
+    align-items: center;
+    justify-content: center;
+}
 .rodada-container {
-width: 90%;
+width: auto;
 margin-left: 10px;
 padding: 8px;
 }
 h1{
 font-size: 12px;
 margin-top: 20%;
+}
+.time-name {
+    min-width: 50px;
+    font-size: 10px;
+    max-width: 100px;
+}
+.time-name_b {
+    font-size: 10px;
+    min-width: 50px;
+    max-width: 100px;
 }
 }
 /* Setas de navegação */
@@ -363,13 +371,13 @@ margin-top: 20%;
     z-index: 10; /* Garante que as setas estejam sobre outros conteúdos */
 }
 .nav-arrow.left {
-    left: -60px; /* Ajuste a posição da seta esquerda */
+    left: -5px; /* Ajuste a posição da seta esquerda */
 }
 
 .nav-arrow.right {
-    right: -60px; /* Ajuste a posição da seta direita */
+    right: -5px; /* Ajuste a posição da seta direita */
 }
 .nav-arrow img {
-    width: 40px;
+    width: 30px;
 }
 
