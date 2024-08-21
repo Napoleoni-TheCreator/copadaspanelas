@@ -146,9 +146,9 @@ function exibirRodadas() {
                     }
                     echo '<span class="time-name">' . $timeA_nome . '</span>';
                     echo '</td>';
-                    echo '<td> <input type="number" id="input" name="golsA_' . $jogoId . '" value="' . $golsA . '"> </td>';
+                    echo '<td> <input type="number" id="input" min="0" step="1" name="golsA_' . $jogoId . '" value="' . $golsA . '"> </td>';
                     echo '<td> X </td>';
-                    echo '<td> <input type="number" id="input" name="golsB_' . $jogoId . '" value="' . $golsB . '"> </td>';
+                    echo '<td> <input type="number" id="input" min="0" step="1" name="golsB_' . $jogoId . '" value="' . $golsB . '"> </td>';
                     echo '<td class="time-row">';
                     if ($logoB) {
                         echo '<img src="' . $logoB . '" class="logo-time">';
