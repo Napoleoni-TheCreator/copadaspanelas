@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confrontos'])) {
     foreach ($confrontos as $confrontoId => $dados) {
         $golsMarcadosTimeA = intval($dados['gols_marcados_timeA']);
         $golsMarcadosTimeB = intval($dados['gols_marcados_timeB']);
-
         // Calcula os gols contra
         $golsContraTimeA = $golsMarcadosTimeB;
         $golsContraTimeB = $golsMarcadosTimeA;

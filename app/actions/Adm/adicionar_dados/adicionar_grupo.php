@@ -13,7 +13,11 @@ if (!isset($_SESSION['admin_id'])) {
 include("../../cadastro_adm/session_check.php");
 
 $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+// Conectar ao banco de dados
+include '../../../config/conexao.php';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,11 +27,11 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
 </head>
 <body>
 <header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-            </div>
-            <nav class="nav-icons">
+    <div class="containerr">
+        <div class="logo">
+            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+        </div>
+        <nav class="nav-icons">
             <div class="nav-item">
                 <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
                 <span>Rodadas</span>
@@ -38,11 +42,11 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             </div>
             <div class="nav-item">
                 <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                <span>editar times</span>
+                <span>Editar times</span>
             </div>
             <div class="nav-item">
                 <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                <span>editar finais</span>
+                <span>Editar finais</span>
             </div>
             <div class="nav-item">
                 <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
@@ -57,101 +61,125 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                 <span>Adicionar times</span>
             </div>
             <div class="nav-item">
-                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
+                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="Cadastro novos adm"></a>
                 <span>Adicionar outro adm</span>
             </div>
         </nav>
 
-            <div class="theme-toggle">
-                <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
-            </div>
+        <div class="theme-toggle">
+            <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
         </div>
-    </header>
-    <script>
-        // Função para alternar o modo escuro
-        function toggleDarkMode() {
-            var element = document.body;
-            var icon = document.getElementById('theme-icon');
-            element.classList.toggle("dark-mode");
+    </div>
+</header>
+<script>
+    // Função para alternar o modo escuro
+    function toggleDarkMode() {
+        var element = document.body;
+        var icon = document.getElementById('theme-icon');
+        element.classList.toggle("dark-mode");
 
-            // Atualizar o ícone conforme o tema
-            if (element.classList.contains("dark-mode")) {
-                localStorage.setItem("theme", "dark");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
-            } else {
-                localStorage.setItem("theme", "light");
-                icon.src = '../../../../public/img/header/modoescuro.svg';
-            }
+        // Atualizar o ícone conforme o tema
+        if (element.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+            icon.src = '../../../../public/img/header/modoclaro.svg';
+        } else {
+            localStorage.setItem("theme", "light");
+            icon.src = '../../../../public/img/header/modoescuro.svg';
         }
+    }
 
-        // Aplicar o tema salvo ao carregar a página
-        document.addEventListener("DOMContentLoaded", function() {
-            var theme = localStorage.getItem("theme");
-            var icon = document.getElementById('theme-icon');
-            if (theme === "dark") {
-                document.body.classList.add("dark-mode");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
+    // Aplicar o tema salvo ao carregar a página
+    document.addEventListener("DOMContentLoaded", function() {
+        var theme = localStorage.getItem("theme");
+        var icon = document.getElementById('theme-icon');
+        if (theme === "dark") {
+            document.body.classList.add("dark-mode");
+            icon.src = '../../../../public/img/header/modoclaro.svg';
+        } else {
+            icon.src = '../../../../public/img/header/modoescuro.svg';
+        }
+    });
+
+    // Adiciona o evento de clique para alternar o tema
+    document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
+</script>
+<div class="form-container">
+    <h1>Adicionar Grupo</h1>
+    <form id="formConfiguracao" method="post" action="">
+        <fieldset>
+            <legend>Configuração dos Grupos:</legend>
+            <label for="equipesPorGrupo">Número de equipes por grupo (máx 16):</label>
+            <input type="number" id="equipesPorGrupo" name="equipesPorGrupo" min="1" max="16" required><br>
+            <label for="numeroGrupos">Número de grupos (máx 18):</label>
+            <input type="number" id="numeroGrupos" name="numeroGrupos" min="1" max="18" required><br>
+            <label for="faseFinal">Fase Final:</label>
+            <select id="faseFinal" name="faseFinal" required>
+                <option value="oitavas">Oitavas de Final</option>
+                <option value="quartas">Quartas de Final</option>
+            </select><br>
+            <button type="submit">Calcular e Criar Grupos</button>
+        </fieldset>
+    </form>
+</div>
+
+<div id="mensagem" class="success-message">
+    <!-- Mensagens de sucesso ou erro -->
+</div>
+<div id="grupos">
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['equipesPorGrupo']) && isset($_POST['numeroGrupos']) && isset($_POST['faseFinal'])) {
+        $equipesPorGrupo = intval($_POST['equipesPorGrupo']);
+        $numeroGrupos = intval($_POST['numeroGrupos']);
+        $faseFinal = $_POST['faseFinal'];
+
+        $MAX_EQUIPES_POR_GRUPO = 16;
+        $MAX_GRUPOS = 18;
+        $MIN_TIMES_OITAVAS = 16;
+        $MIN_TIMES_QUARTAS = 8;
+
+        if ($equipesPorGrupo > $MAX_EQUIPES_POR_GRUPO || $numeroGrupos > $MAX_GRUPOS) {
+            echo "<p class='error-message'>O número máximo de equipes por grupo é 16 e o número máximo de grupos é 18.</p>";
+        } else {
+            $totalEquipes = $equipesPorGrupo * $numeroGrupos;
+
+            if (($faseFinal === 'oitavas' && $totalEquipes < $MIN_TIMES_OITAVAS) || 
+                ($faseFinal === 'quartas' && $totalEquipes < $MIN_TIMES_QUARTAS)) {
+                $minimo = ($faseFinal === 'oitavas') ? $MIN_TIMES_OITAVAS : $MIN_TIMES_QUARTAS;
+                echo "<p class='error-message'>Não é possível criar grupos. O número total de equipes deve ser pelo menos $minimo para a fase final selecionada.</p>";
             } else {
-                icon.src = '../../../../public/img/header/modoescuro.svg';
-            }
-        });
+                // Condições para verificar se a divisão é exata para a fase final
+                if ($faseFinal === 'oitavas') {
+                    if (($totalEquipes % 16) !== 0) {
+                        echo "<p class='error-message'>Para a fase de oitavas, o número total de equipes deve ser múltiplo de 16.</p>";
+                    } elseif (($numeroGrupos * $equipesPorGrupo) % 8 !== 0) {
+                        echo "<p class='error-message'>Número de grupos ou equipes por grupo não permite uma divisão exata para a fase de oitavas.</p>";
+                    } else {
+                        try {
+                            // Desativar restrições de chave estrangeira (necessário para usar TRUNCATE em algumas configurações)
+                            $conn->query("SET FOREIGN_KEY_CHECKS = 0");
 
-        // Adiciona o evento de clique para alternar o tema
-        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
-    </script>
-    <div class="form-container">
-        <h1>Adicionar Grupo</h1>
-        <form id="formConfiguracao" method="post" action="">
-            <fieldset>
-                <legend>Configuração dos Grupos:</legend>
-                <label for="equipesPorGrupo">Número de equipes por grupo (máx 16):</label>
-                <input type="number" id="equipesPorGrupo" name="equipesPorGrupo" min="1" max="16" required><br>
-                <label for="numeroGrupos">Número de grupos (máx 18):</label>
-                <input type="number" id="numeroGrupos" name="numeroGrupos" min="1" max="18" required><br>
-                <label for="faseFinal">Fase Final:</label>
-                <select id="faseFinal" name="faseFinal" required>
-                    <option value="oitavas">Oitavas de Final</option>
-                    <option value="quartas">Quartas de Final</option>
-                </select><br>
-                <button type="submit">Calcular e Criar Grupos</button>
-            </fieldset>
-        </form>
-    </div>
+                            // Limpar tabelas
+                            $tables = [
+                                'jogadores',
+                                'times',
+                                'final',
+                                'quartas_de_final',
+                                'oitavas_de_final',
+                                'semifinais',
+                                'jogos',
+                                'jogos_fase_grupos',
+                                'grupos'
+                            ];
 
-    <div id="mensagem" class="success-message">
-        <!-- Mensagens de sucesso ou erro -->
-    </div>
-    <div id="grupos">
-        <?php
-        include '../../../config/conexao.php';
+                            foreach ($tables as $table) {
+                                $sql = "TRUNCATE TABLE $table";
+                                $conn->query($sql);
+                            }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['equipesPorGrupo']) && isset($_POST['numeroGrupos']) && isset($_POST['faseFinal'])) {
-            $equipesPorGrupo = intval($_POST['equipesPorGrupo']);
-            $numeroGrupos = intval($_POST['numeroGrupos']);
-            $faseFinal = $_POST['faseFinal'];
+                            // Reativar restrições de chave estrangeira
+                            $conn->query("SET FOREIGN_KEY_CHECKS = 1");
 
-            $MAX_EQUIPES_POR_GRUPO = 16;
-            $MAX_GRUPOS = 18;
-            $MIN_TIMES_OITAVAS = 16;
-            $MIN_TIMES_QUARTAS = 8;
-
-            if ($equipesPorGrupo > $MAX_EQUIPES_POR_GRUPO || $numeroGrupos > $MAX_GRUPOS) {
-                echo "<p class='error-message'>O número máximo de equipes por grupo é 16 e o número máximo de grupos é 18.</p>";
-            } else {
-                $totalEquipes = $equipesPorGrupo * $numeroGrupos;
-
-                if (($faseFinal === 'oitavas' && $totalEquipes < $MIN_TIMES_OITAVAS) || 
-                    ($faseFinal === 'quartas' && $totalEquipes < $MIN_TIMES_QUARTAS)) {
-                    $minimo = ($faseFinal === 'oitavas') ? $MIN_TIMES_OITAVAS : $MIN_TIMES_QUARTAS;
-                    echo "<p class='error-message'>Não é possível criar grupos. O número total de equipes deve ser pelo menos $minimo para a fase final selecionada.</p>";
-                } else {
-                    // Condições para verificar se a divisão é exata para a fase final
-                    if ($faseFinal === 'oitavas') {
-                        if (($totalEquipes % 16) !== 0) {
-                            echo "<p class='error-message'>Para a fase de oitavas, o número total de equipes deve ser múltiplo de 16.</p>";
-                        } elseif (($numeroGrupos * $equipesPorGrupo) % 8 !== 0) {
-                            echo "<p class='error-message'>Número de grupos ou equipes por grupo não permite uma divisão exata para a fase de oitavas.</p>";
-                        } else {
+                            // Criar grupos
                             $sql = "REPLACE INTO configuracoes (id, equipes_por_grupo, numero_grupos, fase_final) VALUES (1, ?, ?, ?)";
                             $stmt = $conn->prepare($sql);
                             $stmt->bind_param("iis", $equipesPorGrupo, $numeroGrupos, $faseFinal);
@@ -165,13 +193,49 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                                 $conn->query($sql);
                             }
                             echo "<p class='success-message'>Grupos criados com sucesso!</p>";
+                        } catch (Exception $e) {
+                            echo "<p class='error-message'>Erro ao deletar dados: " . $e->getMessage() . "</p>";
                         }
-                    } elseif ($faseFinal === 'quartas') {
-                        if (($totalEquipes % 2) !== 0) {
-                            echo "<p class='error-message'>Para a fase de quartas, o número total de equipes deve ser múltiplo de 8.</p>";
-                        } elseif (($numeroGrupos * $equipesPorGrupo) % 2 !== 0) {
-                            echo "<p class='error-message'>Número de grupos ou equipes por grupo não permite uma divisão exata para a fase de quartas.</p>";
-                        } else {
+                    }
+                } elseif ($faseFinal === 'quartas') {
+                    if (($totalEquipes % 8) !== 0) {
+                        echo "<p class='error-message'>Para a fase de quartas, o número total de equipes deve ser múltiplo de 8.</p>";
+                    } elseif (($numeroGrupos * $equipesPorGrupo) % 2 !== 0) {
+                        echo "<p class='error-message'>Número de grupos ou equipes por grupo não permite uma divisão exata para a fase de quartas.</p>";
+                    } else {
+                        try {
+                            // Desativar restrições de chave estrangeira (necessário para usar TRUNCATE em algumas configurações)
+                            $conn->query("SET FOREIGN_KEY_CHECKS = 0");
+
+                            // Limpar tabelas
+                            $tables = [
+                                'jogadores',
+                                'posicoes_jogadores',
+                                'times',
+                                'final',
+                                'quartas_de_final',
+                                'oitavas_de_final',
+                                'semifinais',
+                                'jogos',
+                                'jogos_finais',
+                                'jogos_fase_grupos',
+                                'grupos',
+                                'final_confrontos',
+                                'oitavas_de_final_confrontos',
+                                'quartas_de_final_confrontos',
+                                'semifinais_confrontos',
+                                'final_confrontos'
+                            ];
+
+                            foreach ($tables as $table) {
+                                $sql = "TRUNCATE TABLE $table";
+                                $conn->query($sql);
+                            }
+
+                            // Reativar restrições de chave estrangeira
+                            $conn->query("SET FOREIGN_KEY_CHECKS = 1");
+
+                            // Criar grupos
                             $sql = "REPLACE INTO configuracoes (id, equipes_por_grupo, numero_grupos, fase_final) VALUES (1, ?, ?, ?)";
                             $stmt = $conn->prepare($sql);
                             $stmt->bind_param("iis", $equipesPorGrupo, $numeroGrupos, $faseFinal);
@@ -185,14 +249,17 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
                                 $conn->query($sql);
                             }
                             echo "<p class='success-message'>Grupos criados com sucesso!</p>";
+                        } catch (Exception $e) {
+                            echo "<p class='error-message'>Erro ao deletar dados: " . $e->getMessage() . "</p>";
                         }
                     }
                 }
             }
         }
+    }
 
-        $conn->close();
-        ?>
-    </div>
+    $conn->close();
+    ?>
+</div>
 </body>
 </html>
