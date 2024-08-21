@@ -1,4 +1,5 @@
 /* CSS - styles.css */
+
 body {
     display: flex;
     flex-direction: column;
@@ -323,7 +324,7 @@ max-width: 200px;
 font-size: 10px;
 }
 .time_teste{
-padding: 0px;
+padding: 2px;
 margin: none;
 }
 td{
@@ -337,6 +338,7 @@ margin-bottom: 5%;
 #rodadas-wrapper{
     align-items: center;
     justify-content: center;
+    margin-bottom: 20%;
 }
 .rodada-container {
 width: auto;
@@ -345,7 +347,8 @@ padding: 8px;
 }
 h1{
 font-size: 12px;
-margin-top: 20%;
+margin-top: 10%;
+margin-bottom:10%;
 }
 .time-name {
     min-width: 50px;

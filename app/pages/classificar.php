@@ -16,7 +16,6 @@
             flex-direction: column;
             height: 100%;
             margin: 0;
-            background-color: #f0f8ff;
             font-family: "Times New Roman", serif;
         }
 

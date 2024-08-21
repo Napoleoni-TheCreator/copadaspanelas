@@ -70,6 +70,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Estatísticas dos Jogadores</title>
+    <link rel="stylesheet" href="../../public/css/cssfooter.css">
     <style>
         * {
             /* margin: 0; */
@@ -83,7 +84,6 @@ $conn->close();
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #f0f8ff;
             font-family: "Times New Roman", serif;
         }
 
@@ -159,7 +159,7 @@ $conn->close();
         .index {
             font-size: 18px;
             font-weight: bold;
-            margin-right: 10px;
+            /* margin-right: 10px; */
             text-align: center;
             width: 30px;
         }
@@ -211,6 +211,25 @@ $conn->close();
         }
         #tituloh1{
             margin-top: 5%;
+        }
+        @media (max-width: 768px) {
+            body{
+                font-size: 18px;
+            }
+            #tituloh1 , .section h1{
+                font-size: 18px;
+            }
+            .player-card .info .name{
+                font-size: 12px;
+            }
+            .player-card img{
+                width: 30px;
+                height: 30px;
+            }
+            .container{
+                width: 95%;
+                padding: 10px;
+            }
         }
 
     </style>
@@ -317,5 +336,6 @@ $conn->close();
         document.body.classList.toggle('dark-mode');
     }
     </script>
+<?php include 'footer.php'?>  
 </body>
 </html>
