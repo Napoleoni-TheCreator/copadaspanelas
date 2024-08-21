@@ -71,7 +71,7 @@ function gerarCodigoAdm($conn) {
 
 // Verificar CSRF token
 if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    header('Location: cadastro_adm.php?error=token');
+    header('Location: ../../pages/adm/cadastro_adm.php?error=token');
     exit();
 }
 
@@ -82,12 +82,12 @@ $senha = $_POST['senha'];
 
 // Validar email
 if (!validarEmail($email)) {
-    header('Location: cadastro_adm.php?error=email');
+    header('Location: ../../pages/adm/cadastro_adm.php?error=email');
     exit();
 }
 
 if (!validarDominioEmail($email)) {
-    header('Location: cadastro_adm.php?error=dominio');
+    header('Location: ../../pages/adm/cadastro_adm.php?error=dominio');
     exit();
 }
 
@@ -108,17 +108,17 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
 if ($row['nome_existente'] > 0) {
-    header('Location: cadastro_adm.php?error=nome_existente');
+    header('Location: ../../pages/adm/cadastro_adm.php?error=nome_existente');
     exit();
 }
 
 if ($row['email_existente'] > 0) {
-    header('Location: cadastro_adm.php?error=email_existente');
+    header('Location: ../../pages/adm/cadastro_adm.php?error=email_existente');
     exit();
 }
 
 if ($row['senha_existente'] > 0) {
-    header('Location: cadastro_adm.php?error=senha_existente');
+    header('Location: ../../pages/adm/cadastro_adm.php?error=senha_existente');
     exit();
 }
 
@@ -135,10 +135,10 @@ $cod_adm = gerarCodigoAdm($conn);
 $stmt->bind_param("ssss", $cod_adm, $nome, $email, $senha_hash);
 
 if ($stmt->execute()) {
-    header('Location: cadastro_adm.php?success=1');
+    header('Location: ../../pages/adm/cadastro_adm.php?success=1');
     exit();
 } else {
-    header('Location: cadastro_adm.php?error=db');
+    header('Location: ../../pages/adm/cadastro_adm.php?error=db');
     exit();
 }
 ?>

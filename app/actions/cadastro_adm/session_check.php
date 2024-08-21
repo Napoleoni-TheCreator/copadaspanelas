@@ -5,7 +5,7 @@
 if (!isset($_SESSION['admin_id'])) {
     // Armazenar a URL de referência para redirecionar após o login
     $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
-    header("Location: login.php");
+    header("Location: ../../pages/adm/login.php");
     exit();
 }
 ?>

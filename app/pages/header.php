@@ -6,6 +6,6 @@
     <H1 id="titulo">COPA DAS PANELAS</H1>
 
     <div class="cadastro">
-        <a href="../actions/cadastro_adm/login.php" class="fas fa-user"></i> Login</a>
+        <a href="../pages/adm/login.php" class="fas fa-user"></i> Login</a>
     </div>
 </header>

@@ -1,15 +1,15 @@
 <?php
-include '../../../config/conexao.php';
+include '../../config/conexao.php';
 session_start();
 // Verifica se o usuário está autenticado e se é um administrador
 if (!isset($_SESSION['admin_id'])) {
     // Armazenar a URL de referência para redirecionar após o login
     $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
-    header("Location: ./../../cadastro_adm/login.php");
+    header("Location: login.php");
     exit();
 }
 
-include("../../cadastro_adm/session_check.php");
+include("../../actions/cadastro_adm/session_check.php");
 
 $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 
@@ -95,9 +95,9 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD Jogadores</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
-    <link rel="stylesheet" href="../../../../public/css/adm/cadastros_times_jogadores_adm/crud_jogador.css">
-    <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
+    <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/crud_jogador.css">
+    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
     <script>
         function populatePlayersList(timeId) {
             document.getElementById('selectedTimeId').value = timeId;
@@ -109,51 +109,7 @@ $conn->close();
     </script>
 </head>
 <body>
-<header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-            </div>
-            <nav class="nav-icons">
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
-                <span>Rodadas</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
-                <span>Classificação</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                <span>editar times</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                <span>editar finais</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
-                <span>Editar jogadores</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/header/grupo.svg" alt="Trophy Icon"></a>
-                <span>Criar grupos</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/header/adtime.svg" alt="Trophy Icon"></a>
-                <span>Adicionar times</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
-                <span>Adicionar outro adm</span>
-            </div>
-        </nav>
-
-            <div class="theme-toggle">
-                <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
-            </div>
-        </div>
-    </header>
+<?php require_once 'header_classificacao.php' ?>
     <script>
         // Função para alternar o modo escuro
         function toggleDarkMode() {
@@ -164,10 +120,10 @@ $conn->close();
             // Atualizar o ícone conforme o tema
             if (element.classList.contains("dark-mode")) {
                 localStorage.setItem("theme", "dark");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
+                icon.src = '../../../public/img/header/modoclaro.svg';
             } else {
                 localStorage.setItem("theme", "light");
-                icon.src = '../../../../public/img/header/modoescuro.svg';
+                icon.src = '../../../public/img/header/modoescuro.svg';
             }
         }
 
@@ -177,9 +133,9 @@ $conn->close();
             var icon = document.getElementById('theme-icon');
             if (theme === "dark") {
                 document.body.classList.add("dark-mode");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
+                icon.src = '../../../public/img/header/modoclaro.svg';
             } else {
-                icon.src = '../../../../public/img/header/modoescuro.svg';
+                icon.src = '../../../public/img/header/modoescuro.svg';
             }
         });
 
@@ -210,7 +166,7 @@ $conn->close();
                     <?php if ($player['imagem']): ?>
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($player['imagem']); ?>" class="player-image" alt="Imagem do Jogador">
                     <?php else: ?>
-                        <img src="../../../../public/images/default-player.png" class="player-image" alt="Imagem do Jogador">
+                        <img src="../../../public/images/default-player.png" class="player-image" alt="Imagem do Jogador">
                     <?php endif; ?>
                     <div class="player-details">
                         <strong>Nome:</strong> <?php echo htmlspecialchars($player['nome']); ?><br>
@@ -271,6 +227,6 @@ $conn->close();
         modal.find('#deleteForm').attr('action', '?delete_token=' + encodeURIComponent(token));
     });
 </script>
-    <?php include '../../../pages/footer.php' ?>
+    <?php include '../footer.php' ?>
 </body>
 </html>

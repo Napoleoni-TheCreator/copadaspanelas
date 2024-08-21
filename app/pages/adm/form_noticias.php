@@ -1,5 +1,5 @@
 <?php
-include '../../../config/conexao.php';
+include '../../config/conexao.php';
 
 function escapeString($conn, $string) {
     return mysqli_real_escape_string($conn, $string);
@@ -49,11 +49,11 @@ $noticias = $conn->query("SELECT * FROM noticias ORDER BY data_adicao DESC");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../../public/css/form_noticias.css">
+    <link rel="stylesheet" href="../../../public/css/form_noticias.css">
     <title>Administração de Notícias</title>
 </head>
 <body>
-    <header><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt=""></header>
+    <header><img src="../../../public/img/ESCUDO COPA DAS PANELAS.png" alt=""></header>
     <h1>Administração de Notícias</h1>
     <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" id="id">

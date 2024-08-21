@@ -6,11 +6,11 @@ session_start();
 if (!isset($_SESSION['admin_id'])) {
     // Armazenar a URL de referência para redirecionar após o login
     $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
-    header("Location: ./../../cadastro_adm/login.php");
+    header("Location: login.php");
     exit();
 }
 
-include("../../cadastro_adm/session_check.php");
+include("../../actions/cadastro_adm/session_check.php");
 
 $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 ?>
@@ -19,32 +19,12 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
 <head>
     <title>Rodadas das Fases de Grupo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../../../public/css/adm/rodadas_adm.css">
-    <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
-    <link rel="stylesheet" href="../../../../public/css/cssfooter.css">
+    <link rel="stylesheet" href="../../../public/css/adm/rodadas_adm.css">
+    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
 </head>
 <body>
-<header class="header">
-    <div class="containerr">
-        <div class="logo">
-            <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-        </div>
-        <nav class="nav-icons">
-            <!-- Navegação com ícones -->
-            <div class="nav-item"><a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a><span>Rodadas</span></div>
-            <div class="nav-item"><a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a><span>Classificação</span></div>
-            <div class="nav-item"><a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a><span>editar times</span></div>
-            <div class="nav-item"><a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a><span>editar finais</span></div>
-            <div class="nav-item"><a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a><span>Editar jogadores</span></div>
-            <div class="nav-item"><a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/header/grupo.svg" alt="Trophy Icon"></a><span>Criar grupos</span></div>
-            <div class="nav-item"><a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/header/adtime.svg" alt="Trophy Icon"></a><span>Adicionar times</span></div>
-            <div class="nav-item"><a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a><span>Adicionar outro adm</span></div>
-        </nav>
-        <div class="theme-toggle">
-            <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
-        </div>
-    </div>
-</header>
+<?php require_once 'header_classificacao.php' ?>
 <h1 id="dynamic-text">FASES DE GRUPO</h1>
 <script>
     // JavaScript - script.js
@@ -91,15 +71,15 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
     });
 </script>
 <div id="rodadas-wrapper">
-    <div class="nav-arrow left" onclick="previousRodada()"><img src="../../../../public/img/esquerda.svg" alt=""></div>
+    <div class="nav-arrow left" onclick="previousRodada()"><img src="../../../public/img/esquerda.svg" alt=""></div>
     <div class="table-container">
         <?php exibirRodadas(); ?>
     </div>
-    <div class="nav-arrow right" onclick="nextRodada()"><img src="../../../../public/img/direita.svg" alt=""></div>
+    <div class="nav-arrow right" onclick="nextRodada()"><img src="../../../public/img/direita.svg" alt=""></div>
 </div>
 <?php
 function exibirRodadas() {
-    include '../../../config/conexao.php';
+    include '../../config/conexao.php';
 
     $sqlRodadas = "SELECT DISTINCT rodada FROM jogos_fase_grupos ORDER BY rodada";
     $resultRodadas = $conn->query($sqlRodadas);
@@ -138,7 +118,7 @@ function exibirRodadas() {
             $resultConfrontos = $conn->query($sqlConfrontos);
 
             if ($resultConfrontos->num_rows > 0) {
-                echo '<form method="POST" action="../../funcoes/atualizar_gols.php" class="admin-only">';
+                echo '<form method="POST" action="../../actions/funcoes/atualizar_gols.php" class="admin-only">';
                 while ($rowConfronto = $resultConfrontos->fetch_assoc()) {
                     $jogoId = $rowConfronto['id'];
                     $timeA_nome = $rowConfronto['nome_timeA'];
@@ -241,7 +221,7 @@ function exibirRodadas() {
         isDarkMode = !isDarkMode;
         document.body.classList.toggle('dark-mode', isDarkMode);
         var themeIcon = document.getElementById('theme-icon');
-        themeIcon.src = isDarkMode ? '../../../../public/img/header/modoclaro.svg' : '../../../../public/img/header/modoescuro.svg';
+        themeIcon.src = isDarkMode ? '../../../public/img/header/modoclaro.svg' : '../../../../public/img/header/modoescuro.svg';
     }
 
     // Optional: Add a button for toggling dark mode if needed
@@ -286,12 +266,12 @@ function exibirRodadas() {
         var theme = localStorage.getItem("theme");
         if (theme === "dark") {
             document.body.classList.add("dark-mode");
-            themeIcon.src = '../../../../public/img/header/modoclaro.svg';
+            themeIcon.src = '../../../public/img/header/modoclaro.svg';
         } else {
-            themeIcon.src = '../../../../public/img/header/modoescuro.svg';
+            themeIcon.src = '../../../public/img/header/modoescuro.svg';
         }
     });
 </script>
-<?php include '../../../pages/footer.php' ?>
+<?php include '../footer.php' ?>
 </body>
 </html>

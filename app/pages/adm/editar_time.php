@@ -1,6 +1,6 @@
 <?php
 // Inclui o arquivo de conexão com o banco de dados
-include "../../../config/conexao.php";
+include "../../config/conexao.php";
 
 // Exibe erros para depuração
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -96,7 +96,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Time</title>
-    <link rel="stylesheet" href="../../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -220,51 +220,7 @@ $conn->close();
         }
     </script>
 </head>
-<header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../../../pages/HomePage.php"><img src="../../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
-            </div>
-            <nav class="nav-icons">
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/rodadas_adm.php"><img src="../../../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
-                <span>Rodadas</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/tabela_de_classificacao.php"><img src="../../../../public/img/header/campo.png" alt="Field Icon"></a>
-                <span>Classificação</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_time/listar_times.php"><img src="../../../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                <span>editar times</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/adicionar_dados_finais.php"><img src="../../../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                <span>editar finais</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_jogador/crud_jogador.php"><img src="../../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
-                <span>Editar jogadores</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/adicionar_dados/adicionar_grupo.php"><img src="../../../../public/img/header/grupo.svg" alt="Trophy Icon"></a>
-                <span>Criar grupos</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../Adm/cadastro_time/adicionar_times.php"><img src="../../../../public/img/header/adtime.svg" alt="Trophy Icon"></a>
-                <span>Adicionar times</span>
-            </div>
-            <div class="nav-item">
-                <a href="../../cadastro_adm/cadastro_adm.php"><img src="../../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a>
-                <span>Adicionar outro adm</span>
-            </div>
-        </nav>
-
-            <div class="theme-toggle">
-                <img id="theme-icon" src="../../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
-            </div>
-        </div>
-    </header>
+<?php require_once 'header_classificacao.php' ?>
     <script>
         // Função para alternar o modo escuro
         function toggleDarkMode() {
@@ -275,10 +231,10 @@ $conn->close();
             // Atualizar o ícone conforme o tema
             if (element.classList.contains("dark-mode")) {
                 localStorage.setItem("theme", "dark");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
+                icon.src = '../../../public/img/header/modoclaro.svg';
             } else {
                 localStorage.setItem("theme", "light");
-                icon.src = '../../../../public/img/header/modoescuro.svg';
+                icon.src = '../../../public/img/header/modoescuro.svg';
             }
         }
 
@@ -288,9 +244,9 @@ $conn->close();
             var icon = document.getElementById('theme-icon');
             if (theme === "dark") {
                 document.body.classList.add("dark-mode");
-                icon.src = '../../../../public/img/header/modoclaro.svg';
+                icon.src = '../../../public/img/header/modoclaro.svg';
             } else {
-                icon.src = '../../../../public/img/header/modoescuro.svg';
+                icon.src = '../../../public/img/header/modoescuro.svg';
             }
         });
 
