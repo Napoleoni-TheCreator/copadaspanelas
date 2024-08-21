@@ -177,7 +177,7 @@ function exibirRodadas() {
 }
 ?>
 <!-- Link que aciona o modal -->
-<a href="/copadaspanelas/app/actions/funcoes/confrontos_rodadas.php" class="btn-redirect" id="confirm-link">Classificar Confrontos Rodadas</a>
+<a href="../../actions/funcoes/confrontos_rodadas.php" class="btn-redirect" id="confirm-link">Classificar Confrontos Rodadas</a>
 
 <!-- Modal de Confirmação -->
 <div id="confirm-modal" class="modal">

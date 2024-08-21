@@ -4,7 +4,6 @@
     <title>Rodadas das Fases de Grupo</title>
     <link rel="stylesheet" href="../../public/css/adm/rodadas_adm.css">
     <link rel="stylesheet" href="../../public/css/cssfooter.css">
-    <link rel="stylesheet" href="../../public/css/adm/header_cl.css"> <!-- Incluindo o CSS do cabeçalho -->
 </head>
 <body>
 <?php include 'header_classificacao.php'; ?>

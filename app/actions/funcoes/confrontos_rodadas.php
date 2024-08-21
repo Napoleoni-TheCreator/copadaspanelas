@@ -103,8 +103,7 @@ function inserirOuAtualizarConfrontos($rodadas) {
 
 $rodadas = gerarRodadas();
 inserirOuAtualizarConfrontos($rodadas);
-
 $conn->close();
-header('Location: /copadaspanelas/app/actions/Adm/adicionar_dados/rodadas_adm.php');
+header('Location: /copadaspanelas/app/pages/adm/rodadas_adm.php');
 exit();
 ?>

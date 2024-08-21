@@ -13,7 +13,7 @@
 
         .header {
             background-color: rgb(180, 0, 0);
-            padding: 10px 0;
+            padding: 1px 0;
             width: 100%;
             position: fixed; /* Fixado no topo da página */
             top: 0;
@@ -41,7 +41,7 @@
         }
 
         .logo img {
-            height: 60px; /* Ajustado para dispositivos menores */
+            height: 90px; /* Ajustado para dispositivos menores */
             margin-right: 10px;
         }
 
@@ -49,7 +49,7 @@
             display: flex;
             flex: 1;
             justify-content: center;
-            gap: 20px; /* Espaçamento reduzido */
+            gap: 70px; /* Espaçamento reduzido */
         }
 
         .nav-item {

@@ -24,6 +24,7 @@ include '../../config/conexao.php';
     <title>Adicionar Grupo</title>
     <link rel="stylesheet" href="../../../public/css/adm/adicionar_grupo.css">
     <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
 </head>
 <body>
 <?php require_once 'header_classificacao.php' ?>
@@ -217,5 +218,6 @@ include '../../config/conexao.php';
     $conn->close();
     ?>
 </div>
+<?php require_once '../footer.php' ?>
 </body>
 </html>

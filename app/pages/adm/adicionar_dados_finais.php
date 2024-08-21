@@ -227,6 +227,7 @@ function obterNomeTime($id_time) {
     <title>Atualizar Confrontos</title>
     <link rel="stylesheet" href="../../../public/css/adm/adicionar_dados_finais.css">
     <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
 </head>
 <body>
 <?php include "header_classificacao.php";?>
@@ -392,6 +393,6 @@ function obterNomeTime($id_time) {
         }
     });
 </script>
-
+<?php require_once '../footer.php' ?>
 </body>
 </html>

@@ -48,5 +48,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $conn->close();
-header('Location: /copadaspanelas/app/actions/Adm/adicionar_dados/rodadas_adm.php');
+header('Location: /copadaspanelas/app/pages/adm/rodadas_adm.php');
 ?>

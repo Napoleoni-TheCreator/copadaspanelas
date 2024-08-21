@@ -34,7 +34,7 @@ h1{
     background-size: 15% auto;
     background-position: top center;
     background-repeat: no-repeat;
-    margin-bottom: 5%;
+    margin-bottom: 10%;
 }
 
 /* Estilos do Layout dos Confrontos */

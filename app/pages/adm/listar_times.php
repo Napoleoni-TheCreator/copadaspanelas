@@ -77,6 +77,7 @@ $_SESSION['csrf_token'] = $csrf_token;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/listar_times.css">
     <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
     <style>
         /* Efeito de fade-in */
         .fade-in {
@@ -235,5 +236,6 @@ $_SESSION['csrf_token'] = $csrf_token;
         });
 
     </script>
+    <?php require_once '../footer.php' ?>
 </body>
 </html>

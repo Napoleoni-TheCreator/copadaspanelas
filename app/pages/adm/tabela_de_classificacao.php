@@ -231,5 +231,6 @@ function gerarUltimosJogos($timeId) {
 
     document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
 </script>
+<?php require_once '../footer.php' ?>
 </body>
 </html>

@@ -66,6 +66,7 @@ $codigo_adm = gerarCodigoAdm($conn);
     <title>Cadastro de Administrador</title>
     <link rel="stylesheet" href="../../../public/css/cadastro_adm/cadastro_adm.css">
     <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
 
 </head>
 <body>
@@ -147,5 +148,7 @@ require_once 'header_classificacao.php';
             <?php endif; ?>
         </form>
     </div>
+
+    <?php require_once '../footer.php' ?>
 </body>
 </html>
