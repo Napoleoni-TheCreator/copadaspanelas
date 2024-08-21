@@ -3,6 +3,7 @@
 <head>
     <title>Rodadas das Fases de Grupo</title>
     <link rel="stylesheet" href="../../public/css/adm/rodadas_adm.css">
+    <link rel="stylesheet" href="../../public/css/cssfooter.css">
     <link rel="stylesheet" href="../../public/css/adm/header_cl.css"> <!-- Incluindo o CSS do cabeçalho -->
 </head>
 <body>
@@ -136,6 +137,6 @@ function exibirRodadas() {
         themeIcon.src = '../../public/img/header/modoescuro.svg';
     }
 </script>
-
+<?php include 'footer.php'?>   
 </body>
 </html>

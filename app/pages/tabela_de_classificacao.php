@@ -3,6 +3,7 @@
 <head>
     <title>Tabela de Classificação</title>
     <link rel="stylesheet" href="../../public/css/tabela_classifica.css">
+    <link rel="stylesheet" href="../../public/css/cssfooter.css">
     <style>
         /* Adicione a transição ao efeito de desvanecimento */
         .fade-in {
@@ -195,5 +196,6 @@
             });
         });
     </script>
+<?php include 'footer.php'?>   
 </body>
 </html>

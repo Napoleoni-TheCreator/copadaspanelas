@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../../public/css/cssfooter.css">
 <style>
 /* Estilos Gerais do Corpo da Página */
 body {
@@ -420,5 +421,6 @@ function exibirConfrontos($conn, $fase, $count, $start = 0) {
         ?>
     </div>
 </div>
+<?php include 'footer.php'?>  
 </body>
 </html>

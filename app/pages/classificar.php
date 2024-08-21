@@ -187,6 +187,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="../../public/css/cssfooter.css">
 </head>
 <body>
     <button class="dark-mode-button" onclick="toggleDarkMode()">Modo Escuro/Claro</button>
@@ -239,5 +240,6 @@
             document.body.classList.toggle("dark-mode");
         }
     </script>
+<?php include 'footer.php'?>   
 </body>
 </html>
