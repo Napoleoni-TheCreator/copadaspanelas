@@ -123,8 +123,9 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $fase_final = $row['fase_final'];
-} else {
-    die("Erro ao obter a fase final configurada.");
+} 
+else {
+    header('Location: adicionar_grupo.php');
 }
 
 // Define a tabela a ser usada com base na fase final

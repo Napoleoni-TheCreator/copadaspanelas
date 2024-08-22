@@ -11,7 +11,7 @@
             <div class="nav-item"><a href="listar_times.php"><img src="../../../public/img/header/classificados.png" alt="Chess Icon"></a><span>editar times</span></div>
             <div class="nav-item"><a href="adicionar_dados_finais.php"><img src="../../../public/img/header/oitavas.png" alt="Trophy Icon"></a><span>editar finais</span></div>
             <div class="nav-item"><a href="crud_jogador.php"><img src="../../../public/img/header/prancheta.svg" alt="Trophy Icon"></a><span>Editar jogadores</span></div>
-            <div class="nav-item"><a href="adicionar_grupo.php"><img src="../../../public/img/header/grupo.svg" alt="Trophy Icon"></a><span>Criar grupos</span></div>
+            <div class="nav-item"><a href="adicionar_grupo.php"><img src="../../../public/img/header/grupo.svg" alt="Trophy Icon"></a><span>Nova edição</span></div>
             <div class="nav-item"><a href="adicionar_times.php"><img src="../../../public/img/header/adtime.svg" alt="Trophy Icon"></a><span>Adicionar times</span></div>
             <div class="nav-item"><a href="cadastro_adm.php"><img src="../../../public/img/header/adadm.svg" alt="cadastro novos adm"></a><span>Adicionar outro adm</span></div>
         </nav>
