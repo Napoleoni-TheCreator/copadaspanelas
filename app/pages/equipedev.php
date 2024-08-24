@@ -27,67 +27,67 @@
 		<div class="team-content">
 			<div class="box">
 				<img src="../../public/img/Dev's/thw.jpg">
-				<h3>Thweritons</h3>
+				<h3>Thwaverton</h3>
 				<h5>Tec. Informatica</h5>
 				<div class="icons">
 					<a href="#"><i class="ri-twitter-fill"></i></a>
-					<a href="#"><i class="ri-facebook-box-fill"></i></a>
-					<a href="#"><i class="ri-instagram-fill"></i></a>
+					<a href="https://github.com/"><i class="fa-brands fa-square-github"></i></i></a>
+					<a href="https://www.instagram.com/thwaverton/"><i class="ri-instagram-fill"></i></a>
 				</div>
 			</div>
 
 			<div class="box">
-				<img src="../../public/img/Dev's/thw.jpg">
+				<img src="../../public/img/Dev's/luiz.jpg">
 				<h3>Luiz</h3>
 				<h5>Tec. Informatica</h5>
 				<div class="icons">
 					<a href="#"><i class="ri-twitter-fill"></i></a>
-					<a href="#"><i class="ri-facebook-box-fill"></i></a>
-					<a href="#"><i class="ri-instagram-fill"></i></a>
+					<a href="https://github.com/Kizzo-liso"><i class="fa-brands fa-square-github"></i></i></a>
+					<a href="https://www.instagram.com/luiz_bjl/"><i class="ri-instagram-fill"></i></a>
 				</div>
 			</div>
 
 			<div class="box">
-				<img src="../../public/img/Dev's/thw.jpg">
+				<img src="../../public/img/Dev's/Eduardo.jfif">
 				<h3>Eduardo</h3>
 				<h5>Tec. Informatica</h5>
 				<div class="icons">
 					<a href="#"><i class="ri-twitter-fill"></i></a>
-					<a href="#"><i class="ri-facebook-box-fill"></i></a>
-					<a href="#"><i class="ri-instagram-fill"></i></a>
+					<a href="https://github.com/Napoleoni-TheCreator"><i class="fa-brands fa-square-github"></i></a>
+					<a href="https://www.instagram.com/"><i class="ri-instagram-fill"></i></a>
 				</div>
 			</div>
 
 			<div class="box">
-				<img src="../../public/img/Dev's/thw.jpg">
-				<h3>Xaraia</h3>
+				<img src="../../public/img/Dev's/sharaia.jpg">
+				<h3>Shaiara</h3>
 				<h5>Tec. Informatica</h5>
 				<div class="icons">
 					<a href="#"><i class="ri-twitter-fill"></i></a>
-					<a href="#"><i class="ri-facebook-box-fill"></i></a>
-					<a href="#"><i class="ri-instagram-fill"></i></a>
+					<a href="https://github.com/"><i class="fa-brands fa-square-github"></i></i></a>
+					<a href="https://www.instagram.com/shayara_mary/"><i class="ri-instagram-fill"></i></a>
 				</div>
 			</div>
 
             <div class="box">
-				<img src="../../public/img/Dev's/thw.jpg">
-				<h3>riqueles</h3>
+				<img src="../../public/img/Dev's/riqquele.png">
+				<h3>Riquele</h3>
 				<h5>Tec. Informatica</h5>
 				<div class="icons">
 					<a href="#"><i class="ri-twitter-fill"></i></a>
-					<a href="#"><i class="ri-facebook-box-fill"></i></a>
-					<a href="#"><i class="ri-instagram-fill"></i></a>
+					<a href="https://github.com/"><i class="fa-brands fa-square-github"></i></i></a>
+					<a href="https://www.instagram.com/riquelecostaa/"><i class="ri-instagram-fill"></i></a>
 				</div>
 			</div>
 
             <div class="box">
-				<img src="../../public/img/Dev's/thw.jpg">
-				<h3>Rafaeu</h3>
+				<img src="../../public/img/Dev's/rafael.jpg">
+				<h3>Rafael</h3>
 				<h5>Tec. Informatica</h5>
 				<div class="icons">
 					<a href="#"><i class="ri-twitter-fill"></i></a>
-					<a href="#"><i class="ri-facebook-box-fill"></i></a>
-					<a href="#"><i class="ri-instagram-fill"></i></a>
+					<a href="https://github.com/"><i class="fa-brands fa-square-github"></i></i></a>
+					<a href="https://www.instagram.com/offx.moreira/"><i class="ri-instagram-fill"></i></a>
 				</div>
 			</div>
 		</div>
