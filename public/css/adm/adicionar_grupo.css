@@ -1,5 +1,5 @@
 
-body {
+.main {
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
     color: #333;
@@ -80,12 +80,12 @@ button:hover {
 
 .error-message {
     color: #e74c3c;
-    background-color: #fdd;
+    /* background-color: #fdd; */
 }
 
 .success-message {
     color: #2ecc71;
-    background-color: #dff0d8;
+    /* background-color: #dff0d8; */
 }
 
 table {

@@ -27,6 +27,7 @@ include '../../config/conexao.php';
 </head>
 <body>
 <?php require_once 'header_classificacao.php' ?>
+<div class="main">
 <div class="form-container">
     <h1>Adicionar Grupo</h1>
     <form id="formConfiguracao" method="post" action="">
@@ -184,6 +185,7 @@ include '../../config/conexao.php';
 
     $conn->close();
     ?>
+</div>
 </div>
 <?php require_once '../footer.php' ?>
 </body>

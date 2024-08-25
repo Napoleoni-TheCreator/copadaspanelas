@@ -1,9 +1,10 @@
+/*FOOTER*/
 
-/* Estilos do footer */
 footer {
     background-color: rgb(27, 25, 25);
     width: 100%;
-    position: absolute;
+    position: relative;
+    bottom: 0;
 }
 
 .footerContain {
@@ -101,28 +102,28 @@ footer {
 
 @media only screen and (max-width: 768px) {
     .socialIcons {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-wrap: wrap; /* Quebra os ícones sociais em várias linhas */
+        justify-content: center; /* Centraliza os ícones social no centro */
     }
 
     .socialIcons a {
-        margin: 5px;
+        margin: 5px; /* Espaçamento menor entre os ícones */
     }
 
     .footerNav {
-        padding: 20px 0;
+        padding: 20px 0; /* Reduz o padding dos links de navegação */
     }
 
     .footerNav ul {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column; /* Ajusta os links de navegação para uma coluna */
+        align-items: center; /* Centraliza os links de navegação */
     }
 
     .footerNav ul li a {
-        padding: 10px;
+        padding: 10px; /* Reduz o padding dos links de navegação */
     }
 
     .footerButton p {
-        font-size: 0.9em;
+        font-size: 0.9em; /* Reduz o tamanho da fonte do texto do footer */
     }
 }

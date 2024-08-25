@@ -125,6 +125,7 @@ $numTimesToAdd = isset($_POST['num_times']) ? (int)$_POST['num_times'] : 1;
 </head>
 <body>
 <?php require_once 'header_classificacao.php' ?>
+<div class="main">
 <div class="titulo-barra">
     <h1>Adicionar Times</h1>
 </div>
@@ -183,7 +184,7 @@ $numTimesToAdd = isset($_POST['num_times']) ? (int)$_POST['num_times'] : 1;
         ?>
     </form>
 </div>
-
+</div>
 <script>
 function updateFormFields(num) {
     const container = document.getElementById('times-fields');
