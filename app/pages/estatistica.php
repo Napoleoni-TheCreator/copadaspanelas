@@ -72,15 +72,7 @@ $conn->close();
     <title>Estatísticas dos Jogadores</title>
     <link rel="stylesheet" href="../../public/css/cssfooter.css">
     <style>
-        * {
-            /* margin: 0; */
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            width: 100%;
-            height: 100%;
+        .main {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -235,9 +227,8 @@ $conn->close();
     </style>
 </head>
 <body>
-    <button class="dark-mode-button" onclick="toggleDarkMode()">Modo Escuro/Claro</button>
-    
     <?php include '../pages/header_classificacao.php'; ?>
+    <div class="main">
     <h1 id="tituloh1">Estatísticas dos Jogadores</h1>
     <div class="container">
 
@@ -330,12 +321,7 @@ $conn->close();
         </div>
 
     </div>
-
-    <script>
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
-    }
-    </script>
+</div>
 <?php include 'footer.php'?>  
 </body>
 </html>

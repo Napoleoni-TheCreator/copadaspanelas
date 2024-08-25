@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-<link rel="stylesheet" href="../../public/css/cssfooter.css">
+    <meta charset="UTF-8">
+    <title>Estatísticas dos Jogadores</title>
+    <link rel="stylesheet" href="../../public/css/cssfooter.css">
 <style>
-/* Estilos Gerais do Corpo da Página */
-body {
-    height: 100%;
+.main{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0;
     font-family: Arial, sans-serif;
 }
-
-h1{
+#titulo_eli{
   font-size: 30px;
   margin-bottom: 10px;
   text-align: center;
@@ -124,12 +122,6 @@ h1{
     margin: 0 10px;
 }
 
-/* Modo Escuro */
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
 body.dark-mode .container {
     background-color: #1e1e1e;
     border: 1px solid #444;
@@ -211,7 +203,8 @@ h1{
 </style>
 </head>
 <body>
-<?php include 'header_classificacao.php'; ?>
+<?php include '../pages/header_classificacao.php'; ?>
+<div class="main">
 <h1 id="titulo_eli">ELIMINATORIA</h1>
 <div class="container">
     <div class="bracket">
@@ -346,6 +339,7 @@ function exibirConfrontos($conn, $fase, $count, $start = 0) {
         echo "</div>";
         ?>
     </div>
+</div>
 </div>
 <?php include 'footer.php'?>  
 </body>
