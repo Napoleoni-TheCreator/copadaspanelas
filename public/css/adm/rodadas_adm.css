@@ -25,12 +25,26 @@ h1 {
 .reveal {
     opacity: 1;
 }
-.dark-mode #rodadas-wrapper{
-    background-color: grey;
+/* Estilos gerais do modo escuro */
+.dark-mode {
+    background-color: #1e1e1e; /* Cor de fundo para o modo escuro */
+    color: #e0e0e0; /* Cor do texto para o modo escuro */
 }
-.dark-mode .time_teste{
-    background-color: #888;
+
+.dark-mode #rodadas-wrapper {
+    background-color: #2c2c2c;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
+
+.dark-mode .time_teste {
+    background-color: #333;
+    border: 1px solid #555;
+}
+
+.dark-mode th {
+    background-color: #444;
+}
+
 #rodadas-wrapper {
     display: flex;
     align-items: center;
@@ -45,7 +59,7 @@ h1 {
     min-width: 50%;
     max-width: 90%;
     transition: background-color 0.3s, box-shadow 0.3s;
-    position: relative; /* Necessário para o posicionamento das setas */
+    position: relative;
 }
 
 tr {
@@ -87,14 +101,6 @@ tr {
     margin-right: 10px;
     transition: 0.5s ease;
 }
-.dark-mode .rodada-container {
-    background-color: #2c2c2c;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-}
-.dark-mode .rodada-container:hover {
-
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -106,9 +112,6 @@ th, td {
 }
 th {
     background-color: #f2f2f2;
-}
-.dark-mode th {
-    background-color: #333;
 }
 .rodada-header {
     display: flex;
@@ -178,9 +181,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .btn-save:hover {
     background-color: #45a049;
-}
-.dark-mode .btn-toggle-mode:hover {
-    background-color: #333;
 }
 .no-break {
     display: flex;
