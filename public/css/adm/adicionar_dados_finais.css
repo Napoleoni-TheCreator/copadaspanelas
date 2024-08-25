@@ -1,6 +1,9 @@
 main{
     flex: 0 !important;
 }
+.page-wrapper{
+    min-height: auto !important;
+}
 .main {
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));

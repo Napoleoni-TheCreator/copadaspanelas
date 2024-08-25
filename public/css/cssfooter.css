@@ -1,17 +1,9 @@
-.page-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: auto; /* Garante que a altura mínima da página seja a altura da tela */
-}
-
-main {
-    flex: 1; /* Faz com que o main preencha o espaço restante antes do footer */
-}
 
 /* Estilos do footer */
 footer {
     background-color: rgb(27, 25, 25);
     width: 100%;
+    position: absolute;
 }
 
 .footerContain {
