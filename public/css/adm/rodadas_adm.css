@@ -25,7 +25,12 @@ h1 {
 .reveal {
     opacity: 1;
 }
-
+.dark-mode #rodadas-wrapper{
+    background-color: grey;
+}
+.dark-mode .time_teste{
+    background-color: #888;
+}
 #rodadas-wrapper {
     display: flex;
     align-items: center;
