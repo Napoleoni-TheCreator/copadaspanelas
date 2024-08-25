@@ -1,74 +1,151 @@
+<?php
+session_start(); // Inicia a sessão
+// Verificar se o usuário está logado
+$usuarioLogado = isset($_SESSION['admin_id']);
+?>
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header Example</title>
+    <title>Menu Responsivo | GN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        html, body {
+            height: 100%;
+        }
+
         body {
+            overflow-x: hidden; /* Evita rolagem horizontal */
+        }
+        .header {
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+
+        :root {
+            --cor-branca: #fff;
+            --cor-vermelho: rgb(180, 0, 0);
+            --cor-escura4: #1c1c1c;
+            --cor-texto: #000;
+            --cor-fundo: #fff;
+        }
+        .dark-mode {
+            --cor-branca: #fff;
+            --cor-vermelho: #cc0000;
+            --cor-escura4: #1c1c1c;
+            --cor-texto: #e0e0e0;
+            --cor-fundo: #121212;
+        }
+
+        * {
             margin: 0;
-            padding-top: 80px; /* Espaçamento para o cabeçalho fixo */
-            transition: background-color 0.3s, color 0.3s; /* Transição suave */
+            padding: 0;
+        }
+
+        #deslogar {
+            font-size: 1.1em;
+            padding: 15px 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            color: var(--cor-branca);
+            position: absolute;
+            right: 5%; /* 5px da borda direita */
+            top: 50%;
+            transform: translateY(-50%); /* Centraliza verticalmente */
+        }
+
+        #deslogar a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+        }
+
+        #deslogar a i {
+            padding-right: 8px;
+            font-size: 1.2em;
+        }
+
+        #deslogar:hover {
+            background-color: var(--cor-branca);
+            transition: 0.8s;
+        }
+
+        #deslogar a:hover {
+            color: rgb(150, 0, 0);
+            transition: 0.3s;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+        }
+
+        .img_logo_header {
+            width: 90px;
+            margin-left: 15px;
         }
 
         .header {
-            background-color: rgb(180, 0, 0);
-            padding: 1px 0;
+            background-color: var(--cor-vermelho);
+            height: 5em; /* Aumenta a altura do header */
+            box-shadow: 1px 1px 4px var(--cor-escura4);
             width: 100%;
-            position: fixed; /* Fixado no topo da página */
+            position: fixed;
             top: 0;
             left: 0;
-            z-index: 1000; /* Garantir que o header esteja acima de outros elementos */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra ao cabeçalho */
-        }
-
-        .containerr {
+            z-index: 20;
             display: flex;
+            align-items: center;
+            padding: 0 5%;
             justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            height: auto;
+            position: relative; /* Necessário para o posicionamento absoluto do #deslogar */
         }
 
-        .logo {
+        .logo_header {
+            flex: 1;
+        }
+
+        .navegacao_header {
             display: flex;
+            gap: 3em;
             align-items: center;
-            color: white;
-            font-size: 24px;
+            position: absolute;
+            left: 35%;
+            transform: translateX(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .navegacao_header a {
+            text-decoration: none;
+            color: var(--cor-texto);
+            transition: color 0.3s ease;
             font-weight: bold;
         }
 
-        .logo img {
-            height: 90px; /* Ajustado para dispositivos menores */
-            margin-right: 10px;
+        .navegacao_header a:hover {
+            color: var(--cor-branca);
         }
 
-        .nav-icons {
-            display: flex;
-            flex: 1;
-            justify-content: center;
-            gap: 70px; /* Espaçamento reduzido */
+        .ativo {
+            padding: 10px;
+            border-radius: 10px;
         }
 
-        .nav-item {
-            text-align: center;
+        .btn_icon_header {
+            background: transparent;
+            border: none;
+            color: var(--cor-branca);
+            cursor: pointer;
+            display: none;
         }
 
-        .nav-item img {
-            height: 30px; /* Ajustado para dispositivos menores */
-            width: 30px;
-        }
-
-        .nav-item span {
-            display: block;
-            margin-top: 5px;
-            color: white;
-            font-size: 12px; /* Ajustado para dispositivos menores */
-        }
-
-        /* Estilos para o modo escuro */
         .dark-mode {
             background: #121212;
             color: #ffffff;
@@ -107,96 +184,203 @@
             height: 40px; /* Ajuste o tamanho conforme necessário */
         }
 
-        /* Media queries para dispositivos menores */
-        @media (max-width: 767px) {
-            .logo img {
-                height: 50px;
+        @media screen and (max-width: 768px) {
+            .header {
+                padding: 0 1em;
             }
 
-            .nav-icons {
-                gap: 15px;
+            .logo_header {
+                display: flex;
+                justify-content: center;
+            }
+            .img_logo_header{
+                width: 40px;
+                margin-left: 0;
+            }
+            .navegacao_header {
+                position: fixed;
+                flex-direction: column;
+                top: 0;
+                background: var(--cor-vermelho);
+                height: 100%;
+                width: 35vw;
+                padding: 1em;
+                left: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 22;
             }
 
-            .nav-item img {
-                height: 25px;
-                width: 25px;
+            .btn_icon_header {
+                display: block;
+                z-index: 23;
             }
-
-            .nav-item span {
-                font-size: 10px;
+            .theme-toggle img{
+                width: 35px;
             }
-
-            .theme-toggle img {
-                height: 35px;
+            .overlay.active + .navegacao_header {
+                transform: translateX(0);
+            }
+            #deslogar {
+                right: 3%; 
             }
         }
 
-        @media (max-width: 480px) {
-            .logo img {
-                height: 40px;
-            }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 15;
+            display: none;
+        }
 
-            .nav-icons {
-                gap: 10px;
-            }
+        .overlay.active {
+            display: block;
+        }
 
-            .nav-item img {
-                height: 20px;
-                width: 20px;
-            }
+        .submenu {
+            display: none;
+            position: absolute;
+            left: 0;
+            background: var(--cor-vermelho);
+            min-width: 150px;
+            border-radius: 5px;
+            z-index: 22;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
 
-            .nav-item span {
-                font-size: 8px;
-            }
+        .submenu a {
+            color: var(--cor-branca);
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
 
-            .theme-toggle img {
-                height: 30px;
-            }
+        .submenu a:hover {
+            background: var(--cor-escura4);
+        }
+
+        .has-submenu {
+            position: relative;
+        }
+
+        .has-submenu:hover .submenu {
+            display: block;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 18%;
+            top: 50%;
+            transform: translateY(-50%); /* Centraliza verticalmente */
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="containerr">
-            <div class="logo">
-                <a href="../pages/HomePage.php"><img src="../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Grupo Ninja Logo"></a>
+    <div class="overlay" id="overlay"></div>
+    <div class="header" id="header">
+        <button onclick="toggleSidebar()" class="btn_icon_header" id="btn_open">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        </button>
+        <div class="logo_header">
+            <a href="HomePage.php">            
+                <img src="../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Escudo da CP" class="img_logo_header">
+            </a>
+        </div>
+        <div class="navegacao_header" id="navegacao_header">
+            <button onclick="toggleSidebar()" class="btn_icon_header" id="btn_close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
+            <a href="HomePage.php" class="ativo">Home</a>
+            <div class="has-submenu">
+                <a href="rodadas.php">Rodadas</a>
+                <?php if ($usuarioLogado): ?>
+                <div class="submenu">
+                    <a href="../pages/adm/rodadas_adm.php">Administrar Rodadas</a>
+                    <a href="../pages/adm/adicionar_grupo.php">Criar novo campeonato</a>
+                    <a href="../pages/adm/adicionar_times.php">Adicionar times</a>
+                    <a href="../pages/adm/editar_time.php">Editar times</a>
+                    <a href="../pages/adm/adicionar_times_de_forma_aleatoria.php">Adicionar times forma aleatória</a>
+                </div>
+                <?php endif; ?>
             </div>
-            <nav class="nav-icons">
-                <div class="nav-item">
-                    <a href="../pages/rodadas.php"><img src="../../public/img/header/rodadas.png" alt="Soccer Icon"></a>
-                    <span>Rodadas</span>
+            <div class="has-submenu">
+                <a href="tabela_de_classificacao.php">Classificação</a>
+                <?php if ($usuarioLogado): ?>
+                <div class="submenu">
+                    <a href="classificar.php">Classificados</a>
                 </div>
-                <div class="nav-item">
-                    <a href="../pages/tabela_de_classificacao.php"><img src="../../public/img/header/campo.png" alt="Field Icon"></a>
-                    <span>Classificação</span>
+                <?php endif; ?>
+            </div>
+            <div class="has-submenu">
+                <a href="exibir_finais.php">Finais</a>
+                <?php if ($usuarioLogado): ?>
+                <div class="submenu">
+                    <a href="../pages/adm/adicionar_dados_finais.php">Administrar finais</a>
                 </div>
-                <div class="nav-item">
-                    <a href="../pages/classificar.php"><img src="../../public/img/header/classificados.png" alt="Chess Icon"></a>
-                    <span>Classificados</span>
+                <?php endif; ?>
+            </div>
+            <div class="has-submenu">
+                <a href="estatistica.php">Estatísticas</a>
+                <?php if ($usuarioLogado): ?>
+                <div class="submenu">
+                    <a href="../pages/adm/crud_jogador.php">Administrar jogadores</a>
                 </div>
-                <div class="nav-item">
-                    <a href="../pages/exibir_finais.php"><img src="../../public/img/header/oitavas.png" alt="Trophy Icon"></a>
-                    <span>Finais</span>
-                </div>
-                <div class="nav-item">
-                    <a href="../pages/estatistica.php"><img src="../../public/img/header/prancheta.svg" alt="Trophy Icon"></a>
-                    <span>Estatistica</span>
-                </div>
-            </nav>
-            <div class="theme-toggle">
-                <img id="theme-icon" src="../../public/img/header/modoescuro.svg" alt="Toggle Theme">
+                <?php endif; ?>
             </div>
         </div>
-    </header>
-
+        <div class="theme-toggle">
+            <img id="theme-icon" src="../../public/img/header/modoescuro.svg" alt="Toggle Theme">
+        </div>
+        <?php if ($usuarioLogado): ?>
+        <div class="has-submenu" id="deslogar">
+            <a href="../actions/cadastro_adm/logout.php">
+                <i class="fas fa-user"></i> Deslogar
+            </a>
+        </div>
+        <?php endif; ?>
+    </div>
     <script>
-        // Função para alternar o modo escuro
+        const header = document.getElementById('header');
+        const navegacaoHeader = document.getElementById('navegacao_header');
+        const overlay = document.getElementById('overlay');
+        let mostrarSidebar = false;
+
+        function toggleSidebar() {
+            mostrarSidebar = !mostrarSidebar;
+            navegacaoHeader.style.transform = mostrarSidebar ? 'translateX(0)' : 'translateX(-100%)';
+            overlay.classList.toggle('active', mostrarSidebar);
+        }
+
+        function closeSidebar(event) {
+            if (mostrarSidebar && !navegacaoHeader.contains(event.target) && !header.contains(event.target) && !overlay.contains(event.target)) {
+                toggleSidebar();
+            }
+        }
+
+        document.addEventListener('click', closeSidebar);
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && mostrarSidebar) {
+                toggleSidebar();
+            }
+        });
+
         function toggleDarkMode() {
             var element = document.body;
             var icon = document.getElementById('theme-icon');
             element.classList.toggle("dark-mode");
 
-            // Atualizar o ícone conforme o tema
             if (element.classList.contains("dark-mode")) {
                 localStorage.setItem("theme", "dark");
                 icon.src = '../../public/img/header/modoclaro.svg';
@@ -206,7 +390,6 @@
             }
         }
 
-        // Aplicar o tema salvo ao carregar a página
         document.addEventListener("DOMContentLoaded", function() {
             var theme = localStorage.getItem("theme");
             var icon = document.getElementById('theme-icon');
@@ -218,7 +401,6 @@
             }
         });
 
-        // Adiciona o evento de clique para alternar o tema
         document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
     </script>
 </body>

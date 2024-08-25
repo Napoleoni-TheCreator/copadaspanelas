@@ -17,8 +17,9 @@
     </style>
 </head>
 <body>
-    <?php include 'header_classificacao.php'; ?>
-    <h1 class="fade-in">FASE DE GRUPOS</h1>
+<?php include 'header_classificacao.php'; ?>
+    <div class="wrapper-container">
+    <h1 class="fade-in">FASE DE GRUPOS</h1>  
     <div id="tabela-wrapper" class="fade-in">
         <h4 class="fade-in">Tabela de Classificação</h4>
         <?php mostrarGrupos(); ?>
@@ -41,6 +42,7 @@
                 <span class="descricao">Não houve jogo</span>
             </div>
         </div>
+    </div>
     </div>
 
     <?php

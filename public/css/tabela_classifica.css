@@ -1,9 +1,5 @@
-/* Reset de padding e box-sizing */
-* {
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
+
+.wrapper-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,11 +20,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden; /* Adicionado para esconder qualquer conteúdo que ultrapasse */
 }
+
 /* Estilo do container de grupos */
 .grupo-container {
     width: 100%;
     margin-bottom: 20px;
+    box-sizing: border-box; /* Adicionado para garantir que o padding e as bordas não aumentem a largura */
 }
 
 /* Estilo do cabeçalho do grupo */
@@ -37,6 +36,9 @@ body {
     margin-bottom: 10px;
     margin-left: 30px;
     text-align: left;
+    overflow: hidden; /* Adicionado para garantir que o texto longo não ultrapasse o container */
+    text-overflow: ellipsis; /* Adicionado para adicionar "..." ao texto longo */
+    white-space: nowrap; /* Evita quebra de linha */
 }
 
 /* Estilo da tabela flexível */
@@ -44,12 +46,14 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
+    box-sizing: border-box; /* Adicionado para garantir que o padding e as bordas não aumentem a largura */
 }
 
 .tabela-flex-header, .tabela-flex-row {
     display: flex;
     width: 100%;
     border-bottom: 1px solid #ddddddf1;
+    box-sizing: border-box; /* Adicionado para garantir que o padding e as bordas não aumentem a largura */
 }
 
 .tabela-flex-row:hover {
@@ -87,6 +91,7 @@ body {
     align-items: center;
     display: flex;
     justify-content: center;
+    box-sizing: border-box; /* Adicionado para garantir que o padding e as bordas não aumentem a largura */
 }
 
 .larger-col {
@@ -95,6 +100,7 @@ body {
     align-items: center;
     display: flex;
     justify-content: center;
+    box-sizing: border-box; /* Adicionado para garantir que o padding e as bordas não aumentem a largura */
 }
 
 /* Estilo dos resultados */
@@ -292,12 +298,14 @@ body.dark-mode #legenda-simbolos {
     text-align: center;
     padding: 20px;
 }
-h1{
+
+h1 {
     margin-top: 80px;
 }
+
 /* Media Queries */
 @media (min-width: 350px) and (max-width: 1000px) {
-    h1{
+    h1 {
         font-size: 16px;
         margin: none;
     }
@@ -310,11 +318,9 @@ h1{
         width: 5px;
         height: 5px;
     }
-
     .grupo-header {
         font-size: 10px;
     }
-
     #tabela-wrapper {
         width: 100%;
         background-color: none;
@@ -322,30 +328,25 @@ h1{
         box-shadow: none;
         padding: none;
     }
-
     #legenda-simbolos {
         width: 70%;
         max-height: 30%;
         background-color: rgba(245, 222, 179, 0.116);
     }
-
     .descricao {
         font-size: 9px;
         margin: none;
     }
-
     .simbolo {
         width: 9px;
         height: 9px;
         margin: none;
     }
-
     .tabela-flex-header > div, .tabela-flex-row > div {
         padding: 0px;
         margin-top: 4px;
         margin-bottom: 4px;
     }
-
     .time-info {
         display: flex;
         align-items: center;
@@ -356,11 +357,9 @@ h1{
         max-height: 20px;
         overflow: hidden;
     }
-
     .tabela-flex-header {
         font-size: 10px;
     }
-
     .logo-time {
         margin-left: 2px;
         margin-right: 4px;
@@ -369,27 +368,24 @@ h1{
         max-height: 20px;
         min-height: 20px;
     }
-
     .posicao_num {
         font-size: 10px;
         margin-left: 4px;
         margin-right: 0px;
     }
-
     .time-name {
         font-size: 7px;
         min-width: 100px;
         height: 70px;
         max-width: 100px;
     }
-
     h4 {
         font-size: 7px;
     }
 }
 
-/* teste */
-@media (min-width: 350px) and (max-width: 1000px){
+/* Teste */
+@media (min-width: 350px) and (max-width: 1000px) {
     .small-col {
         min-width: 0%;
         max-width: 100px;
@@ -400,5 +396,4 @@ h1{
         min-width: 80px; /* Largura mínima */
         max-width: auto;
     }
-
 }

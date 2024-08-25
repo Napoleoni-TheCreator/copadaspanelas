@@ -2,6 +2,11 @@
 session_start();
 include("../../config/conexao.php");
 
+// Verificar se o usuário já está logado
+if (isset($_SESSION['admin_id'])) {
+    header("Location: rodadas_adm.php");
+    exit();
+}
 // Gerar um token CSRF
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));

@@ -8,7 +8,7 @@
 <body>
 <?php include 'header_classificacao.php'; ?>
 <h1 id="dynamic-text">FASES DE GRUPO</h1>
-
+<div class="rodada_container1">
 <div id="rodadas-wrapper">
     <div class="nav-arrow left" onclick="previousRodada()"><img src="../../public/img/esquerda.svg" alt=""></div>
     <div class="table-container">
@@ -16,7 +16,7 @@
     </div>
     <div class="nav-arrow right" onclick="nextRodada()"><img src="../../public/img/direita.svg" alt=""></div>
 </div>
-
+</div>
 <?php
 function exibirRodadas() {
     include '../config/conexao.php';
@@ -27,7 +27,6 @@ function exibirRodadas() {
     if ($resultRodadas->num_rows > 0) {
         while ($rowRodada = $resultRodadas->fetch_assoc()) {
             $rodada = $rowRodada['rodada'];
-
             echo '<div class="rodada-container">';
             echo '<h2 class="rodada-header">' . $rodada . 'ª RODADA</h2>';
 
@@ -88,7 +87,6 @@ function exibirRodadas() {
     $conn->close();
 }
 ?>
-
 <script>
     var currentRodadaIndex = 0;
     var rodadaContainers = document.getElementsByClassName('rodada-container');
@@ -114,28 +112,8 @@ function exibirRodadas() {
     }
 
     showRodada(currentRodadaIndex);
-
-    // Toggle dark mode
-    var isDarkMode = false;
-    function toggleMode() {
-        isDarkMode = !isDarkMode;
-        document.body.classList.toggle('dark-mode', isDarkMode);
-        var themeIcon = document.getElementById('theme-icon');
-        themeIcon.src = isDarkMode ? '../../public/img/header/modoclaro.svg' : '../../public/img/header/modoescuro.svg';
-    }
-
-    var themeIcon = document.getElementById('theme-icon');
-    themeIcon.addEventListener('click', toggleMode);
-
-    // Aplicar o tema salvo ao carregar a página
-    var theme = localStorage.getItem("theme");
-    if (theme === "dark") {
-        document.body.classList.add("dark-mode");
-        themeIcon.src = '../../public/img/header/modoclaro.svg';
-    } else {
-        themeIcon.src = '../../public/img/header/modoescuro.svg';
-    }
 </script>
+
 <?php include 'footer.php'?>   
 </body>
 </html>

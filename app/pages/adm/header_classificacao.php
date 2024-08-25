@@ -1,3 +1,9 @@
+<?php
+session_start(); // Inicia a sessão
+// Verificar se o usuário está logado
+$usuarioLogado = isset($_SESSION['admin_id']);
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -5,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Responsivo | GN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --cor-branca: #fff;
@@ -27,18 +34,54 @@
             padding: 0;
         }
 
+        #deslogar {
+            font-size: 1.1em;
+            padding: 15px 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            color: var(--cor-branca);
+            position: absolute;
+            right: 5%; /* 5px da borda direita */
+            top: 50%;
+            transform: translateY(-50%); /* Centraliza verticalmente */
+        }
+
+        #deslogar a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+        }
+
+        #deslogar a i {
+            padding-right: 8px;
+            font-size: 1.2em;
+        }
+
+        #deslogar:hover {
+            background-color: var(--cor-branca);
+            transition: 0.8s;
+        }
+
+        #deslogar a:hover {
+            color: rgb(150, 0, 0);
+            transition: 0.3s;
+        }
+
         body {
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
         }
 
         .img_logo_header {
-            width: 60px;
+            width: 90px;
+            margin-left: 15px;
         }
 
         .header {
             background-color: var(--cor-vermelho);
-            height: 4em;
+            height: 5em; /* Aumenta a altura do header */
             box-shadow: 1px 1px 4px var(--cor-escura4);
             width: 100%;
             position: fixed;
@@ -49,6 +92,7 @@
             align-items: center;
             padding: 0 5%;
             justify-content: space-between;
+            position: relative; /* Necessário para o posicionamento absoluto do #deslogar */
         }
 
         .logo_header {
@@ -60,7 +104,7 @@
             gap: 3em;
             align-items: center;
             position: absolute;
-            left: 50%;
+            left: 35%;
             transform: translateX(-50%);
             transition: transform 0.3s ease;
         }
@@ -88,8 +132,8 @@
             cursor: pointer;
             display: none;
         }
-           /* Estilos para o modo escuro */
-           .dark-mode {
+
+        .dark-mode {
             background: #121212;
             color: #ffffff;
         }
@@ -134,9 +178,12 @@
 
             .logo_header {
                 display: flex;
-                justify-content: flex-end;
+                justify-content: center;
             }
-
+            .img_logo_header{
+                width: 40px;
+                margin-left: 0;
+            }
             .navegacao_header {
                 position: fixed;
                 flex-direction: column;
@@ -155,9 +202,14 @@
                 display: block;
                 z-index: 23;
             }
-
+            .theme-toggle img{
+                width: 35px;
+            }
             .overlay.active + .navegacao_header {
                 transform: translateX(0);
+            }
+            #deslogar {
+                right: 3%; 
             }
         }
 
@@ -208,7 +260,12 @@
         }
 
         .theme-toggle {
-            margin-left: auto;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 18%;
+            top: 50%;
+            transform: translateY(-50%); /* Centraliza verticalmente */
         }
     </style>
 </head>
@@ -227,13 +284,14 @@
         </div>
         <div class="navegacao_header" id="navegacao_header">
             <button onclick="toggleSidebar()" class="btn_icon_header" id="btn_close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
             </button>
             <a href="../HomePage.php" class="ativo">Home</a>
             <div class="has-submenu">
                 <a href="../rodadas.php">Rodadas</a>
+                <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="rodadas_adm.php">Administrar Rodadas</a>
                     <a href="adicionar_grupo.php">Criar novo campeonato</a>
@@ -241,29 +299,43 @@
                     <a href="editar_time.php">Editar times</a>
                     <a href="adicionar_times_de_forma_aleatoria.php">Adicionar times forma aleatória</a>
                 </div>
+                <?php endif; ?>
             </div>
             <div class="has-submenu">
                 <a href="../tabela_de_classificacao.php">Classificação</a>
+                <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="../classificar.php">Classificados</a>
                 </div>
+                <?php endif; ?>
             </div>
             <div class="has-submenu">
                 <a href="../exibir_finais.php">Finais</a>
+                <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="adicionar_dados_finais.php">Administrar finais</a>
                 </div>
+                <?php endif; ?>
             </div>
             <div class="has-submenu">
                 <a href="../estatistica.php">Estatísticas</a>
+                <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="crud_jogador.php">Administrar jogadores</a>
                 </div>
-            </div>
-            <div class="theme-toggle">
-                <img id="theme-icon" src="../../public/img/header/modoescuro.svg" alt="Toggle Theme">
+                <?php endif; ?>
             </div>
         </div>
+        <div class="theme-toggle">
+            <img id="theme-icon" src="../../public/img/header/modoescuro.svg" alt="Toggle Theme">
+        </div>
+        <?php if ($usuarioLogado): ?>
+        <div class="has-submenu" id="deslogar">
+            <a href="../../actions/cadastro_adm/logout.php">
+                <i class="fas fa-user"></i> Deslogar
+            </a>
+        </div>
+        <?php endif; ?>
     </div>
     <script>
         const header = document.getElementById('header');
@@ -291,13 +363,11 @@
             }
         });
 
-        // Função para alternar o modo escuro
         function toggleDarkMode() {
             var element = document.body;
             var icon = document.getElementById('theme-icon');
             element.classList.toggle("dark-mode");
 
-            // Atualizar o ícone conforme o tema
             if (element.classList.contains("dark-mode")) {
                 localStorage.setItem("theme", "dark");
                 icon.src = '../../../public/img/header/modoclaro.svg';
@@ -307,7 +377,6 @@
             }
         }
 
-        // Aplicar o tema salvo ao carregar a página
         document.addEventListener("DOMContentLoaded", function() {
             var theme = localStorage.getItem("theme");
             var icon = document.getElementById('theme-icon');
@@ -319,7 +388,6 @@
             }
         });
 
-        // Adiciona o evento de clique para alternar o tema
         document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
     </script>
 </body>
