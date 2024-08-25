@@ -108,44 +108,11 @@ $csrf_token = gerarTokenCSRF();
     <meta charset="UTF-8">
     <title>Editar Jogador</title>
     <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/editar_jogador.css">
-    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
 </head>
 <body>
 <?php 
 require_once 'header_classificacao.php'
 ?>
-    <script>
-        // Função para alternar o modo escuro
-        function toggleDarkMode() {
-            var element = document.body;
-            var icon = document.getElementById('theme-icon');
-            element.classList.toggle("dark-mode");
-
-            // Atualizar o ícone conforme o tema
-            if (element.classList.contains("dark-mode")) {
-                localStorage.setItem("theme", "dark");
-                icon.src = '../../../public/img/header/modoclaro.svg';
-            } else {
-                localStorage.setItem("theme", "light");
-                icon.src = '../../../public/img/header/modoescuro.svg';
-            }
-        }
-
-        // Aplicar o tema salvo ao carregar a página
-        document.addEventListener("DOMContentLoaded", function() {
-            var theme = localStorage.getItem("theme");
-            var icon = document.getElementById('theme-icon');
-            if (theme === "dark") {
-                document.body.classList.add("dark-mode");
-                icon.src = '../../../public/img/header/modoclaro.svg';
-            } else {
-                icon.src = '../../../public/img/header/modoescuro.svg';
-            }
-        });
-
-        // Adiciona o evento de clique para alternar o tema
-        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
-    </script>
     <div class="container">
         <div class="form-container">
             <h2 id="editable">Editar Jogador</h2>

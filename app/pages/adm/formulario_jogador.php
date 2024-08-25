@@ -109,7 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Jogadores</title>
     <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/formulario_jogador.css">
-    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
     <style>
         .error-message {
             display: none;
@@ -143,38 +142,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php 
 require_once 'header_classificacao.php'
 ?>
-<script>
-    // Função para alternar o modo escuro
-    function toggleDarkMode() {
-        var element = document.body;
-        var icon = document.getElementById('theme-icon');
-        element.classList.toggle("dark-mode");
-
-        // Atualizar o ícone conforme o tema
-        if (element.classList.contains("dark-mode")) {
-            localStorage.setItem("theme", "dark");
-            icon.src = '../../../public/img/header/modoclaro.svg';
-        } else {
-            localStorage.setItem("theme", "light");
-            icon.src = '../../../public/img/header/modoescuro.svg';
-        }
-    }
-
-    // Aplicar o tema salvo ao carregar a página
-    document.addEventListener("DOMContentLoaded", function() {
-        var theme = localStorage.getItem("theme");
-        var icon = document.getElementById('theme-icon');
-        if (theme === "dark") {
-            document.body.classList.add("dark-mode");
-            icon.src = '../../../public/img/header/modoclaro.svg';
-        } else {
-            icon.src = '../../../public/img/header/modoescuro.svg';
-        }
-    });
-
-    // Adiciona o evento de clique para alternar o tema
-    document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
-</script>
 <div class="fundo-tela">
     <div class="formulario" id="main-content">
         <form id="form-jogador" action="" method="post" enctype="multipart/form-data">

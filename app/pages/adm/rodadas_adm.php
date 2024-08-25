@@ -20,7 +20,6 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
     <title>Rodadas das Fases de Grupo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../../public/css/adm/rodadas_adm.css">
-    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
     <link rel="stylesheet" href="../../../public/css/cssfooter.css">
 </head>
 <body>
@@ -188,8 +187,8 @@ function exibirRodadas() {
         <button id="cancel-btn">Não</button>
     </div>
 </div>
-
 <script>
+    // Controle das Rodadas
     var currentRodadaIndex = 0;
     var rodadaContainers = document.getElementsByClassName('rodada-container');
 
@@ -214,19 +213,6 @@ function exibirRodadas() {
     }
 
     showRodada(currentRodadaIndex);
-
-    // Toggle dark mode
-    var isDarkMode = false;
-    function toggleDarkMode() {
-        isDarkMode = !isDarkMode;
-        document.body.classList.toggle('dark-mode', isDarkMode);
-        var themeIcon = document.getElementById('theme-icon');
-        themeIcon.src = isDarkMode ? '../../../public/img/header/modoclaro.svg' : '../../../../public/img/header/modoescuro.svg';
-    }
-
-    // Optional: Add a button for toggling dark mode if needed
-    var themeIcon = document.getElementById('theme-icon');
-    themeIcon.addEventListener('click', toggleDarkMode);
 
     // Modal functionality
     document.addEventListener('DOMContentLoaded', function() {
@@ -261,15 +247,6 @@ function exibirRodadas() {
                 modal.style.display = 'none';
             }
         });
-
-        // Aplicar o tema salvo ao carregar a página
-        var theme = localStorage.getItem("theme");
-        if (theme === "dark") {
-            document.body.classList.add("dark-mode");
-            themeIcon.src = '../../../public/img/header/modoclaro.svg';
-        } else {
-            themeIcon.src = '../../../public/img/header/modoescuro.svg';
-        }
     });
 </script>
 <?php include '../footer.php' ?>

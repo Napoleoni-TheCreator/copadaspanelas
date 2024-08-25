@@ -76,7 +76,6 @@ $_SESSION['csrf_token'] = $csrf_token;
     <title>CRUD Times</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/listar_times.css">
-    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
     <link rel="stylesheet" href="../../../public/css/cssfooter.css">
     <style>
         /* Efeito de fade-in */
@@ -161,81 +160,50 @@ $_SESSION['csrf_token'] = $csrf_token;
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // Função para alternar o modo escuro
-        function toggleDarkMode() {
-            var element = document.body;
-            var icon = document.getElementById('theme-icon');
-            element.classList.toggle("dark-mode");
+    // Função para adicionar a classe 'show' para fade-in efeito
+    function fadeInElements() {
+        const elements = document.querySelectorAll('.fade-in');
+        let delay = 0;
+        elements.forEach((el, index) => {
+            setTimeout(() => {
+                el.classList.add('show');
+            }, delay);
+            delay += 60; // 1 segundo entre cada elemento
+        });
+    }
 
-            // Atualizar o ícone conforme o tema
-            if (element.classList.contains("dark-mode")) {
-                localStorage.setItem("theme", "dark");
-                icon.src = '../../../public/img/header/modoclaro.svg';
-            } else {
-                localStorage.setItem("theme", "light");
-                icon.src = '../../../public/img/header/modoescuro.svg';
+    // Inicia o efeito de fade-in quando a página carrega
+    document.addEventListener('DOMContentLoaded', fadeInElements);
+
+    // Adiciona o token ao campo oculto do formulário de exclusão
+    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var token = button.data('token');
+        var modal = $(this);
+        modal.find('#delete_token').val(token);
+    });
+
+    // Efeito de digitação para o título
+    document.addEventListener('DOMContentLoaded', () => {
+        const textElement = document.getElementById('text-center');
+        const text = textElement.textContent;
+        textElement.textContent = '';
+
+        let index = 0;
+        const typingSpeed = 30; // Ajuste a velocidade da digitação aqui
+
+        function typeLetter() {
+            if (index < text.length) {
+                textElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeLetter, typingSpeed);
             }
         }
 
-        // Aplicar o tema salvo ao carregar a página
-        document.addEventListener("DOMContentLoaded", function() {
-            var theme = localStorage.getItem("theme");
-            var icon = document.getElementById('theme-icon');
-            if (theme === "dark") {
-                document.body.classList.add("dark-mode");
-                icon.src = '../../../public/img/header/modoclaro.svg';
-            } else {
-                icon.src = '../../../public/img/header/modoescuro.svg';
-            }
-        });
+        typeLetter();
+    });
+</script>
 
-        // Adiciona o evento de clique para alternar o tema
-        document.getElementById('theme-icon').addEventListener('click', toggleDarkMode);
-
-        // Função para adicionar a classe 'show' para fade-in efeito
-        function fadeInElements() {
-            const elements = document.querySelectorAll('.fade-in');
-            let delay = 0;
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('show');
-                }, delay);
-                delay += 60; // 1 segundo entre cada elemento
-            });
-        }
-
-        // Inicia o efeito de fade-in quando a página carrega
-        document.addEventListener('DOMContentLoaded', fadeInElements);
-
-        // Adiciona o token ao campo oculto do formulário de exclusão
-        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var token = button.data('token');
-            var modal = $(this);
-            modal.find('#delete_token').val(token);
-        });
-            //EFEITO DIGITANDO
-        document.addEventListener('DOMContentLoaded', () => {
-            // Efeito de digitação para o título
-            const textElement = document.getElementById('text-center');
-            const text = textElement.textContent;
-            textElement.textContent = '';
-
-            let index = 0;
-            const typingSpeed = 30; // Ajuste a velocidade da digitação aqui
-
-            function typeLetter() {
-                if (index < text.length) {
-                    textElement.textContent += text.charAt(index);
-                    index++;
-                    setTimeout(typeLetter, typingSpeed);
-                }
-            }
-
-            typeLetter();
-        });
-
-    </script>
     <?php require_once '../footer.php' ?>
 </body>
 </html>
