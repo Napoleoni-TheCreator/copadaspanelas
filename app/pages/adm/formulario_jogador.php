@@ -1,6 +1,5 @@
 <?php
 include '../../config/conexao.php';
-
 // Função para gerar um token único
 function generateToken($length = 32) {
     return bin2hex(random_bytes($length));
@@ -75,8 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Processa a imagem do jogador
     $imagem = $_FILES['imagem'];
-    $imagemTmpName = $imagem['tmp_name'];
-    $imgData = file_get_contents($imagemTmpName);
+    if ($imagem['error'] == UPLOAD_ERR_NO_FILE) {
+        // Se nenhum arquivo foi enviado, usar uma imagem padrão
+        $imgData = file_get_contents('../../../public/img/perfil_padrao_jogador.png'); // Atualize o caminho para a imagem padrão
+    } else {
+        $imagemTmpName = $imagem['tmp_name'];
+        $imgData = file_get_contents($imagemTmpName);
+    }
 
     // Gera um token único para o jogador
     $token = generateToken();
@@ -173,7 +177,7 @@ require_once 'header_classificacao.php'
                 ?>
             </select>
             <label for="imagem">Imagem do Jogador</label>
-            <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()" required>
+            <input type="file" id="imagem" name="imagem" accept="image/*" onchange="previewImage()">
             <img id="imagem-preview" src="#" alt="Imagem do Jogador">
             <div id="message-container">
                 <div id="error-message" class="error-message"></div>
