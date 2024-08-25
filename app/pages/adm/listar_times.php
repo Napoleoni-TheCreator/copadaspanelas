@@ -1,6 +1,6 @@
 <?php
 include '../../config/conexao.php';
-session_start(); // Iniciar a sessão para validação CSRF e autenticação
+session_start();
 
 // Função para gerar token
 function gerarToken($length = 32) {
@@ -9,17 +9,13 @@ function gerarToken($length = 32) {
 
 // Função para lidar com a exclusão de um time
 if (isset($_POST['delete_token'])) {
-    // Verificação do token CSRF
     if (!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die("CSRF token inválido");
     }
 
     $token = $_POST['delete_token'];
-
-    // Desativar verificações de chave estrangeira
     $conn->query("SET FOREIGN_KEY_CHECKS=0");
 
-    // Validar o token e obter o ID do time
     $sql = "SELECT id FROM times WHERE token = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $token);
@@ -29,31 +25,24 @@ if (isset($_POST['delete_token'])) {
     $stmt->close();
 
     if ($id) {
-        // Excluir o time com o ID correspondente
         $deleteSql = "DELETE FROM times WHERE id = ?";
         $stmt = $conn->prepare($deleteSql);
         $stmt->bind_param("i", $id);
-        if ($stmt->execute()) {
-            if ($stmt->affected_rows > 0) {
-                // Redireciona para a lista de times com uma mensagem de sucesso
-                header("Location: listar_times.php?status=success");
-                exit();
-            } else {
-                echo "<script>alert('Nenhum time encontrado com o ID fornecido.'); window.location.href='listar_times.php';</script>";
-            }
+        if ($stmt->execute() && $stmt->affected_rows > 0) {
+            header("Location: listar_times.php?status=success");
+            exit();
         } else {
-            echo "<script>alert('Erro ao excluir time: " . $stmt->error . "'); window.location.href='listar_times.php';</script>";
+            header("Location: listar_times.php?status=error");
+            exit();
         }
         $stmt->close();
     } else {
         die("Token inválido");
     }
 
-    // Reativar verificações de chave estrangeira
     $conn->query("SET FOREIGN_KEY_CHECKS=1");
 }
 
-// Consulta SQL para obter todos os times
 $sql = "SELECT t.id, t.nome, t.logo, t.token, g.nome AS grupo_nome FROM times t JOIN grupos g ON t.grupo_id = g.id ORDER BY g.nome, t.nome";
 $result = $conn->query($sql);
 
@@ -64,7 +53,6 @@ while ($row = $result->fetch_assoc()) {
 
 $conn->close();
 
-// Gerar token CSRF para uso no formulário
 $csrf_token = gerarToken();
 $_SESSION['csrf_token'] = $csrf_token;
 ?>
@@ -77,54 +65,41 @@ $_SESSION['csrf_token'] = $csrf_token;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/listar_times.css">
     <link rel="stylesheet" href="../../../public/css/cssfooter.css">
-    <style>
-        /* Efeito de fade-in */
-        .fade-in {
-            opacity: 0 !important;
-            transition: opacity 1s ease-in-out !important;
-        }
-        .fade-in.show {
-            opacity: 1 !important;
-        }
-    </style>
 </head>
 <body>
-<?php require_once 'header_classificacao.php' ?>
+<?php include 'header_classificacao.php'; ?>
 
-    <h1 class="text-center" id="text-center">LISTAR DE TIMES</h1>
+    <h1 class="text-center">LISTAR DE TIMES</h1>
 
-    <div class="container fade-in" id="container">
-        <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
-            <div class="alert alert-success text-center">Time excluído com sucesso!</div>
+    <div class="container">
+        <?php if (isset($_GET['status'])): ?>
+            <?php if ($_GET['status'] === 'success'): ?>
+                <div class="alert alert-success text-center">Time excluído com sucesso!</div>
+            <?php elseif ($_GET['status'] === 'error'): ?>
+                <div class="alert alert-danger text-center">Erro ao excluir time.</div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <div class="row">
-        <?php
-            $borderColors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A0', '#33F0FF', '#FFBF00', '#8CFF33'];
-            $colorIndex = 0;
-        ?>
         <?php foreach ($times as $grupo_nome => $timesGrupo): ?>
-            <div class="col-md-3 fade-in">
+            <div class="col-md-3">
                 <h3><?php echo htmlspecialchars($grupo_nome); ?></h3>
                 <?php foreach ($timesGrupo as $time): ?>
-                    <div class="time-card fade-in" style="border-color: <?php echo $borderColors[$colorIndex]; ?>;">
+                    <div class="time-card">
                         <?php if ($time['logo']): ?>
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($time['logo']); ?>" class="time-image fade-in" alt="Logo do Time">
+                            <img src="data:image/jpeg;base64,<?php echo base64_encode($time['logo']); ?>" class="time-image" alt="Logo do Time">
                         <?php else: ?>
-                            <img src="../../../public/images/default-team.png" class="time-image fade-in" alt="Logo do Time">
+                            <img src="../../../public/images/default-team.png" class="time-image" alt="Logo do Time">
                         <?php endif; ?>
-                        <div class="time-details fade-in">
+                        <div class="time-details">
                             <strong>Nome:</strong> <?php echo htmlspecialchars($time['nome']); ?><br>
-                            <strong>TECNICO:</strong> <?php echo htmlspecialchars($time['grupo_nome']); ?><br>
+                            <strong>Grupo:</strong> <?php echo htmlspecialchars($time['grupo_nome']); ?><br>
                         </div>
-                        <div class="time-actions fade-in">
-                            <a href="#" class="delete fade-in" data-toggle="modal" data-target="#confirmDeleteModal" data-token="<?php echo htmlspecialchars($time['token']); ?>">Excluir</a>
-                            <a href="editar_time.php?token=<?php echo $time['token']; ?>" class="edit fade-in">Editar</a>
+                        <div class="time-actions">
+                            <a href="#" class="delete" data-toggle="modal" data-target="#confirmDeleteModal" data-token="<?php echo htmlspecialchars($time['token']); ?>">Excluir</a>
+                            <a href="editar_time.php?token=<?php echo $time['token']; ?>" class="edit">Editar</a>
                         </div>
                     </div>
-                    <?php
-                        $colorIndex = ($colorIndex + 1) % count($borderColors);
-                    ?>
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
@@ -160,50 +135,14 @@ $_SESSION['csrf_token'] = $csrf_token;
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-    // Função para adicionar a classe 'show' para fade-in efeito
-    function fadeInElements() {
-        const elements = document.querySelectorAll('.fade-in');
-        let delay = 0;
-        elements.forEach((el, index) => {
-            setTimeout(() => {
-                el.classList.add('show');
-            }, delay);
-            delay += 60; // 1 segundo entre cada elemento
-        });
-    }
-
-    // Inicia o efeito de fade-in quando a página carrega
-    document.addEventListener('DOMContentLoaded', fadeInElements);
-
-    // Adiciona o token ao campo oculto do formulário de exclusão
     $('#confirmDeleteModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var token = button.data('token');
         var modal = $(this);
         modal.find('#delete_token').val(token);
     });
+    </script>
 
-    // Efeito de digitação para o título
-    document.addEventListener('DOMContentLoaded', () => {
-        const textElement = document.getElementById('text-center');
-        const text = textElement.textContent;
-        textElement.textContent = '';
-
-        let index = 0;
-        const typingSpeed = 30; // Ajuste a velocidade da digitação aqui
-
-        function typeLetter() {
-            if (index < text.length) {
-                textElement.textContent += text.charAt(index);
-                index++;
-                setTimeout(typeLetter, typingSpeed);
-            }
-        }
-
-        typeLetter();
-    });
-</script>
-
-    <?php require_once '../footer.php' ?>
+    <?php include '../footer.php'; ?>
 </body>
 </html>
