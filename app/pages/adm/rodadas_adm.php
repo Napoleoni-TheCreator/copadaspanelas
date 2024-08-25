@@ -154,10 +154,10 @@ function exibirRodadas() {
                     echo '<td> X </td>';
                     echo '<td> <input type="number" id="input" min="0" step="1" name="golsB_' . $jogoId . '" value="' . $golsB . '"> </td>';
                     echo '<td class="time-row">';
+                    echo '<span class="time-name_b">' . $timeB_nome . '</span>';
                     if ($logoB) {
                         echo '<img src="' . $logoB . '" class="logo-time">';
                     }
-                    echo '<span class="time-name">' . $timeB_nome . '</span>';
                     echo '</td>';
                     echo '<input type="hidden" name="confrontos[]" value="' . $jogoId . '">';
                     echo '<input type="hidden" name="resultadoA_' . $jogoId . '" value="' . $resultadoA . '">';

@@ -96,7 +96,6 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Time</title>
-    <link rel="stylesheet" href="../../../public/css/adm/header_cl.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;

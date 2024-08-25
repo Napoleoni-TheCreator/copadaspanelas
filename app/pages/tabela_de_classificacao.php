@@ -18,6 +18,7 @@
 </head>
 <body>
 <?php include 'header_classificacao.php'; ?>
+<div class="main">
     <div class="wrapper-container">
     <h1 class="fade-in">FASE DE GRUPOS</h1>  
     <div id="tabela-wrapper" class="fade-in">
@@ -198,6 +199,7 @@
             });
         });
     </script>
+</div>
 <?php include 'footer.php'?>   
 </body>
 </html>

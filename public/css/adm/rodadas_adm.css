@@ -17,7 +17,6 @@ h1 {
     justify-self: center;
     flex-direction: column;
 }
-        /* Adicione o estilo necessário aqui */
 .hidden {
     opacity: 0;
     transition: opacity 0.05s ease-out; /* Reduzido para acelerar */
@@ -58,11 +57,12 @@ tr {
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    scale: 0.8;
+    /* scale: 0.1; */
+    margin-bottom: 4%;
 }
 .time_teste img {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
 }
 .tr_teste {
     display: flex;

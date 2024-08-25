@@ -1,11 +1,27 @@
-/*FOOTER*/
+/* CSS para garantir que o footer fique no final da página */
+html, body {
+    height: 100%;
+    margin: 0;
+}
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Seu CSS existente para o footer */
 footer {
     background-color: rgb(27, 25, 25);
     width: 100%;
     position: relative;
     bottom: 0;
 }
+
+/* O restante do seu CSS para o footer permanece o mesmo */
 
 .footerContain {
     width: 100%;
