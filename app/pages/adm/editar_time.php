@@ -96,32 +96,25 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Time</title>
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            /* background-color: red; */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
         .container {
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            display: flex;
             padding: 20px;
-            width: 100%;
-            max-width: 60%;
+            font-family: Arial, sans-serif;
         }
         .form-container {
-            /* background-color: rgb(218, 215, 215);
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 1.8);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px); */
-            border: 3px solid rgba(31, 38, 135, 0.37);
+            border: 1px solid #ccc;
             padding: 40px;
-            margin-top: 10%;
             margin-bottom: 10%;
+            max-width: 700px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.8);
         }
         .form-container h2 {
             text-align: center;
@@ -138,7 +131,7 @@ $conn->close();
         }
         input[type="text"], input[type="number"], select {
             padding: 10px;
-            border: 3px solid rgba(31, 38, 135, 0.37);
+            border: 1px solid #ccc;
             border-radius: 5px;
             margin-bottom: 15px;
             font-size: 12px;
@@ -146,7 +139,7 @@ $conn->close();
         }
         input[type="file"] {
             padding: 10px;
-            border: 3px solid rgba(31, 38, 135, 0.37);
+             border: 1px solid #ccc;
             border-radius: 5px;
             margin-bottom: 15px;
             font-size: 12px;
@@ -154,7 +147,7 @@ $conn->close();
         }
         input[type="submit"] {
             padding: 15px;
-            border: 3px solid rgba(31, 38, 135, 0.37);
+             border: 1px solid #ccc;
             background-color: #28a745;
             cursor: pointer;
             border-radius: 5px;
@@ -170,7 +163,7 @@ $conn->close();
             padding: 15px;
             background-color: #dc3545;
             color: white;
-            border: 3px solid rgba(31, 38, 135, 0.37);
+             border: 1px solid #ccc;
             text-align: center;
             text-decoration: none;
             font-weight: bold;
@@ -199,8 +192,12 @@ $conn->close();
             -webkit-appearance: none; /* Chrome, Safari, Edge */
             margin: 0; /* Remove margin */
         }
-
-    
+        .dark-mode select{
+            color: white;
+        }
+        .dark-mode input{
+            color: white;
+        }
     </style>
     <script>
         function previewImage(input) {
@@ -275,5 +272,8 @@ $conn->close();
            
         </div>
     </div>
+    <?php 
+    require_once '../footer.php';
+    ?>
 </body>
 </html>

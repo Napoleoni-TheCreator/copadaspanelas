@@ -83,7 +83,7 @@ $_SESSION['csrf_token'] = $csrf_token;
         <div class="row">
         <?php foreach ($times as $grupo_nome => $timesGrupo): ?>
             <div class="col-md-3">
-                <h3><?php echo htmlspecialchars($grupo_nome); ?></h3>
+                <h3 id="nome_grupo"><?php echo htmlspecialchars($grupo_nome); ?></h3>
                 <?php foreach ($timesGrupo as $time): ?>
                     <div class="time-card">
                         <?php if ($time['logo']): ?>

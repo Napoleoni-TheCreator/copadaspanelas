@@ -90,7 +90,6 @@ function inserirOuAtualizarConfrontos($rodadas) {
                 echo "<pre>";
                 print_r($partida);
                 echo "</pre>";
-
                 // Inserir um novo confronto
                 $stmtInsert = $conn->prepare("INSERT INTO jogos_fase_grupos (grupo_id, timeA_id, timeB_id, nome_timeA, nome_timeB, data_jogo, rodada) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
                 $stmtInsert->bind_param("iiissi", $partida['grupo_id'], $partida['timeA_id'], $partida['timeB_id'], $partida['timeA_nome'], $partida['timeB_nome'], $rodada);
