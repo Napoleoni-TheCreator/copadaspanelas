@@ -69,12 +69,17 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         });
     });
 </script>
+<div class="rodada_container1">
 <div id="rodadas-wrapper">
     <div class="nav-arrow left" onclick="previousRodada()"><img src="../../../public/img/esquerda.svg" alt=""></div>
     <div class="table-container">
         <?php exibirRodadas(); ?>
     </div>
     <div class="nav-arrow right" onclick="nextRodada()"><img src="../../../public/img/direita.svg" alt=""></div>
+</div>
+<!-- Link que aciona o modal -->
+<a href="../../actions/funcoes/confrontos_rodadas.php" class="btn-redirect" id="confirm-link">Classificar Confrontos Rodadas</a>
+
 </div>
 <?php
 function exibirRodadas() {
@@ -175,9 +180,6 @@ function exibirRodadas() {
     $conn->close();
 }
 ?>
-<!-- Link que aciona o modal -->
-<a href="../../actions/funcoes/confrontos_rodadas.php" class="btn-redirect" id="confirm-link">Classificar Confrontos Rodadas</a>
-
 <!-- Modal de Confirmação -->
 <div id="confirm-modal" class="modal">
     <div class="modal-content">

@@ -1,5 +1,7 @@
-
-body {
+main{
+    flex: 0 !important;
+}
+.main {
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(to top,#ff73008c,rgba(255, 4, 4, 0.726));
     color: #333;
@@ -18,28 +20,16 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
 /* Remove setinhas dos inputs de tipo number no Firefox */
 input[type="number"] {
     -moz-appearance: textfield;
 }
-
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
 h1 {
     font-size: 2em;
     color: #444;
     margin-top: 5%;
     font-family: 'Courier New', Courier, monospace;
 }
-
-body.dark-mode h1 {
-    color: #e0e0e0;
-}
-
 .form-container {
     background-color: rgba(240, 248, 255, 0.301);
     padding: 30px;
@@ -50,12 +40,6 @@ body.dark-mode h1 {
     margin: 20px;
     transition: background-color 0.3s, color 0.3s;
 }
-
-body.dark-mode .form-container {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-}
-
 table {
     width: 100%;
     border-collapse: separate;
@@ -93,12 +77,6 @@ td input[type="number"] {
     font-size: 1em;
 }
 
-body.dark-mode td input[type="number"] {
-    border-color: #555;
-    background-color: #333;
-    color: #e0e0e0;
-}
-
 #butao {
     background-color: #007bff;
     color: #fff;
@@ -127,21 +105,10 @@ body.dark-mode td input[type="number"] {
     background-color: #fdd;
 }
 
-body.dark-mode .error-message {
-    color: #e74c3c;
-    background-color: #3f3f3f;
-}
-
 .success-message {
     color: #2ecc71;
     background-color: #dff0d8;
 }
-
-body.dark-mode .success-message {
-    color: #2ecc71;
-    background-color: #3f3f3f;
-}
-
 select {
     padding: 10px;
     font-size: 1em;
@@ -151,13 +118,6 @@ select {
     width: 100%;
     max-width: 250px;
 }
-
-body.dark-mode select {
-    border-color: #555;
-    background-color: #333;
-    color: #e0e0e0;
-}
-
 label {
     display: block;
     margin-bottom: 10px;

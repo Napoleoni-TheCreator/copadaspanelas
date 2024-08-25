@@ -231,6 +231,7 @@ function obterNomeTime($id_time) {
 </head>
 <body>
 <?php include "header_classificacao.php";?>
+<div class="main">
  <h1 id="dynamic-text">Atualizar Confrontos para a Fase de <?php echo ucfirst($fase_final); ?></h1>
 
 <script>
@@ -340,7 +341,7 @@ function obterNomeTime($id_time) {
     <!-- Frame para redirecionamento após classificação -->
     <iframe name="result_frame" style="display:none;"></iframe>
 </div>
-
+</div>
 <script>
     document.getElementById('classificacao-form').addEventListener('submit', function(event) {
         var selecionado = document.querySelector('input[name="opcao"]:checked');

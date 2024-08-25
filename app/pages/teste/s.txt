@@ -1,3 +1,0 @@
-fazer, para colocar perfil de adm , e restringir o header caso seja adm aparece em um formato caso nao seja adm apareça outro header
-
-Fazer quero um imagem padrao o campo de imagem do jogador, caso nao tenha.

@@ -10,12 +10,11 @@
             box-sizing: border-box;
         }
 
-        body {
+        .main {
             display: flex;
             align-items: center;
             flex-direction: column;
-            height: 100%;
-            margin: 0;
+            justify-content: center;
             font-family: "Times New Roman", serif;
         }
 
@@ -101,47 +100,7 @@
         .dark-mode .grupo-item, .position :hover{
             color: #ffffff;
         }
-        .dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-        .dark-mode #tabela-wrapper {
-            background-color: #1e1e1e;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-        }
-
-        .dark-mode .grupo-item {
-            background-color: #333;
-            border: 1px solid #444;
-        }
-
-        .dark-mode .grupo-item img {
-            border: 1px solid #ffffff;
-        }
-
-        .dark-mode h1, .dark-mode h2 {
-            color: #ffffff;
-        }
-
-        .dark-mode-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
         
-        /* .dark-mode-button:hover {
-            background-color: #0056b3;
-        } */
-
         /* Media Queries para Ajustar o Layout em Telas Menores */
         @media (max-width: 768px) {
             h1 {
@@ -189,10 +148,9 @@
     <link rel="stylesheet" href="../../public/css/cssfooter.css">
 </head>
 <body>
-    <button class="dark-mode-button" onclick="toggleDarkMode()">Modo Escuro/Claro</button>
-
     <?php include 'header_classificacao.php'; ?>
     <h1>CLASSIFICADOS</h1>
+    <div class="main">
     <div id="tabela-wrapper">
         <?php
         function exibirTimes($titulo, $tabela) {
@@ -233,12 +191,7 @@
         exibirTimes('Final', 'final');
         ?>
     </div>
-
-    <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-        }
-    </script>
+    </div>
 <?php include 'footer.php'?>   
 </body>
 </html>

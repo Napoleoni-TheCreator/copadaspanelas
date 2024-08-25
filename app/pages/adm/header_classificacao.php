@@ -13,6 +13,14 @@ $usuarioLogado = isset($_SESSION['admin_id']);
     <title>Menu Responsivo | GN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        html, body {
+            height: 100%;
+        }
+        .header {
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
         :root {
             --cor-branca: #fff;
             --cor-vermelho: rgb(180, 0, 0);
@@ -20,7 +28,6 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             --cor-texto: #000;
             --cor-fundo: #fff;
         }
-
         .dark-mode {
             --cor-branca: #fff;
             --cor-vermelho: #cc0000;
@@ -36,17 +43,24 @@ $usuarioLogado = isset($_SESSION['admin_id']);
 
         #deslogar {
             font-size: 1.1em;
-            padding: 15px 20px;
+            padding: 10px 15px;
             border-radius: 5px;
             display: flex;
             align-items: center;
             color: var(--cor-branca);
             position: absolute;
-            right: 5%; /* 5px da borda direita */
+            right: 2%; /* 5px da borda direita */
             top: 50%;
             transform: translateY(-50%); /* Centraliza verticalmente */
         }
-
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right:19%;
+            top: 50%;
+            transform: translateY(-50%); /* Centraliza verticalmente */
+        }
         #deslogar a {
             text-decoration: none;
             color: inherit;
@@ -76,12 +90,11 @@ $usuarioLogado = isset($_SESSION['admin_id']);
 
         .img_logo_header {
             width: 90px;
-            margin-left: 15px;
         }
 
         .header {
             background-color: var(--cor-vermelho);
-            height: 5em; /* Aumenta a altura do header */
+            height: 6em; /* Aumenta a altura do header */
             box-shadow: 1px 1px 4px var(--cor-escura4);
             width: 100%;
             position: fixed;
@@ -90,15 +103,9 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             z-index: 20;
             display: flex;
             align-items: center;
-            padding: 0 5%;
             justify-content: space-between;
             position: relative; /* Necessário para o posicionamento absoluto do #deslogar */
         }
-
-        .logo_header {
-            flex: 1;
-        }
-
         .navegacao_header {
             display: flex;
             gap: 3em;
@@ -120,9 +127,12 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             color: var(--cor-branca);
         }
 
-        .ativo {
+        #ativo :hover {
             padding: 10px;
-            border-radius: 10px;
+            background-color: white;
+            padding: auto;
+            color: var(--cor-texto);
+            border-radius:4px;
         }
 
         .btn_icon_header {
@@ -233,7 +243,7 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             display: none;
             position: absolute;
             left: 0;
-            background: var(--cor-vermelho);
+            background: rgb(109, 0, 0);
             min-width: 150px;
             border-radius: 5px;
             z-index: 22;
@@ -246,9 +256,10 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             display: block;
             text-decoration: none;
         }
-
-        .submenu a:hover {
-            background: var(--cor-escura4);
+        .submenu a:hover{
+            background-color: #e0e0e0;
+            color: var(--cor-texto);
+            border-radius: 4px;
         }
 
         .has-submenu {
@@ -257,15 +268,6 @@ $usuarioLogado = isset($_SESSION['admin_id']);
 
         .has-submenu:hover .submenu {
             display: block;
-        }
-
-        .theme-toggle {
-            display: flex;
-            align-items: center;
-            position: absolute;
-            right: 18%;
-            top: 50%;
-            transform: translateY(-50%); /* Centraliza verticalmente */
         }
     </style>
 </head>
@@ -278,7 +280,7 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             </svg>
         </button>
         <div class="logo_header">
-            <a href="../HomePage.php">            
+            <a href="HomePage.php">            
                 <img src="../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Escudo da CP" class="img_logo_header">
             </a>
         </div>
@@ -288,9 +290,13 @@ $usuarioLogado = isset($_SESSION['admin_id']);
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
             </button>
-            <a href="../HomePage.php" class="ativo">Home</a>
+            <div id="ativo" class="has-submenu">
+                <a href="../HomePage.php" id="ativo">Home</a>
+            </div>
             <div class="has-submenu">
-                <a href="../rodadas.php">Rodadas</a>
+                <div id="ativo" >
+                    <a href="../rodadas.php">Rodadas</a>
+                </div>
                 <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="rodadas_adm.php">Administrar Rodadas</a>
@@ -302,7 +308,9 @@ $usuarioLogado = isset($_SESSION['admin_id']);
                 <?php endif; ?>
             </div>
             <div class="has-submenu">
-                <a href="../tabela_de_classificacao.php">Classificação</a>
+                <div id="ativo" >
+                    <a href="../tabela_de_classificacao.php">Classificação</a>
+                </div>
                 <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="../classificar.php">Classificados</a>
@@ -310,7 +318,9 @@ $usuarioLogado = isset($_SESSION['admin_id']);
                 <?php endif; ?>
             </div>
             <div class="has-submenu">
-                <a href="../exibir_finais.php">Finais</a>
+                <div id="ativo" >
+                    <a href="../exibir_finais.php">Finais</a>
+                </div>
                 <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="adicionar_dados_finais.php">Administrar finais</a>
@@ -318,7 +328,9 @@ $usuarioLogado = isset($_SESSION['admin_id']);
                 <?php endif; ?>
             </div>
             <div class="has-submenu">
-                <a href="../estatistica.php">Estatísticas</a>
+                <div id="ativo" >
+                     <a href="../estatistica.php">Estatísticas</a>
+                </div>
                 <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="crud_jogador.php">Administrar jogadores</a>
@@ -327,7 +339,7 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             </div>
         </div>
         <div class="theme-toggle">
-            <img id="theme-icon" src="../../public/img/header/modoescuro.svg" alt="Toggle Theme">
+            <img id="theme-icon" src="../../../public/img/header/modoescuro.svg" alt="Toggle Theme">
         </div>
         <?php if ($usuarioLogado): ?>
         <div class="has-submenu" id="deslogar">
