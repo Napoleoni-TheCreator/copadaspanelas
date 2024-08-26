@@ -220,29 +220,11 @@ CREATE TABLE jogos_fase_grupos (
     FOREIGN KEY (timeB_id) REFERENCES times(id)
 );
 
-select*from  fase_execucao;
+INSERT INTO admin (cod_adm, nome, email, senha)
+VALUES ('2024cpTelsr', 'Thwaverton', 'thwavertont@gmail.com', '$2y$10$uTyQiFbpkTSZXHlovd2aT.IJI0szHF6.W8zcSUxpyfJM4V26mU7RO');
 
-select*from oitavas_de_final_confrontos;
-select*from final;
-select*from semifinais;
-select*from oitavas_de_final;
-select*from final_confrontos;
-select*from  semifinais_confrontos;
--- Comandos para visualização das tabelas
-select*from quartas_de_final_confrontos;
--- Visualiza todos os registros na tabela quartas_de_final
-SELECT * FROM quartas_de_final;
-
--- Visualiza todos os registros na tabela jogos
-SELECT * FROM jogos;
-
--- Visualiza todos os registros na tabela times
-SELECT * FROM times;
-
--- Visualiza todos os registros na tabela grupos
-SELECT * FROM grupos;
-select*from configuracoes;
+--cod_adm: 2024cpTelsr
+--senha: 123
 
 
-
-NÃO APAGUE POR FAVOR 
+NAO APAGUE
