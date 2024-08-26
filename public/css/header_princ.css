@@ -245,7 +245,7 @@ body {
     text-decoration: none;
 }
 .submenu a:hover{
-    background-color: #e0e0e0;
+    background-color: white;
     color: var(--cor-texto);
     border-radius: 4px;
 }

@@ -4,215 +4,208 @@
     <meta charset="UTF-8">
     <title>Estatísticas dos Jogadores</title>
     <link rel="stylesheet" href="../../public/css/cssfooter.css">
-<style>
-.main{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-}
-#titulo_eli{
-  font-size: 30px;
-  margin-bottom: 10px;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-}
-/* Estilos do Contêiner Principal */
-.container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    border: 1px solid red;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px red;
-    max-width: 1200px; /* Limitar a largura máxima */
-    overflow: hidden;
-    background-image: url('../../public/img/ESCUDO\ COPA\ DAS\ PANELAS.png');
-    background-size: 15% auto;
-    background-position: top center;
-    background-repeat: no-repeat;
-    margin-bottom: 10%;
-}
-
-/* Estilos do Layout dos Confrontos */
-.bracket {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    flex-wrap: nowrap; /* Garantir que as colunas não quebrem para a próxima linha */
-    align-items: center;
-}
-
-/* Estilos das Colunas */
-.column {
-    flex: 1;
-    margin-left: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 200px; /* Ajustar conforme necessário */
-}
-
-/* Estilos dos Confrontos */
-.match {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    border: 1px solid #ccc;
-    padding: 10px;
+    <style>
+    .main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+    }
+    #titulo_eli{
+    font-size: 30px;
     margin-bottom: 10px;
-    background-color: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px red;
     text-align: center;
-    box-sizing: border-box; /* Inclui padding e border no tamanho total */
-}
-
-/* Estilos das Equipes */
-.team {
-    display: flex;
-    align-items: center;
-    text-align: left; /* Alinha o texto à esquerda */
-    padding: 10px;
-    box-sizing: border-box; /* Inclui padding e border no tamanho total */
-}
-
-/* Estilos das Imagens das Bandeiras */
-.flag {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    object-fit: contain;
-}
-
-/* Estilos dos Nomes dos Times */
-.team-name {
-    font-weight: bold;
-    margin-right: 10px;
-    max-width: 150px; /* Limitar a largura máxima do nome do time */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-
-/* Estilos para o Placar dos Jogos */
-.score {
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: auto; /* Move o placar para o lado esquerdo */
-    font-size: 1.2em;
-}
-
-/* Estilos Específicos para a Final */
-.final-match {
-    display: flex;
-    justify-content: space-between;
-    width: 100%; /* Garantir que ocupa a largura total da coluna */
-}
-
-/* Estilos dos Separadores */
-.vs {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0 10px;
-}
-
-body.dark-mode .container {
-    background-color: #1e1e1e;
-    border: 1px solid #444;
-    box-shadow: 0 4px 8px #444;
-}
-
-body.dark-mode .match {
-    background-color: #333;
-    border: 1px solid #555;
-    box-shadow: 0 4px 8px #555;
-}
-
-body.dark-mode .round-label {
-    color: #e0e0e0;
-}
-
-body.dark-mode #titulo_eli {
-    color: #e0e0e0;
-    text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.7);
-}
-h1{
-    margin-top: 5%;
-}
-
-/* Media Queries para iPhone 12 e dispositivos similares */
-@media (max-width: 768px) { /* iPhone 12 portrait mode */
+    font-family: Arial, Helvetica, sans-serif;
+    }
     .container {
-        padding: 10px;
-        max-width: 100%; /* Ajustar a largura para ocupar 100% da tela */
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        border: 1px solid red;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px red;
+        max-width: 1200px; 
+        overflow: hidden;
+        background-image: url('../../public/img/ESCUDO\ COPA\ DAS\ PANELAS.png');
+        background-size: 15% auto;
+        background-position: top center;
+        background-repeat: no-repeat;
+        margin-bottom: 10%;
     }
 
-    .column {
-        margin: 5px;
-        max-width: 100%; /* Ajustar a largura máxima para 100% */
-    }
-
-    .flag {
-        width: 30px; /* Reduzir o tamanho das bandeiras */
-        height: 30px;
-    }
-
-    .team-name {
-        max-width: 120px; /* Reduzir a largura máxima do nome do time */
-    }
-}
-
-@media (max-width: 480px) { /* iPhone 12 mini e outros dispositivos menores */
-    .container {
-        /* flex-direction: column; Empilhar os elementos verticalmente */
-        width: 80%;
-        overflow-x:auto;
-    }
-    .match {
-        font-size: 10px;
-        width: auto;
-        height: auto;
-        padding: 0;
-    }
-    h1{
-        margin-top: 20%;
-    }
-    /* Estilos do Layout dos Confrontos */
     .bracket {
         display: flex;
         justify-content: space-between;
+        width: 100%;
         flex-wrap: nowrap; /* Garantir que as colunas não quebrem para a próxima linha */
         align-items: center;
     }
 
-    .flag {
-        width: 25px; /* Reduzir ainda mais o tamanho das bandeiras */
-        height: 25px;
+    .column {
+        flex: 1;
+        margin-left: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 200px; /* Ajustar conforme necessário */
     }
-    .column{
-        margin: 0;
-    }
-}
 
-</style>
+    .match {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px red;
+        text-align: center;
+        box-sizing: border-box; /* Inclui padding e border no tamanho total */
+    }
+
+    .team {
+        display: flex;
+        align-items: center;
+        text-align: left; /* Alinha o texto à esquerda */
+        padding: 10px;
+        box-sizing: border-box; /* Inclui padding e border no tamanho total */
+    }
+
+    /* Estilos das Imagens das Bandeiras */
+    .flag {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        object-fit: contain;
+    }
+
+    /* Estilos dos Nomes dos Times */
+    .team-name {
+        font-weight: bold;
+        margin-right: 10px;
+        max-width: 150px; /* Limitar a largura máxima do nome do time */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+    /* Estilos para o Placar dos Jogos */
+    .score {
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-right: auto; /* Move o placar para o lado esquerdo */
+        font-size: 1.2em;
+    }
+
+    /* Estilos Específicos para a Final */
+    .final-match {
+        display: flex;
+        justify-content: space-between;
+        width: 100%; /* Garantir que ocupa a largura total da coluna */
+    }
+
+    /* Estilos dos Separadores */
+    .vs {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 0 10px;
+    }
+
+    body.dark-mode .container {
+        background-color: #1e1e1e;
+        border: 1px solid #444;
+        box-shadow: 0 4px 8px #444;
+    }
+
+    body.dark-mode .match {
+        background-color: #333;
+        border: 1px solid #555;
+        box-shadow: 0 4px 8px #555;
+    }
+
+    body.dark-mode .round-label {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode #titulo_eli {
+        color: #e0e0e0;
+        text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    h1{
+        margin-top: 5%;
+    }
+
+    /* Media Queries para iPhone 12 e dispositivos similares */
+    @media (max-width: 768px) { /* iPhone 12 portrait mode */
+        .container {
+            padding: 10px;
+            max-width: 100%; /* Ajustar a largura para ocupar 100% da tela */
+        }
+
+        .column {
+            margin: 5px;
+            max-width: 100%; /* Ajustar a largura máxima para 100% */
+        }
+
+        .flag {
+            width: 30px; /* Reduzir o tamanho das bandeiras */
+            height: 30px;
+        }
+
+        .team-name {
+            max-width: 120px; /* Reduzir a largura máxima do nome do time */
+        }
+    }
+
+
+    @media (max-width: 480px) { /* iPhone 12 mini e outros dispositivos menores */
+        .container {
+            /* flex-direction: column; Empilhar os elementos verticalmente */
+            width: 80%;
+            overflow-x:auto;
+        }
+        .match {
+            font-size: 10px;
+            width: auto;
+            height: auto;
+            padding: 0;
+        }
+        h1{
+            margin-top: 20%;
+        }
+        /* Estilos do Layout dos Confrontos */
+        .bracket {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap; /* Garantir que as colunas não quebrem para a próxima linha */
+            align-items: center;
+        }
+
+        .flag {
+            width: 25px; /* Reduzir ainda mais o tamanho das bandeiras */
+            height: 25px;
+        }
+        .column{
+            margin: 0;
+        }
+    }
+    </style>
 </head>
 <body>
-<?php include '../pages/header_classificacao.php'; ?>
+<?php require_once '../pages/header_classificacao.php'; ?>
 <div class="main">
 <h1 id="titulo_eli">ELIMINATORIA</h1>
 <div class="container">
     <div class="bracket">
         <?php
-        // Incluir a configuração de conexão
         include '../config/conexao.php';
 
-        // Função para exibir a imagem do logo
         function exibirImagemLogo($conn, $time_id) {
             $sql = "SELECT logo FROM times WHERE id = $time_id";
             $result = $conn->query($sql);
