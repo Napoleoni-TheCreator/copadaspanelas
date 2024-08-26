@@ -1,13 +1,7 @@
-body {
-    /* background-color:red; */
-    margin: 0;
-    padding: 0;
+.main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    background: linear-gradient(to top,#f879118c,rgba(255, 0, 0, 0.603));
-    user-select: none;
 }
 .container {
     width: 50%;
@@ -17,6 +11,7 @@ body {
     margin-bottom: 5%;
     border-radius: 10px;
     padding: 5px;
+    border:#666 1px solid;
     display: flex;
     justify-content: center;
 }
@@ -76,6 +71,7 @@ input[type="text"], input[type="number"], select {
     border: none;
     color: rgba(15, 10, 2, 0.466);
     background-color:rgba(255, 255, 255, 0.459);
+    border:#666 1px solid;
 }
 input[type="file"] {
     padding: 10px;

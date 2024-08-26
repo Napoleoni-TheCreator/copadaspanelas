@@ -108,11 +108,13 @@ $csrf_token = gerarTokenCSRF();
     <meta charset="UTF-8">
     <title>Editar Jogador</title>
     <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/editar_jogador.css">
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
 </head>
 <body>
 <?php 
 require_once 'header_classificacao.php'
 ?>
+    <div class="main">
     <div class="container">
         <div class="form-container">
             <h2 id="editable">Editar Jogador</h2>
@@ -157,7 +159,7 @@ require_once 'header_classificacao.php'
             </form>
         </div>
     </div>
-
+</div>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const elements = document.querySelectorAll('.form-container *');
@@ -199,5 +201,6 @@ require_once 'header_classificacao.php'
         typeLetter();
     });
     </script>
+<?php require_once '../footer.php'; ?>
 </body>
 </html>

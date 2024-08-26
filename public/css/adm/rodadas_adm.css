@@ -302,7 +302,9 @@ margin-bottom: 5%;
 #rodadas-wrapper{
     align-items: center;
     justify-content: center;
-    margin-bottom: 20%;
+    margin-bottom: 61%;
+    border: none;
+    box-shadow: none;
 }
 .rodada-container {
 width: auto;

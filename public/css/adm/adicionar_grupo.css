@@ -42,12 +42,7 @@ legend {
     margin-bottom: 20px;
     color: #333; /* Cor do legend em cinza escuro */
 }
-.dark-mode legend{
-    color: white;
-}
-.dark-mode label{
-    color: white;
-}
+
 /* Estilo para labels */
 label {
     display: block;
@@ -102,7 +97,6 @@ button:hover {
 /* Mensagem de erro */
 .error-message {
     color: #e74c3c; /* Cor do texto em vermelho */
-    background-color: #fdd; /* Fundo claro para mensagens de erro */
 }
 
 /* Mensagem de sucesso */
@@ -145,21 +139,46 @@ iframe {
     padding: 5px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Estilos específicos para o modo escuro */
+body.dark-mode {
+    background-color: #121212; /* Cor de fundo escura para o corpo */
+    color: #e0e0e0; /* Cor do texto em cinza claro */
+}
+
+body.dark-mode .main {
+    background-color: #121212; /* Cor de fundo escura */
+}
+
 body.dark-mode h1 {
     color: #fafafa; /* Texto do cabeçalho em branco no modo escuro */
 }
 
 body.dark-mode .form-container {
-    background-color: #444; /* Fundo escuro no modo escuro */
-    color: #fff; /* Texto branco */
+    background-color: #1e1e1e; /* Fundo escuro para o contêiner do formulário */
+    color: #e0e0e0; /* Texto em cinza claro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode legend,
+body.dark-mode label {
+    color: #e0e0e0; /* Cor do legend e labels em cinza claro */
+}
+
+body.dark-mode input[type="number"], 
+body.dark-mode select {
+    border: 1px solid #555; /* Borda cinza escura */
+    background-color: #333; /* Fundo escuro para inputs e selects */
+    color: #e0e0e0; /* Texto em cinza claro */
 }
 
 body.dark-mode table th, 
 body.dark-mode table td {
-    background-color: white; /* Fundo das células em cinza escuro no modo escuro */
+    background-color: #222; /* Fundo das células em cinza escuro */
+    color: #e0e0e0; /* Texto em cinza claro */
+    border-bottom: 1px solid #444; /* Borda cinza escura */
 }
 
 body.dark-mode .error-message {
@@ -170,4 +189,9 @@ body.dark-mode .error-message {
 body.dark-mode .success-message {
     color: #2ecc71; /* Mensagens de sucesso em verde */
     background-color: #333; /* Fundo escuro para mensagens de sucesso */
+}
+
+body.dark-mode .btn-toggle-mode {
+    background-color: #e0e0e0; /* Cor de fundo clara para o botão */
+    color: #121212; /* Texto escuro */
 }

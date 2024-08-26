@@ -1,0 +1,165 @@
+/* Estilos gerais */
+.container {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.form-container {
+    border: 1px solid #ccc;
+    padding: 40px;
+    margin-bottom: 10%;
+    max-width: 700px;
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 2px;
+    font-size: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="number"], select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+input[type="submit"] {
+    padding: 15px;
+    border: 1px solid #ccc;
+    background-color: #28a745;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    padding: 15px;
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #ccc;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}
+
+#imagem-preview {
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+input[type=number] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield !important;
+    appearance: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    margin: 0; /* Remove margin */
+}
+
+/* Estilos específicos para o modo escuro */
+body.dark-mode .container {
+    background-color: #121212; /* Fundo escuro */
+    color: #e0e0e0; /* Texto em cinza claro */
+}
+
+body.dark-mode .form-container {
+    border: 1px solid #444;
+    background-color: rgba(33, 33, 33, 0.8); /* Fundo escuro com opacidade */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .form-container h2 {
+    color: #e0e0e0; /* Texto em cinza claro */
+}
+
+body.dark-mode label {
+    color: #e0e0e0; /* Cor dos labels em cinza claro */
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="number"],
+body.dark-mode select {
+    border: 1px solid #555; /* Borda cinza escura */
+    background: rgba(33, 33, 33, 0.8); /* Fundo escuro com opacidade */
+    color: #e0e0e0; /* Texto em cinza claro */
+}
+
+body.dark-mode input[type="file"] {
+    border: 1px solid #555; /* Borda cinza escura */
+    background: rgba(33, 33, 33, 0.8); /* Fundo escuro com opacidade */
+    color: #e0e0e0; /* Texto em cinza claro */
+}
+
+body.dark-mode input[type="submit"] {
+    border: 1px solid #444;
+    background-color: #4CAF50; /* Verde escuro */
+    color: #e0e0e0; /* Texto em cinza claro */
+}
+
+body.dark-mode input[type="submit"]:hover {
+    background-color: #45a049; /* Verde mais escuro ao passar o mouse */
+}
+
+body.dark-mode .btn-cancel {
+    background-color: #c82333; /* Vermelho mais escuro */
+    border: 1px solid #444;
+}
+
+body.dark-mode .btn-cancel:hover {
+    background-color: #b22a27; /* Vermelho ainda mais escuro ao passar o mouse */
+}
+
+body.dark-mode #imagem-preview {
+    border: 1px solid #444; /* Borda escura para a imagem */
+}

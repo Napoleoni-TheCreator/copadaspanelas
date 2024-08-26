@@ -77,66 +77,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="../../../public/css/cssfooter.css">
+    <link rel="stylesheet" href="../../../public/css/adm/cadastros_times_jogadores_adm/adicionar_times.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Time</title>
-    <style>
-        body {
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: rgb(218, 215, 215);
-        }
-        /* Estilos para o formulário */
-        .formulario {
-            display: flex;
-            height: calc(100vh - 60px); /* Ajusta a altura para deixar espaço para a barra de título */
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-        }
-        form {
-            max-width: 500px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-        label {
-            display: block;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        input[type="text"],
-        input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-        }
-        input[type="submit"] {
-            background-color: #c60909;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        input[type="submit"]:hover {
-            background-color: #a60000;
-        }
-    </style>
+    
 </head>
 <body>
 <?php 
 require_once 'header_classificacao.php'
 ?>
+<div class="main">
+    <div class="titulo-barra">
+        <h1>Adicionar times
+        </h1>
+    </div>
     <div class="formulario">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
             <label for="nome_time">Nome do Time:</label>
@@ -148,5 +103,9 @@ require_once 'header_classificacao.php'
             <input type="submit" value="Adicionar Time">
         </form>
     </div>
+</div>
+<?php 
+require_once '../footer.php'
+?>
 </body>
 </html>
