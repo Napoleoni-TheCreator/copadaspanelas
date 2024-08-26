@@ -53,3 +53,41 @@ header{
     transition: 0.3s;
 }
 
+@media only screen and (max-width: 768px) {
+    header {
+        height: 70px; 
+        padding: 10px; 
+        align-items: center; 
+    }
+
+    #Icon {
+        width: auto;
+        align-items: center;
+        display: flex;
+        margin: none;
+    }
+
+    #titulo {
+        font-size: 12px; /* Tamanho de fonte maior para o título */
+        margin-bottom: 10px; /* Espaçamento inferior para separar do link de cadastro */
+    }
+
+    .cadastro {
+        font-size: 10px;
+        padding: 0 !important;
+        margin-right: 20px;
+    }
+    .menu-toggle{
+        font-size: 18px!important;
+        padding: 0;
+    }
+    .cadastro:hover{
+        background-color: none;
+        padding: none;
+    }
+
+    .cadastro a {
+        padding: 10px 15px; /* Reduz o padding do link de cadastro */
+        font-size: 0.9em; /* Reduz o tamanho da fonte do link de cadastro */
+    }
+}

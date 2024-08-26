@@ -1,14 +1,4 @@
 
-.main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    height: 100%;
-    font-family: 'Courier New', Courier, monospace;
-
-}
-
 h1 {
     font-size: 2.5em;
     margin-top: 5%;
@@ -16,6 +6,12 @@ h1 {
 
 h3 {
     font-size: 1.8em;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form-container {
@@ -36,10 +32,20 @@ input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
-    -moz-appearance: textfield;
-    -webkit-appearance: none;
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: none;   /* Chrome, Safari */
+    appearance: none;           /* Para navegadores que suportam essa propriedade */
 }
-
+/* Remove as setas para navegadores baseados em WebKit (Chrome, Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+}
+ /* Remove as setas para navegadores baseados em Gecko (Firefox) */
+input[type="number"] {
+        -moz-appearance: textfield;
+}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -117,6 +123,7 @@ iframe {
     display: none;
 }
 
+/* Modo Escuro */
 body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
@@ -144,87 +151,75 @@ body.dark-mode .success-message {
     background-color: #1a4a1a;
 }
 
-/* Media Queries */
-@media (max-width: 1200px) {
-    h1 {
-        font-size: 2em;
-    }
-
-    h3 {
-        font-size: 1.6em;
-    }
-
-    .form-container {
-        padding: 20px;
-        margin: 15px;
-    }
-}
-
-@media (max-width: 992px) {
-    h1 {
-        font-size: 1.8em;
-    }
-
-    h3 {
-        font-size: 1.4em;
-    }
-
-    input[type="number"] {
-        max-width: 60px;
-    }
-
-    #butao {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-
-    .form-container {
-        max-width: 100%;
-        margin: 10px;
-    }
-}
-
+/* Responsividade para dispositivos menores */
 @media (max-width: 768px) {
     h1 {
-        font-size: 1.6em;
-        margin-top: 3%;
-    }
-
-    h3 {
         font-size: 1.2em;
     }
 
-    input[type="number"] {
-        max-width: 100%;
+    .form-container {
+        padding: 0;
+    }
+
+    table, th, td {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 0.3em;
     }
 
     #butao {
-        font-size: 12px;
-        padding: 6px 12px;
+        width: 100%;
+        padding: 0.5em;
+    }
+    select{
+        padding: 2px;
+        font-size: 10px;
+        width: auto;
+    }
+    td input[type="number"] {
+        width: 20px;
+        font-size: 8px;
+        padding: 2;
     }
 
-    .form-container {
-        padding: 15px;
-        margin: 10px;
-    }
+    
 }
 
-@media (max-width: 576px) {
-    h1 {
-        font-size: 1.4em;
-    }
-
-    h3 {
-        font-size: 1em;
+/* Estilização para dispositivos móveis */
+@media (max-width: 480px) {
+    h1, h3,p {
+        font-size: 0.9em;
     }
 
     .form-container {
-        padding: 10px;
-        margin: 5px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .form-container label{
+        font-size: 10px;
+    }
+    #isso{
+        font-size: 15px;
+    }
+    table {
+        font-size: 0.8em;
+    }
+
+    th, td {
+        padding: 0.2em;
+    }
+
+    input[type="number"] {
+        font-size: 0.9em;
     }
 
     #butao {
-        font-size: 10px;
-        padding: 5px 10px;
+        font-size: 0.9em;
+        padding: 0.4em;
     }
 }

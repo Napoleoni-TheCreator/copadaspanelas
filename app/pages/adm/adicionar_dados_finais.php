@@ -269,7 +269,7 @@ function obterNomeTime($id_time) {
 
         <!-- Formulário para selecionar a fase final -->
         <form method="post" action="">
-            <label for="fase_final">Selecionar Fase Final:</label>
+            <label id="isso" for="fase_final">Selecionar Fase Final:</label>
             <select id="fase_final" name="fase_final" onchange="this.form.submit()">
                 <option value="oitavas" <?php if ($fase_final == 'oitavas') echo 'selected'; ?>>Oitavas de Final</option>
                 <option value="quartas" <?php if ($fase_final == 'quartas') echo 'selected'; ?>>Quartas de Final</option>
@@ -301,11 +301,11 @@ function obterNomeTime($id_time) {
                         <form method="post" action="">
                             <td><?php echo htmlspecialchars($nome_timeA); ?></td>
                             <td>
-                                <input type="number" name="gols_marcados_timeA" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
+                                <input type="number" name="gols_marcados_timeA"  min="0" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeA']); ?>" required>
                             </td>
                             <td>vs</td>
                             <td>
-                                <input type="number" name="gols_marcados_timeB" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
+                                <input type="number" name="gols_marcados_timeB"  min="0" value="<?php echo htmlspecialchars($row_confrontos['gols_marcados_timeB']); ?>" required>
                             </td>
                             <td><?php echo htmlspecialchars($nome_timeB); ?></td>
                             <td>

@@ -18,7 +18,13 @@
         $endDate->modify('+6 days');
         $endTimestamp = $endDate->getTimestamp();
     ?>
-    <nav>
+    <div class="menu-container">
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <nav id="nav-menu">
         <ul>
             <li><a href="../pages/HomePage.php">Home</a></li>
 
@@ -125,7 +131,15 @@
         </div>
     </div>
     -->
-    
+    <script>document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+    });
+});
+</script>
     <script src="../../public/js/homepage.js"></script>
 </body>
 </html>

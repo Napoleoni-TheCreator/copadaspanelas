@@ -23,7 +23,7 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             </svg>
         </button>
         <div class="logo_header">
-            <a href="HomePage.php">            
+            <a href="../HomePage.php">            
                 <img src="../../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Escudo da CP" class="img_logo_header">
             </a>
         </div>
