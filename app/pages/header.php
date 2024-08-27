@@ -3,7 +3,7 @@ session_start(); // Inicie a sessão para verificar a autenticação
 ?>
 <header>
     <div id="Icon">
-        <a href="../pages/Homepage.php"><img src="../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Logo"></a>
+        <a href="Homepage.php"><img src="../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Logo"></a>
     </div>
     <h1 id="titulo">COPA DAS PANELAS</h1>
 

@@ -126,6 +126,7 @@ body {
     color: var(--cor-branca);
     cursor: pointer;
     display: none;
+    margin-left: 7px;
 }
 
 .dark-mode {

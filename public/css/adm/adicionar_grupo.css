@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100%;
     user-select: none;
     background-color: #f5f5f5; /* Cor de fundo clara */
@@ -21,12 +22,14 @@ h1 {
 
 /* Estilo do contêiner do formulário */
 .form-container {
+    width: 40%;
     background-color: #ffffff; /* Fundo branco puro */
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-width: 30%;
     margin-top: 5%;
+    margin-bottom: 10%;
 }
 
 /* Estilo para o fieldset */
@@ -70,7 +73,7 @@ input[type="number"], select {
 
 /* Estilo para botões */
 button {
-    background-color: #e41010; /* Cor de fundo azul */
+    background-color: #e41010; /* Cor de fundo vermelha */
     color: #fff; /* Texto branco */
     border: none;
     padding: 10px 15px;
@@ -83,7 +86,7 @@ button {
 
 /* Estilo de hover para botões */
 button:hover {
-    background-color: #da4518a2; /* Azul escuro ao passar o mouse */
+    background-color: #da4518a2; /* Vermelho escuro ao passar o mouse */
 }
 
 /* Estilo para mensagens de erro e sucesso */
@@ -194,4 +197,79 @@ body.dark-mode .success-message {
 body.dark-mode .btn-toggle-mode {
     background-color: #e0e0e0; /* Cor de fundo clara para o botão */
     color: #121212; /* Texto escuro */
+}
+
+/* Media Queries para tornar o design responsivo */
+
+/* Para telas menores que 768px */
+@media (max-width: 768px) {
+    .form-container {
+        width: 80%;
+        padding: 20px;
+        margin-top: 10%;
+        margin-bottom: 5%;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .btn-toggle-mode {
+        width: 50px;
+        font-size: 8px;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    .error-message, .success-message {
+        font-size: 1em;
+    }
+}
+
+/* Para telas menores que 480px */
+@media (max-width: 480px) {
+    .form-container {
+        width: 70%;
+        padding: 15px;
+        margin-top: 15%;
+        margin-bottom: 5%;
+    }
+
+    h1 {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .btn-toggle-mode {
+        width: 40px;
+        font-size: 6px;
+    }
+
+    table {
+        font-size: 10px;
+    }
+    legend, label{
+        font-size: 14px;
+    }
+    input, select{
+        padding: 0px !important;
+        font-size: 12px !important;
+    }
+    select{
+        width: 90% !important;
+    }
+    .error-message, .success-message {
+        font-size: 0.9em;
+    }
 }
