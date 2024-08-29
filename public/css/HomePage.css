@@ -299,28 +299,28 @@ nav ul li a:hover {
 
 @media only screen and (max-width: 768px) {
     .menu-container {
-        display: block; /* Exibe o botão em tamanhos menores */
+        display: block; 
     }
     #Icon img{
         width: 50px !important;
     }
     nav {
-        display: none; /* Oculta a navegação padrão em tamanhos menores */
-        flex-direction: column; /* Layout de coluna */
-        align-items: stretch; /* Alinha itens à esquerda */
+        display: none; 
+        flex-direction: column; 
+        align-items: stretch; 
         position: absolute;
-        top: 60px; /* Ajuste conforme necessário */
+        top: 60px; 
         left: 0;
         width: 100%;
         z-index: 1000;
     }
 
     nav.active {
-        display: block; /* Exibe o menu quando ativado */
+        display: block; 
     }
 
     nav ul {
-        flex-direction: column; /* Altera para layout de coluna */
+        flex-direction: column; 
     }
 
     nav ul li {
@@ -338,29 +338,23 @@ nav ul li a:hover {
     }
 
     .menu-toggle {
-        display: block; /* Exibe o botão em tamanhos menores */
+        display: block; 
     }
-
-    /* Adjustments for slides and content on small screens */
     .Slideshare {
         height: 250px;
     }
-
     .mySlides img {
         height: 100%;
         object-fit: cover;
     }
-
     .news-block {
         width: 100%;
         margin: 10px 0;
     }
-
     .conteudo {
         flex-direction: column;
         align-items: center;
     }
-
     .image-block {
         height: 200px;
         margin-right: 0;

@@ -54,3 +54,29 @@ button:hover {
 .senha_incorreta{
     color: red;
 }
+
+/* Media Queries para melhorar a responsividade em telas menores */
+@media (max-width: 600px) {
+    form {
+        padding: 15px;
+        width: 92% !important;
+    }
+    input[type="text"], input[type="password"] {
+        width: 90%;
+    }
+    label {
+        font-size: 14px;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+    
+    button {
+        width: 95%;
+        font-size: 14px;
+        padding: 10px;
+    }
+}

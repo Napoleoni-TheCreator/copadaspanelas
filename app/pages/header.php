@@ -3,10 +3,11 @@ session_start(); // Inicie a sessão para verificar a autenticação
 ?>
 <header>
     <div id="Icon">
-        <a href="Homepage.php"><img src="../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Logo"></a>
+        <a href="HomePage.php"><img src="../../public/img/ESCUDO COPA DAS PANELAS.png" alt="Logo"></a>
     </div>
-    <h1 id="titulo">COPA DAS PANELAS</h1>
-
+    <div id="titulo-container">
+        <div id="titulo">COPA DAS PANELAS</div>
+    </div>
     <div class="cadastro">
         <?php if (isset($_SESSION['admin_id'])): ?>
             <a href="../pages/adm/rodadas_adm.php" class="fas fa-user"> Entrar</a>
