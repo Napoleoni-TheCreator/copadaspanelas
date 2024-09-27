@@ -1,0 +1,91 @@
+-- caso algum individuo querer fazer a parte para salvar os dados das edições anteriores.
+-- Tabela de grupos (histórico)
+CREATE TABLE grupos_historico (
+    historico_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Tabela de times (histórico)
+CREATE TABLE times_historico (
+    historico_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    logo BLOB NOT NULL,
+    grupo_id INT NOT NULL,
+    token VARCHAR(64),
+    pts INT DEFAULT 0,
+    vitorias INT DEFAULT 0,
+    empates INT DEFAULT 0,
+    derrotas INT DEFAULT 0,
+    gm INT DEFAULT 0,
+    gc INT DEFAULT 0,
+    sg INT DEFAULT 0
+);
+
+-- Tabela de jogos (histórico)
+CREATE TABLE jogos_historico (
+    historico_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
+    time_id INT NOT NULL,
+    resultado CHAR(1),
+    data_jogo DATE
+);
+
+-- Tabela de jogos finais (histórico)
+CREATE TABLE jogos_finais_historico (
+    historico_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    nome_timeA VARCHAR(100) NOT NULL,
+    nome_timeB VARCHAR(100) NOT NULL,
+    gols_marcados_timeA INT NOT NULL,
+    gols_marcados_timeB INT NOT NULL,
+    resultado_timeA CHAR(1),
+    resultado_timeB CHAR(1),
+    data_jogo DATETIME NOT NULL,
+    fase VARCHAR(50) NOT NULL
+);
+
+-- Tabela de jogadores (histórico)
+CREATE TABLE jogadores_historico (
+    historico_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    gols INT DEFAULT 0,
+    posicao VARCHAR(255),
+    numero INT,
+    assistencias INT DEFAULT 0,
+    cartoes_amarelos INT DEFAULT 0,
+    cartoes_vermelhos INT DEFAULT 0,
+    token VARCHAR(64),
+    imagem LONGBLOB,
+    time_id INT NOT NULL
+);
+
+-- Tabela para armazenar o ranking de estatísticas dos jogadores (histórico)
+CREATE TABLE posicoes_jogadores_historico (
+    historico_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
+    jogador_id INT NOT NULL,
+    categoria ENUM('gols', 'assistencias', 'cartoes_amarelos', 'cartoes_vermelhos') NOT NULL,
+    posicao INT DEFAULT 0
+);
+
+-- Tabela de jogos fase grupos (histórico)
+CREATE TABLE jogos_fase_grupos_historico (
+    historico_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
+    grupo_id INT NOT NULL,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    nome_timeA VARCHAR(100) NOT NULL,
+    nome_timeB VARCHAR(100) NOT NULL,
+    gols_marcados_timeA INT DEFAULT 0,
+    gols_marcados_timeB INT DEFAULT 0,
+    resultado_timeA CHAR(1),
+    resultado_timeB CHAR(1),
+    data_jogo DATETIME NOT NULL,
+    rodada INT NOT NULL
+);

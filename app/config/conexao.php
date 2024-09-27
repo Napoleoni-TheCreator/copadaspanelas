@@ -2,13 +2,11 @@
 
 $servername = "localhost";  // Endereço do servidor MySQL (geralmente 'localhost')
 $username = "root";  // Nome de usuário do MySQL
-$password = "";    // Senha do MySQL
-$database = "copa"; // Nome do banco de dados
+$password = "";    
+$database = "copa"; 
 
-// Cria a conexão
 $conn = new mysqli($servername, $username, $password, $database);
 
-// Verifica a conexão
 if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }else{
