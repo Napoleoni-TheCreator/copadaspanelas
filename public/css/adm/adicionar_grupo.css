@@ -1,7 +1,6 @@
-/* Define a fonte padrão e configurações básicas */
 .main {
     font-family: 'Roboto', sans-serif;
-    color: #333; /* Texto principal em cinza escuro */
+    color: #333; 
     margin: 0;
     padding: 0;
     display: flex;
@@ -10,20 +9,18 @@
     justify-content: center;
     height: 100%;
     user-select: none;
-    background-color: #f5f5f5; /* Cor de fundo clara */
+    background-color: #f5f5f5; 
 }
 
-/* Estilo para cabeçalhos */
 h1 {
     font-size: 2em;
-    color: #333; /* Cor do cabeçalho em cinza escuro */
+    color: #333; 
     margin-top: 20px;
 }
 
-/* Estilo do contêiner do formulário */
 .form-container {
     width: 40%;
-    background-color: #ffffff; /* Fundo branco puro */
+    background-color: #ffffff; 
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -32,49 +29,42 @@ h1 {
     margin-bottom: 10%;
 }
 
-/* Estilo para o fieldset */
 fieldset {
     border: none;
     padding: 0;
     margin: 0;
 }
 
-/* Estilo para o legend */
 legend {
     font-size: 1.5em;
     margin-bottom: 20px;
-    color: #333; /* Cor do legend em cinza escuro */
+    color: #333; 
 }
 
-/* Estilo para labels */
 label {
     display: block;
     margin-bottom: 10px;
-    color: #333; /* Cor dos labels em cinza escuro */
+    color: #333; 
 }
 
-/* Estilo para inputs e selects */
 input[type="number"], select {
     padding: 10px;
     font-size: 1em;
     border-radius: 5px;
-    border: 1px solid #ccc; /* Borda cinza clara */
-    background-color: #fff; /* Fundo branco */
+    border: 1px solid #ccc; 
+    background-color: #fff; 
     width: 90%;
     -webkit-appearance: none;
     -moz-appearance: textfield !important;
     appearance: none;
 }
 
-/* Estilo específico para #faseFinal */
 #faseFinal {
     width: 97%;
 }
-
-/* Estilo para botões */
 button {
-    background-color: #e41010; /* Cor de fundo vermelha */
-    color: #fff; /* Texto branco */
+    background-color: #e41010; 
+    color: #fff; 
     border: none;
     padding: 10px 15px;
     font-size: 16px;
@@ -83,13 +73,10 @@ button {
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
-
-/* Estilo de hover para botões */
 button:hover {
-    background-color: #da4518a2; /* Vermelho escuro ao passar o mouse */
+    background-color: #da4518a2; 
 }
 
-/* Estilo para mensagens de erro e sucesso */
 .error-message, .success-message {
     font-size: 1.1em;
     margin-bottom: 20px;
@@ -97,17 +84,14 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Mensagem de erro */
 .error-message {
-    color: #e74c3c; /* Cor do texto em vermelho */
+    color: #e74c3c; 
 }
 
-/* Mensagem de sucesso */
 .success-message {
-    color: #2ecc71; /* Cor do texto em verde */
+    color: #2ecc71; 
 }
 
-/* Estilo para tabelas */
 table {
     width: 100%;
     border-collapse: separate;
@@ -115,93 +99,85 @@ table {
     margin-top: 20px;
 }
 
-/* Estilo para células da tabela */
 th, td {
     padding: 12px 15px;
     text-align: center;
-    border-bottom: 1px solid #ddd; /* Borda cinza clara */
-    background-color: #fafafa; /* Fundo da célula em cinza claro */
+    border-bottom: 1px solid #ddd; 
+    background-color: #fafafa; 
 }
 
-/* Estilo para cabeçalhos da tabela */
 th {
-    background-color: #e0e0e0; /* Fundo cinza claro */
+    background-color: #e0e0e0; 
 }
 
-/* Estilo para iframes ocultos */
 iframe {
     display: none;
 }
 
-/* Estilo para o botão de alternância de modo */
 .btn-toggle-mode {
     width: 60px;
     font-size: 10px;
-    background-color: #444; /* Cor de fundo escura para o botão */
-    color: #fff; /* Texto branco */
+    background-color: #444; 
+    color: #fff; 
     padding: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-/* Estilos específicos para o modo escuro */
 body.dark-mode {
-    background-color: #121212; /* Cor de fundo escura para o corpo */
-    color: #e0e0e0; /* Cor do texto em cinza claro */
+    background-color: #121212; 
+    color: #e0e0e0; 
 }
 
 body.dark-mode .main {
-    background-color: #121212; /* Cor de fundo escura */
+    background-color: #121212; 
 }
 
 body.dark-mode h1 {
-    color: #fafafa; /* Texto do cabeçalho em branco no modo escuro */
+    color: #fafafa; 
 }
 
 body.dark-mode .form-container {
-    background-color: #1e1e1e; /* Fundo escuro para o contêiner do formulário */
-    color: #e0e0e0; /* Texto em cinza claro */
+    background-color: #1e1e1e; 
+    color: #e0e0e0; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode legend,
 body.dark-mode label {
-    color: #e0e0e0; /* Cor do legend e labels em cinza claro */
+    color: #e0e0e0; 
 }
 
 body.dark-mode input[type="number"], 
 body.dark-mode select {
-    border: 1px solid #555; /* Borda cinza escura */
-    background-color: #333; /* Fundo escuro para inputs e selects */
-    color: #e0e0e0; /* Texto em cinza claro */
+    border: 1px solid #555; 
+    background-color: #333; 
+    color: #e0e0e0; 
 }
 
 body.dark-mode table th, 
 body.dark-mode table td {
-    background-color: #222; /* Fundo das células em cinza escuro */
-    color: #e0e0e0; /* Texto em cinza claro */
-    border-bottom: 1px solid #444; /* Borda cinza escura */
+    background-color: #222; 
+    color: #e0e0e0; 
+    border-bottom: 1px solid #444; 
 }
 
 body.dark-mode .error-message {
-    color: #e74c3c; /* Mensagens de erro em vermelho */
-    background-color: #333; /* Fundo escuro para mensagens de erro */
+    color: #e74c3c; 
+    background-color: #333; 
 }
 
 body.dark-mode .success-message {
-    color: #2ecc71; /* Mensagens de sucesso em verde */
-    background-color: #333; /* Fundo escuro para mensagens de sucesso */
+    color: #2ecc71; 
+    background-color: #333; 
 }
 
 body.dark-mode .btn-toggle-mode {
-    background-color: #e0e0e0; /* Cor de fundo clara para o botão */
-    color: #121212; /* Texto escuro */
+    background-color: #e0e0e0; 
+    color: #121212; 
 }
 
-/* Media Queries para tornar o design responsivo */
-
-/* Para telas menores que 768px */
 @media (max-width: 768px) {
     .form-container {
         width: 80%;
@@ -233,7 +209,6 @@ body.dark-mode .btn-toggle-mode {
     }
 }
 
-/* Para telas menores que 480px */
 @media (max-width: 480px) {
     .form-container {
         width: 70%;

@@ -32,9 +32,9 @@ input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
-    -moz-appearance: textfield; /* Firefox */
-    -webkit-appearance: none;   /* Chrome, Safari */
-    appearance: none;           /* Para navegadores que suportam essa propriedade */
+    -moz-appearance: textfield; 
+    -webkit-appearance: none;   
+    appearance: none;           
 }
 /* Remove as setas para navegadores baseados em WebKit (Chrome, Safari) */
 input[type="number"]::-webkit-inner-spin-button,
@@ -42,7 +42,6 @@ input[type="number"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
 }
- /* Remove as setas para navegadores baseados em Gecko (Firefox) */
 input[type="number"] {
         -moz-appearance: textfield;
 }
@@ -123,7 +122,6 @@ iframe {
     display: none;
 }
 
-/* Modo Escuro */
 body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
@@ -151,7 +149,6 @@ body.dark-mode .success-message {
     background-color: #1a4a1a;
 }
 
-/* Responsividade para dispositivos menores */
 @media (max-width: 768px) {
     h1 {
         font-size: 1.2em;
@@ -187,7 +184,6 @@ body.dark-mode .success-message {
     
 }
 
-/* Estilização para dispositivos móveis */
 @media (max-width: 480px) {
     h1, h3,p {
         font-size: 0.9em;

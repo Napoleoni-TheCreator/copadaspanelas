@@ -19,16 +19,15 @@ h1 {
 }
 .hidden {
     opacity: 0;
-    transition: opacity 0.05s ease-out; /* Reduzido para acelerar */
+    transition: opacity 0.05s ease-out; 
 }
 
 .reveal {
     opacity: 1;
 }
-/* Estilos gerais do modo escuro */
 .dark-mode {
-    background-color: #1e1e1e; /* Cor de fundo para o modo escuro */
-    color: #e0e0e0; /* Cor do texto para o modo escuro */
+    background-color: #1e1e1e; 
+    color: #e0e0e0; 
 }
 
 .dark-mode #rodadas-wrapper {
@@ -211,7 +210,6 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: rgba(0, 0, 0, 0.4); 
 }
 
-/* Estilo do conteúdo do modal */
 .modal-content {
     background-color: #fefefe;
     margin: 10% auto; 
@@ -246,7 +244,6 @@ button#cancel-btn {
     background-color: #dc3545;
     color: white;
 }
-/* Ajustes responsivos */
 @media (max-width: 770px) { 
 .time_teste{
     width: auto;
@@ -328,7 +325,6 @@ margin-bottom:10%;
     max-width: 100px;
 }
 }
-/* Setas de navegação */
 .nav-arrow {
     font-size: 24px;
     cursor: pointer;
@@ -337,14 +333,14 @@ margin-bottom:10%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10; /* Garante que as setas estejam sobre outros conteúdos */
+    z-index: 10; 
 }
 .nav-arrow.left {
-    left: -5px; /* Ajuste a posição da seta esquerda */
+    left: -5px; 
 }
 
 .nav-arrow.right {
-    right: -5px; /* Ajuste a posição da seta direita */
+    right: -5px; 
 }
 .nav-arrow img {
     width: 30px;

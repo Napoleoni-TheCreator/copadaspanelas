@@ -42,7 +42,6 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #a60000;
 }
-/* Estilos padrão para o formulário */
 .formulario {
     display: flex;
     min-width: 60%;
@@ -62,7 +61,6 @@ form {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilos para mensagens */
 .message {
     padding: 15px;
     margin-bottom: 5px;
@@ -81,7 +79,6 @@ form {
     background-color: #f8d7da;
     color: red;
 }
-/* Estilo para o modo escuro */
 body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
@@ -105,7 +102,6 @@ body.dark-mode .message.error {
     background-color: #5d2a2a;
     color: #f8d7da;
 }
-/* Estilos responsivos */
 @media (max-width: 768px) {
     .formulario {
         margin-top: 10%;

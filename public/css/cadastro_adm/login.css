@@ -55,7 +55,6 @@ button:hover {
     color: red;
 }
 
-/* Media Queries para melhorar a responsividade em telas menores */
 @media (max-width: 600px) {
     form {
         padding: 15px;

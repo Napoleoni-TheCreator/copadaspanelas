@@ -1,4 +1,4 @@
-/* Reset de padding e box-sizing */
+
 * {
     padding: 0;
     box-sizing: border-box;
@@ -25,13 +25,12 @@
     flex-direction: column;
     align-items: center;
 }
-/* Estilo do container de grupos */
+
 .grupo-container {
     width: 100%;
     margin-bottom: 20px;
 }
 
-/* Estilo do cabeçalho do grupo */
 .grupo-header {
     font-size: 1.2em;
     margin-bottom: 10px;
@@ -39,7 +38,6 @@
     text-align: left;
 }
 
-/* Estilo da tabela flexível */
 .tabela-flex {
     display: flex;
     flex-direction: column;
@@ -70,7 +68,6 @@
     border-right: none;
 }
 
-/* Estilo do logo do time */
 .logo-time {
     max-width: 50px;
     max-height: 50px;
@@ -232,13 +229,12 @@ body.dark-mode #legenda-simbolos {
 .time-name {
     display: flex;
     align-items: center;
-    flex: 1; /* Faz com que o nome do time ocupe o espaço restante */
-    overflow: hidden; /* Oculta texto que excede o limite */
+    flex: 1; 
+    overflow: hidden; 
     text-overflow: ellipsis; /* Adiciona '...' ao final do texto que excede o limite */
     white-space: nowrap; /* Evita que o texto quebre em várias linhas */
 }
 
-/* Estilo das informações */
 .inf {
     display: inline-block; 
     width: 10px; 
@@ -276,7 +272,6 @@ body.dark-mode #legenda-simbolos {
     margin-right: 2px;
 }
 
-/* Estilo de efeito de desvanecimento */
 .fade-in {
     opacity: 0;
     transition: opacity 1s ease-in-out;
@@ -286,7 +281,6 @@ body.dark-mode #legenda-simbolos {
     opacity: 1;
 }
 
-/* Estilo do carregamento */
 #carregamento {
     display: block;
     text-align: center;
@@ -295,7 +289,7 @@ body.dark-mode #legenda-simbolos {
 h1{
     margin-top: 80px;
 }
-/* Media Queries */
+
 @media (min-width: 350px) and (max-width: 1000px) {
     h1{
         font-size: 16px;
@@ -397,7 +391,7 @@ h1{
         font-size: 8px;
     }
     .clube {
-        min-width: 80px; /* Largura mínima */
+        min-width: 80px; 
         max-width: auto;
     }
 

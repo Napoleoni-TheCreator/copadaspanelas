@@ -9,18 +9,18 @@ body {
 
 header {
     width: 70%;
-    margin: 0 auto; /* Centraliza o header na página */
-    text-align: center; /* Centraliza horizontalmente o conteúdo dentro do header */
-    background-color: #f4f4f4; /* Cor de fundo opcional */
-    padding: 20px 0; /* Espaçamento interno */
-    box-sizing: border-box; /* Garante que o padding não incremente o tamanho total */
+    margin: 0 auto; 
+    text-align: center;
+    background-color: #f4f4f4; 
+    padding: 20px 0; 
+    box-sizing: border-box; 
 }
 
 header img {
-    max-width: 100%; /* Garante que a imagem não ultrapasse a largura do header */
-    height: auto; /* Mantém a proporção da imagem */
-    display: block; /* Remove espaços em branco sob a imagem */
-    margin: 0 auto; /* Centraliza a imagem horizontalmente dentro do header */
+    max-width: 100%; 
+    height: auto; 
+    display: block; 
+    margin: 0 auto; 
 }
 
 .container {
@@ -32,7 +32,6 @@ header img {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Estilo para h1 e h2 */
 h1, h2 {
     color: #fff;
     background-color: #333;
@@ -42,8 +41,6 @@ h1, h2 {
     border-radius: 4px;
 }
 
-
-/* Estilo do formulário */
 form {
     max-width: 600px;
     margin: 0 auto;
@@ -79,8 +76,6 @@ form button {
 form button:hover {
     background-color: #0056b3;
 }
-
-/* Estilo da lista de notícias */
 ul {
     list-style-type: none;
     padding: 0;

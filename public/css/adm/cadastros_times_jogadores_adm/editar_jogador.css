@@ -26,7 +26,7 @@
     margin: none;
     font-size: 40px;
     font-family: 'Roboto', Courier, monospace;
-    white-space: nowrap; /* Prevent line breaks */
+    white-space: nowrap; 
     overflow: hidden;    
     position: relative;  
     width: 0; 
@@ -82,11 +82,11 @@ input[type="file"] {
 .button-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Ajuste a margem superior se necessário */
+    margin-top: 20px; 
 }
 .button-container input[type="submit"],
 .button-container .btn-cancel {
-    margin: 0 10px; /* Espaçamento entre os botões */
+    margin: 0 10px; 
 }
 input[type="submit"] {
     padding: 15px;
@@ -123,14 +123,14 @@ input[type="submit"]:hover {
     border-radius: 5px;
 }
 input[type="number"] {
-    -moz-appearance: textfield; /* Firefox */
+    -moz-appearance: textfield; 
 }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none; /* Chrome, Safari, e Opera */
+    -webkit-appearance: none; 
     margin: 0;
 }
 .hidden {
     opacity: 0;
-    transition: opacity 0.3s ease-in-out; /* Duração mais curta */
+    transition: opacity 0.3s ease-in-out; 
 }

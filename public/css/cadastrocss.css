@@ -21,15 +21,15 @@ body {
     margin-top: 20px;
     background-color: #2d2d2d;
     border-radius: 10px;
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); /* Adicionando sombra */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
     padding: 20px;
     width: 300px;
-    text-align: center; /* Centralizando o texto */
+    text-align: center; 
 
 }
 
 h1 {
-    color: #fff; /* Cor branca para o título */
+    color: #fff; 
     margin-bottom: 20px;
 }
 

@@ -4,7 +4,6 @@ time x time 2
 e quando mudar os dados aqui, adicionar gols vitoria empate..
 
 
-
 BD atualizado
 DROP DATABASE IF EXISTS gerenciador_grupos;
 CREATE DATABASE gerenciador_grupos;

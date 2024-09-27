@@ -147,16 +147,16 @@ body {
 }
 
 .dark-mode th {
-    color: #00ff00; /* Verde */
-    border-bottom: 3px solid #ff0000; /* Vermelho */
+    color: #00ff00; 
+    border-bottom: 3px solid #ff0000; 
 }
 
 .dark-mode .dados {
-    color: #ff0000; /* Vermelho */
+    color: #ff0000; 
 }
 
 .dark-mode .clube {
-    color: #00ff00; /* Verde */
+    color: #00ff00; 
 }
 
 .theme-toggle {
@@ -164,15 +164,15 @@ body {
 }
 
 .theme-toggle img {
-    height: 40px; /* Ajuste o tamanho conforme necessário */
+    height: 40px; 
 }
 
 @media screen and (max-width: 768px) {
     .logo_header {
         display: flex;
         justify-content: center;
-        align-items: center; /* Adiciona alinhamento vertical */
-        width: 100%; /* Garante que ocupa toda a largura do cabeçalho */
+        align-items: center; 
+        width: 100%; 
     }
 
     .img_logo_header {

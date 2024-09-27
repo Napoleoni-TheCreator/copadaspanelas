@@ -1,4 +1,3 @@
-/* Estilos gerais */
 .container {
     justify-content: center;
     flex-direction: column;
@@ -103,63 +102,62 @@ input[type=number] {
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none; /* Chrome, Safari, Edge */
-    margin: 0; /* Remove margin */
+    -webkit-appearance: none; 
+    margin: 0;
 }
 
-/* Estilos específicos para o modo escuro */
 body.dark-mode .container {
-    background-color: #121212; /* Fundo escuro */
-    color: #e0e0e0; /* Texto em cinza claro */
+    background-color: #121212;
+    color: #e0e0e0; 
 }
 
 body.dark-mode .form-container {
     border: 1px solid #444;
-    background-color: rgba(33, 33, 33, 0.8); /* Fundo escuro com opacidade */
+    background-color: rgba(33, 33, 33, 0.8); 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 body.dark-mode .form-container h2 {
-    color: #e0e0e0; /* Texto em cinza claro */
+    color: #e0e0e0; 
 }
 
 body.dark-mode label {
-    color: #e0e0e0; /* Cor dos labels em cinza claro */
+    color: #e0e0e0; 
 }
 
 body.dark-mode input[type="text"],
 body.dark-mode input[type="number"],
 body.dark-mode select {
-    border: 1px solid #555; /* Borda cinza escura */
-    background: rgba(33, 33, 33, 0.8); /* Fundo escuro com opacidade */
-    color: #e0e0e0; /* Texto em cinza claro */
+    border: 1px solid #555; 
+    background: rgba(33, 33, 33, 0.8); 
+    color: #e0e0e0; 
 }
 
 body.dark-mode input[type="file"] {
-    border: 1px solid #555; /* Borda cinza escura */
-    background: rgba(33, 33, 33, 0.8); /* Fundo escuro com opacidade */
-    color: #e0e0e0; /* Texto em cinza claro */
+    border: 1px solid #555; 
+    background: rgba(33, 33, 33, 0.8); 
+    color: #e0e0e0; 
 }
 
 body.dark-mode input[type="submit"] {
     border: 1px solid #444;
-    background-color: #4CAF50; /* Verde escuro */
-    color: #e0e0e0; /* Texto em cinza claro */
+    background-color: #4CAF50; 
+    color: #e0e0e0; 
 }
 
 body.dark-mode input[type="submit"]:hover {
-    background-color: #45a049; /* Verde mais escuro ao passar o mouse */
+    background-color: #45a049; 
 }
 
 body.dark-mode .btn-cancel {
-    background-color: #c82333; /* Vermelho mais escuro */
+    background-color: #c82333; 
     border: 1px solid #444;
 }
 
 body.dark-mode .btn-cancel:hover {
-    background-color: #b22a27; /* Vermelho ainda mais escuro ao passar o mouse */
+    background-color: #b22a27; 
 }
 
 body.dark-mode #imagem-preview {
-    border: 1px solid #444; /* Borda escura para a imagem */
+    border: 1px solid #444; 
 }
