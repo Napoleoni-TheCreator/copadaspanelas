@@ -1,8 +1,5 @@
 <?php
-// Verificar se o usuário está autenticado
 session_start();
-
-// Verifica se o usuário está autenticado e se é um administrador
 if (!isset($_SESSION['admin_id'])) {
     // Armazenar a URL de referência para redirecionar após o login
     $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
@@ -14,7 +11,6 @@ include("../../actions/cadastro_adm/session_check.php");
 
 $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 
-// Conectar ao banco de dados
 include '../../config/conexao.php';
 ?>
 
@@ -77,7 +73,6 @@ include '../../config/conexao.php';
                                 try {
                                     // Desativar restrições de chave estrangeira (necessário para usar TRUNCATE em algumas configurações)
                                     $conn->query("SET FOREIGN_KEY_CHECKS = 0");
-
                                     // Limpar tabelas
                                     $tables = [
                                         'jogadores',

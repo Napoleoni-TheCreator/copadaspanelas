@@ -44,6 +44,7 @@ $usuarioLogado = isset($_SESSION['admin_id']);
                 <div class="submenu">
                     <a href="rodadas_adm.php">Administrar Rodadas</a>
                     <a href="adicionar_grupo.php">Criar novo campeonato</a>
+                    <!-- <a href="salvar_historico.php">Salvar historico</a> -->
                     <a href="adicionar_times.php">Adicionar times</a>
                     <a href="editar_time.php">Editar times</a>
                     <a href="adicionar_times_de_forma_aleatoria.php">Adicionar times forma aleatória</a>
