@@ -97,6 +97,17 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
             border-color: #dc3545 !important;
             background-color: #fff3f3;
         }
+
+        /* Estilo adicional para o novo modal */
+        #classificarConfirmModal .confirm-modal-content {
+            max-width: 400px;
+        }
+
+        #classificarMessage {
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -144,9 +155,10 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         </div>
         <div class="nav-arrow right" onclick="nextRodada()"><img src="../../../public/img/direita.svg" alt=""></div>
     </div>
-    <a href="../../actions/funcoes/confrontos_rodadas.php" class="btn-redirect" id="confirm-link">Classificar Confrontos Rodadas</a>
+    <a href="../../actions/funcoes/confrontos_rodadas.php" class="btn-redirect" id="classificar-link">Classificar Confrontos Rodadas</a>
 </div>
 
+<!-- Modal de Confirmação para Salvar -->
 <div id="saveConfirmModal" class="confirm-modal">
     <div class="confirm-modal-content">
         <p id="confirmMessage">Tem certeza que deseja salvar os resultados?</p>
@@ -158,6 +170,17 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
     </div>
 </div>
 
+<!-- Novo Modal de Confirmação para Classificar -->
+<div id="classificarConfirmModal" class="confirm-modal">
+    <div class="confirm-modal-content">
+        <p id="classificarMessage">Tem certeza que deseja classificar os confrontos desta rodada?</p>
+        <div class="confirm-modal-buttons">
+            <button class="confirm-modal-btn confirm-modal-yes" id="confirmClassificar">Sim</button>
+            <button class="confirm-modal-btn confirm-modal-no" id="cancelClassificar">Cancelar</button>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         let formToSubmit = null;
@@ -165,6 +188,38 @@ $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && 
         const confirmMessage = document.getElementById('confirmMessage');
         const dateInfo = document.getElementById('dateInfo');
 
+        // Configuração do modal de classificação
+        const classificarModal = document.getElementById('classificarConfirmModal');
+        const classificarLink = document.getElementById('classificar-link');
+        let redirectUrl = '';
+
+        // Handler para o link de classificação
+        classificarLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            redirectUrl = this.href;
+            classificarModal.style.display = 'block';
+        });
+
+        // Confirmar classificação
+        document.getElementById('confirmClassificar').addEventListener('click', () => {
+            window.location.href = redirectUrl;
+        });
+
+        // Cancelar classificação
+        document.getElementById('cancelClassificar').addEventListener('click', () => {
+            classificarModal.style.display = 'none';
+            redirectUrl = '';
+        });
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', (e) => {
+            if(e.target === classificarModal) {
+                classificarModal.style.display = 'none';
+                redirectUrl = '';
+            }
+        });
+
+        // Código original do modal de salvar
         document.querySelectorAll('form').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -303,7 +358,6 @@ function exibirRodadas() {
                     $golsA = $rowConfronto['gols_marcados_timeA'];
                     $golsB = $rowConfronto['gols_marcados_timeB'];
                     
-                    // Processar data e hora existentes
                     $dataValue = '';
                     $horaValue = '';
                     if ($rowConfronto['data_jogo'] && $rowConfronto['data_jogo'] != '0000-00-00 00:00:00') {
