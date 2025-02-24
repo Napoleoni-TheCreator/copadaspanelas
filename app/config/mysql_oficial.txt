@@ -221,7 +221,7 @@ CREATE TABLE jogos_fase_grupos (
 );
 
 INSERT INTO admin (cod_adm, nome, email, senha)
-VALUES ('2024cpTelsr', 'Thwaverton', 'thwavertont@gmail.com', '$2y$10$uTyQiFbpkTSZXHlovd2aT.IJI0szHF6.W8zcSUxpyfJM4V26mU7RO');
+VALUES ('2024cpTelsr', 'Thwaverton', 'thwavertont@gmail.com', '$2y$10$1gl82pJO56IydnIuRw/E0O.WeWKeWuST3HPt4lw.vLPcfMK9lhCuq');
 
 --cod_adm: 2024cpTelsr
 --senha: 123
