@@ -1,0 +1,14 @@
+1- criar um perfil de adm, para adicionar outros adm.
+2-criar uma logica, para armazenar todos os dados da copa anteriores.
+3- criar uma pagina para exibir os dados das copas anteriores.
+
+
+
+
+"Por favor não apgue!"
+
+
+
+Lista tarefas hoje
+- criar um unico botão para salvar os resultados da fase de grupo.
+- criar um calendario para adicionar as datas dos jogos, e o horario.
