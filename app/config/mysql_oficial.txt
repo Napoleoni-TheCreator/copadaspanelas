@@ -226,5 +226,3 @@ VALUES ('2024cpTelsr', 'Thwaverton', 'thwavertont@gmail.com', '$2y$10$1gl82pJO56
 --cod_adm: 2024cpTelsr
 --senha: 123
 
-
-NAO APAGUE  POR FAVOR
