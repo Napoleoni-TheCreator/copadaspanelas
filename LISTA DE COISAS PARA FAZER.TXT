@@ -12,3 +12,4 @@
 Lista tarefas hoje
 - criar um unico botão para salvar os resultados da fase de grupo.
 - criar um calendario para adicionar as datas dos jogos, e o horario.
+- criar uma pagina para salvar e editar todos os dados da copa.
