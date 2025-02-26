@@ -2,6 +2,29 @@
 include '../../config/conexao.php';
 session_start();
 
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: login.php");
+    exit();
+}
+
+include("../../actions/cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
+
 // Função para gerar token
 function gerarToken($length = 32) {
     return bin2hex(random_bytes($length));
@@ -16,9 +39,9 @@ if (isset($_POST['delete_token'])) {
     $token = $_POST['delete_token'];
     $conn->query("SET FOREIGN_KEY_CHECKS=0");
 
-    $sql = "SELECT id FROM times WHERE token = ?";
+    $sql = "SELECT id FROM times WHERE token = ? AND campeonato_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $token);
+    $stmt->bind_param("si", $token, $campeonatoId);
     $stmt->execute();
     $stmt->bind_result($id);
     $stmt->fetch();
@@ -43,14 +66,23 @@ if (isset($_POST['delete_token'])) {
     $conn->query("SET FOREIGN_KEY_CHECKS=1");
 }
 
-$sql = "SELECT t.id, t.nome, t.logo, t.token, g.nome AS grupo_nome FROM times t JOIN grupos g ON t.grupo_id = g.id ORDER BY g.nome, t.nome";
-$result = $conn->query($sql);
+// Consulta para obter os times do campeonato ativo
+$sql = "SELECT t.id, t.nome, t.logo, t.token, g.nome AS grupo_nome 
+        FROM times t 
+        JOIN grupos g ON t.grupo_id = g.id 
+        WHERE t.campeonato_id = ? 
+        ORDER BY g.nome, t.nome";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $campeonatoId);
+$stmt->execute();
+$result = $stmt->get_result();
 
 $times = [];
 while ($row = $result->fetch_assoc()) {
     $times[$row['grupo_nome']][] = $row;
 }
 
+$stmt->close();
 $conn->close();
 
 $csrf_token = gerarToken();

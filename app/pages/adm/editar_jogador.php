@@ -1,6 +1,29 @@
 <?php
 include "../../config/conexao.php";
-session_start(); // Iniciar a sessão
+session_start();
+
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: login.php");
+    exit();
+}
+
+include("../../actions/cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
 
 // Função para gerar token CSRF
 function gerarTokenCSRF() {
@@ -23,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $token = trim($_POST['token']);
     
     // Valida o token e obtém o ID do jogador
-    $sql = "SELECT id FROM jogadores WHERE token = ?";
+    $sql = "SELECT id FROM jogadores WHERE token = ? AND campeonato_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $token);
+    $stmt->bind_param("si", $token, $campeonatoId);
     $stmt->execute();
     $stmt->bind_result($id);
     $stmt->fetch();
@@ -54,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Atualiza os dados do jogador no banco de dados
         if ($imagem) {
-            $sql = "UPDATE jogadores SET nome=?, posicao=?, numero=?, gols=?, assistencias=?, cartoes_amarelos=?, cartoes_vermelhos=?, imagem=? WHERE id=?";
+            $sql = "UPDATE jogadores SET nome=?, posicao=?, numero=?, gols=?, assistencias=?, cartoes_amarelos=?, cartoes_vermelhos=?, imagem=? WHERE id=? AND campeonato_id=?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssiiiiisi', $nome, $posicao, $numero, $gols, $assistencias, $cartoes_amarelos, $cartoes_vermelhos, $imagem, $id);
+            $stmt->bind_param('ssiiiiisii', $nome, $posicao, $numero, $gols, $assistencias, $cartoes_amarelos, $cartoes_vermelhos, $imagem, $id, $campeonatoId);
         } else {
-            $sql = "UPDATE jogadores SET nome=?, posicao=?, numero=?, gols=?, assistencias=?, cartoes_amarelos=?, cartoes_vermelhos=? WHERE id=?";
+            $sql = "UPDATE jogadores SET nome=?, posicao=?, numero=?, gols=?, assistencias=?, cartoes_amarelos=?, cartoes_vermelhos=? WHERE id=? AND campeonato_id=?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssiiiiii', $nome, $posicao, $numero, $gols, $assistencias, $cartoes_amarelos, $cartoes_vermelhos, $id);
+            $stmt->bind_param('ssiiiiiii', $nome, $posicao, $numero, $gols, $assistencias, $cartoes_amarelos, $cartoes_vermelhos, $id, $campeonatoId);
         }
 
         if ($stmt->execute()) {
@@ -81,9 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Recupera o jogador para exibir o formulário de edição
 if (isset($_GET['token'])) {
     $token = trim($_GET['token']);
-    $sql = "SELECT * FROM jogadores WHERE token = ?";
+    $sql = "SELECT * FROM jogadores WHERE token = ? AND campeonato_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $token);
+    $stmt->bind_param('si', $token, $campeonatoId);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -101,7 +124,6 @@ $conn->close();
 $csrf_token = gerarTokenCSRF();
 ?>
 
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

@@ -1,0 +1,288 @@
+-- Remove o banco de dados existente, se existir
+DROP DATABASE IF EXISTS copa;
+
+-- Cria o novo banco de dados
+CREATE DATABASE copa;
+
+-- Usa o banco de dados criado
+USE copa;
+
+-- Tabela de campeonatos
+CREATE TABLE campeonatos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+-- Tabela de link da live
+CREATE TABLE linklive (
+    codlive VARCHAR(255) PRIMARY KEY,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de link do Instagram
+CREATE TABLE linkinstagram (
+    codinsta INT AUTO_INCREMENT PRIMARY KEY,
+    linklive VARCHAR(255),
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de administradores
+CREATE TABLE admin (
+    cod_adm VARCHAR(200) NOT NULL PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
+);
+
+-- Tabela de grupos
+CREATE TABLE grupos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de times
+CREATE TABLE times (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    logo BLOB NOT NULL,
+    grupo_id INT NOT NULL,
+    token VARCHAR(64) UNIQUE,
+    pts INT DEFAULT 0,
+    vitorias INT DEFAULT 0,
+    empates INT DEFAULT 0,
+    derrotas INT DEFAULT 0,
+    gm INT DEFAULT 0,
+    gc INT DEFAULT 0,
+    sg INT DEFAULT 0,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de jogos
+CREATE TABLE jogos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    resultado CHAR(1),  -- 'V' para vitória, 'D' para derrota, 'E' para empate
+    data_jogo DATE,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de jogos finais
+CREATE TABLE jogos_finais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    nome_timeA VARCHAR(100) NOT NULL,
+    nome_timeB VARCHAR(100) NOT NULL,
+    gols_marcados_timeA INT NOT NULL,
+    gols_marcados_timeB INT NOT NULL,
+    resultado_timeA CHAR(1),
+    resultado_timeB CHAR(1),
+    data_jogo DATETIME NOT NULL,
+    fase VARCHAR(50) NOT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de configurações
+CREATE TABLE configuracoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipes_por_grupo INT NOT NULL,
+    numero_grupos INT NOT NULL,
+    fase_final ENUM('oitavas', 'quartas', 'semifinais', 'final') NOT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de oitavas de final
+CREATE TABLE oitavas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de quartas de final
+CREATE TABLE quartas_de_final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de semifinais
+CREATE TABLE semifinais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de final
+CREATE TABLE final (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    time_id INT NOT NULL,
+    grupo_nome VARCHAR(50),
+    time_nome VARCHAR(100),
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de confrontos da final
+CREATE TABLE final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('final') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de confrontos das oitavas de final
+CREATE TABLE oitavas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('oitavas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de confrontos das quartas de final
+CREATE TABLE quartas_de_final_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('quartas') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de confrontos das semifinais
+CREATE TABLE semifinais_confrontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    fase ENUM('semifinais') NOT NULL,
+    gols_marcados_timeA INT DEFAULT NULL,
+    gols_marcados_timeB INT DEFAULT NULL,
+    gols_contra_timeA INT DEFAULT NULL,
+    gols_contra_timeB INT DEFAULT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de fase de execução
+CREATE TABLE fase_execucao (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fase VARCHAR(50) NOT NULL,
+    executado BOOLEAN NOT NULL DEFAULT FALSE,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de notícias
+CREATE TABLE noticias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT NOT NULL,
+    imagem LONGBLOB NOT NULL,
+    link VARCHAR(255) NOT NULL,
+    data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de jogadores
+CREATE TABLE jogadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    gols INT DEFAULT 0,
+    posicao VARCHAR(255),
+    numero INT,
+    assistencias INT DEFAULT 0,
+    cartoes_amarelos INT DEFAULT 0,
+    cartoes_vermelhos INT DEFAULT 0,
+    token VARCHAR(64) UNIQUE,
+    imagem LONGBLOB,
+    time_id INT NOT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (time_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de posições dos jogadores
+CREATE TABLE posicoes_jogadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    jogador_id INT NOT NULL,
+    categoria ENUM('gols', 'assistencias', 'cartoes_amarelos', 'cartoes_vermelhos') NOT NULL,
+    posicao INT DEFAULT 0,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (jogador_id) REFERENCES jogadores(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Tabela de jogos da fase de grupos
+CREATE TABLE jogos_fase_grupos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    grupo_id INT NOT NULL,
+    timeA_id INT NOT NULL,
+    timeB_id INT NOT NULL,
+    nome_timeA VARCHAR(100) NOT NULL,
+    nome_timeB VARCHAR(100) NOT NULL,
+    gols_marcados_timeA INT DEFAULT 0,
+    gols_marcados_timeB INT DEFAULT 0,
+    resultado_timeA CHAR(1),
+    resultado_timeB CHAR(1),
+    data_jogo DATETIME NOT NULL,
+    rodada INT NOT NULL,
+    campeonato_id INT NOT NULL,
+    FOREIGN KEY (grupo_id) REFERENCES grupos(id),
+    FOREIGN KEY (timeA_id) REFERENCES times(id),
+    FOREIGN KEY (timeB_id) REFERENCES times(id),
+    FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
+);
+
+-- Inserir administrador padrão
+INSERT INTO admin (cod_adm, nome, email, senha)
+VALUES ('2024cpTelsr', 'Thwaverton', 'thwavertont@gmail.com', '$2y$10$1gl82pJO56IydnIuRw/E0O.WeWKeWuST3HPt4lw.vLPcfMK9lhCuq');

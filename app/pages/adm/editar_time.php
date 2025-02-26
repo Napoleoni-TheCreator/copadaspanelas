@@ -1,9 +1,30 @@
 <?php
 // Inclui o arquivo de conexão com o banco de dados
 include "../../config/conexao.php";
+session_start();
 
-// Exibe erros para depuração
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: login.php");
+    exit();
+}
+
+include("../../actions/cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
 
 // Verifica se o token do time foi passado via GET
 if (!isset($_GET['token']) || empty($_GET['token'])) {
@@ -27,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sg = $_POST['sg'];
 
     // Consulta para obter a imagem atual
-    $sql = "SELECT logo FROM times WHERE token = ?";
+    $sql = "SELECT logo FROM times WHERE token = ? AND campeonato_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $token);
+    $stmt->bind_param('si', $token, $campeonatoId);
     $stmt->execute();
     $result = $stmt->get_result();
     $time = $result->fetch_assoc();
@@ -53,9 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Atualiza os dados do time
-    $sql = "UPDATE times SET nome = ?, logo = ?, grupo_id = ?, pts = ?, vitorias = ?, empates = ?, derrotas = ?, gm = ?, gc = ?, sg = ? WHERE token = ?";
+    $sql = "UPDATE times SET nome = ?, logo = ?, grupo_id = ?, pts = ?, vitorias = ?, empates = ?, derrotas = ?, gm = ?, gc = ?, sg = ? WHERE token = ? AND campeonato_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssiiiiiiiss', $nome, $logo, $grupo_id, $pts, $vitorias, $empates, $derrotas, $gm, $gc, $sg, $token);
+    $stmt->bind_param('ssiiiiiiissi', $nome, $logo, $grupo_id, $pts, $vitorias, $empates, $derrotas, $gm, $gc, $sg, $token, $campeonatoId);
 
     if ($stmt->execute()) {
         header("Location: listar_times.php");
@@ -68,9 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Consulta para obter os dados do time pelo token
-$sql = "SELECT * FROM times WHERE token = ?";
+$sql = "SELECT * FROM times WHERE token = ? AND campeonato_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('s', $token);
+$stmt->bind_param('si', $token, $campeonatoId);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -83,9 +104,13 @@ if ($result->num_rows === 0) {
 $time = $result->fetch_assoc();
 $stmt->close();
 
-// Consulta para obter todos os grupos
-$sql = "SELECT id, nome FROM grupos";
-$grupos = $conn->query($sql)->fetch_all(MYSQLI_ASSOC);
+// Consulta para obter todos os grupos do campeonato ativo
+$sql = "SELECT id, nome FROM grupos WHERE campeonato_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $campeonatoId);
+$stmt->execute();
+$grupos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 
 $conn->close();
 ?>

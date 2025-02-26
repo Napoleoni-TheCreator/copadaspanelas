@@ -1,6 +1,7 @@
 <?php
 include '../../config/conexao.php';
 session_start();
+
 // Verifica se o usuário está autenticado e se é um administrador
 if (!isset($_SESSION['admin_id'])) {
     // Armazenar a URL de referência para redirecionar após o login
@@ -12,6 +13,17 @@ if (!isset($_SESSION['admin_id'])) {
 include("../../actions/cadastro_adm/session_check.php");
 
 $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
 
 // Função para gerar token CSRF
 function gerarTokenCSRF() {
@@ -60,14 +72,18 @@ if (isset($_POST['delete_token'])) {
 
 $_SESSION['csrf_token'] = gerarTokenCSRF();
 
-// Obter todos os times
-$timesSql = "SELECT id, nome FROM times";
-$timesResult = $conn->query($timesSql);
+// Obter todos os times do campeonato ativo
+$timesSql = "SELECT id, nome FROM times WHERE campeonato_id = ?";
+$stmt = $conn->prepare($timesSql);
+$stmt->bind_param("i", $campeonatoId);
+$stmt->execute();
+$timesResult = $stmt->get_result();
 
 $times = [];
 while ($row = $timesResult->fetch_assoc()) {
     $times[] = $row;
 }
+$stmt->close();
 
 // Obter jogadores por time se um time for selecionado
 $selectedTimeId = isset($_POST['time_id']) ? $_POST['time_id'] : null;

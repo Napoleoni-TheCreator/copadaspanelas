@@ -1,12 +1,7 @@
 <?php
 include '../../config/conexao.php';
-// Função para gerar um token único
-function generateToken($length = 32) {
-    return bin2hex(random_bytes($length));
-}
-
-// Inicia a sessão para usar flash messages
 session_start();
+
 // Verifica se o usuário está autenticado e se é um administrador
 if (!isset($_SESSION['admin_id'])) {
     // Armazenar a URL de referência para redirecionar após o login
@@ -18,6 +13,22 @@ if (!isset($_SESSION['admin_id'])) {
 include("../../actions/cadastro_adm/session_check.php");
 
 $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
+
+// Função para gerar um token único
+function generateToken($length = 32) {
+    return bin2hex(random_bytes($length));
+}
 
 $response = [
     'success' => true,
@@ -86,9 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $token = generateToken();
 
     // Insere os dados no banco de dados
-    $sql = "INSERT INTO jogadores (nome, posicao, numero, time_id, imagem, token) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO jogadores (nome, posicao, numero, time_id, imagem, token, campeonato_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssisss", $nome, $posicao, $numero, $time_id, $imgData, $token);
+    $stmt->bind_param("ssisssi", $nome, $posicao, $numero, $time_id, $imgData, $token, $campeonatoId);
 
     if ($stmt->execute()) {
         $response['message'] = "Jogador adicionado com sucesso!";
@@ -168,7 +179,7 @@ require_once 'header_classificacao.php'
                 <option value="">Selecione o time</option>
                 <?php
                 include '../../../config/conexao.php';
-                $sql = "SELECT id, nome FROM times";
+                $sql = "SELECT id, nome FROM times WHERE campeonato_id = $campeonatoId";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                     echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";

@@ -1,14 +1,36 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: login.php");
+    exit();
+}
+
+include("../../actions/cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+include '../../config/conexao.php';
+
 // Função para gerar um token aleatório
 function gerarToken($length = 32) {
     return bin2hex(random_bytes($length));
 }
 
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
+
 // Verifica se o formulário foi submetido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Conexão com o banco de dados
-    include '../../config/conexao.php';
-
     // Dados do formulário
     $nomeTime = $_POST['nome_time'];
     $logoTime = file_get_contents($_FILES['logo_time']['tmp_name']); // Obtém o conteúdo binário da imagem
@@ -18,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $token = gerarToken();
 
     // Consulta para obter a quantidade de equipes por grupo
-    $configSql = "SELECT equipes_por_grupo FROM configuracoes LIMIT 1";
+    $configSql = "SELECT equipes_por_grupo FROM configuracoes WHERE campeonato_id = $campeonatoId LIMIT 1";
     $configResult = $conn->query($configSql);
 
     if ($configResult->num_rows > 0) {
@@ -29,8 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gruposSql = "
             SELECT g.id, g.nome, COALESCE(t.count, 0) as count
             FROM grupos g
-            LEFT JOIN (SELECT grupo_id, COUNT(*) as count FROM times GROUP BY grupo_id) t
+            LEFT JOIN (SELECT grupo_id, COUNT(*) as count FROM times WHERE campeonato_id = $campeonatoId GROUP BY grupo_id) t
             ON g.id = t.grupo_id
+            WHERE g.campeonato_id = $campeonatoId
         ";
         $gruposResult = $conn->query($gruposSql);
 
@@ -51,8 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $grupoId = $gruposDisponiveis[0]['id'];
 
                 // Inserção dos dados na tabela de times
-                $sql = "INSERT INTO times (nome, logo, grupo_id, pts, vitorias, empates, derrotas, gm, gc, sg, token) 
-                        VALUES ('$nomeTime', '$logoTime', '$grupoId', 0, 0, 0, 0, 0, 0, 0, '$token')";
+                $sql = "INSERT INTO times (nome, logo, grupo_id, pts, vitorias, empates, derrotas, gm, gc, sg, token, campeonato_id) 
+                        VALUES ('$nomeTime', '$logoTime', '$grupoId', 0, 0, 0, 0, 0, 0, 0, '$token', '$campeonatoId')";
 
                 if ($conn->query($sql) === TRUE) {
                     echo "Time adicionado com sucesso ao grupo " . $gruposDisponiveis[0]['nome'] . "!";
@@ -81,7 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Time</title>
-    
 </head>
 <body>
 <?php 
@@ -89,8 +111,7 @@ require_once 'header_classificacao.php'
 ?>
 <div class="main">
     <div class="titulo-barra">
-        <h1>Adicionar times
-        </h1>
+        <h1>Adicionar times</h1>
     </div>
     <div class="formulario">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">

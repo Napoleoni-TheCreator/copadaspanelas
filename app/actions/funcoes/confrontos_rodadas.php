@@ -1,15 +1,39 @@
 <?php
 include '../../config/conexao.php';
+session_start();
 
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazenar a URL de referência para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: login.php");
+    exit();
 }
 
-function gerarRodadas() {
+include("../../actions/cadastro_adm/session_check.php");
+
+$isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
+
+function gerarRodadas($campeonatoId) {
     global $conn;
 
-    $sqlGrupos = "SELECT id, nome FROM grupos ORDER BY nome";
-    $resultGrupos = $conn->query($sqlGrupos);
+    // Busca os grupos do campeonato ativo
+    $sqlGrupos = "SELECT id, nome FROM grupos WHERE campeonato_id = ? ORDER BY nome";
+    $stmtGrupos = $conn->prepare($sqlGrupos);
+    $stmtGrupos->bind_param("i", $campeonatoId);
+    $stmtGrupos->execute();
+    $resultGrupos = $stmtGrupos->get_result();
 
     $grupos = [];
     if ($resultGrupos->num_rows > 0) {
@@ -18,8 +42,11 @@ function gerarRodadas() {
             $grupoNome = $rowGrupos['nome'];
 
             // Buscar times no grupo
-            $sqlTimes = "SELECT id, nome, logo FROM times WHERE grupo_id = $grupoId";
-            $resultTimes = $conn->query($sqlTimes);
+            $sqlTimes = "SELECT id, nome, logo FROM times WHERE grupo_id = ? AND campeonato_id = ?";
+            $stmtTimes = $conn->prepare($sqlTimes);
+            $stmtTimes->bind_param("ii", $grupoId, $campeonatoId);
+            $stmtTimes->execute();
+            $resultTimes = $stmtTimes->get_result();
 
             $times = [];
             if ($resultTimes->num_rows > 0) {
@@ -74,25 +101,21 @@ function gerarRodadas() {
     return $rodadas;
 }
 
-function inserirOuAtualizarConfrontos($rodadas) {
+function inserirOuAtualizarConfrontos($rodadas, $campeonatoId) {
     global $conn;
 
     foreach ($rodadas as $rodada => $grupos) {
         foreach ($grupos as $grupoNome => $partidas) {
             // Primeiro, exclua todos os confrontos antigos para o grupo e rodada
-            $stmtDelete = $conn->prepare("DELETE FROM jogos_fase_grupos WHERE grupo_id = ? AND rodada = ?");
-            $stmtDelete->bind_param("ii", $partidas[0]['grupo_id'], $rodada);
+            $stmtDelete = $conn->prepare("DELETE FROM jogos_fase_grupos WHERE grupo_id = ? AND rodada = ? AND campeonato_id = ?");
+            $stmtDelete->bind_param("iii", $partidas[0]['grupo_id'], $rodada, $campeonatoId);
             $stmtDelete->execute();
             $stmtDelete->close();
 
             foreach ($partidas as $partida) {
-                // Adiciona depuração para verificar dados
-                echo "<pre>";
-                print_r($partida);
-                echo "</pre>";
                 // Inserir um novo confronto
-                $stmtInsert = $conn->prepare("INSERT INTO jogos_fase_grupos (grupo_id, timeA_id, timeB_id, nome_timeA, nome_timeB, data_jogo, rodada) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
-                $stmtInsert->bind_param("iiissi", $partida['grupo_id'], $partida['timeA_id'], $partida['timeB_id'], $partida['timeA_nome'], $partida['timeB_nome'], $rodada);
+                $stmtInsert = $conn->prepare("INSERT INTO jogos_fase_grupos (grupo_id, timeA_id, timeB_id, nome_timeA, nome_timeB, data_jogo, rodada, campeonato_id) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)");
+                $stmtInsert->bind_param("iiissii", $partida['grupo_id'], $partida['timeA_id'], $partida['timeB_id'], $partida['timeA_nome'], $partida['timeB_nome'], $rodada, $campeonatoId);
                 $stmtInsert->execute();
                 $stmtInsert->close();
             }
@@ -100,8 +123,8 @@ function inserirOuAtualizarConfrontos($rodadas) {
     }
 }
 
-$rodadas = gerarRodadas();
-inserirOuAtualizarConfrontos($rodadas);
+$rodadas = gerarRodadas($campeonatoId);
+inserirOuAtualizarConfrontos($rodadas, $campeonatoId);
 $conn->close();
 header('Location: /copadaspanelas/app/pages/adm/rodadas_adm.php');
 exit();

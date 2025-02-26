@@ -1,3 +1,4 @@
+<!-- criar grupo caso o campeonato atual estiver ativo -->
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
@@ -12,6 +13,17 @@ include("../../actions/cadastro_adm/session_check.php");
 $isAdmin = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 
 include '../../config/conexao.php';
+
+// Busca o campeonato ativo
+$sql = "SELECT id FROM campeonatos WHERE ativo = TRUE LIMIT 1";
+$stmt = $conn->query($sql);
+$campeonatoAtivo = $stmt->fetch_assoc();
+
+if (!$campeonatoAtivo) {
+    die("Nenhum campeonato ativo encontrado.");
+}
+
+$campeonatoId = $campeonatoAtivo['id'];
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +85,8 @@ include '../../config/conexao.php';
                                 try {
                                     // Desativar restrições de chave estrangeira (necessário para usar TRUNCATE em algumas configurações)
                                     $conn->query("SET FOREIGN_KEY_CHECKS = 0");
-                                    // Limpar tabelas
+
+                                    // Limpar tabelas relacionadas ao campeonato ativo
                                     $tables = [
                                         'jogadores',
                                         'times',
@@ -87,7 +100,7 @@ include '../../config/conexao.php';
                                     ];
 
                                     foreach ($tables as $table) {
-                                        $sql = "TRUNCATE TABLE $table";
+                                        $sql = "DELETE FROM $table WHERE campeonato_id = $campeonatoId";
                                         $conn->query($sql);
                                     }
 
@@ -95,16 +108,14 @@ include '../../config/conexao.php';
                                     $conn->query("SET FOREIGN_KEY_CHECKS = 1");
 
                                     // Criar grupos
-                                    $sql = "REPLACE INTO configuracoes (id, equipes_por_grupo, numero_grupos, fase_final) VALUES (1, ?, ?, ?)";
+                                    $sql = "REPLACE INTO configuracoes (id, equipes_por_grupo, numero_grupos, fase_final, campeonato_id) VALUES (1, ?, ?, ?, ?)";
                                     $stmt = $conn->prepare($sql);
-                                    $stmt->bind_param("iis", $equipesPorGrupo, $numeroGrupos, $faseFinal);
+                                    $stmt->bind_param("iisi", $equipesPorGrupo, $numeroGrupos, $faseFinal, $campeonatoId);
                                     $stmt->execute();
-
-                                    $conn->query("DELETE FROM grupos");
 
                                     for ($i = 1; $i <= $numeroGrupos; $i++) {
                                         $nomeGrupo = "Grupo " . chr(64 + $i);
-                                        $sql = "INSERT INTO grupos (nome) VALUES ('$nomeGrupo')";
+                                        $sql = "INSERT INTO grupos (nome, campeonato_id) VALUES ('$nomeGrupo', $campeonatoId)";
                                         $conn->query($sql);
                                     }
                                     echo "<p class='success-message'>Grupos criados com sucesso!</p>";
@@ -122,7 +133,7 @@ include '../../config/conexao.php';
                                     // Desativar restrições de chave estrangeira (necessário para usar TRUNCATE em algumas configurações)
                                     $conn->query("SET FOREIGN_KEY_CHECKS = 0");
 
-                                    // Limpar tabelas
+                                    // Limpar tabelas relacionadas ao campeonato ativo
                                     $tables = [
                                         'jogadores',
                                         'posicoes_jogadores',
@@ -143,7 +154,7 @@ include '../../config/conexao.php';
                                     ];
 
                                     foreach ($tables as $table) {
-                                        $sql = "TRUNCATE TABLE $table";
+                                        $sql = "DELETE FROM $table WHERE campeonato_id = $campeonatoId";
                                         $conn->query($sql);
                                     }
 
@@ -151,16 +162,14 @@ include '../../config/conexao.php';
                                     $conn->query("SET FOREIGN_KEY_CHECKS = 1");
 
                                     // Criar grupos
-                                    $sql = "REPLACE INTO configuracoes (id, equipes_por_grupo, numero_grupos, fase_final) VALUES (1, ?, ?, ?)";
+                                    $sql = "REPLACE INTO configuracoes (id, equipes_por_grupo, numero_grupos, fase_final, campeonato_id) VALUES (1, ?, ?, ?, ?)";
                                     $stmt = $conn->prepare($sql);
-                                    $stmt->bind_param("iis", $equipesPorGrupo, $numeroGrupos, $faseFinal);
+                                    $stmt->bind_param("iisi", $equipesPorGrupo, $numeroGrupos, $faseFinal, $campeonatoId);
                                     $stmt->execute();
-
-                                    $conn->query("DELETE FROM grupos");
 
                                     for ($i = 1; $i <= $numeroGrupos; $i++) {
                                         $nomeGrupo = "Grupo " . chr(64 + $i);
-                                        $sql = "INSERT INTO grupos (nome) VALUES ('$nomeGrupo')";
+                                        $sql = "INSERT INTO grupos (nome, campeonato_id) VALUES ('$nomeGrupo', $campeonatoId)";
                                         $conn->query($sql);
                                     }
                                     echo "<p class='success-message'>Grupos criados com sucesso!</p>";
