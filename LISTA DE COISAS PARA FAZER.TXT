@@ -13,3 +13,11 @@ Lista tarefas hoje
 - criar um unico botão para salvar os resultados da fase de grupo.
 - criar um calendario para adicionar as datas dos jogos, e o horario.
 - criar uma pagina para salvar e editar todos os dados da copa.
+
+
+
+
+pensa :
+eu tenho um banco de dados, tem as tabelas times jogadores e etc...
+se eu ligar todos esses dados um 1 campeonato especifico. 
+ai quando eu apagar o id do campeonato ele automaticamente apagar todos os dados das outras tabela vinculada a esse id
