@@ -3,20 +3,41 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Inicia a sessão
+session_start();
+
+// Verifica se o usuário está autenticado e se é um administrador
+if (!isset($_SESSION['admin_id'])) {
+    // Armazena a URL atual para redirecionar após o login
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+
+    // Redireciona para a página de login
+    header("Location: login.php");
+    exit();
+}
+
+// Inclui a verificação de sessão
+include("../../actions/cadastro_adm/session_check.php");
+
 // Inclui o arquivo de conexão
-require 'conexao.php';
+require '../../config/conexao.php';
 
 // Verifica se a conexão foi estabelecida
-if (!isset($pdo)) {
+if (!isset($conn)) {
     die("Erro: Conexão com o banco de dados não estabelecida.");
 }
 
 // Busca todos os campeonatos
 try {
     $sql = "SELECT * FROM campeonatos";
-    $stmt = $pdo->query($sql);
-    $campeonatos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
+    $result = $conn->query($sql);
+
+    if ($result === false) {
+        die("Erro ao buscar campeonatos: " . $conn->error);
+    }
+
+    $campeonatos = $result->fetch_all(MYSQLI_ASSOC);
+} catch (Exception $e) {
     die("Erro ao buscar campeonatos: " . $e->getMessage());
 }
 
@@ -28,23 +49,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         if ($acao === 'ativar') {
             // Desativa todos os campeonatos
-            $pdo->query("UPDATE campeonatos SET ativo = FALSE");
+            $conn->query("UPDATE campeonatos SET ativo = FALSE");
 
             // Ativa o campeonato selecionado
-            $sql = "UPDATE campeonatos SET ativo = TRUE WHERE id = :id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(['id' => $id]);
+            $sql = "UPDATE campeonatos SET ativo = TRUE WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
         } elseif ($acao === 'desativar') {
             // Desativa o campeonato selecionado
-            $sql = "UPDATE campeonatos SET ativo = FALSE WHERE id = :id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(['id' => $id]);
+            $sql = "UPDATE campeonatos SET ativo = FALSE WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
         }
 
         // Redireciona para evitar reenvio do formulário
-        header("Location: ativar_campeonato.php");
+        header("Location: Manipular_campeonato.php");
         exit;
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         die("Erro ao atualizar campeonato: " . $e->getMessage());
     }
 }

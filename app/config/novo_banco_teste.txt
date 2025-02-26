@@ -11,7 +11,9 @@ USE copa;
 CREATE TABLE campeonatos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    ativo BOOLEAN NOT NULL DEFAULT FALSE
+    ativo BOOLEAN NOT NULL DEFAULT FALSE,
+    data_inicio DATE,
+    data_final DATE
 );
 
 -- Tabela de link da live
