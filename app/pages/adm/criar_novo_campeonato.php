@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Criar Campeonato</title>
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
     <style>
         .mensagem {
             padding: 10px;
@@ -82,6 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+<?php 
+require_once 'header_classificacao.php'
+?>
     <h1>Criar Campeonato</h1>
 
     <?php if (isset($erro)): ?>
@@ -108,5 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <br>
     <a href="ativar_campeonato.php">Gerenciar Campeonatos</a> | 
     <a href="adicionar_grupos_times.php">Adicionar Grupos e Times</a>
+    <?php include '../footer.php' ?>
 </body>
 </html>

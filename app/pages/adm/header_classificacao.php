@@ -1,5 +1,9 @@
 <?php
-session_start(); // Inicia a sessão
+// Verifica se a sessão já está ativa antes de iniciar uma nova
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Verificar se o usuário está logado
 $usuarioLogado = isset($_SESSION['admin_id']);
 ?>
@@ -35,6 +39,18 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             </button>
             <div id="ativo" class="has-submenu">
                 <a href="../HomePage.php" id="ativo">Home</a>
+            </div>
+            <div class="has-submenu">
+                <div id="ativo" >
+                    <a href="../tabela_de_classificacao.php">Campeonato</a>
+                </div>
+                <?php if ($usuarioLogado): ?>
+                <div class="submenu">
+                    <a href="gerenciar_campeonato.php">Gerenciar campeonato</a>
+                    <a href="criar_novo_campeonato.php">Criar campeonato</a>
+                    <a href="Manipular_campeonato.php">Manipular campeonato</a>
+                </div>
+                <?php endif; ?>
             </div>
             <div class="has-submenu">
                 <div id="ativo" >

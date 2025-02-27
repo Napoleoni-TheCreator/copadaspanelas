@@ -111,6 +111,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Gerenciar Campeonatos</title>
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
     <style>
         .section {
             margin-bottom: 30px;
@@ -151,6 +152,9 @@ if (isset($_GET['id'])) {
     </style>
 </head>
 <body>
+<?php 
+require_once 'header_classificacao.php'
+?>
     <h1>Gerenciar Campeonatos</h1>
 
     <!-- Seletor de Campeonato -->
@@ -240,5 +244,6 @@ if (isset($_GET['id'])) {
             </form>
         </div>
     <?php endif; ?>
+    <?php include '../footer.php' ?>
 </body>
 </html>

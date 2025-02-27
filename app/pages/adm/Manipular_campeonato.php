@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Ativar/Desativar Campeonato</title>
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
     <style>
         .mensagem {
             padding: 10px;
@@ -106,6 +107,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+<?php 
+require_once 'header_classificacao.php'
+?>
     <h1>Ativar/Desativar Campeonato</h1>
 
     <?php if (isset($erro)): ?>
@@ -141,5 +145,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tr>
         <?php endforeach; ?>
     </table>
+    <?php include '../footer.php' ?>
 </body>
 </html>
