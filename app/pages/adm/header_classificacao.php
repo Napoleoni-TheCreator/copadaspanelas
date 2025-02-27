@@ -42,7 +42,7 @@ $usuarioLogado = isset($_SESSION['admin_id']);
             </div>
             <div class="has-submenu">
                 <div id="ativo" >
-                    <a href="../tabela_de_classificacao.php">Campeonato</a>
+                    <a href="gerenciar_campeonato.php">Campeonato</a>
                 </div>
                 <?php if ($usuarioLogado): ?>
                 <div class="submenu">
