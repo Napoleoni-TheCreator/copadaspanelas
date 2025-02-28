@@ -59,7 +59,7 @@ $usuarioLogado = isset($_SESSION['admin_id']);
                 <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="rodadas_adm.php">Administrar Rodadas</a>
-                    <a href="adicionar_grupo.php">Criar novo campeonato</a>
+                    <a href="adicionar_grupo.php">Criar novo grupo</a>
                     <!-- <a href="salvar_historico.php">Salvar historico</a> -->
                     <a href="adicionar_times.php">Adicionar times</a>
                     <a href="editar_time.php">Editar times</a>
