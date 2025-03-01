@@ -11,13 +11,18 @@ if ($conn->connect_error) {
     die("Erro na conexão: " . $conn->connect_error);
 }
 
+// Função para gerar token único
+function gerarTokenUnico() {
+    return bin2hex(random_bytes(16));
+}
+
 // Processar ações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Excluir Campeonato
     if (isset($_POST['excluir_campeonato'])) {
         $campeonato_id = $_POST['campeonato_id'];
         
-        $tables = [
+        $tabelas = [
             'posicoes_jogadores', 'jogadores', 'jogos_fase_grupos', 'semifinais_confrontos',
             'quartas_de_final_confrontos', 'oitavas_de_final_confrontos', 'final_confrontos',
             'jogos_finais', 'fase_execucao', 'semifinais', 'quartas_de_final', 'oitavas_de_final',
@@ -26,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conn->begin_transaction();
         try {
-            foreach ($tables as $table) {
-                $sql = "DELETE FROM $table WHERE campeonato_id = ?";
+            foreach ($tabelas as $tabela) {
+                $sql = "DELETE FROM $tabela WHERE campeonato_id = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $campeonato_id);
                 $stmt->execute();
@@ -49,49 +54,138 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Excluir Grupo
-    if (isset($_POST['excluir_grupo'])) {
-        $grupo_id = $_POST['grupo_id'];
+    // Ativar/Desativar Campeonato
+    if (isset($_POST['ativar_campeonato'])) {
+        $campeonato_id = $_POST['campeonato_id'];
         
-        $conn->begin_transaction();
         try {
-            $sql = "DELETE jogadores, posicoes_jogadores FROM jogadores 
-                    LEFT JOIN posicoes_jogadores ON jogadores.id = posicoes_jogadores.jogador_id 
-                    WHERE jogadores.time_id IN (SELECT id FROM times WHERE grupo_id = ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $grupo_id);
-            $stmt->execute();
+            $sql = "UPDATE campeonatos SET ativo = 0";
+            $conn->query($sql);
             
-            $sql = "DELETE FROM jogos_fase_grupos WHERE grupo_id = ?";
+            $sql = "UPDATE campeonatos SET ativo = 1 WHERE id = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $grupo_id);
+            $stmt->bind_param("i", $campeonato_id);
             $stmt->execute();
+            $stmt->close();
             
-            $sql = "DELETE FROM times WHERE grupo_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $grupo_id);
-            $stmt->execute();
-            
-            $sql = "DELETE FROM grupos WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $grupo_id);
-            $stmt->execute();
-            
-            $conn->commit();
-            echo "<p style='color:green;'>Grupo excluído com sucesso!</p>";
+            echo "<p style='color:green;'>Campeonato ativado com sucesso!</p>";
+            header("Refresh:1");
         } catch (Exception $e) {
-            $conn->rollback();
             echo "<p style='color:red;'>Erro: " . $e->getMessage() . "</p>";
         }
     }
+// Excluir Grupo (Solução Completa)
+if (isset($_POST['excluir_grupo'])) {
+    $grupo_id = $_POST['grupo_id'];
+    
+    $conn->begin_transaction();
+    try {
+        // 1. Excluir posições de jogadores vinculadas aos times do grupo
+        $sql = "DELETE pp FROM posicoes_jogadores pp
+                INNER JOIN jogadores j ON pp.jogador_id = j.id
+                INNER JOIN times t ON j.time_id = t.id
+                WHERE t.grupo_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $grupo_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // 2. Excluir jogadores dos times do grupo
+        $sql = "DELETE j FROM jogadores j
+                INNER JOIN times t ON j.time_id = t.id
+                WHERE t.grupo_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $grupo_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // 3. Excluir jogos da fase de grupos (pelo grupo_id)
+        $sql = "DELETE FROM jogos_fase_grupos WHERE grupo_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $grupo_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // 4. Excluir jogos de TODAS as fases (usando JOIN)
+        $tabelas_jogos = [
+            'jogos', 
+            'jogos_finais', 
+            'semifinais_confrontos',
+            'quartas_de_final_confrontos', 
+            'oitavas_de_final_confrontos',
+            'final_confrontos'
+        ];
+
+        foreach ($tabelas_jogos as $tabela) {
+            // Para tabelas com timeA_id e timeB_id (ex: confrontos)
+            if (strpos($tabela, 'confrontos') !== false || $tabela === 'jogos_finais') {
+                $sql = "DELETE t FROM $tabela t
+                        INNER JOIN times tm1 ON t.timeA_id = tm1.id
+                        INNER JOIN times tm2 ON t.timeB_id = tm2.id
+                        WHERE tm1.grupo_id = ? OR tm2.grupo_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ii", $grupo_id, $grupo_id);
+                $stmt->execute();
+            } 
+            // Para tabelas com time_id único (ex: jogos)
+            else {
+                $sql = "DELETE t FROM $tabela t
+                        INNER JOIN times tm ON t.time_id = tm.id
+                        WHERE tm.grupo_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $grupo_id);
+                $stmt->execute();
+            }
+            $stmt->close();
+        }
+
+        // 5. Excluir classificações (oitavas, quartas, etc.)
+        $tabelas_classificacao = [
+            'oitavas_de_final',
+            'quartas_de_final',
+            'semifinais',
+            'final'
+        ];
+
+        foreach ($tabelas_classificacao as $tabela) {
+            $sql = "DELETE t FROM $tabela t
+                    INNER JOIN times tm ON t.time_id = tm.id
+                    WHERE tm.grupo_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $grupo_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        // 6. Excluir os times do grupo
+        $sql = "DELETE FROM times WHERE grupo_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $grupo_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // 7. Excluir o grupo (AGORA SEM ERROS)
+        $sql = "DELETE FROM grupos WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $grupo_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $conn->commit();
+        echo "<p style='color:green;'>Grupo e todos os dados relacionados excluídos com sucesso!</p>";
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo "<p style='color:red;'>Erro: " . $e->getMessage() . "</p>";
+    }
+}
 
     // Excluir Registro
     if (isset($_POST['excluir_registro'])) {
-        $table = $_POST['table'];
+        $tabela = $_POST['table'];
         $id = $_POST['id'];
         
         try {
-            $sql = "DELETE FROM $table WHERE id = ?";
+            $sql = "DELETE FROM $tabela WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -103,27 +197,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Editar Registro
     if (isset($_POST['editar_registro'])) {
-        $table = $_POST['table'];
+        $tabela = $_POST['table'];
         $id = $_POST['id'];
-        $fields = $_POST['fields'];
+        $campos = $_POST['fields'];
         
         try {
-            $set = [];
-            $types = '';
-            $values = [];
+            $sets = [];
+            $tipos = '';
+            $valores = [];
             
-            foreach ($fields as $field => $value) {
-                $set[] = "$field = ?";
-                $types .= 's';
-                $values[] = $value;
+            foreach ($campos as $campo => $valor) {
+                $sets[] = "$campo = ?";
+                $tipos .= 's';
+                $valores[] = $valor;
             }
             
-            $sql = "UPDATE $table SET " . implode(', ', $set) . " WHERE id = ?";
-            $types .= 'i';
-            $values[] = $id;
+            if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
+                $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+                $tipoArquivo = $_FILES['logo']['type'];
+                
+                if (!in_array($tipoArquivo, $tiposPermitidos)) {
+                    throw new Exception("Tipo de arquivo inválido. Use JPG, PNG ou GIF.");
+                }
+
+                $logo = file_get_contents($_FILES['logo']['tmp_name']);
+                if ($logo === false) {
+                    throw new Exception("Erro ao ler a imagem.");
+                }
+                
+                $sets[] = "logo = ?";
+                $tipos .= 's';
+                $valores[] = $logo;
+            }
+            
+            $sql = "UPDATE $tabela SET " . implode(', ', $sets) . " WHERE id = ?";
+            $tipos .= 'i';
+            $valores[] = $id;
             
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param($types, ...$values);
+            $stmt->bind_param($tipos, ...$valores);
             $stmt->execute();
             
             echo "<p style='color:green;'>Alterações salvas!</p>";
@@ -141,6 +253,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ativo = isset($_POST['ativo']) ? 1 : 0;
         
         try {
+            if ($ativo) {
+                $sql = "UPDATE campeonatos SET ativo = 0";
+                $conn->query($sql);
+            }
+            
             $sql = "INSERT INTO campeonatos (nome, data_inicio, data_final, ativo) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sssi", $nome, $data_inicio, $data_final, $ativo);
@@ -151,18 +268,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<p style='color:red;'>Erro: " . $e->getMessage() . "</p>";
         }
     }
+
+    // Criar Time
+    if (isset($_POST['criar_time'])) {
+        $nomeTime = $_POST['nome_time'];
+        $grupoId = $_POST['grupo_id'];
+        $campeonatoId = $_POST['campeonato_id'];
+        
+        try {
+            if (isset($_FILES['logo_time']) && $_FILES['logo_time']['error'] === UPLOAD_ERR_OK) {
+                $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+                $tipoArquivo = $_FILES['logo_time']['type'];
+                
+                if (!in_array($tipoArquivo, $tiposPermitidos)) {
+                    throw new Exception("Tipo de arquivo não permitido.");
+                }
+
+                $logoTime = file_get_contents($_FILES['logo_time']['tmp_name']);
+                if ($logoTime === false) {
+                    throw new Exception("Erro ao ler o arquivo de imagem.");
+                }
+            } else {
+                throw new Exception("Nenhuma imagem foi enviada.");
+            }
+
+            $token = gerarTokenUnico();
+            $sql = "INSERT INTO times (nome, logo, grupo_id, pts, vitorias, empates, derrotas, gm, gc, sg, token, campeonato_id) 
+                    VALUES (?, ?, ?, 0, 0, 0, 0, 0, 0, 0, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssis", $nomeTime, $logoTime, $grupoId, $token, $campeonatoId);
+            $stmt->execute();
+            
+            echo "<p style='color:green;'>Time criado com sucesso!</p>";
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Erro: " . $e->getMessage() . "</p>";
+        }
+    }
 }
 
 // Obter campeonatos
 $campeonatos = [];
 $sql = "SELECT * FROM campeonatos ORDER BY id DESC";
-$result = $conn->query($sql);
-while($row = $result->fetch_assoc()) {
-    $campeonatos[] = $row;
+$resultado = $conn->query($sql);
+while($linha = $resultado->fetch_assoc()) {
+    $campeonatos[] = $linha;
 }
 
 // Obter dados do campeonato selecionado
-$selectedCampeonato = null;
+$campeonatoSelecionado = null;
 $dadosCampeonato = [];
 
 if (isset($_GET['campeonato_id']) && is_numeric($_GET['campeonato_id'])) {
@@ -172,10 +325,10 @@ if (isset($_GET['campeonato_id']) && is_numeric($_GET['campeonato_id'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $campeonato_id);
     $stmt->execute();
-    $selectedCampeonato = $stmt->get_result()->fetch_assoc();
+    $campeonatoSelecionado = $stmt->get_result()->fetch_assoc();
     $stmt->close();
     
-    $related_tables = [
+    $tabelasRelacionadas = [
         'grupos' => 'Grupos',
         'times' => 'Times',
         'jogos_fase_grupos' => 'Jogos da Fase de Grupos',
@@ -186,12 +339,12 @@ if (isset($_GET['campeonato_id']) && is_numeric($_GET['campeonato_id'])) {
         'linklive' => 'Link Live'
     ];
     
-    foreach ($related_tables as $table => $name) {
-        $sql = "SELECT * FROM $table WHERE campeonato_id = ?";
+    foreach ($tabelasRelacionadas as $tabela => $nome) {
+        $sql = "SELECT * FROM $tabela WHERE campeonato_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $campeonato_id);
         $stmt->execute();
-        $dadosCampeonato[$table] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $dadosCampeonato[$tabela] = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
     }
 }
@@ -225,6 +378,7 @@ $conn->close();
         .edit-form.active { display: block; }
         .form-group { margin-bottom: 10px; }
         .form-group label { display: block; margin-bottom: 5px; }
+        .logo-time { max-width: 100px; max-height: 100px; }
     </style>
     <script>
         function toggleEditForm(formId) {
@@ -274,51 +428,56 @@ $conn->close();
             </form>
         </div>
 
-        <?php if ($selectedCampeonato): ?>
+        <?php if ($campeonatoSelecionado): ?>
         <!-- Editar Campeonato -->
         <div class="section">
             <button onclick="toggleEditForm('editCampeonato')" class="btn edit">Editar Campeonato</button>
             <form method="post" id="editCampeonato" class="edit-form">
                 <input type="hidden" name="table" value="campeonatos">
-                <input type="hidden" name="id" value="<?= $selectedCampeonato['id'] ?>">
+                <input type="hidden" name="id" value="<?= $campeonatoSelecionado['id'] ?>">
                 <div class="form-group">
                     <label>Nome:</label>
-                    <input type="text" name="fields[nome]" value="<?= htmlspecialchars($selectedCampeonato['nome']) ?>" required>
+                    <input type="text" name="fields[nome]" value="<?= htmlspecialchars($campeonatoSelecionado['nome']) ?>" required>
                 </div>
                 <div class="form-group">
                     <label>Data Início:</label>
-                    <input type="date" name="fields[data_inicio]" value="<?= $selectedCampeonato['data_inicio'] ?>" required>
+                    <input type="date" name="fields[data_inicio]" value="<?= $campeonatoSelecionado['data_inicio'] ?>" required>
                 </div>
                 <div class="form-group">
                     <label>Data Final:</label>
-                    <input type="date" name="fields[data_final]" value="<?= $selectedCampeonato['data_final'] ?>" required>
-                </div>
-                <div class="form-group">
-                    <label><input type="checkbox" name="fields[ativo]" value="1" <?= $selectedCampeonato['ativo'] ? 'checked' : '' ?>> Ativo</label>
+                    <input type="date" name="fields[data_final]" value="<?= $campeonatoSelecionado['data_final'] ?>" required>
                 </div>
                 <button type="submit" name="editar_registro" class="btn edit">Salvar</button>
                 <button type="button" onclick="toggleEditForm('editCampeonato')" class="btn delete">Cancelar</button>
             </form>
 
+            <!-- Ativar/Desativar Campeonato -->
+            <form method="post">
+                <input type="hidden" name="campeonato_id" value="<?= $campeonatoSelecionado['id'] ?>">
+                <button type="submit" name="ativar_campeonato" class="btn new">
+                    <?= $campeonatoSelecionado['ativo'] ? 'Desativar' : 'Ativar' ?>
+                </button>
+            </form>
+
             <!-- Excluir Campeonato -->
             <form method="post" onsubmit="return confirm('Confirma exclusão total?')">
-                <input type="hidden" name="campeonato_id" value="<?= $selectedCampeonato['id'] ?>">
+                <input type="hidden" name="campeonato_id" value="<?= $campeonatoSelecionado['id'] ?>">
                 <button type="submit" name="excluir_campeonato" class="btn delete">Excluir Tudo</button>
             </form>
         </div>
 
         <!-- Listar e Editar Dados -->
-        <?php foreach ($related_tables as $table => $name): ?>
+        <?php foreach ($tabelasRelacionadas as $tabela => $nome): ?>
             <div class="section">
-                <h2><?= $name ?></h2>
-                <?php if (!empty($dadosCampeonato[$table])): ?>
-                    <?php foreach ($dadosCampeonato[$table] as $registro): ?>
+                <h2><?= $nome ?></h2>
+                <?php if (!empty($dadosCampeonato[$tabela])): ?>
+                    <?php foreach ($dadosCampeonato[$tabela] as $registro): ?>
                         <div class="data-box">
-                            <button onclick="toggleEditForm('edit_<?= $table ?>_<?= $registro['id'] ?>')" 
+                            <button onclick="toggleEditForm('edit_<?= $tabela ?>_<?= $registro['id'] ?>')" 
                                     class="btn edit">Editar</button>
                             
-                            <form method="post" id="edit_<?= $table ?>_<?= $registro['id'] ?>" class="edit-form">
-                                <input type="hidden" name="table" value="<?= $table ?>">
+                            <form method="post" id="edit_<?= $tabela ?>_<?= $registro['id'] ?>" class="edit-form" enctype="multipart/form-data">
+                                <input type="hidden" name="table" value="<?= $tabela ?>">
                                 <input type="hidden" name="id" value="<?= $registro['id'] ?>">
                                 <?php foreach ($registro as $campo => $valor): ?>
                                     <?php if (!in_array($campo, ['id', 'campeonato_id'])): ?>
@@ -330,6 +489,9 @@ $conn->close();
                                             <?php elseif (strpos($campo, 'data') !== false): ?>
                                                 <input type="date" name="fields[<?= $campo ?>]" 
                                                     value="<?= htmlspecialchars($valor) ?>">
+                                            <?php elseif ($campo === 'logo'): ?>
+                                                <img src="data:image/jpeg;base64,<?= base64_encode($valor) ?>" class="logo-time">
+                                                <input type="file" name="logo">
                                             <?php else: ?>
                                                 <input type="text" name="fields[<?= $campo ?>]" 
                                                     value="<?= htmlspecialchars($valor) ?>">
@@ -339,14 +501,14 @@ $conn->close();
                                 <?php endforeach; ?>
                                 <button type="submit" name="editar_registro" class="btn edit">Salvar</button>
                                 <button type="button" 
-                                        onclick="toggleEditForm('edit_<?= $table ?>_<?= $registro['id'] ?>')" 
+                                        onclick="toggleEditForm('edit_<?= $tabela ?>_<?= $registro['id'] ?>')" 
                                         class="btn delete">Cancelar</button>
                             </form>
 
                             <pre><?= json_encode($registro, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?></pre>
                             
                             <form method="post">
-                                <input type="hidden" name="table" value="<?= $table ?>">
+                                <input type="hidden" name="table" value="<?= $tabela ?>">
                                 <input type="hidden" name="id" value="<?= $registro['id'] ?>">
                                 <button type="submit" name="excluir_registro" class="btn delete"
                                         onclick="return confirm('Confirmar exclusão?')">Excluir</button>
