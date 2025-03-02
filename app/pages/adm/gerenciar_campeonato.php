@@ -74,109 +74,100 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<p style='color:red;'>Erro: " . $e->getMessage() . "</p>";
         }
     }
-// Excluir Grupo (Solução Completa)
-if (isset($_POST['excluir_grupo'])) {
-    $grupo_id = $_POST['grupo_id'];
-    
-    $conn->begin_transaction();
-    try {
-        // 1. Excluir posições de jogadores vinculadas aos times do grupo
-        $sql = "DELETE pp FROM posicoes_jogadores pp
-                INNER JOIN jogadores j ON pp.jogador_id = j.id
-                INNER JOIN times t ON j.time_id = t.id
-                WHERE t.grupo_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $grupo_id);
-        $stmt->execute();
-        $stmt->close();
+// ... (código anterior)
 
-        // 2. Excluir jogadores dos times do grupo
-        $sql = "DELETE j FROM jogadores j
-                INNER JOIN times t ON j.time_id = t.id
-                WHERE t.grupo_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $grupo_id);
-        $stmt->execute();
-        $stmt->close();
+try {
+    // 1. Excluir posições de jogadores vinculadas aos times do grupo
+    $sql = "DELETE pp FROM posicoes_jogadores pp
+            INNER JOIN jogadores j ON pp.jogador_id = j.id
+            INNER JOIN times t ON j.time_id = t.id
+            WHERE t.grupo_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $grupo_id);
+    $stmt->execute();
+    $stmt->close();
 
-        // 3. Excluir jogos da fase de grupos (pelo grupo_id)
-        $sql = "DELETE FROM jogos_fase_grupos WHERE grupo_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $grupo_id);
-        $stmt->execute();
-        $stmt->close();
+    // 2. Excluir jogadores dos times do grupo
+    $sql = "DELETE j FROM jogadores j
+            INNER JOIN times t ON j.time_id = t.id
+            WHERE t.grupo_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $grupo_id);
+    $stmt->execute();
+    $stmt->close();
 
-        // 4. Excluir jogos de TODAS as fases (usando JOIN)
-        $tabelas_jogos = [
-            'jogos', 
-            'jogos_finais', 
-            'semifinais_confrontos',
-            'quartas_de_final_confrontos', 
-            'oitavas_de_final_confrontos',
-            'final_confrontos'
-        ];
+    // 3. Excluir jogos da fase de grupos
+    $sql = "DELETE FROM jogos_fase_grupos WHERE grupo_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $grupo_id);
+    $stmt->execute();
+    $stmt->close();
 
-        foreach ($tabelas_jogos as $tabela) {
-            // Para tabelas com timeA_id e timeB_id (ex: confrontos)
-            if (strpos($tabela, 'confrontos') !== false || $tabela === 'jogos_finais') {
-                $sql = "DELETE t FROM $tabela t
-                        INNER JOIN times tm1 ON t.timeA_id = tm1.id
-                        INNER JOIN times tm2 ON t.timeB_id = tm2.id
-                        WHERE tm1.grupo_id = ? OR tm2.grupo_id = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ii", $grupo_id, $grupo_id);
-                $stmt->execute();
-            } 
-            // Para tabelas com time_id único (ex: jogos)
-            else {
-                $sql = "DELETE t FROM $tabela t
-                        INNER JOIN times tm ON t.time_id = tm.id
-                        WHERE tm.grupo_id = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("i", $grupo_id);
-                $stmt->execute();
-            }
-            $stmt->close();
-        }
+    // 4. Excluir jogos de todas as fases (confrontos)
+    $tabelas_jogos = [
+        'jogos', 
+        'jogos_finais', 
+        'semifinais_confrontos',
+        'quartas_de_final_confrontos', 
+        'oitavas_de_final_confrontos',
+        'final_confrontos'
+    ];
 
-        // 5. Excluir classificações (oitavas, quartas, etc.)
-        $tabelas_classificacao = [
-            'oitavas_de_final',
-            'quartas_de_final',
-            'semifinais',
-            'final'
-        ];
-
-        foreach ($tabelas_classificacao as $tabela) {
+    foreach ($tabelas_jogos as $tabela) {
+        if (strpos($tabela, 'confrontos') !== false || $tabela === 'jogos_finais') {
             $sql = "DELETE t FROM $tabela t
-                    INNER JOIN times tm ON t.time_id = tm.id
-                    WHERE tm.grupo_id = ?";
+                    WHERE EXISTS (SELECT 1 FROM times tm WHERE tm.grupo_id = ? AND tm.id = t.timeA_id)
+                    OR EXISTS (SELECT 1 FROM times tm WHERE tm.grupo_id = ? AND tm.id = t.timeB_id)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $grupo_id, $grupo_id);
+        } else {
+            $sql = "DELETE t FROM $tabela t
+                    WHERE EXISTS (SELECT 1 FROM times tm WHERE tm.grupo_id = ? AND tm.id = t.time_id)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $grupo_id);
-            $stmt->execute();
-            $stmt->close();
         }
-
-        // 6. Excluir os times do grupo
-        $sql = "DELETE FROM times WHERE grupo_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $grupo_id);
         $stmt->execute();
         $stmt->close();
-
-        // 7. Excluir o grupo (AGORA SEM ERROS)
-        $sql = "DELETE FROM grupos WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $grupo_id);
-        $stmt->execute();
-        $stmt->close();
-
-        $conn->commit();
-        echo "<p style='color:green;'>Grupo e todos os dados relacionados excluídos com sucesso!</p>";
-    } catch (Exception $e) {
-        $conn->rollback();
-        echo "<p style='color:red;'>Erro: " . $e->getMessage() . "</p>";
     }
+
+    // 5. Excluir classificações (oitavas, quartas, etc.)
+    $tabelas_classificacao = [
+        'oitavas_de_final',
+        'quartas_de_final',
+        'semifinais',
+        'final'
+    ];
+
+    foreach ($tabelas_classificacao as $tabela) {
+        $sql = "DELETE t FROM $tabela t
+                INNER JOIN times tm ON t.time_id = tm.id
+                WHERE tm.grupo_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $grupo_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    // 6. Excluir os times do grupo (ETAPA CRÍTICA)
+    $sql = "DELETE FROM times WHERE grupo_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $grupo_id);
+    $stmt->execute();
+    $stmt->close();
+
+    // 7. Agora sim, excluir o grupo
+    $sql = "DELETE FROM grupos WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $grupo_id);
+    $stmt->execute();
+    $stmt->close();
+
+    $conn->commit();
+    echo "<p style='color:green;'>Grupo excluído com sucesso!</p>";
+
+} catch (Exception $e) {
+    $conn->rollback();
+    echo "<p style='color:red;'>Erro: " . $e->getMessage() . "</p>";
 }
 
     // Excluir Registro

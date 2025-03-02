@@ -284,7 +284,14 @@ CREATE TABLE jogos_fase_grupos (
     FOREIGN KEY (timeB_id) REFERENCES times(id),
     FOREIGN KEY (campeonato_id) REFERENCES campeonatos(id)
 );
+-- Remova a constraint antiga
+ALTER TABLE times
+DROP FOREIGN KEY times_ibfk_1;
 
+-- Adicione a nova constraint com ON DELETE CASCADE
+ALTER TABLE times
+ADD CONSTRAINT times_ibfk_1
+FOREIGN KEY (grupo_id) REFERENCES grupos(id) ON DELETE CASCADE;
 -- Inserir administrador padrão
 INSERT INTO admin (cod_adm, nome, email, senha)
 VALUES ('2024cpTelsr', 'Thwaverton', 'thwavertont@gmail.com', '$2y$10$1gl82pJO56IydnIuRw/E0O.WeWKeWuST3HPt4lw.vLPcfMK9lhCuq');
