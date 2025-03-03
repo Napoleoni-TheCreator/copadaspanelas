@@ -348,8 +348,8 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Gestão Completa de Campeonatos</title>
+    <link rel="stylesheet" href="../../../public/css/cssfooter.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
         .container { max-width: 1200px; margin: 0 auto; }
         .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
         select { padding: 8px; width: 300px; }
@@ -378,6 +378,7 @@ $conn->close();
     </script>
 </head>
 <body>
+<?php require_once 'header_classificacao.php'?>
     <div class="container">
         <h1>Gestão de Campeonatos</h1>
 
@@ -513,5 +514,6 @@ $conn->close();
         <?php endforeach; ?>
         <?php endif; ?>
     </div>
+<?php require_once '../footer.php'?>
 </body>
 </html>

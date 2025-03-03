@@ -47,8 +47,6 @@ $usuarioLogado = isset($_SESSION['admin_id']);
                 <?php if ($usuarioLogado): ?>
                 <div class="submenu">
                     <a href="gerenciar_campeonato.php">Gerenciar campeonato</a>
-                    <a href="criar_novo_campeonato.php">Criar campeonato</a>
-                    <a href="Manipular_campeonato.php">Manipular campeonato</a>
                 </div>
                 <?php endif; ?>
             </div>
