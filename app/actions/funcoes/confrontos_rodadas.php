@@ -122,10 +122,23 @@ function inserirOuAtualizarConfrontos($rodadas, $campeonatoId) {
         }
     }
 }
-
-$rodadas = gerarRodadas($campeonatoId);
-inserirOuAtualizarConfrontos($rodadas, $campeonatoId);
-$conn->close();
-header('Location: /copadaspanelas/app/pages/adm/rodadas_adm.php');
-exit();
+// versao antiga
+// $rodadas = gerarRodadas($campeonatoId);
+// inserirOuAtualizarConfrontos($rodadas, $campeonatoId);
+// $conn->close();
+// header('Location: /copadaspanelas/app/pages/adm/rodadas_adm.php');
+// exit();
+//versao atual
+// Verifica se a requisição é do tipo POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $rodadas = gerarRodadas($campeonatoId);
+    inserirOuAtualizarConfrontos($rodadas, $campeonatoId);
+    $conn->close();
+    header('Location: /copadaspanelas/app/pages/adm/rodadas_adm.php');
+    exit();
+} else {
+    $_SESSION['error'] = "Método de requisição inválido";
+    header('Location: /copadaspanelas/app/pages/adm/rodadas_adm.php');
+    exit();
+}
 ?>

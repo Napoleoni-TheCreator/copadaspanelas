@@ -15,7 +15,8 @@ BOM dia!
 
 
 
-
+cd /opt/lampp
+sudo 
 
 
 
