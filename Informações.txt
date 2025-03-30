@@ -16,7 +16,7 @@ BOM dia!
 
 
 cd /opt/lampp
-sudo 
+sudo ./manager-linux-x64.run
 
 
 
